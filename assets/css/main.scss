@@ -1,0 +1,22 @@
+---
+---
+
+@import "minimal-mistakes";
+
+/* 本文 */
+.page__content {
+  font-size: 17px;
+  line-height: 2;
+}
+
+/* 見出し */
+.page__content h2 {
+  border-bottom: 2px solid #ddd;
+  padding-bottom: .3em;
+  margin-top: 2.5em;
+}
+
+/* ページ幅 */
+.page {
+  max-width: 860px;
+}
