@@ -1,0 +1,35 @@
+title: "Macro Economics Notes"
+description: "RBC・NK・DSGE・Fiscal Theory"
+
+url: "https://tokyo-worker.github.io"
+baseurl: ""
+
+lang: ja
+timezone: Asia/Tokyo
+
+remote_theme: "mmistakes/minimal-mistakes"
+
+plugins:
+  - jekyll-include-cache
+  - jekyll-feed
+  - jekyll-sitemap
+
+markdown: kramdown
+
+kramdown:
+  input: GFM
+  math_engine: mathjax
+
+permalink: /:title/
+
+minimal_mistakes_skin: default
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      toc: true
+      toc_sticky: true
