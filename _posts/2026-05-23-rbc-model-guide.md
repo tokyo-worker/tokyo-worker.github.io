@@ -19,14 +19,11 @@ toc: true
 家計の効用関数：
 
 $$
-U =
-\sum_{t=0}^{\infty}
-\beta^t
+U = \sum_{t=0}^{\infty} \beta^t
 \left(
 \frac{C_t^{1-\sigma}}{1-\sigma}
 -
-\chi
-\frac{L_t^{1+\gamma}}{1+\gamma}
+\chi \frac{L_t^{1+\gamma}}{1+\gamma}
 \right)
 $$
 
@@ -35,10 +32,8 @@ $$
 $$
 C_t^{-\sigma}
 =
-\beta
-E_t
+\beta E_t
 \left[
-R_{t+1}
-C_{t+1}^{-\sigma}
+R_{t+1} C_{t+1}^{-\sigma}
 \right]
 $$
