@@ -10,6 +10,20 @@ tags:
 toc: true
 ---
 
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$']],
+    displayMath: [['$$', '$$']]
+  }
+};
+</script>
+
+<script async
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+
 # はじめに
 
 本稿では政府部門を含むRBCモデルを解説する。
