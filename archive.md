@@ -1,18 +1,11 @@
 ---
-layout: archive
+layout: single
 title: "Archive"
 permalink: /archive/
-author_profile: false
 ---
 
-{% include base_path %}
+# 記事一覧
 
 {% for post in site.posts %}
-  <h2>
-    <a href="{{ base_path }}{{ post.url }}">
-      {{ post.title }}
-    </a>
-  </h2>
-
-  <p>{{ post.excerpt }}</p>
+- [{{ post.title }}]({{ post.url }})
 {% endfor %}
