@@ -119,3 +119,21 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+/* 記事本文の横幅制限を解除し、ブラウザの幅に合わせる設定 */
+.wrapper {
+  max-width: 100% !important;
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+}
+
+#main {
+  max-width: 100% !important;
+}
+
+/* 記事コンテンツ部分を横いっぱいに広げる */
+.archive, .page, .single {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-right: 0 !important;
+}
