@@ -8,7 +8,6 @@ title:
 
 マクロ経済学を中心とした自分用の勉強ノートや素朴な疑問です。
 ---
--->
 # 最新記事
 
 {% for post in site.posts limit:5 %}
@@ -20,6 +19,7 @@ title:
 ---
 
 {% endfor %}
+-->
 <!--
 # Categories
 
