@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Can Deficits Finance Themselves? — OLG-NK モデル 完全解説 v1</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<style>
+:root{
+  --bg:#ffffff;--bg2:#f8f7f4;--bg3:#f0ede8;
+  --text:#1a1a18;--text2:#4a4a46;--text3:#6a6a66;
+  --border:#d4d1c9;--border2:#b8b5ad;
+  --blue50:#e6f1fb;--blue100:#b5d4f4;--blue600:#185fa5;--blue800:#0c447c;--blue900:#042c53;
+  --teal50:#e1f5ee;--teal100:#9fe1cb;--teal600:#0f6e56;--teal800:#085041;
+  --amber50:#faeeda;--amber600:#854f0b;--amber800:#633806;
+  --green50:#eaf3de;--green600:#3b6d11;--green800:#27500a;
+  --red50:#fcebeb;--red600:#a32d2d;--red800:#791f1f;
+  --purple50:#eeedfe;--purple600:#534ab7;--purple800:#3c3489;
+  --coral50:#faece7;--coral600:#993c1d;--coral800:#712b13;
+  --gray50:#f1efe8;--gray600:#5f5e5a;--gray800:#444441;
+  --accent:#185fa5;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#1e1e1c;--bg2:#252523;--bg3:#2e2e2b;
+    --text:#e8e6df;--text2:#b8b6af;--text3:#888780;
+    --border:#3a3a38;--border2:#4a4a48;
+    --blue50:#042c53;--blue100:#0c447c;--blue600:#85b7eb;--blue800:#b5d4f4;--blue900:#e6f1fb;
+    --teal50:#04342c;--teal100:#085041;--teal600:#5dcaa5;--teal800:#9fe1cb;
+    --amber50:#412402;--amber600:#ef9f27;--amber800:#fac775;
+    --green50:#173404;--green600:#97c459;--green800:#c0dd97;
+    --red50:#501313;--red600:#e24b4a;--red800:#f7c1c1;
+    --purple50:#26215c;--purple600:#afa9ec;--purple800:#cecbf6;
+    --coral50:#4a1b0c;--coral600:#f0997b;--coral800:#f5c4b3;
+    --gray50:#2c2c2a;--gray600:#b4b2a9;--gray800:#d3d1c7;
+    --accent:#85b7eb;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Helvetica Neue',Arial,sans-serif;font-size:16px;line-height:1.7;color:var(--text);background:var(--bg);max-width:1100px;margin:0 auto;padding:2rem 1.5rem}
+h1{font-size:1.8rem;font-weight:600;border-bottom:2px solid var(--accent);padding-bottom:.5rem;margin-bottom:.5rem}
+.subtitle{color:var(--text2);font-size:.9rem;margin-bottom:2rem}
+.toc{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1rem 1.5rem;margin-bottom:2.5rem}
+.toc h2{font-size:1rem;font-weight:600;margin-bottom:.5rem;color:var(--text2)}
+.toc ul{list-style:none;display:flex;flex-wrap:wrap;gap:.25rem .75rem}
+.toc li a{color:var(--accent);text-decoration:none;font-size:.85rem}
+.toc li a:hover{text-decoration:underline}
+.section{margin-bottom:3rem}
+.section-header{display:flex;align-items:baseline;gap:1rem;margin-bottom:1.25rem;border-bottom:1px solid var(--border);padding-bottom:.5rem}
+.section-num{font-size:2rem;font-weight:700;color:var(--accent);line-height:1;min-width:3.5rem}
+.section-title{font-size:1.2rem;font-weight:600;color:var(--text)}
+.eq-block{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1rem 1.25rem;margin:1rem 0;overflow-x:auto}
+.eq-label{font-size:.78rem;color:var(--text3);float:right;margin-top:.25rem}
+.eq-tag{display:inline-block;font-size:.75rem;background:var(--blue50);color:var(--blue800);border-radius:4px;padding:1px 6px;margin-left:.5rem;font-weight:500}
+.commentary{display:flex;gap:1rem;margin:.75rem 0}
+.commentary-label{font-size:.75rem;font-weight:600;color:var(--text3);min-width:6rem;padding-top:.15rem}
+.commentary-body{font-size:.9rem;color:var(--text2);line-height:1.6}
+.var-table{width:100%;border-collapse:collapse;font-size:.85rem;margin:.5rem 0 1rem}
+.var-table th{background:var(--bg3);color:var(--text2);font-weight:600;padding:.4rem .6rem;text-align:left;border:1px solid var(--border)}
+.var-table td{padding:.35rem .6rem;border:1px solid var(--border);vertical-align:top}
+.var-table tr:nth-child(even) td{background:var(--bg2)}
+.badge{display:inline-block;font-size:.72rem;font-weight:600;padding:1px 6px;border-radius:3px;white-space:nowrap}
+.b-ext{background:var(--green50);color:var(--green600)}
+.b-end{background:var(--blue50);color:var(--blue800)}
+.b-state{background:var(--amber50);color:var(--amber600)}
+.b-jump{background:var(--teal50);color:var(--teal600)}
+.b-param{background:var(--gray50);color:var(--gray600)}
+.b-nom{background:var(--purple50);color:var(--purple600)}
+.b-new{background:var(--coral50);color:var(--coral600)}
+.alert{background:var(--blue50);border-left:3px solid var(--accent);padding:.75rem 1rem;border-radius:0 6px 6px 0;font-size:.88rem;color:var(--text2);margin:.75rem 0}
+.alert-warn{background:var(--amber50);border-left-color:#854f0b}
+.alert-green{background:var(--green50);border-left-color:#3b6d11}
+.highlight-box{background:var(--bg2);border:1.5px solid var(--accent);border-radius:8px;padding:1rem 1.25rem;margin:1.25rem 0}
+.highlight-box h4{font-size:.95rem;font-weight:600;color:var(--accent);margin-bottom:.5rem}
+.highlight-box p,.highlight-box li{font-size:.88rem;color:var(--text2);line-height:1.6}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:.75rem 0}
+@media(max-width:700px){.two-col{grid-template-columns:1fr}}
+.mini-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:.75rem 1rem}
+.mini-card h5{font-size:.85rem;font-weight:600;margin-bottom:.4rem;color:var(--text2)}
+.mini-card p{font-size:.82rem;color:var(--text3);line-height:1.5}
+/* Comparison table */
+.comp-table{width:100%;border-collapse:collapse;font-size:.82rem;margin:1rem 0}
+.comp-table th{background:var(--bg3);padding:.5rem .7rem;border:1px solid var(--border);font-weight:600;text-align:left}
+.comp-table td{padding:.45rem .7rem;border:1px solid var(--border);vertical-align:top;line-height:1.5}
+.comp-table tr:nth-child(even) td{background:var(--bg2)}
+.col-rbc{background:var(--amber50)!important;font-weight:600;color:var(--amber800)!important}
+.col-nk{background:var(--blue50)!important;font-weight:600;color:var(--blue800)!important}
+.col-alw{background:var(--teal50)!important;font-weight:600;color:var(--teal800)!important}
+.check{color:var(--green600);font-weight:700}
+.cross{color:var(--red600);font-weight:700}
+hr{border:none;border-top:1px solid var(--border);margin:2.5rem 0}
+</style>
+</head>
+<body>
+
+<h1>Can Deficits Finance Themselves?<br><small style="font-size:.6em;font-weight:400">OLG-NKモデル 完全解説 v1</small></h1>
+<p class="subtitle">
+  Angeletos, Lian &amp; Wolf (2024, NBER WP 31185) 論文解説 ――
+  ニューケインジアンモデル (nk_model_guide_v4 §0–§14 準拠) ＋ 論文固有の拡張 §15–§21<br>
+  v1：標準OLG-NKセットアップ → 財政ルール → 均衡特性 → 自己ファイナンス定理 → 定量分析 → 比較表
+</p>
+
+<!-- TOC -->
+<div class="toc">
+  <h2>目次</h2>
+  <ul>
+    <li><a href="#s0">§0 変数・パラメーター凡例</a></li>
+    <li><a href="#s1">§1 家計の最適化問題（OLG）</a></li>
+    <li><a href="#s2">§2 企業の最適化問題</a></li>
+    <li><a href="#s3">§3 カルボ型価格設定とNKPC</a></li>
+    <li><a href="#s4">§4 政府部門（財政政策）</a></li>
+    <li><a href="#s5">§5 中央銀行の金融政策ルール</a></li>
+    <li><a href="#s6">§6 統合政府の予算制約</a></li>
+    <li><a href="#s7">§7 市場清算条件</a></li>
+    <li><a href="#s8">§8 一階条件と消費関数の導出</a></li>
+    <li><a href="#s9">§9 集計需要方程式</a></li>
+    <li><a href="#s10">§10 均衡方程式体系（命題1）</a></li>
+    <li><a href="#s11">§11 定常状態の計算</a></li>
+    <li><a href="#s12">§12 対数線形近似と状態空間</a></li>
+    <li><a href="#s13">§13 均衡の決定性（BK条件）</a></li>
+    <li><a href="#s14">§14 金融政策の中立性とZLB</a></li>
+    <li><a href="#s15">§15 自己ファイナンスの定義と分解</a></li>
+    <li><a href="#s16">§16 主定理：定理1（自己ファイナンス結果）</a></li>
+    <li><a href="#s17">§17 2チャンネルの分解（命題2）</a></li>
+    <li><a href="#s18">§18 自己ファイナンスの経済学的直観</a></li>
+    <li><a href="#s19">§19 拡張（金融政策・需要構造・投資）</a></li>
+    <li><a href="#s20">§20 定量分析</a></li>
+    <li><a href="#s21">§21 RBC・NK・ALW比較表</a></li>
+  </ul>
+</div>
+
+<!-- ===== §0 ===== -->
+<div class="section" id="s0">
+<div class="section-header">
+  <span class="section-num">§0</span>
+  <span class="section-title">変数分類の凡例とパラメーター一覧</span>
+</div>
+
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem">
+  <span class="badge b-ext">外生変数</span>
+  <span class="badge b-end">内生変数</span>
+  <span class="badge b-state">状態変数（先決）</span>
+  <span class="badge b-jump">ジャンプ変数（非先決）</span>
+  <span class="badge b-param">パラメーター</span>
+  <span class="badge b-nom">名目変数</span>
+  <span class="badge b-new">論文固有（ALW新規）</span>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2);font-size:.95rem">深層パラメーター（NK v4からの継承＋論文追加）</h4>
+<table class="var-table">
+  <tr><th>記号</th><th>意味</th><th>典型値（四半期）</th><th>区分</th><th>NK v4対応</th></tr>
+  <tr><td>\(\beta\)</td><td>時間割引因子</td><td>0.998</td><td><span class="badge b-param">パラメーター</span></td><td>同一</td></tr>
+  <tr><td>\(\sigma\)</td><td>相対的危険回避度（CRRA）。\(1/\sigma\)が異時点間代替弾力性</td><td>1</td><td><span class="badge b-param">パラメーター</span></td><td>同一</td></tr>
+  <tr><td>\(\phi\)</td><td>フリッシュ弾力性の逆数</td><td>較正で決定</td><td><span class="badge b-param">パラメーター</span></td><td>同一</td></tr>
+  <tr><td>\(\kappa\)</td><td>NKPCの傾き（カルボ係数より導出）。\(\kappa=\frac{(1-\theta)(1-\beta\theta)}{\theta}\xi\)</td><td>0.01〜0.10</td><td><span class="badge b-param">パラメーター</span></td><td>対応する\(\tilde\kappa\)</td></tr>
+  <tr><td style="background:var(--coral50)">\(\omega\)</td><td style="background:var(--coral50)">OLG生存確率（永続的若者モデル）。\(\omega=1\)でRICARD等価の標準NK。\(\omega<1\)でリカード等価が崩れる <span class="badge b-new">ALW新規</span></td><td>0.865</td><td><span class="badge b-param">パラメーター</span></td><td>なし</td></tr>
+  <tr><td style="background:var(--coral50)">\(\tau_y\)</td><td style="background:var(--coral50)">所得税率（自動安定化装置）。産出が1ドル増えると税収が\(\tau_y\)ドル自動増加 <span class="badge b-new">ALW新規</span></td><td>0.33</td><td><span class="badge b-param">パラメーター</span></td><td>なし</td></tr>
+  <tr><td style="background:var(--coral50)">\(\tau_d\)</td><td style="background:var(--coral50)">財政調整の速度パラメーター。\(\tau_d\to1\)で即時、\(\tau_d\to0\)で無限遅延 <span class="badge b-new">ALW新規</span></td><td>{0.004, 0.026, 0.085}</td><td><span class="badge b-param">パラメーター</span></td><td>なし</td></tr>
+  <tr><td style="background:var(--coral50)">\(\phi_{mon}\)</td><td style="background:var(--coral50)">金融政策の景気循環性。実質金利が産出ギャップに反応する係数 <span class="badge b-new">ALW新規</span>（§5参照）</td><td>0（ベースライン）</td><td><span class="badge b-param">パラメーター</span></td><td>なし</td></tr>
+  <tr><td>\(\rho_a, \rho_g\)</td><td>TFP・政府支出のAR(1)係数</td><td>0.90〜0.99</td><td><span class="badge b-param">パラメーター</span></td><td>同一</td></tr>
+</table>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2);font-size:.95rem;margin-top:1rem">主要内生変数（論文固有変数を強調）</h4>
+<table class="var-table">
+  <tr><th>記号</th><th>意味</th><th>区分</th></tr>
+  <tr><td>\(y_t\)</td><td>産出の定常からの対数乖離（≈GDPギャップ \(x_t\) に相当）</td><td><span class="badge b-jump">ジャンプ変数</span></td></tr>
+  <tr><td>\(\pi_t\)</td><td>インフレ率（定常からの乖離）</td><td><span class="badge b-jump">ジャンプ変数</span></td></tr>
+  <tr><td>\(r_t\)</td><td>実質金利の定常からの乖離</td><td><span class="badge b-jump">ジャンプ変数</span></td></tr>
+  <tr><td style="background:var(--coral50)">\(d_t\)</td><td style="background:var(--coral50)">実質政府債務残高の定常からの乖離（÷定常産出 \(Y^{ss}\)）<span class="badge b-new">ALW新規</span></td><td><span class="badge b-state">状態変数</span></td></tr>
+  <tr><td style="background:var(--coral50)">\(t_t\)</td><td style="background:var(--coral50)">実質税収の定常からの乖離（÷定常産出）<span class="badge b-new">ALW新規</span></td><td><span class="badge b-jump">ジャンプ変数</span></td></tr>
+  <tr><td style="background:var(--coral50)">\(\varepsilon_t\)</td><td style="background:var(--coral50)">財政赤字ショック（一時的な一括移転。"給付金"）<span class="badge b-new">ALW新規</span></td><td><span class="badge b-ext">外生変数</span></td></tr>
+  <tr><td style="background:var(--coral50)">\(\nu\)</td><td style="background:var(--coral50)">自己ファイナンス度：初期赤字のうち税基盤拡大・インフレ侵食でファイナンスされる割合 \(\nu\in[0,1]\) <span class="badge b-new">ALW新規</span></td><td><span class="badge b-end">内生変数</span></td></tr>
+  <tr><td style="background:var(--coral50)">\(\nu_y,\nu_p\)</td><td style="background:var(--coral50)">自己ファイナンスの2成分：税基盤チャンネル（\(\nu_y\)）・債務侵食チャンネル（\(\nu_p\)）<span class="badge b-new">ALW新規</span></td><td><span class="badge b-end">内生変数</span></td></tr>
+  <tr><td style="background:var(--coral50)">\(\chi, \rho_d\)</td><td style="background:var(--coral50)">均衡の簡約パラメーター：産出応答係数（\(\chi>0\)）・債務の期待持続性（\(\rho_d\in(0,1)\)）<span class="badge b-new">ALW新規</span></td><td><span class="badge b-end">内生変数</span></td></tr>
+  <tr><td style="background:var(--coral50)">\(F_1, F_2\)</td><td style="background:var(--coral50)">集計需要の構造パラメーター（\(\omega, \tau_d, \tau_y\)の関数）<span class="badge b-new">ALW新規</span></td><td><span class="badge b-param">導出パラメーター</span></td></tr>
+</table>
+</div>
+
+<!-- ===== §1 ===== -->
+<div class="section" id="s1">
+<div class="section-header">
+  <span class="section-num">§1</span>
+  <span class="section-title">家計の最適化問題（OLG：永続的若者モデル）</span>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2)">Eq.1 家計 \(i\) の生涯効用関数（OLG）</h4>
+<div class="eq-block">
+  \[
+    E_t\!\left[\sum_{k=0}^{\infty}(\beta\omega)^k\!\left(u(C_{i,t+k})-v(L_{i,t+k})\right)\right]
+    \quad u(C)=\frac{C^{1-1/\sigma}}{1-1/\sigma},\quad v(L)=\chi\frac{L^{1+1/\phi}}{1+1/\phi}
+  \]
+  <span class="eq-label">Eq.1</span>
+</div>
+<div class="two-col">
+  <div class="commentary"><span class="commentary-label">NK v4との差異</span><span class="commentary-body">NK v4は無限生存（\(\omega=1\)）で将来を\(\beta^k\)で割り引く。本論文では各期に確率\(1-\omega\)で死亡・更新されるOLG家計が将来を割引率\(\beta\omega\)で評価。\(\omega<1\)によりリカード等価が崩れ、財政赤字が集計需要を刺激できる。</span></div>
+  <div class="commentary"><span class="commentary-label">社会基金</span><span class="commentary-body">論文は社会基金（social fund）を導入し、異なる世代コホートが定常状態で同一の資産・消費を持つようにする。これにより対数線形化が簡素化され、均衡の定常状態がNK標準と同一になる（\(\omega\)への依存がない）。</span></div>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2);margin-top:1rem">Eq.2 家計の予算制約（アニュイティ付き名目形式）</h4>
+<div class="eq-block">
+  \[
+    A_{i,t+1} = \frac{I_t}{\omega}\!\left(A_{i,t}+P_t\!\left(W_tL_{i,t}+Q_{i,t}-C_{i,t}-T_{i,t}+S_{i,t}\right)\right)
+  \]
+  <span class="eq-label">Eq.2</span>
+</div>
+<div class="commentary"><span class="commentary-label">アニュイティ</span><span class="commentary-body">家計は\(I_t/\omega\)の名目グロスリターンを得る公正アニュイティを取引する。死亡家計の資産が生存家計に再分配される仕組みであり、生存・死亡を込めた実効グロスリターンが\(I_t\)になる。NK v4の標準国債保有とは異なる金融市場設定。</span></div>
+</div>
+
+<!-- ===== §2 ===== -->
+<div class="section" id="s2">
+<div class="section-header">
+  <span class="section-num">§2</span>
+  <span class="section-title">企業の最適化問題</span>
+</div>
+<div class="alert">供給サイドはNK v4の標準テキストブックと完全に同一。労働組合が均等な労働時間を各家計に配分し、カルボ型価格設定を行う独占的競争企業が産出する（§3参照）。資本は§2拡張版では含まれるが、本論文のベースラインは\(\alpha=0\)（労働のみ線形技術）。</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2)">Eq.3 生産関数（線形・労働のみ）</h4>
+<div class="eq-block">
+  \[Y_{j,t} = A_t \cdot l_{j,t}\]
+  <span class="eq-label">Eq.3</span>
+</div>
+<div class="commentary"><span class="commentary-label">NK v4との関係</span><span class="commentary-body">NK v4 §2はコブ＝ダグラス型（資本込み）に拡張しているが、本論文のベースラインはシンプルな線形生産関数。労働組合による均等時間配分の仮定（Eq.3 of paper）が、世代間の労働所得格差を排除し、集計を簡素化する。</span></div>
+</div>
+
+<!-- ===== §3 ===== -->
+<div class="section" id="s3">
+<div class="section-header">
+  <span class="section-num">§3</span>
+  <span class="section-title">カルボ型価格設定とNKフィリップス曲線（NKPC）</span>
+</div>
+
+<div class="alert">NKPCはNK v4 §3と完全に同一の形式。ただし産出ギャップ\(x_t\)の代わりに産出\(y_t\)（定常からの対数乖離）で表記。論文のベースラインでは\(\kappa\)を外生パラメーターとして扱い、価格硬直性の程度を\(\kappa=0\)（完全硬直）から\(\kappa>0\)（粘着的）で表現する。</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2)">Eq.4 NKフィリップス曲線（NKPC）</h4>
+<div class="eq-block">
+  \[
+    \pi_t = \kappa y_t + \beta E_t[\pi_{t+1}],\qquad \kappa = \frac{(1-\theta)(1-\beta\theta)}{\theta}\xi,\quad \xi\equiv\frac{1}{\phi}+\frac{1}{\sigma}
+  \]
+  <span class="eq-label">Eq.4（論文 Eq.16）</span>
+</div>
+<div class="commentary"><span class="commentary-label">産出と産出ギャップの違い</span><span class="commentary-body">NK v4では\(y_t = x_t + y_t^n\)（産出ギャップ＋自然産出）だが、本論文では財政刺激に焦点を当てるため、産出\(y_t\)そのものをNKPCの右辺に置く簡略化がなされている。\(\kappa\)の大小が自己ファイナンスの2チャンネル分配を決定する（§17参照）。</span></div>
+</div>
+
+<!-- ===== §4 ===== -->
+<div class="section" id="s4">
+<div class="section-header">
+  <span class="section-num">§4</span>
+  <span class="section-title">政府部門（財政政策）</span>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2)">Eq.5 名目フロー予算制約（対数線形化後）</h4>
+<div class="eq-block">
+  \[
+    d_{t+1} = \frac{1}{\beta}(d_t - t_t) + \frac{D^{ss}}{Y^{ss}}r_t
+    - \underbrace{\frac{D^{ss}}{Y^{ss}}(\pi_{t+1}-E_t[\pi_{t+1}])}_{\text{サプライズインフレによる債務侵食}}
+  \]
+  <span class="eq-label">Eq.5（論文 Eq.5）</span>
+</div>
+<div class="commentary"><span class="commentary-label">債務侵食項の意味</span><span class="commentary-body">\(D^{ss}/Y^{ss}\cdot(\pi_{t+1}-E_t[\pi_{t+1}])\)は想定外のインフレが名目債務の実質価値を侵食する経路。これが自己ファイナンスの「インフレ（債務侵食）チャンネル」\(\nu_p\)として機能する。NK v4 §4の実質国債動学と同構造。</span></div>
+
+<hr style="margin:1rem 0">
+<h4 style="margin-bottom:.5rem;color:var(--text2)">Eq.6 財政ルール（ベースライン）<span class="badge b-new">ALW新規</span></h4>
+<div class="eq-block">
+  \[
+    t_t = \underbrace{\tau_y y_t}_{\text{自動安定化装置（税基盤）}} + \underbrace{\tau_d(d_t+\varepsilon_t)}_{\text{財政調整}} - \varepsilon_t
+  \]
+  <span class="eq-label">Eq.6（論文 Eq.7）</span>
+</div>
+<div class="two-col">
+  <div class="mini-card"><h5>第1項：\(\tau_y y_t\)（税基盤チャンネル）</h5><p>産出が1単位増えると税収が\(\tau_y\)自動増加。これが自己ファイナンスの「税基盤チャンネル」\(\nu_y\)の根拠。DeLong-Summers (2012) の財政乗数論と直結。</p></div>
+  <div class="mini-card"><h5>第2項：\(\tau_d(d_t+\varepsilon_t)\)（財政調整速度）</h5><p>\(\tau_d\to1\)：即時調整（完全増税）でRICARD等価的。\(\tau_d\to0\)：調整無限遅延→自己ファイナンスが最大化（定理1の核心）。</p></div>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2);margin-top:1rem">Eq.7 財政ルール（代替版・H期遅延型）<span class="badge b-new">ALW新規</span></h4>
+<div class="eq-block">
+  \[
+    t_t = \begin{cases}\tau_y y_t - \varepsilon_0 & t=0 \\ \tau_y y_t & t\in\{1,\cdots,H-1\} \\ d_t & t\geq H\end{cases}
+  \]
+  <span class="eq-label">Eq.7（論文 Eq.8）</span>
+</div>
+<div class="commentary"><span class="commentary-label">2種類のルールの意図</span><span class="commentary-body">ベースラインルール（Eq.6）は再帰的定式化を可能にし、理論解析に便利。代替ルール（Eq.7）はH期まで調整を先送りし、H→∞で財政調整を無限遅延させる直感的解釈を与える。両ルールの極限（\(\tau_d\to0\)または\(H\to\infty\)）は同一の均衡経路に収束することが定理1で示される。</span></div>
+</div>
+
+<!-- ===== §5 ===== -->
+<div class="section" id="s5">
+<div class="section-header">
+  <span class="section-num">§5</span>
+  <span class="section-title">中央銀行の金融政策ルール</span>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2)">Eq.8 金融政策ルール（実質金利ルール）<span class="badge b-new">ALW新規</span></h4>
+<div class="eq-block">
+  \[
+    r_t = \phi_{mon} \cdot y_t
+  \]
+  <span class="eq-label">Eq.8（論文 Eq.10）</span>
+</div>
+<div class="two-col">
+  <div class="mini-card"><h5>\(\phi_{mon}=0\)：中立的金融政策（ベースライン）</h5><p>実質金利を一定に保つ。財政刺激の純粋な需要効果を分離し、金融政策チャンネルを排除。Woodford (2011) と同じベースライン設定。</p></div>
+  <div class="mini-card"><h5>\(\phi_{mon}>0\)：タカ派（ハウキッシュ）</h5><p>産出増→金利引き上げ→景気ブームを冷やす→ケインジアン乗数を減少→自己ファイナンスが制限される（定理2参照）。</p></div>
+</div>
+<div class="mini-card" style="margin-top:.75rem"><h5>\(\phi_{mon}<0\)：ハト派（ZLB含む）</h5><p>産出増→金利引き下げ→家計の支出前倒し→ケインジアン乗数増大→自己ファイナンスが促進。ZLB拘束下ではインフレ→実質金利低下（\(\phi<0\)相当）として解釈可能。</p></div>
+
+<div class="alert" style="margin-top:.75rem">NK v4のテイラー・ルール（\(\hat{i}_t=\delta_\pi\pi_t+\delta_x x_t+u_t\)）は本論文§6.2で定量分析に使用。ベースライン理論分析では実質金利ルール（Eq.8）に特化することで、財政・民間支出の相互作用を明確に分離する。</div>
+</div>
+
+<!-- ===== §6 ===== -->
+<div class="section" id="s6">
+<div class="section-header">
+  <span class="section-num">§6</span>
+  <span class="section-title">統合政府の予算制約</span>
+</div>
+<div class="alert">本論文はキャッシュレス経済を仮定（ベースマネー項はゼロ）。統合政府の異時点間BC（IGBC）は標準NKと同一形式だが、名目債務侵食項が重要な役割を果たす。</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2)">Eq.9 統合政府の現在価値BC（自己ファイナンスの源泉分解）</h4>
+<div class="eq-block">
+  \[
+    \underbrace{\varepsilon_0}_{\text{初期赤字ショック}} =
+    \underbrace{\tau_d\!\left(\varepsilon_0+\sum_{k=0}^\infty\beta^k E_0[d_k]\right)}_{\text{①財政調整}} +
+    \underbrace{\tau_y\sum_{k=0}^\infty\beta^k E_0[y_k]}_{\text{②税基盤（自己ファイナンス）}} +
+    \underbrace{\frac{D^{ss}}{Y^{ss}}(\pi_0-E_{-1}[\pi_0])}_{\text{③債務侵食（自己ファイナンス）}}
+  \]
+  <span class="eq-label">Eq.9（論文 Eq.21）</span>
+</div>
+<div class="commentary"><span class="commentary-label">3つの財源</span><span class="commentary-body">初期赤字\(\varepsilon_0\)は①能動的財政調整（増税/歳出削減）、②ケインジアン・ブームによる税収増（税基盤チャンネル\(\nu_y\)）、③サプライズインフレによる債務実質価値削減（債務侵食チャンネル\(\nu_p\)）の3経路でファイナンスされる。②③の合計が「自己ファイナンス度」\(\nu\)。</span></div>
+</div>
+
+<!-- ===== §7 ===== -->
+<div class="section" id="s7">
+<div class="section-header">
+  <span class="section-num">§7</span>
+  <span class="section-title">市場清算条件</span>
+</div>
+<div class="alert">ベースラインモデルは政府投資なし（\(G_t=0\)）、投資なし（\(I_t=0\)）のシンプルな経済。市場清算は\(Y_t=C_t\)（財市場）と\(t_t = \tau_y y_t + \cdots\)（政府BC）のみ。</div>
+<h4 style="margin-bottom:.5rem;color:var(--text2)">Eq.10 財市場清算（ベースライン）</h4>
+<div class="eq-block">
+  \[y_t = c_t\]
+  <span class="eq-label">Eq.10</span>
+</div>
+<div class="commentary"><span class="commentary-label">投資拡張版</span><span class="commentary-body">§5.3（論文）で投資を導入する拡張を検討。その場合 \(y_t=c_t+i_t\)（消費＋投資）となり、Eq.13の集計需要方程式が消費\(c_t\)について成立する形に修正されるが、自己ファイナンスの本質的結果は変わらない。</span></div>
+</div>
+
+<!-- ===== §8 ===== -->
+<div class="section" id="s8">
+<div class="section-header">
+  <span class="section-num">§8</span>
+  <span class="section-title">一階条件と消費関数の導出</span>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2)">Eq.11 家計 \(i\) の対数線形化消費関数</h4>
+<div class="eq-block">
+  \[
+    c_{i,t} = (1-\beta\omega)\left(\tilde{a}_{i,t} + E_t\!\left[\sum_{k=0}^\infty(\beta\omega)^k(y_{t+k}-t_{t+k})\right]\right)
+    - \gamma E_t\!\left[\sum_{k=0}^\infty(\beta\omega)^k r_{t+k}\right]
+  \]
+  <span class="eq-label">Eq.11（論文 Eq.11）</span>
+</div>
+<div class="two-col">
+  <div class="commentary"><span class="commentary-label">\(\omega=1\)との比較</span><span class="commentary-body">\(\omega=1\)（標準NK）では将来所得を\(\beta\)で割り引き、MPC=\(1-\beta\)（恒久所得仮説）。\(\omega<1\)では将来所得を\(\beta\omega\)でより強く割り引き、MPCが上昇・将来税増税への感応度が低下。</span></div>
+  <div class="commentary"><span class="commentary-label">「割引」と「前倒し」</span><span class="commentary-body">OLG構造から生まれる2つの重要性質：①<strong>割引（Discounting）</strong>：将来所得の現在価値効果が逓減→遠い将来の増税が現在需要にほぼ影響しない。②<strong>前倒し（Front-loading）</strong>：所得増加を素早く消費→累積MPCが1に速く収束。</span></div>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2);margin-top:1rem">Eq.12 集計消費関数（金融資産＝政府債務を利用）</h4>
+<div class="eq-block">
+  \[
+    c_t = (1-\beta\omega)d_t + (1-\beta\omega)E_t\!\left[\sum_{k=0}^\infty(\beta\omega)^k(y_{t+k}-t_{t+k})\right]
+  \]
+  <span class="eq-label">Eq.12（論文 Eq.12）</span>
+</div>
+<div class="commentary"><span class="commentary-label">集計の鍵</span><span class="commentary-body">民間の総金融資産＝政府債務（\(\tilde{a}_t^{agg}=d_t\)）という均衡条件を用いて各世代コホートを集計。政府債務\(d_t\)が正であれば、民間富が増え現在消費を刺激する（財政拡張の需要チャンネルの根拠）。</span></div>
+</div>
+
+<!-- ===== §9 ===== -->
+<div class="section" id="s9">
+<div class="section-header">
+  <span class="section-num">§9</span>
+  <span class="section-title">集計需要方程式（異時点間ケインジアン・クロス）</span>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2)">Eq.13 集計需要（財政ルールEq.6を代入後）<span class="badge b-new">ALW中核方程式</span></h4>
+<div class="eq-block">
+  \[
+    y_t = \underbrace{F_1\cdot(d_t+\varepsilon_t)}_{\text{財政赤字の偏効果（PE）}} +
+    \underbrace{F_2\cdot E_t\!\left[(1-\beta\omega)\sum_{k=0}^\infty(\beta\omega)^k y_{t+k}\right]}_{\text{異時点間ケインジアン・クロス（GE）}}
+  \]
+  \[
+    F_1 \equiv \frac{(1-\beta\omega)(1-\omega)(1-\tau_d)}{1-\omega(1-\tau_d)},\qquad
+    F_2 \equiv 1 - \frac{(1-\omega)\tau_y}{1-\omega(1-\tau_d)}
+  \]
+  <span class="eq-label">Eq.13（論文 Eq.13）</span>
+</div>
+<div class="two-col">
+  <div class="mini-card"><h5>\(F_1>0\)の成立条件</h5><p>\(\omega<1\)（リカード等価の失敗）かつ\(\tau_d<1\)（即時調整でない）の両方が必要。\(\omega=1\)ならリカード等価が成立し\(F_1=0\)→財政赤字は需要に影響しない。</p></div>
+  <div class="mini-card"><h5>\(F_2\)：ケインジアン・クロスの傾き</h5><p>全期間の支出期待を1引き上げると現在支出が\(F_2\)増える。\(\tau_y>0\)と\(\omega<1\)が\(F_2<1\)を保証し、均衡の一意性をもたらす（§13参照）。</p></div>
+</div>
+<div class="alert" style="margin-top:.75rem">\(\omega=1\)（標準NK・恒久所得仮説）の場合、\(F_1=0, F_2=1\)で(Eq.13)はオイラー方程式\(y_t=E_t[y_{t+1}]\)に退化。財政赤字\(d_t,\varepsilon_t\)が需要に登場しない→FTPLの均衡選択問題に帰着。本論文では\(\omega<1\)により財政赤字が直接の需要決定因となる。</div>
+</div>
+
+<!-- ===== §10 ===== -->
+<div class="section" id="s10">
+<div class="section-header">
+  <span class="section-num">§10</span>
+  <span class="section-title">均衡方程式体系（命題1）</span>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2)">Eq.14 均衡方程式体系（3方程式）<span class="badge b-new">ALW中核</span></h4>
+<div class="eq-block">
+  \[
+    \begin{aligned}
+    \textbf{(I)}&\quad y_t = F_1(d_t+\varepsilon_t) + F_2\cdot E_t\!\left[(1-\beta\omega)\sum_{k=0}^\infty(\beta\omega)^k y_{t+k}\right] &\text{集計需要（Eq.13）}\\[6pt]
+    \textbf{(II)}&\quad \pi_t = \kappa y_t + \beta E_t[\pi_{t+1}] &\text{NKPC（Eq.4）}\\[6pt]
+    \textbf{(III)}&\quad d_{t+1} = \beta^{-1}(d_t+\varepsilon_t-\tau_d(d_t+\varepsilon_t)-\tau_y y_t) - \frac{D^{ss}}{Y^{ss}}(\pi_{t+1}-E_t[\pi_{t+1}]) &\text{政府債務動学（Eq.5+Eq.6）}
+    \end{aligned}
+  \]
+  <span class="eq-label">Eq.14</span>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2);margin-top:1rem">Eq.15 命題1：均衡の簡約形（固定点問題の解）</h4>
+<div class="eq-block">
+  \[
+    y_t = \chi(d_t+\varepsilon_t),\qquad E_t[d_{t+1}] = \rho_d(d_t+\varepsilon_t)
+  \]
+  \[
+    \chi = \frac{F_1}{1-F_2\frac{1-\beta\omega}{1-\beta\omega\rho_d}} > 0,\qquad
+    \rho_d = \beta^{-1}(1-\tau_d-\tau_y\chi)\in(0,1),\qquad
+    \pi_t = \frac{\kappa}{1-\beta\rho_d}y_t
+  \]
+  <span class="eq-label">Eq.15（論文 Eq.19・20）</span>
+</div>
+<div class="two-col">
+  <div class="commentary"><span class="commentary-label">経済的意味</span><span class="commentary-body">\(\chi>0\)：財政赤字がケインジアン・ブームを生む（\(\omega<1\)かつ名目硬直性が必要）。\(\rho_d\in(0,1)\)：均衡において政府債務は（確率的に）定常状態に収束する。</span></div>
+  <div class="commentary"><span class="commentary-label">固定点の相互依存</span><span class="commentary-body">① 産出応答\(\chi\uparrow\)→税収増→\(\rho_d\downarrow\)（債務が早く収束）。② \(\rho_d\downarrow\)→将来調整コストの割引現在価値低下→現在需要が増加→\(\chi\uparrow\)。この正のフィードバックが自己ファイナンス機構の核心。</span></div>
+</div>
+</div>
+
+<!-- ===== §11 ===== -->
+<div class="section" id="s11">
+<div class="section-header">
+  <span class="section-num">§11</span>
+  <span class="section-title">定常状態の計算</span>
+</div>
+<div class="alert">定常状態（\(\pi^{ss}=0, y^{ss}=0, d^{ss}\geq0\)）はNK標準と同一。社会基金の設計により\(\omega\)や\(D^{ss}/Y^{ss}\)の値に関わらず定常状態が不変になる。実質金利：\(R^{ss}=\beta^{-1}\)（修正黄金律）。定常税収：\(T^{ss}=(1-\beta)D^{ss}\)。</div>
+
+<table class="var-table">
+  <tr><th>定常値</th><th>条件</th><th>NK v4との対応</th></tr>
+  <tr><td>\(\pi^{ss}=0\)</td><td>インフレ目標</td><td>同一</td></tr>
+  <tr><td>\(r^{ss}=\beta^{-1}-1\)</td><td>修正黄金律</td><td>同一</td></tr>
+  <tr><td>\(D^{ss}/Y^{ss}\)</td><td>政府負債/GDP比（\(\geq0\)）。論文ベンチマーク：1.04</td><td>NK v4の\(s_B\)に対応</td></tr>
+  <tr><td>\(T^{ss}=(1-\beta)D^{ss}\)</td><td>定常ではプライマリー黒字で利払い費を賄う</td><td>NK v4§11と同構造</td></tr>
+  <tr><td>\(\chi^{full}\equiv\lim_{\tau_d\to0}\chi=\frac{1-\beta\rho_d^{full}}{\tau_y}\)</td><td>完全自己ファイナンス時の産出応答係数 <span class="badge b-new">ALW新規</span></td><td>なし</td></tr>
+</table>
+</div>
+
+<!-- ===== §12 ===== -->
+<div class="section" id="s12">
+<div class="section-header">
+  <span class="section-num">§12</span>
+  <span class="section-title">対数線形近似と状態空間表現</span>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2)">Eq.16 先決変数とジャンプ変数の分類</h4>
+<table class="var-table">
+  <tr><th>変数</th><th>区分</th><th>決定タイミング</th><th>NK v4との差異</th></tr>
+  <tr><td>\(d_t\)</td><td><span class="badge b-state">先決変数</span></td><td>前期末の財政決定で確定（名目債務/物価で実質化）</td><td>NK v4の\(\hat{b}_t\)に相当</td></tr>
+  <tr><td>\(A_t, G_t\)</td><td><span class="badge b-ext">外生・先決</span></td><td>AR(1)過程</td><td>同一</td></tr>
+  <tr><td>\(y_t, \pi_t\)</td><td><span class="badge b-jump">ジャンプ変数</span></td><td>Eq.15の簡約形で同時決定</td><td>NK v4 \(x_t,\pi_t\)に対応</td></tr>
+  <tr><td>\(\varepsilon_t\)</td><td><span class="badge b-ext">外生ショック</span></td><td>i.i.d.（date-0の一時的赤字ショック）</td><td><span class="badge b-new">ALW新規</span></td></tr>
+</table>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2);margin-top:1rem">Eq.17 状態空間表現（簡約版）</h4>
+<div class="eq-block">
+  \[
+    \begin{pmatrix}E_t[d_{t+1}]\\E_t[y_{t+1}]\end{pmatrix}
+    = \begin{pmatrix}\frac{1-\tau_d}{\beta} & -\frac{\tau_y}{\beta}\\ -\frac{(1-\beta\omega)(1-\omega)(1-\tau_d)}{\beta\omega} & 1+\frac{(1-\beta\omega)(1-\omega)\tau_y}{\beta\omega}\end{pmatrix}
+    \begin{pmatrix}d_t+\varepsilon_t\\y_t\end{pmatrix}
+  \]
+  <span class="eq-label">Eq.17（論文 Appendix D.1）</span>
+</div>
+<div class="commentary"><span class="commentary-label">固有値解析</span><span class="commentary-body">2×2行列の固有値 \(\lambda_1>1>\lambda_2>0\)。\(\lambda_2=\rho_d\in(0,1)\)が先決変数\(d_t\)に対応する安定固有値（→均衡の一意性）。\(\lambda_1>1\)は爆発的な均衡経路を排除する条件（BK条件）。</span></div>
+</div>
+
+<!-- ===== §13 ===== -->
+<div class="section" id="s13">
+<div class="section-header">
+  <span class="section-num">§13</span>
+  <span class="section-title">均衡の決定性（BK条件）</span>
+</div>
+
+<div class="highlight-box">
+  <h4>OLGモデルの決定性領域（標準NKとの決定的差異）<span class="badge b-new">ALW新規</span></h4>
+  <p>標準NK（\(\omega=1\)）ではテイラー原理（\(\delta_\pi>1\)）がないと不決定（複数均衡）。本論文のOLG設定（\(\omega<1\)）では<strong>任意の財政ルール\(\tau_d\in(0,1)\)のもとで\(\phi_{mon}=0\)（中立的金融政策）でも一意の有界均衡が存在する</strong>。</p>
+  <p style="margin-top:.5rem">直観：\(\omega<1\)により公的債務\(d_t\)が集計需要に直接影響するため、財政が均衡の自動安定化装置として機能。テイラー原理なしでも均衡が安定化される。これは標準NKのFTPL（財政による物価決定）の代替機構と解釈できる。</p>
+</div>
+
+<table class="var-table">
+  <tr><th>モデル</th><th>先決変数の数</th><th>ジャンプ変数の数</th><th>BK条件の充足</th><th>均衡決定の鍵</th></tr>
+  <tr><td>RBC</td><td>2（\(\hat{K}_t,\hat{b}_t\)）</td><td>2（\(\hat{C}_t,\hat{R}_t\)）</td><td>鞍点均衡</td><td>資本の限界生産物</td></tr>
+  <tr><td>NK v4（標準）</td><td>0〜5（拡張次第）</td><td>2（\(x_t,\pi_t\)）</td><td>テイラー原理必要</td><td>\(\delta_\pi>1\)</td></tr>
+  <tr style="background:var(--teal50)"><td><strong>ALW（OLG-NK）</strong></td><td>1（\(d_t\)）</td><td>2（\(y_t,\pi_t\)）</td><td><strong>\(\omega<1\)かつ\(\tau_y>0\)で自動</strong></td><td>\(\omega<1\)による財政自動安定化</td></tr>
+</table>
+</div>
+
+<!-- ===== §14 ===== -->
+<div class="section" id="s14">
+<div class="section-header">
+  <span class="section-num">§14</span>
+  <span class="section-title">金融政策の中立性とゼロ金利制約（ZLB）</span>
+</div>
+
+<div class="alert"><strong>ベースラインの立場：</strong>本論文は金融政策「中立」（\(\phi_{mon}=0\)）を基本設定とし、財政刺激が金融政策チャンネルなしに自己ファイナンスできることを示す。これはNK v4の損失関数最小化アプローチとは異なる分析目的（財政余力の評価）に基づく。</div>
+
+<div class="two-col">
+  <div class="mini-card"><h5>ZLBとの関係</h5><p>ZLB拘束下ではインフレが実質金利低下に完全にパスする（\(\phi_{mon}<0\)相当）。財政刺激のブームが前倒しされ、自己ファイナンスが促進される経路として解釈可能。</p></div>
+  <div class="mini-card"><h5>定量分析での対応（§6.2）</h5><p>Taylor型ルール（\(i_t=\psi\pi_t\）、\(\psi\geq1\)）を用いた感度分析も実施。\(\psi\)が大きいほど自己ファイナンスの上限\(\nu^{max}\)が低下（定理2）。</p></div>
+</div>
+</div>
+
+<!-- ===== §15（以下、論文固有） ===== -->
+<hr>
+<h2 style="margin-bottom:1.5rem;font-size:1.3rem;color:var(--text2)">以下：論文固有の論点（§15〜§21）</h2>
+
+<div class="section" id="s15">
+<div class="section-header">
+  <span class="section-num">§15</span>
+  <span class="section-title">自己ファイナンスの定義と分解<span class="badge b-new" style="font-size:.75rem">ALW新規</span></span>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2)">定義2 自己ファイナンス度 \(\nu\)</h4>
+<div class="eq-block">
+  \[
+    \nu \equiv \frac{\displaystyle\tau_y\sum_{k=0}^\infty\beta^k E_0[y_k] + \frac{D^{ss}}{Y^{ss}}\pi_0}{\varepsilon_0}
+    = \underbrace{\nu_y}_{\text{税基盤チャンネル}} + \underbrace{\nu_p}_{\text{債務侵食チャンネル}}
+  \]
+  <span class="eq-label">Eq.18（論文 Def.2, Eq.22-23）</span>
+</div>
+<div class="two-col">
+  <div class="mini-card"><h5>税基盤チャンネル \(\nu_y\)</h5><p>\[\nu_y = \frac{\tau_y\sum_{k=0}^\infty\beta^k E_0[y_k]}{\varepsilon_0}\]ケインジアン・ブームによる税収増の現在価値。\(\kappa=0\)（完全硬直価格）では\(\nu=\nu_y\)（全て税基盤）。定量的には主要な自己ファイナンス経路。</p></div>
+  <div class="mini-card"><h5>債務侵食チャンネル \(\nu_p\)</h5><p>\[\nu_p = \frac{D^{ss}/Y^{ss}\cdot\pi_0}{\varepsilon_0}\]サプライズインフレによる名目債務の実質価値削減。\(\kappa\)が大きいほど\(\nu_p\)の比率が高い。FTPLとは異なり「均衡選択」ではなく「需要主導ブームの副産物」。</p></div>
+</div>
+
+<div class="highlight-box" style="margin-top:1rem">
+  <h4>チャンネル分割の公式（命題2）</h4>
+  <p>\[\frac{\nu_y}{\nu} = \frac{\tau_y}{\tau_y + \kappa\frac{D^{ss}}{Y^{ss}}},\qquad \frac{\nu_p}{\nu} = \frac{\kappa\frac{D^{ss}}{Y^{ss}}}{\tau_y + \kappa\frac{D^{ss}}{Y^{ss}}}\]</p>
+  <p>価格が完全硬直（\(\kappa=0\)）→全て税基盤。価格が完全伸縮（\(\kappa\to\infty\)）→全て債務侵食。実証的に支持される平坦なNKPC（\(\kappa=0.01\)）のもとでは<strong>ほぼ全て（95%超）が税基盤チャンネル</strong>。</p>
+</div>
+</div>
+
+<!-- ===== §16 ===== -->
+<div class="section" id="s16">
+<div class="section-header">
+  <span class="section-num">§16</span>
+  <span class="section-title">主定理：定理1（自己ファイナンス結果）<span class="badge b-new">ALW中核定理</span></span>
+</div>
+
+<div class="highlight-box" style="border-color:#185fa5">
+  <h4>定理1（Theorem 1）：財政調整を遅らせるほど自己ファイナンス度が上昇し、極限で完全自己ファイナンスに達する</h4>
+  <p style="margin-top:.5rem">仮定：\(\omega<1\)かつ\(\tau_y>0\)。財政ルール(Eq.6)または(Eq.7)のもとで：</p>
+  <ol style="margin:.5rem 0 .5rem 1.5rem">
+    <li><strong>単調性：</strong>\(\nu\)は財政調整の遅延に関して単調増加。すなわち\(\nu\)は\(\tau_d\)の減少関数（Eq.6）かつ\(H\)の増加関数（Eq.7）。</li>
+    <li><strong>極限：</strong>\(\tau_d\to0\)または\(H\to\infty\)のとき\(\nu\to1\)（完全自己ファイナンス）かつ\(\lim_{k\to\infty}E_t[d_{t+k}]\to0\)（債務は定常状態に収束）。</li>
+  </ol>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2);margin-top:1rem">定理1の証明の直観</h4>
+<div class="eq-block">
+  \[
+    \nu^{full} = \lim_{\tau_d\to0}\nu = 1\iff\lim_{\tau_d\to0}\frac{\chi}{1-\beta\rho_d} = \frac{1}{\tau_y}
+    \implies \text{累積乗数} = \frac{\sum\beta^k E_0[y_k]}{\varepsilon_0}\to\frac{1}{\tau_y}
+  \]
+  <span class="eq-label">Eq.19</span>
+</div>
+<div class="commentary"><span class="commentary-label">なぜ累積乗数は\(1/\tau_y\)なのか</span><span class="commentary-body">静的な2期モデルで直観が得られる（§18参照）。累積MPC→1のとき、ケインジアン乗数→\(1/(1-(1-\tau_y)\cdot1)=1/\tau_y\)。すると税収増の現在価値は\(\tau_y\times(1/\tau_y)\times\varepsilon_0=\varepsilon_0\)となり初期赤字をちょうど埋める＝完全自己ファイナンス。</span></div>
+
+<div class="alert-warn alert" style="margin-top:.75rem"><strong>Ricardian等価との対比：</strong>\(\omega=1\)では\(F_1=0\)より財政赤字は需要を刺激せず、\(\nu=0\)（自己ファイナンスなし）。定理1の成立には\(\omega<1\)によるRicardian等価の崩壊が不可欠。</div>
+</div>
+
+<!-- ===== §17 ===== -->
+<div class="section" id="s17">
+<div class="section-header">
+  <span class="section-num">§17</span>
+  <span class="section-title">2チャンネルの分解（命題2）<span class="badge b-new">ALW新規</span></span>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2)">Eq.20 NKPCの傾き\(\kappa\)と2チャンネルの相互関係</h4>
+<div class="eq-block">
+  \[
+    \nu_y = \frac{\tau_y}{\kappa\frac{D^{ss}}{Y^{ss}}+\tau_y}\nu,\qquad \nu_p = \frac{\kappa\frac{D^{ss}}{Y^{ss}}}{\kappa\frac{D^{ss}}{Y^{ss}}+\tau_y}\nu
+  \]
+  <span class="eq-label">Eq.20（論文 Eq.24）</span>
+</div>
+
+<div class="two-col">
+  <div class="mini-card"><h5>\(\kappa=0\)（完全価格硬直）</h5><p>\(\nu=\nu_y\)：全て税基盤チャンネル。実物ブームが税収を増やすが、インフレはゼロなので債務侵食は発生しない。累積乗数→\(1/\tau_y\)。</p></div>
+  <div class="mini-card"><h5>\(\kappa\to\infty\)（完全伸縮価格）</h5><p>\(\nu=\nu_p\)：全て債務侵食チャンネル。実物ブームなしにインフレが債務を侵食。RBCモデルの帰結に近づく。</p></div>
+</div>
+
+<div class="alert-green alert" style="margin-top:.75rem"><strong>定量的含意：</strong>実証支持される平坦なNKPC（\(\kappa=0.01\)）と所得税率（\(\tau_y=0.33\）、\(D^{ss}/Y^{ss}=1.04\)）のもとでは、\(\nu_p/\nu = 0.01\times1.04/(0.33+0.01\times1.04)\approx3\%\)。つまり<strong>自己ファイナンスの97%は税基盤チャンネル</strong>で、インフレ侵食はごくわずか。FTPLの主張とは対照的に、インフレではなく実質ブームが主要経路。</div>
+</div>
+
+<!-- ===== §18 ===== -->
+<div class="section" id="s18">
+<div class="section-header">
+  <span class="section-num">§18</span>
+  <span class="section-title">自己ファイナンスの経済学的直観<span class="badge b-new">ALW新規</span></span>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2)">Eq.21 静的2期モデルによる直観（MPC→1のとき完全自己ファイナンス）</h4>
+<div class="eq-block">
+  \[
+    y_0 = \frac{MPC}{1-MPC(1-\tau_y)}\cdot\varepsilon,\qquad
+    \nu \equiv \frac{\tau_y\cdot y_0}{\varepsilon} = \frac{\tau_y\cdot MPC}{1-MPC(1-\tau_y)}
+    \xrightarrow{MPC\to1} 1
+  \]
+  <span class="eq-label">Eq.21（論文 Eq.25・27）</span>
+</div>
+
+<div class="two-col">
+  <div class="mini-card"><h5>「割引」性質（Discounting）</h5><p>\(\omega<1\)のもとで将来の増税（税ヒケ）が現在消費に与える影響は逓減する。H期が十分遠ければ、date-H増税はdate-0消費にほぼ影響しない。→date-0消費は将来増税に独立（静的モデルの「近視的」行動に対応）。</p></div>
+  <div class="mini-card"><h5>「前倒し」性質（Front-loading）</h5><p>\(\omega<1\)のもとで家計は所得を早めに消費する（恒久所得仮説からの乖離）。財政調整がH期に先送りされるほど、初期の累積MPCが1に近づく。→ケインジアン乗数→\(1/\tau_y\)→\(\nu\to1\)。</p></div>
+</div>
+
+<div class="highlight-box" style="margin-top:1rem">
+  <h4>限界OLG（\(\omega\to1\)）との「極限の順序」問題</h4>
+  <p>任意の\(\omega<1\)でも\(H\to\infty\)（または\(\tau_d\to0\)）なら\(\nu\to1\)（完全自己ファイナンス）。しかし任意の有限Hでも\(\omega\to1\)なら\(\nu\to0\)（自己ファイナンスなし）。<strong>「有限財政遅延×\(\omega\to1\)」では自己ファイナンスが消滅</strong>することに注意。実証的意味：消費者が恒久所得仮説（PIH）に近いほど、財政調整をより長く遅らせないと自己ファイナンスが働かない。</p>
+</div>
+</div>
+
+<!-- ===== §19 ===== -->
+<div class="section" id="s19">
+<div class="section-header">
+  <span class="section-num">§19</span>
+  <span class="section-title">拡張（金融政策・一般需要構造・投資）<span class="badge b-new">ALW新規</span></span>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2)">定理2 金融政策と自己ファイナンスの限界</h4>
+<div class="eq-block">
+  \[
+    \bar\phi \equiv \frac{(1-\beta\omega)(1-\omega)\tau_y/\omega}{\sigma(1-\beta) + (1-\beta\omega)(1-\omega)\beta\frac{D^{ss}}{Y^{ss}}}
+    \qquad
+    \begin{cases}\phi_{mon} < \bar\phi \implies \nu\to1\text{ は達成可能}\\
+    \phi_{mon} > \bar\phi \implies \nu < \bar\nu(\phi_{mon}) < 1\text{（完全自己ファイナンス不可）}\end{cases}
+  \]
+  <span class="eq-label">Eq.22（論文 Theorem 2）</span>
+</div>
+<div class="commentary"><span class="commentary-label">カットオフ\(\bar\phi\)の意味</span><span class="commentary-body">タカ派金融政策が\(\bar\phi\)を超えると、金利引上げが実質債務コストを増大させ、ケインジアン・ブームが常に十分に早く収束しなくなる。定量的には緩やかなTaylor型反応（\(\psi=1.0\)または\(\psi=1.25\)）では\(\bar\phi\)を超えず、完全自己ファイナンスが可能。</span></div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2);margin-top:1.25rem">定理3 一般化需要構造への拡張</h4>
+<div class="eq-block">
+  \[c_t = M_d\cdot d_t + M_y\!\left((y_t-t_t)+\delta\cdot E_t\!\left[\sum_{k=1}^\infty(\beta\omega)^k(y_{t+k}-t_{t+k})\right]\right)\]
+  <span class="eq-label">Eq.23（論文 Eq.30）</span>
+</div>
+<div class="alert" style="margin-top:.5rem">一般化需要構造が2つの仮定（Assumption 1：幾何的割引 \(\omega<1\)、Assumption 2：十分な前倒し）を満たせば定理1の結果（\(\nu\to1\)）が成立。HANK・行動経済学・不完全情報の各モデルがこの枠組みに入る。</div>
+
+<div class="two-col" style="margin-top:.75rem">
+  <div class="mini-card"><h5>PIH家計が存在すると\(\nu=0\)</h5><p>PIH消費者（\(\omega=1, M_y=M_d=1-\beta\)）が1人でも存在すると「消費の将来への繰り延べ」が完全に相殺し、現在価値でみた産出ブームがゼロに。自己ファイナンスが消滅する（不連続性）。</p></div>
+  <div class="mini-card"><h5>HANK・行動モデルの互換性</h5><p>Auclert et al. (2023) / Wolf (2021) のHANKモデルでも、iMPC（異時点間限界消費性向行列）がOLG-スペンダー複合モデルとほぼ一致することが確認されており、定量結果は本質的に変わらない。</p></div>
+</div>
+</div>
+
+<!-- ===== §20 ===== -->
+<div class="section" id="s20">
+<div class="section-header">
+  <span class="section-num">§20</span>
+  <span class="section-title">定量分析<span class="badge b-new">ALW新規</span></span>
+</div>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2)">較正パラメーター（スペンダー-OLGハイブリッドモデル）</h4>
+<table class="var-table">
+  <tr><th>パラメーター</th><th>説明</th><th>値</th><th>ターゲット</th></tr>
+  <tr><td>\(\mu\)</td><td>ハンド・トゥ・マス（HtM）家計の割合</td><td>0.073</td><td>平均MPC = 0.2</td></tr>
+  <tr><td>\(\omega\)</td><td>OLG生存確率</td><td>0.865</td><td>短期MPCスロープ（Fagereng et al. 2021）</td></tr>
+  <tr><td>\(\tau_d\)</td><td>財政調整速度（3ケース）</td><td>0.085 / 0.026 / 0.004</td><td>Galí et al. 2007; Bianchi-Melosi 2017; Auclert-Rognlie 2020</td></tr>
+  <tr><td>\(\kappa\)</td><td>NKPCの傾き</td><td>0.01（基本）; 0.10（感度分析）</td><td>実証推定値（Hazell et al. 2022）</td></tr>
+  <tr><td>\(\tau_y\)</td><td>所得税率</td><td>0.33</td><td>平均労働税率</td></tr>
+  <tr><td>\(D^{ss}/Y^{ss}\)</td><td>政府債務/GDP</td><td>1.04</td><td>流動資産保有量</td></tr>
+</table>
+
+<h4 style="margin-bottom:.5rem;color:var(--text2);margin-top:1rem">主要定量結果</h4>
+<div class="two-col">
+  <div class="mini-card"><h5>ベースライン（\(\phi_{mon}=0, \kappa=0.01\)）</h5><p>財政調整\(\tau_d=0.004\)（最も遅い場合）で\(\nu\approx0.95\)（95%自己ファイナンス）。\(\tau_d=0.026\)でも\(\nu\approx0.8\)。ほぼ全てが税基盤チャンネル（\(\kappa\)が平坦なため）。</p></div>
+  <div class="mini-card"><h5>より伸縮的な価格（\(\kappa=0.10\)）</h5><p>\(\nu_p/\nu\approx20\%\)（債務侵食チャンネルが20%）に増加。しかし\(\nu\)の水準はほぼ不変（約0.9〜0.95）。2チャンネルの分配が変わるだけで総計の自己ファイナンス度は強固。</p></div>
+</div>
+<div class="two-col" style="margin-top:.75rem">
+  <div class="mini-card"><h5>積極的Taylor型金融政策（\(\psi=1.25\)）</h5><p>\(\nu^{max}\approx0.72\)（完全自己ファイナンス不可能だが依然として高い）。\(\psi=1.5\)では\(\nu^{max}\approx0.13\)に急低下→タカ派金融政策が自己ファイナンスを強く制限。</p></div>
+  <div class="mini-card"><h5>財政乗数との整合性</h5><p>Ramey (2011) 等の実証証拠（数年以内に増税で財政調整した場合の累積乗数≈1）と整合。\(\tau_d=0.085\)（速い調整）での累積乗数≈1.11。転送乗数についてはBouscasse-Hong (2023) の完全自己ファイナンス証拠とも整合。</p></div>
+</div>
+</div>
+
+<!-- ===== §21 比較表 ===== -->
+<hr>
+<div class="section" id="s21">
+<div class="section-header">
+  <span class="section-num">§21</span>
+  <span class="section-title">RBC・NK（v4）・ALW（2024）比較表</span>
+</div>
+
+<h3 style="margin-bottom:.75rem;color:var(--text2);font-size:1rem">A. 共通概念・前提</h3>
+<table class="comp-table">
+  <tr>
+    <th style="width:22%">論点</th>
+    <th class="col-rbc" style="width:26%">RBC（政府部門込み）</th>
+    <th class="col-nk" style="width:26%">NK v4</th>
+    <th class="col-alw" style="width:26%">ALW（OLG-NK）</th>
+  </tr>
+  <tr><td>効用関数の形式</td><td>CRRA消費＋労働不効用 (\(U=\sum\beta^t[\cdots]\))</td><td>同上（\(\omega=1\)）</td><td>同上ただし割引率\(\beta\omega\)（OLG）</td></tr>
+  <tr><td>コブ＝ダグラス生産関数</td><td><span class="check">✓</span> \(Y_t=A_tK_t^\alpha L_t^{1-\alpha}\)</td><td><span class="check">✓</span>（v2以降）</td><td>線形生産（\(\alpha=0\)ベースライン）、拡張版でCDS</td></tr>
+  <tr><td>政府フロー予算制約</td><td><span class="check">✓</span> \(b_{t+1}=R_tb_t+G_t-\tau_t\)</td><td><span class="check">✓</span>（名目版）</td><td><span class="check">✓</span>（名目版、Eq.5）</td></tr>
+  <tr><td>ノンポンジ条件（政府）</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+  <tr><td>市場清算（財市場）</td><td>\(Y_t=C_t+I_t+G_t\)</td><td>同上</td><td>\(Y_t=C_t\)（ベースライン）</td></tr>
+  <tr><td>TFP確率過程 AR(1)</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+  <tr><td>定常インフレ\(\pi^*=0\)</td><td>実物モデルなので不要</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+  <tr><td>修正黄金律（\(R^{ss}=1/\beta\)）</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span>（社会基金で保証）</td></tr>
+</table>
+
+<h3 style="margin-bottom:.75rem;color:var(--text2);font-size:1rem;margin-top:1.5rem">B. 拡張・修正された概念・前提</h3>
+<table class="comp-table">
+  <tr>
+    <th style="width:22%">論点</th>
+    <th class="col-rbc" style="width:26%">RBC</th>
+    <th class="col-nk" style="width:26%">NK v4</th>
+    <th class="col-alw" style="width:26%">ALW（OLG-NK）</th>
+  </tr>
+  <tr><td>家計の生存確率</td><td>\(\omega=1\)（無限生存・暗黙）</td><td>\(\omega=1\)（無限生存・暗黙）</td><td><strong>\(\omega\in(0,1]\)</strong>。OLG構造（永続的若者モデル）</td></tr>
+  <tr><td>名目硬直性</td><td><span class="cross">✗</span> 完全伸縮価格</td><td><span class="check">✓</span> カルボ型（\(\kappa>0\)）</td><td><span class="check">✓</span> カルボ型（\(\kappa\geq0\)）。\(\kappa=0\)の極端ケースも重要</td></tr>
+  <tr><td>リカード等価</td><td><span class="check">✓</span> 成立（一括税・代表的家計）</td><td><span class="check">✓</span> 成立（代表的家計・完全市場）</td><td><strong><span class="cross">✗</span> 崩壊</strong>（\(\omega<1\)による有限地平線）</td></tr>
+  <tr><td>財政ルールの設計</td><td>外生的\(G_t,\tau_t\)（AR(1)）</td><td>パッシブ財政ルール（Leeper 1991型）</td><td><strong>税基盤自動安定化（\(\tau_y\)）＋調整速度（\(\tau_d\)）</strong>の明示的分離</td></tr>
+  <tr><td>金融政策のモデル化</td><td>なし（実物モデル）</td><td>テイラー・ルール（\(\delta_\pi>1\)）</td><td><strong>実質金利ルール（\(r_t=\phi_{mon}y_t\)）</strong>。\(\phi_{mon}=0\)ベースライン</td></tr>
+  <tr><td>均衡の決定性条件</td><td>鞍点安定（資本動学）</td><td>テイラー原理（\(\delta_\pi>1\)）必要</td><td><strong>\(\omega<1\)かつ\(\tau_y>0\)で自動的に一意均衡</strong>（テイラー原理不要）</td></tr>
+  <tr><td>消費の異時点間代替</td><td>恒久所得仮説（PIH）</td><td>PIH（代表的家計）</td><td><strong>高MPC・前倒し消費</strong>（PIHからの乖離が自己ファイナンスの鍵）</td></tr>
+  <tr><td>政府債務の実質価値変動</td><td>実質モデルなので名目侵食なし</td><td>NK v4 §4でインフレ税として分析</td><td>債務侵食が\(\nu_p\)として自己ファイナンスに寄与（\(\propto\kappa\)）</td></tr>
+</table>
+
+<h3 style="margin-bottom:.75rem;color:var(--text2);font-size:1rem;margin-top:1.5rem">C. ALW論文の新概念・前提</h3>
+<table class="comp-table">
+  <tr>
+    <th style="width:22%">概念</th>
+    <th style="width:52%">内容</th>
+    <th style="width:26%">RBC/NKへの影響</th>
+  </tr>
+  <tr><td>自己ファイナンス度 \(\nu\)</td><td>初期赤字のうち将来増税なしに（税基盤拡大＋インフレ侵食で）賄われる割合。\(\nu=1\)が完全自己ファイナンス</td><td>RBC:\(\nu=0\)常に。NK（代表的家計）:\(\nu=0\)常に</td></tr>
+  <tr><td>税基盤チャンネル \(\nu_y\)</td><td>ケインジアン・ブームによる税収自動増加。DeLong-Summers (2012) の高水準算術の正式化</td><td>RBC/NK（代表的家計）では不活性</td></tr>
+  <tr><td>債務侵食チャンネル \(\nu_p\)</td><td>サプライズインフレによる名目債務実質価値の削減。FTPLとは異なり「均衡選択」でなく需要主導ブームの副産物</td><td>RBC:名目債務なし。NK v4では理論上可能だが分析されていない</td></tr>
+  <tr><td>「割引」性質</td><td>\(\omega<1\)のもとで遠い将来の税増税が現在消費に与える影響が逓減・消滅</td><td>PIH(\(\omega=1\))では逓減しない→自己ファイナンスなし</td></tr>
+  <tr><td>「前倒し」性質</td><td>\(\omega<1\)のもとで所得増加が消費に素早く反映→累積MPCが1に速く収束</td><td>PIH(\(\omega=1\))では消費平滑化→累積MPCが1に収束しない</td></tr>
+  <tr><td>異時点間ケインジアン・クロス</td><td>将来所得期待の上昇が現在消費を増加させる動的フィードバックループ（\(F_2\)で測定）</td><td>RBC/NK(\(\omega=1\))では財政変数が需要方程式から消える</td></tr>
+  <tr><td>OLGの社会基金</td><td>異世代コホートの定常消費を均等化し、モデルの定常状態を\(\omega\)に依存しないようにする技術的装置</td><td>比較なし（ALW固有）</td></tr>
+</table>
+
+<h3 style="margin-bottom:.75rem;color:var(--text2);font-size:1rem;margin-top:1.5rem">D. 金融政策・財政政策の結論の相違点</h3>
+<table class="comp-table">
+  <tr>
+    <th style="width:22%">論点</th>
+    <th class="col-rbc" style="width:26%">RBC</th>
+    <th class="col-nk" style="width:26%">NK v4（代表的家計）</th>
+    <th class="col-alw" style="width:26%">ALW（OLG-NK）</th>
+  </tr>
+  <tr><td>財政赤字の需要効果</td><td><span class="cross">✗</span> 中立（リカード等価）</td><td><span class="cross">✗</span> 中立（リカード等価）</td><td><span class="check">✓</span> <strong>需要刺激効果あり</strong>（\(\omega<1\)による）</td></tr>
+  <tr><td>財政乗数</td><td>\(G_t\)のクラウドアウト：乗数\(<1\)</td><td>テイラー原理下では\(<1\)、ZLBでは\(>1\)</td><td>累積財政乗数→\(1/\tau_y\)（完全自己ファイナンス極限）</td></tr>
+  <tr><td>財政余力の財源</td><td>将来の増税のみ（IGBC充足）</td><td>将来の増税＋シニョレッジ（NK v4）</td><td><strong>将来増税＋税基盤拡大（\(\nu_y\)）＋インフレ侵食（\(\nu_p\)）</strong></td></tr>
+  <tr><td>金融緩和の財政への波及</td><td>なし（実物モデル）</td><td>低実質金利→政府借入コスト低下</td><td><strong>低実質金利→家計支出前倒し→ケインジアン乗数増大→\(\nu\uparrow\)</strong></td></tr>
+  <tr><td>金融引締の財政への波及</td><td>なし</td><td>高実質金利→政府借入コスト増大（debt service）</td><td><strong>高実質金利→消費後ずれ→ケインジアン乗数減少→\(\nu\downarrow\)</strong>（定理2）</td></tr>
+  <tr><td>インフレ税・シニョレッジ</td><td>なし（実物）</td><td>NK v4 §5：シニョレッジ\(\omega_t=\bar{i}m_{t-1}+\cdots\)</td><td>インフレ侵食は\(\nu_p\)として計上。現実には\(\nu_p\ll\nu_y\)（平坦NKPC）</td></tr>
+  <tr><td>r<g ルール（Blanchard型）</td><td>RBCでは\(r>g\)が修正黄金律で保証</td><td>\(R^{ss}=1/\beta>1\)（\(r>g\)仮定）</td><td><strong>\(r>g\)なしでも自己ファイナンス可能</strong>（需要ブーム経由）</td></tr>
+  <tr><td>FTPLとの関係</td><td>なし（実物）</td><td>アクティブ財政＋パッシブ金融→FTPL的（NK v4 §6）</td><td><strong>パッシブ財政（Ricardian）でも自己ファイナンス成立</strong>。FTPLの均衡選択機構不要</td></tr>
+</table>
+
+<h3 style="margin-bottom:.75rem;color:var(--text2);font-size:1rem;margin-top:1.5rem">E. 財政余力の結論の相違点</h3>
+<table class="comp-table">
+  <tr>
+    <th style="width:22%">論点</th>
+    <th class="col-rbc" style="width:26%">RBC</th>
+    <th class="col-nk" style="width:26%">NK v4</th>
+    <th class="col-alw" style="width:26%">ALW（OLG-NK）</th>
+  </tr>
+  <tr><td>財政余力の主要指標</td><td>IGBC充足＋ノンポンジ条件（将来プライマリー黒字の割引現在価値≥現在債務）</td><td>NK v4 §12：\(\hat{b}_t\)=将来プライマリー収支・シニョレッジの現在価値（状態空間で追跡）</td><td><strong>\(\nu\)（自己ファイナンス度）＝「増税なしに賄える割合」</strong>が中心指標</td></tr>
+  <tr><td>赤字ファイナンスの必要条件</td><td>将来の増税/歳出削減が必要（IGBC）</td><td>同上＋テイラー原理による均衡安定化</td><td><strong>\(\omega<1\)かつ\(\tau_y>0\)かつ\(\phi_{mon}<\bar\phi\)で、増税なしに赤字が自己ファイナンス可能</strong></td></tr>
+  <tr><td>財政調整の遅延効果</td><td>遅延するほど将来の調整額が利子分だけ増大（IGBC）</td><td>遅延すると不決定問題リスク（テイラー原理依存）</td><td><strong>遅延するほど自己ファイナンス度が上昇し、極限で100%に達する</strong>（定理1）</td></tr>
+  <tr><td>政府債務の持続可能性</td><td>プライマリー黒字で利払費を賄う必要</td><td>同上＋テイラー原理による物価安定</td><td><strong>需要ブームによる税収増で債務が内生的に定常状態へ収束</strong>（\(\rho_d\in(0,1)\)）</td></tr>
+  <tr><td>\(r<g\)の財政余力</td><td>\(r<g\)のポンジゲームは禁止（ノンポンジ）</td><td>同上（NK v4）</td><td><strong>\(r>g\)を前提しつつも、需要効果による代替的ファイナンス経路を示す</strong></td></tr>
+  <tr><td>「給付金」施策（stimulus check）</td><td>リカード等価→効果なし</td><td>リカード等価→効果なし（代表的家計）</td><td><strong>大部分が自己ファイナンス可能（\(\nu\approx0.8\sim0.95\)）。財政コストは従来の想定より大幅に小さい</strong></td></tr>
+</table>
+
+<div class="alert-green alert" style="margin-top:1.5rem">
+  <strong>論文の結論（要約）：</strong>名目硬直性とリカード等価の崩壊（有限地平線または流動性制約）がある経済では、財政赤字は①実質ブームによる税基盤拡大と②インフレによる名目債務侵食という2チャンネルを通じて自分自身をファイナンスできる。財政調整を遅らせるほどその度合いが増し、無限遅延の極限では完全自己ファイナンスが成立する。定量的には、実証的なMPC・財政調整速度・NKPCの傾き・金融政策反応を条件とすると、「給付金」型の赤字ショックは大部分が自己ファイナンスされ、主にインフレではなく実質税基盤拡大を通じて実現される（コロナ後の財政刺激に対する実証的含意）。
+</div>
+</div>
+
+<p style="margin-top:3rem;font-size:.8rem;color:var(--text3);border-top:1px solid var(--border);padding-top:1rem">
+  Angeletos, G.-M., Lian, C., &amp; Wolf, C.K. (2024). "Can Deficits Finance Themselves?" NBER Working Paper No.31185 (Revised February 2024).
+  本ガイド v1 は論文の nk_model_guide_v4 §0–§14 準拠フォーマット整理＋§15–§21 論文固有論点追加。
+</p>
+</body>
+</html>
