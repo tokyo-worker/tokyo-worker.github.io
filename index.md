@@ -1,12 +1,12 @@
 ---
 layout: home
 author_profile: false
-title: "Macro Economics Notes"
+title: 
 ---
 
 # Macro Economics Notes
 
-RBC・DSGE・FTPL・Asset Pricing を中心とした研究ノートです。
+マクロ経済学を中心とした自分用の勉強ノートや素朴な疑問です。
 
 - Real Business Cycle
 - New Keynesian Economics
@@ -44,11 +44,11 @@ RBC・DSGE・FTPL・Asset Pricing を中心とした研究ノートです。
 
 # About
 
-このサイトでは、
+このサイトは、マクロ経済学を中心とした自分用の勉強ノートや素朴な疑問の備忘録的です。
 
-- マクロ経済学
-- DSGE
-- 財政理論
-- 資産価格理論
-
-について整理しています。
+- Real Business Cycle
+- New Keynesian Economics
+- Fiscal Theory of the Price Level
+- Government Debt
+- Sovereign Risk
+- Martingale Pricing
