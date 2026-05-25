@@ -1,17 +1,8 @@
----
-title: "Mermaid Test"
-date: 2026-05-24
-layout: single
-toc: true
----
-
-# RBCモデルのフロー
-
 <pre class="mermaid">
 graph TD
-A[Household] --> B[Labor]
-B --> C[Firm]
-C --> D[Production]
-D --> E[Income]
+A["家計"] --> B["労働供給"]
+B --> C["企業"]
+C --> D["生産"]
+D --> E["所得"]
 E --> A
 </pre>
