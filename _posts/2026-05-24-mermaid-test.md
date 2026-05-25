@@ -7,11 +7,11 @@ toc: true
 
 # RBCモデルのフロー
 
-<div class="mermaid">
+<pre class="mermaid">
 graph TD
 A[Household] --> B[Labor]
 B --> C[Firm]
 C --> D[Production]
 D --> E[Income]
 E --> A
-</div>
+</pre>
