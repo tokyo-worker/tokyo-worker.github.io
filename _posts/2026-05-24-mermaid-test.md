@@ -7,7 +7,8 @@ toc: true
 
 # RBCモデルのフロー
 
-```mermaid
+<div class="mermaid">
+
 graph TD
 
 A[家計]
@@ -29,4 +30,5 @@ T --> A
 G --> Bond[国債]
 
 Bond --> A
-```
+
+</div>
