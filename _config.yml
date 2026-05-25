@@ -27,11 +27,9 @@ permalink: /:title/
 
 minimal_mistakes_skin: default
 
-header_pages:
-<!--
-  - archive.md
-  - about.md
--->
+# header_pages:
+#  - archive.md
+#  - about.md
 
 defaults:
   -
