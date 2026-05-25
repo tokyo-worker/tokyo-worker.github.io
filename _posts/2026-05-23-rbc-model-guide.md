@@ -1,13 +1,18 @@
 ---
 title: "政府部門入りRBCモデル完全解説"
 date: 2026-05-23
+
 categories:
   - macroeconomics
   - rbc
+
 tags:
   - DSGE
-  - Fiscal Theory
+  - FTPL
+  - Government Debt
+
 toc: true
+layout: single
 ---
 
 <link rel="stylesheet"
