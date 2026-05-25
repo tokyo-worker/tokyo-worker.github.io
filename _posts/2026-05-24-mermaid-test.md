@@ -9,13 +9,9 @@ toc: true
 
 <div class="mermaid">
 graph TD
-A[家計] --> B[労働供給]
-B --> C[企業]
-C --> D[生産]
-D --> E[所得]
+A[Household] --> B[Labor]
+B --> C[Firm]
+C --> D[Production]
+D --> E[Income]
 E --> A
-G[政府] --> T[租税]
-T --> A
-G --> Bond[国債]
-Bond --> A
 </div>
