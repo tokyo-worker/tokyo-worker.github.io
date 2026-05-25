@@ -20,20 +20,19 @@ kramdown:
   input: GFM
   math_engine: mathjax
   syntax_highlighter: rouge
-
   parse_block_html: true
-  
+
 permalink: /:title/
 
 minimal_mistakes_skin: default
 
-header_pages:
-  - archive.md
-  - about.md
+# header_pagesをコメントアウトして無効化しました
+# header_pages:
+#   - archive.md
+#   - about.md
 
 defaults:
-  -
-    scope:
+  - scope:
       path: ""
       type: posts
     values:
