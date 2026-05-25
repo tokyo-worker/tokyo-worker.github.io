@@ -1,5 +1,12 @@
 ---
-title: "政府部門入りRBCモデル ステップバイステップ完全解説"
+layout: single
+title: 
+title_hidden: true    <-- これを追記します
+sidebar:
+  nav: false
+---
+---
+title: "政府部門入りRBCモデル ガイド"
 date: 2026-05-21
 categories:
   - macroeconomics
@@ -12,7 +19,7 @@ toc: true
 layout: single
 ---
 
-# 政府部門入りRBCモデル ステップバイステップ完全解説
+# 政府部門入りRBCモデル ガイド
 
 ## 1. モデルの概要
 
