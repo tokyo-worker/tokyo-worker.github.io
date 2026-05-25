@@ -14,5 +14,8 @@ main:
   - title: "Bibliography"
     url: /bibliography/
 
+  - title: "Search"
+    url: /search/
+
   - title: "About"
     url: /about/
