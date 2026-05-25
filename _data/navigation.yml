@@ -1,7 +1,7 @@
 main:
   - title: "Home"
     url: /
-
+<!--
   - title: "Archive"
     url: /archive/
 
@@ -19,3 +19,4 @@ main:
 
   - title: "About"
     url: /about/
+-->
