@@ -6,17 +6,14 @@ title: "Macro Economics Notes"
 
 # Macro Economics Notes
 
-マクロ経済学・資産価格理論・財政理論に関する研究ノート。
+RBC・DSGE・FTPL・Asset Pricing を中心とした研究ノートです。
 
-主なテーマ：
-
-- RBC
-- DSGE
-- Fiscal Theory of the Price Level (FTPL)
+- Real Business Cycle
+- New Keynesian Economics
+- Fiscal Theory of the Price Level
 - Government Debt
-- Asset Pricing
-- Martingale Pricing
 - Sovereign Risk
+- Martingale Pricing
 
 ---
 
@@ -26,17 +23,32 @@ title: "Macro Economics Notes"
 
 ## [{{ post.title }}]({{ post.url }})
 
-- 投稿日: {{ post.date | date: "%Y-%m-%d" }}
-
 {{ post.excerpt }}
 
 ---
 
 {% endfor %}
 
-# カテゴリ
+# Categories
 
-- [Categories](/categories/)
-- [Tags](/tags/)
-- [Archive](/archive/)
-- [About](/about/)
+- [Macroeconomics](/categories/#macroeconomics)
+- [RBC](/categories/#rbc)
+
+# Tags
+
+- [DSGE](/tags/#dsge)
+- [FTPL](/tags/#ftpl)
+- [Government Debt](/tags/#government-debt)
+
+---
+
+# About
+
+このサイトでは、
+
+- マクロ経済学
+- DSGE
+- 財政理論
+- 資産価格理論
+
+について整理しています。
