@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-md fixed-top navbar-light" id="navbar">
+  <div class="container">
+    <a class="navbar-brand" href="{{ '/' | relative_url }}">
+      <span class="font-weight-bold">{{ site.title }}</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+      aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav ml-auto">
+
+        <li class="nav-item">
+          <a class="nav-link{% if page.url == '/' %} active{% endif %}" href="{{ '/' | relative_url }}">
+            <i class="fas fa-home mr-1"></i> Home
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link{% if page.url == '/about/' %} active{% endif %}" href="{{ '/about/' | relative_url }}">
+            <i class="fas fa-user mr-1"></i> About
+          </a>
+        </li>
+
+        {% if site.show_rss %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ '/feed.xml' | relative_url }}" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-rss mr-1"></i> RSS
+          </a>
+        </li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </div>
+</nav>

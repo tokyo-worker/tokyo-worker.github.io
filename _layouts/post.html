@@ -1,0 +1,73 @@
+---
+layout: default
+---
+
+<!-- Post navigation breadcrumb -->
+<div class="post-nav-bar mb-4 pb-2 border-bottom">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-transparent p-0 mb-0">
+      <li class="breadcrumb-item">
+        <a href="{{ '/' | relative_url }}"><i class="fas fa-home mr-1"></i>Home</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">{{ page.title | truncate: 40 }}</li>
+    </ol>
+  </nav>
+</div>
+
+<!-- Post header -->
+<div class="post-header mb-5">
+  <div class="post-meta d-flex flex-wrap align-items-center mb-3">
+    <span class="post-date mr-3">
+      <i class="far fa-calendar-alt mr-1"></i>
+      {{ page.date | date: "%Y年%m月%d日" }}
+    </span>
+    {% if page.categories %}
+      {% for cat in page.categories %}
+      <span class="badge badge-primary-custom mr-1">{{ cat }}</span>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  {% if page.tags %}
+  <div class="post-tags mt-2">
+    {% for tag in page.tags %}
+    <span class="tag-badge">#{{ tag }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+<!-- KaTeX CSS (if needed by post) -->
+{% if page.math_scripts %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+{% endif %}
+
+<!-- Post content (full HTML from the original post) -->
+<div class="post-content-wrapper">
+  {{ content }}
+</div>
+
+<!-- Post footer navigation -->
+<div class="post-footer mt-5 pt-4 border-top">
+  <div class="row">
+    <div class="col-6">
+      {% if page.previous %}
+      <a href="{{ page.previous.url | relative_url }}" class="btn btn-outline-secondary btn-sm">
+        <i class="fas fa-chevron-left mr-1"></i> {{ page.previous.title | truncate: 30 }}
+      </a>
+      {% endif %}
+    </div>
+    <div class="col-6 text-right">
+      {% if page.next %}
+      <a href="{{ page.next.url | relative_url }}" class="btn btn-outline-secondary btn-sm">
+        {{ page.next.title | truncate: 30 }} <i class="fas fa-chevron-right ml-1"></i>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="text-center mt-3">
+    <a href="{{ '/' | relative_url }}" class="btn btn-light btn-sm">
+      <i class="fas fa-list mr-1"></i> 記事一覧に戻る
+    </a>
+  </div>
+</div>

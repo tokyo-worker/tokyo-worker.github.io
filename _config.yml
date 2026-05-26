@@ -1,5 +1,7 @@
 title: "Random Thoughts on Economics from a Non‑Expert"
 description: "経済(学)について思う事をつぶやきます。"
+author: "tokyo-worker"
+show_rss: false
 
 url: "https://tokyo-worker.github.io"
 baseurl: ""
@@ -7,35 +9,49 @@ baseurl: ""
 lang: ja
 timezone: Asia/Tokyo
 
-remote_theme: "mmistakes/minimal-mistakes"
-
-plugins:
-  - jekyll-include-cache
-  - jekyll-feed
-  - jekyll-sitemap
-
+# Build settings
 markdown: kramdown
+highlighter: rouge
+permalink: /:year/:month/:day/:title/
 
 kramdown:
   input: GFM
-  math_engine: mathjax
   syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: "highlight"
+    span:
+      line_numbers: false
+    block:
+      line_numbers: false
+  math_engine: mathjax
   parse_block_html: true
 
-permalink: /:title/
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
 
-minimal_mistakes_skin: default
+# Sass
+sass:
+  style: compressed
 
-# header_pagesをコメントアウトして無効化しました
-# header_pages:
-#   - archive.md
-#   - about.md
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - README.md
+  - .github
 
+# Post defaults
 defaults:
   - scope:
       path: ""
       type: posts
     values:
-      layout: single
-      toc: true
-      toc_sticky: true
+      layout: post
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: default
