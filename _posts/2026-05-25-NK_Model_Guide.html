@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ニューケインジアン（NK）モデル 完全解説 v4</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0f1923; --ink2: #2a3a4a;
+  --paper: #f3f6f3; --paper2: #e6ede6; --ruled: #c8d4c8;
+  --accent: #1a4a2a; --accent2: #8b1a1a;
+  --gold: #7a9a1a; --green: #1a5c3a; --purple: #4a1a6c;
+  --orange: #8b4a00; --teal: #0a4a5a; --cb: #5a3a00;
+  --eq-bg: #edf2ed;
+  --mono: 'IBM Plex Mono', monospace;
+  --serif: 'Noto Serif JP', serif;
+  --sans: 'Noto Sans JP', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); background: var(--paper); color: var(--ink); line-height: 1.8; font-size: 14px; }
+
+header { background: var(--accent); color: #d0e8d8; padding: 3rem 2rem 2.5rem; position: relative; overflow: hidden; }
+header::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,255,255,.02) 40px,rgba(255,255,255,.02) 80px); }
+header .inner { position:relative; max-width:900px; margin:0 auto; }
+header .tag-line { font-family:var(--mono); font-size:.7rem; letter-spacing:.15em; color:#7ac89a; margin-bottom:.8rem; text-transform:uppercase; }
+header h1 { font-family:var(--serif); font-size:1.7rem; font-weight:600; line-height:1.4; margin-bottom:1rem; }
+header .subtitle { font-size:.85rem; color:#9ac8aa; line-height:1.6; }
+
+main { max-width:900px; margin:0 auto; padding:2rem 1.5rem 5rem; }
+
+/* v2 changelog banner */
+.changelog { display:flex; flex-wrap:wrap; gap:.5rem; background:var(--ink2); color:#c8dce8; font-family:var(--mono); font-size:.7rem; letter-spacing:.06em; padding:.75rem 1rem; margin-bottom:2rem; border-radius:2px; }
+.changelog .badge { background:var(--gold); color:#fff; padding:.1rem .45rem; border-radius:2px; }
+
+.toc { border:2px solid var(--ruled); background:white; border-radius:2px; padding:1.5rem; margin-bottom:2.5rem; }
+.toc-title { font-family:var(--serif); font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; border-bottom:1px solid var(--ruled); padding-bottom:.5rem; }
+.toc-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:.2rem 1.5rem; }
+.toc-item { display:flex; align-items:baseline; gap:.5rem; font-size:.85rem; color:var(--ink2); text-decoration:none; padding:.25rem 0; border-bottom:1px dotted transparent; transition:color .2s; }
+.toc-item:hover { color:var(--accent); border-bottom-color:var(--ruled); }
+.toc-item .toc-num { font-family:var(--mono); font-size:.7rem; color:var(--gold); flex-shrink:0; }
+
+.param-section { background:white; border:1px solid var(--ruled); margin-bottom:2.5rem; border-radius:2px; }
+.param-section-title { background:var(--ink2); color:#d4dce8; font-family:var(--mono); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; padding:.5rem 1rem; }
+
+.section { margin-bottom:3rem; }
+.section-header { display:flex; align-items:center; gap:.8rem; margin-bottom:1.5rem; padding-bottom:.6rem; border-bottom:2px solid var(--accent); }
+.section-num { font-family:var(--mono); font-size:.7rem; background:var(--accent); color:white; padding:.2rem .5rem; border-radius:2px; letter-spacing:.08em; }
+.section-title { font-family:var(--serif); font-size:1.1rem; font-weight:600; color:var(--accent); }
+
+.eq-card { background:white; border:1px solid var(--ruled); border-left:4px solid var(--accent); margin-bottom:1.5rem; border-radius:2px; }
+.eq-card.gov { border-left-color:var(--accent2); }
+.eq-card.firm { border-left-color:var(--green); }
+.eq-card.market { border-left-color:var(--gold); }
+.eq-card.foc { border-left-color:var(--purple); }
+.eq-card.ss { border-left-color:var(--orange); }
+.eq-card.system { border-left-color:var(--ink2); }
+.eq-card.nk { border-left-color:var(--teal); }
+.eq-card.cb { border-left-color:var(--cb); }
+
+.eq-head { display:flex; align-items:center; gap:.8rem; padding:.65rem 1rem; border-bottom:1px solid var(--ruled); background:var(--eq-bg); }
+.eq-num-badge { font-family:var(--mono); font-size:.75rem; font-weight:500; background:var(--accent); color:white; width:2rem; height:2rem; display:flex; align-items:center; justify-content:center; border-radius:2px; flex-shrink:0; }
+.eq-card.gov .eq-num-badge { background:var(--accent2); }
+.eq-card.firm .eq-num-badge { background:var(--green); }
+.eq-card.market .eq-num-badge { background:var(--gold); }
+.eq-card.foc .eq-num-badge { background:var(--purple); }
+.eq-card.ss .eq-num-badge { background:var(--orange); }
+.eq-card.system .eq-num-badge { background:var(--ink2); }
+.eq-card.nk .eq-num-badge { background:var(--teal); }
+.eq-card.cb .eq-num-badge { background:var(--cb); }
+
+.eq-head-title { font-weight:500; font-size:.9rem; color:var(--ink); flex:1; }
+.eq-ref { font-family:var(--mono); font-size:.68rem; color:#8090a0; background:var(--paper2); padding:.15rem .4rem; border-radius:2px; white-space:nowrap; }
+.eq-body { padding:1.2rem 1.2rem 1rem; }
+
+.formula-box { background:var(--paper); border:1px solid var(--ruled); padding:1rem 1.5rem; text-align:center; margin-bottom:1rem; overflow-x:auto; border-radius:2px; }
+
+.var-table { width:100%; border-collapse:collapse; font-size:.82rem; margin-bottom:1rem; }
+.var-table th { background:var(--paper2); padding:.4rem .7rem; text-align:left; border:1px solid var(--ruled); font-family:var(--mono); font-size:.72rem; letter-spacing:.05em; text-transform:uppercase; color:var(--ink2); font-weight:500; }
+.var-table td { padding:.45rem .7rem; border:1px solid var(--ruled); vertical-align:top; line-height:1.5; }
+.var-table tr:nth-child(even) td { background:#f6faf6; }
+
+.tag { display:inline-block; padding:.1rem .45rem; border-radius:2px; font-size:.68rem; font-family:var(--mono); font-weight:500; letter-spacing:.04em; color:white; margin:.1rem; white-space:nowrap; }
+.tag.exo { background:var(--green); } .tag.endo { background:var(--accent); }
+.tag.state { background:var(--purple); } .tag.jump { background:var(--accent2); }
+.tag.param { background:var(--orange); } .tag.nom { background:var(--teal); }
+.tag.cbt { background:var(--cb); }
+
+.info-grid { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; margin-top:.5rem; }
+@media(max-width:640px){ .info-grid { grid-template-columns:1fr; } .toc-grid { grid-template-columns:1fr; } header h1 { font-size:1.3rem; } }
+.info-block { background:var(--paper); border:1px solid var(--ruled); border-radius:2px; padding:.7rem .9rem; }
+.info-block.wide { grid-column:1/-1; }
+.info-label { font-family:var(--mono); font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); margin-bottom:.35rem; display:flex; align-items:center; gap:.3rem; }
+.info-label::before { content:'▸'; color:var(--gold); }
+.info-text { font-size:.84rem; color:var(--ink2); line-height:1.7; }
+
+.legend-strip { display:flex; flex-wrap:wrap; gap:.5rem; padding:1rem; background:var(--paper2); border:1px solid var(--ruled); margin-bottom:2rem; border-radius:2px; }
+.legend-strip .tag { font-size:.75rem; padding:.2rem .6rem; }
+
+.summary-box { background:var(--accent); color:#c8e4cc; border-radius:2px; padding:1.5rem; margin-top:1.5rem; }
+.summary-box h3 { font-family:var(--serif); font-size:1rem; color:white; margin-bottom:1rem; padding-bottom:.5rem; border-bottom:1px solid rgba(255,255,255,.2); }
+.summary-flow { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:.8rem; }
+.flow-item { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); padding:.8rem; border-radius:2px; }
+.flow-item .flow-label { font-family:var(--mono); font-size:.68rem; color:#9ad8aa; letter-spacing:.08em; margin-bottom:.3rem; }
+.flow-item .flow-desc { font-size:.82rem; color:#b8d8bc; }
+
+.katex { font-size:1em; } .formula-box .katex { font-size:1.05em; }
+
+.new-badge { display:inline-block; font-family:var(--mono); font-size:.62rem; background:var(--teal); color:white; padding:.08rem .35rem; border-radius:2px; margin-left:.4rem; vertical-align:middle; letter-spacing:.04em; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <div class="tag-line">マクロ経済学入門書 第2章 — v4（主要変数一覧の完全化・Eq.11表記統一・シニョレッジ分解精緻化）</div>
+    <h1>ニューケインジアン（NK）モデル<br>完全解説 v4</h1>
+    <div class="subtitle">
+      v1（標準3方程式）→ v2 拡張：① 資本蓄積（コブ＝ダグラス生産）、② 財政政策（政府BC・リカード等価・政府支出乗数）、③ 中央銀行予算制約（シニョレッジ・統合政府BC）
+    </div>
+  </div>
+</header>
+
+<main>
+
+
+<!-- TOC -->
+<nav class="toc">
+  <div class="toc-title">目次</div>
+  <div class="toc-grid">
+    <a class="toc-item" href="#s0"><span class="toc-num">§0</span> 変数・パラメーター凡例</a>
+    <a class="toc-item" href="#s1"><span class="toc-num">§1</span> 家計の最適化問題（資本・国債・税）</a>
+    <a class="toc-item" href="#s2"><span class="toc-num">§2</span> 企業の最適化問題（コブ＝ダグラス型）</a>
+    <a class="toc-item" href="#s3"><span class="toc-num">§3</span> カルボ型価格設定と実質限界費用</a>
+    <a class="toc-item" href="#s4"><span class="toc-num">§4</span> 政府部門（財政政策）</a>
+    <a class="toc-item" href="#s5"><span class="toc-num">§5</span> 中央銀行の予算制約式</a>
+    <a class="toc-item" href="#s6"><span class="toc-num">§6</span> 統合政府の予算制約</a>
+    <a class="toc-item" href="#s7"><span class="toc-num">§7</span> 市場清算条件</a>
+    <a class="toc-item" href="#s8"><span class="toc-num">§8</span> 一階条件の導出</a>
+    <a class="toc-item" href="#s9"><span class="toc-num">§9</span> 資本蓄積式・TFP・政府支出過程</a>
+    <a class="toc-item" href="#s10"><span class="toc-num">§10</span> 均衡方程式体系</a>
+    <a class="toc-item" href="#s11"><span class="toc-num">§11</span> 定常状態の計算</a>
+    <a class="toc-item" href="#s12"><span class="toc-num">§12</span> 対数線形近似と状態空間表現（全変数・財政余力）</a>
+    <a class="toc-item" href="#s13"><span class="toc-num">§13</span> 均衡の決定性（BK条件）</a>
+    <a class="toc-item" href="#s14"><span class="toc-num">§14</span> 金融政策の目標関数・ZLB</a>
+    <a class="toc-item" href="#changelog"><span class="toc-num">付記</span> バージョン変更履歴</a>
+  </div>
+</nav>
+
+<!-- §0 凡例 -->
+<div class="section" id="s0">
+  <div class="section-header">
+    <span class="section-num">§0</span>
+    <span class="section-title">変数分類の凡例とパラメーター一覧</span>
+  </div>
+
+  <div class="legend-strip">
+    <span class="tag exo">外生変数</span>
+    <span class="tag endo">内生変数</span>
+    <span class="tag state">状態変数（先決）</span>
+    <span class="tag jump">ジャンプ変数（非先決）</span>
+    <span class="tag param">パラメーター</span>
+    <span class="tag nom">名目変数</span>
+    <span class="tag cbt">中央銀行変数</span>
+  </div>
+
+  <div class="param-section">
+    <div class="param-section-title">深層パラメーター（v2追加分を含む）</div>
+    <table class="var-table">
+      <tr><th>記号</th><th>意味</th><th>典型値（四半期）</th><th>区分</th><th>RBC対応</th></tr>
+      <tr><td>\(\beta\)</td><td>時間割引因子</td><td>0.99</td><td><span class="tag param">パラメーター</span></td><td>同一</td></tr>
+      <tr><td>\(\sigma\)</td><td>相対的危険回避度（CRRA）。\(1/\sigma\)が異時点間代替弾力性</td><td>1〜2</td><td><span class="tag param">パラメーター</span></td><td>同一</td></tr>
+      <tr><td>\(\phi\)</td><td>フリッシュ弾力性の逆数（労働供給の賃金弾力性の逆数）</td><td>1〜5</td><td><span class="tag param">パラメーター</span></td><td>\(\gamma\)に相当</td></tr>
+      <tr><td>\(\chi\)</td><td>労働不効用のスケール・パラメーター</td><td>較正で決定</td><td><span class="tag param">パラメーター</span></td><td>同一</td></tr>
+      <tr><td>\(\alpha\)</td><td>コブ＝ダグラス生産関数の資本分配率 <span class="new-badge">v2追加</span></td><td>\(1/3\)</td><td><span class="tag param">パラメーター</span></td><td>RBC §0と同一</td></tr>
+      <tr><td>\(\delta\)</td><td>資本減耗率 <span class="new-badge">v2追加</span></td><td>0.025〜0.10</td><td><span class="tag param">パラメーター</span></td><td>RBC §0と同一</td></tr>
+      <tr><td>\(\varepsilon\)</td><td>差別化財間のCES代替弾力性</td><td>6〜11</td><td><span class="tag param">パラメーター</span></td><td>なし（NK固有）</td></tr>
+      <tr><td>\(\mu\)</td><td>カルボ・パラメーター（価格固定確率）</td><td>0.66〜0.75</td><td><span class="tag param">パラメーター</span></td><td>なし（NK固有）</td></tr>
+      <tr><td>\(\delta_\pi\)</td><td>テイラー・ルールのインフレ反応係数（\(\delta_\pi>1\)：テイラー原理）</td><td>1.5</td><td><span class="tag param">パラメーター</span></td><td>なし（NK固有）</td></tr>
+      <tr><td>\(\delta_x\)</td><td>テイラー・ルールのGDPギャップ反応係数</td><td>0.5</td><td><span class="tag param">パラメーター</span></td><td>なし（NK固有）</td></tr>
+      <tr><td>\(\rho_a\)</td><td>TFPのAR(1)係数</td><td>0.90〜0.99</td><td><span class="tag param">パラメーター</span></td><td>同一</td></tr>
+      <tr><td>\(\rho_g\)</td><td>政府支出のAR(1)係数 <span class="new-badge">v2追加</span></td><td>0.80〜0.95</td><td><span class="tag param">パラメーター</span></td><td>RBC §7と同一</td></tr>
+    </table>
+  </div>
+
+  <div class="param-section">
+    <div class="param-section-title">主要変数一覧（モデルで使用するすべての変数）</div>
+
+    <table class="var-table">
+      <tr><th colspan="3" style="background:var(--accent);color:white;font-size:.78rem;letter-spacing:.06em;">【家計・実物変数】</th></tr>
+      <tr><th>記号</th><th>意味</th><th>区分</th></tr>
+      <tr><td>\(C_t\)</td><td>実質消費（CES合成消費指数）</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+      <tr><td>\(H_t\)</td><td>労働時間（家計の労働供給量）</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+      <tr><td>\(K_t\)</td><td>t期首の資本ストック（前期末に蓄積された先決変数）</td><td><span class="tag endo">内生変数</span> <span class="tag state">状態変数</span></td></tr>
+      <tr><td>\(I_t\)</td><td>実質投資。資本蓄積：\(K_{t+1}=(1-\delta)K_t+I_t\)</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+      <tr><td>\(Y_t\)</td><td>実質総産出（財市場清算：\(Y_t=C_t+I_t+G_t\)）</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+      <tr><td>\(Y_t^n\)</td><td>自然産出水準——価格が完全伸縮的なときの均衡産出</td><td><span class="tag endo">内生変数</span></td></tr>
+      <tr><td>\(x_t = \hat{Y}_t - \hat{Y}_t^n\)</td><td>GDPギャップ（実際の産出と自然水準の乖離）。\(x_t>0\)：インフレ圧力</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+      <tr><td>\(a_t^{NK} = K_t + b_t\)</td><td>家計の総実質資産（資本＋実質国債）</td><td><span class="tag endo">内生変数</span></td></tr>
+      <tr><td>\(\lambda_t\)</td><td>家計最適化問題の名目シャドー・プライス（ラグランジュ乗数）。\(\lambda_t P_t = C_t^{-\sigma}\)</td><td><span class="tag endo">内生変数</span></td></tr>
+
+      <tr><th colspan="3" style="background:var(--accent);color:white;font-size:.78rem;letter-spacing:.06em;">【企業変数】</th></tr>
+      <tr><th>記号</th><th>意味</th><th>区分</th></tr>
+      <tr><td>\(Y_{j,t}\)</td><td>企業\(j\)の産出量。対称均衡では全企業同一</td><td><span class="tag endo">内生変数</span></td></tr>
+      <tr><td>\(K_{j,t}\)</td><td>企業\(j\)がレンタルする資本量。集計：\(\int_0^1 K_{j,t}\,dj = K_t\)</td><td><span class="tag endo">内生変数</span></td></tr>
+      <tr><td>\(l_{j,t}\)</td><td>企業\(j\)が雇用する労働量。集計：\(\int_0^1 l_{j,t}\,dj = H_t\)</td><td><span class="tag endo">内生変数</span></td></tr>
+      <tr><td>\(MC_t\)</td><td>名目限界費用（コブ＝ダグラス生産から導出）</td><td><span class="tag endo">内生変数</span> <span class="tag nom">名目変数</span></td></tr>
+      <tr><td>\(mc_t^r = MC_t/P_t\)</td><td>実質限界費用。対数線形化：\(\hat{mc}_t \approx (\sigma+\phi/(1-\alpha))x_t\)</td><td><span class="tag endo">内生変数</span></td></tr>
+      <tr><td>\(\Pi_t\)</td><td>企業からの名目利潤（独占的競争により\(\Pi_t>0\)）</td><td><span class="tag endo">内生変数</span> <span class="tag nom">名目変数</span></td></tr>
+      <tr><td>\(P_t^*\)</td><td>カルボ型価格改定企業の最適価格（各期確率\(1-\mu\)で更新）</td><td><span class="tag endo">内生変数</span> <span class="tag nom">名目変数</span></td></tr>
+
+      <tr><th colspan="3" style="background:var(--accent);color:white;font-size:.78rem;letter-spacing:.06em;">【価格・賃金・金利】</th></tr>
+      <tr><th>記号</th><th>意味</th><th>区分</th></tr>
+      <tr><td>\(P_t\)</td><td>物価水準（CES集計価格。カルボ型集計式で決まる）</td><td><span class="tag endo">内生変数</span> <span class="tag nom">名目変数</span></td></tr>
+      <tr><td>\(P_{j,t}\)</td><td>企業\(j\)の個別財価格</td><td><span class="tag endo">内生変数</span> <span class="tag nom">名目変数</span></td></tr>
+      <tr><td>\(\pi_t = (P_t-P_{t-1})/P_{t-1}\)</td><td>インフレ率（物価上昇率）。定常：\(\pi^*=0\)</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+      <tr><td>\(W_t\)</td><td>名目賃金率</td><td><span class="tag endo">内生変数</span> <span class="tag nom">名目変数</span></td></tr>
+      <tr><td>\(w_t = W_t/P_t\)</td><td>実質賃金率。労働市場均衡：\(w_t = (1-\alpha)Y_t/H_t\)</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+      <tr><td>\(r_t^k = R_t^k/P_t\)</td><td>実質資本レンタル料。資本市場均衡：\(r_t^k = \alpha Y_t/K_t\)</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+      <tr><td>\(R_t^k\)</td><td>名目資本レンタル料（\(R_t^k = P_t r_t^k\)）</td><td><span class="tag endo">内生変数</span> <span class="tag nom">名目変数</span></td></tr>
+      <tr><td>\(i_t\)</td><td>名目政策金利（テイラー・ルールで決定）。定常：\(\bar{i}=1/\beta-1\)</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span> <span class="tag nom">名目変数</span></td></tr>
+      <tr><td>\(\hat{i}_t \equiv i_t - \bar{i}\)</td><td>名目金利の定常からの乖離（対数線形化体系で使用）</td><td><span class="tag endo">内生変数</span></td></tr>
+      <tr><td>\(r_t^n\)</td><td>自然利子率——伸縮価格均衡での実質金利。\(r_t^n = \sigma E_t[\hat{Y}_{t+1}^n - \hat{Y}_t^n]\)</td><td><span class="tag endo">内生変数</span></td></tr>
+      <tr><td>\(R_t^B = (1+i_{t-1})/(1+\pi_t)\)</td><td>名目国債の事後実質グロスリターン（フィッシャー方程式による実質化）。定常：\(R^{B*}=1/\beta\)</td><td><span class="tag endo">内生変数</span></td></tr>
+
+      <tr><th colspan="3" style="background:var(--accent2);color:white;font-size:.78rem;letter-spacing:.06em;">【政府・財政変数】</th></tr>
+      <tr><th>記号</th><th>意味</th><th>区分</th></tr>
+      <tr><td>\(G_t\)</td><td>政府実質支出（外生的AR(1)過程：\(\hat{G}_{t+1}=\rho_g\hat{G}_t+\varepsilon_{t+1}^g\)）</td><td><span class="tag exo">外生変数</span> <span class="tag state">状態変数</span></td></tr>
+      <tr><td>\(\tau_t\)</td><td>実質一括税（政府の財源調達。外生）</td><td><span class="tag exo">外生変数</span></td></tr>
+      <tr><td>\(B_t\)</td><td>家計（民間）保有の名目国債残高（期末ストック）</td><td><span class="tag endo">内生変数</span> <span class="tag state">状態変数</span> <span class="tag nom">名目変数</span></td></tr>
+      <tr><td>\(b_t = B_t/P_t\)</td><td>実質国債残高（民間保有分。\(b_t\)は期末残高・先決変数）</td><td><span class="tag endo">内生変数</span> <span class="tag state">状態変数</span></td></tr>
+      <tr><td>\(\omega_t = \Omega_t/P_t\)</td><td>実質シニョレッジ（中央銀行から政府への実質利益移転）</td><td><span class="tag cbt">中央銀行変数</span></td></tr>
+
+      <tr><th colspan="3" style="background:var(--cb);color:white;font-size:.78rem;letter-spacing:.06em;">【中央銀行変数】</th></tr>
+      <tr><th>記号</th><th>意味</th><th>区分</th></tr>
+      <tr><td>\(B_t^{CB}\)</td><td>中央銀行保有の政府名目国債（資産サイド）。\(B_t^{CB}=M_t\)（CB BSの恒等式）</td><td><span class="tag cbt">中央銀行変数</span> <span class="tag nom">名目変数</span></td></tr>
+      <tr><td>\(M_t\)</td><td>名目ベースマネー（現金通貨＋準備預金。CBの名目負債）</td><td><span class="tag cbt">中央銀行変数</span> <span class="tag nom">名目変数</span></td></tr>
+      <tr><td>\(m_t = M_t/P_t\)</td><td>実質ベースマネー残高。定常：\(\bar{m}=\bar{\omega}/\bar{i}\)。キャッシュレス極限：\(m_t\to 0\)</td><td><span class="tag cbt">中央銀行変数</span> <span class="tag state">状態変数</span></td></tr>
+      <tr><td>\(\Omega_t = i_{t-1}M_{t-1}\)</td><td>中央銀行の名目利潤（シニョレッジ）——政府財政に移転。実質：\(\omega_t\approx i_{t-1}m_{t-1}\)</td><td><span class="tag cbt">中央銀行変数</span> <span class="tag nom">名目変数</span></td></tr>
+      <tr><td>\(\Delta B_t^{CB} = B_t^{CB}-B_{t-1}^{CB}\)</td><td>純公開市場操作（OMO）——国債の純購入額</td><td><span class="tag cbt">中央銀行変数</span> <span class="tag nom">名目変数</span></td></tr>
+      <tr><td>\(u_t\)</td><td>テイラー・ルールの金融政策ショック（外生）</td><td><span class="tag exo">外生変数</span></td></tr>
+
+      <tr><th colspan="3" style="background:var(--green);color:white;font-size:.78rem;letter-spacing:.06em;">【外生ショック・確率過程】</th></tr>
+      <tr><th>記号</th><th>意味</th><th>区分</th></tr>
+      <tr><td>\(A_t\)</td><td>TFP（全要素生産性。ヒックス中立型）。\(\hat{A}_{t+1}=\rho_a\hat{A}_t+\varepsilon_{t+1}^a\)</td><td><span class="tag exo">外生変数</span> <span class="tag state">状態変数</span></td></tr>
+      <tr><td>\(\varepsilon_t^a \sim iid\,N(0,\sigma_a^2)\)</td><td>TFPイノベーション（技術ショック）</td><td><span class="tag exo">外生変数</span></td></tr>
+      <tr><td>\(\varepsilon_t^g \sim iid\,N(0,\sigma_g^2)\)</td><td>政府支出イノベーション（財政ショック）</td><td><span class="tag exo">外生変数</span></td></tr>
+
+      <tr><th colspan="3" style="background:var(--gold);color:white;font-size:.78rem;letter-spacing:.06em;">【定常値シェア比率（対数線形化の係数として登場）】</th></tr>
+      <tr><th>記号</th><th>定義</th><th>用途</th></tr>
+      <tr><td>\(s_C = \bar{C}/\bar{Y}\)</td><td>定常消費シェア</td><td>財市場清算・DIS曲線の集計</td></tr>
+      <tr><td>\(s_I = \delta\bar{K}/\bar{Y}\)</td><td>定常投資シェア（\(=\delta\bar{K}/\bar{Y}\)）</td><td>同上</td></tr>
+      <tr><td>\(s_G = \bar{G}/\bar{Y}\)</td><td>定常政府支出シェア</td><td>DIS曲線の財政効果・市場清算</td></tr>
+      <tr><td>\(s_B = \bar{b}/\bar{Y}\)</td><td>定常国債残高対GDP比</td><td>政府BC（Eq.36-VI）の係数</td></tr>
+      <tr><td>\(s_\tau = \bar{\tau}/\bar{Y}\)</td><td>定常税収対GDP比</td><td>同上</td></tr>
+      <tr><td>\(s_\omega = \bar{\omega}/\bar{Y}\)</td><td>定常シニョレッジ対GDP比</td><td>同上</td></tr>
+      <tr><td>\(\bar{\sigma}^{-1}\)</td><td>DIS曲線の有効IES：\(1/\bar\sigma \approx s_C/\sigma + s_I\beta r^{k*}/\sigma\)（簡略版：\(1/\sigma\)）</td><td>DIS・状態空間の\(\Gamma_{JJ}\)係数</td></tr>
+      <tr><td>\(R^{B*} = 1/\beta\)</td><td>定常実質国債グロスリターン（修正黄金律から）</td><td>政府BC・BK条件の固有値</td></tr>
+    </table>
+  </div>
+
+  <div class="param-section">
+    <div class="param-section-title">導出パラメーター（深層パラメーターから計算される複合係数）</div>
+    <table class="var-table">
+      <tr><th>記号</th><th>定義</th><th>経済的意味</th></tr>
+      <tr><td>\(\kappa\)</td><td>\(\dfrac{(1-\mu)(1-\mu\beta)}{\mu}\)</td><td>NKPCの基本傾き（カルボ係数）。\(\mu\to 0\)で\(\kappa\to\infty\)（完全伸縮価格）</td></tr>
+      <tr><td>\(\tilde{\kappa}\)</td><td>\(\kappa\!\left(\sigma+\dfrac{\phi}{1-\alpha}\right)\)</td><td>v2のNKPC傾き。資本分配率\(\alpha>0\)によりv1の\(\kappa(\sigma+\phi)\)より急（§3参照）</td></tr>
+      <tr><td>\(r^{k*}\)</td><td>\(\dfrac{1}{\beta}-(1-\delta)\)</td><td>定常実質資本レンタル料（修正黄金律）。RBC §8の\(\bar{R}-1\)に対応</td></tr>
+      <tr><td>\(r_t^n\)</td><td>\(\sigma E_t[\hat{Y}_{t+1}^n - \hat{Y}_t^n]\)</td><td>自然利子率。TFP・資本・政府支出の変化で変動</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- §1 家計の最適化問題 -->
+<div class="section" id="s1">
+  <div class="section-header">
+    <span class="section-num">§1</span>
+    <span class="section-title">家計の最適化問題（資本・国債・税の保有者として）</span>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">1</div>
+      <div class="eq-head-title">家計の生涯効用関数（v1と同一）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[U = E_0\sum_{t=0}^{\infty}\beta^t\!\left(\frac{C_t^{1-\sigma}}{1-\sigma} - \chi\frac{H_t^{1+\phi}}{1+\phi}\right)\]
+      </div>
+      <div class="info-block wide" style="margin-top:0;">
+        <div class="info-label">v1・RBCとの対応</div>
+        <div class="info-text">効用関数の形式はv1・RBCと同一（CRRA型消費効用＋労働不効用）。\(C_t\)はCES合成消費（Eq.2）、\(H_t\)は労働時間。v2での変更点は予算制約式（Eq.3）——資本・国債・税が明示的に加わる。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">2</div>
+      <div class="eq-head-title">CES合成消費指数と集計価格水準（v1と同一）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[C_t = \!\left(\int_0^1 c_{j,t}^{\frac{\varepsilon-1}{\varepsilon}}dj\right)^{\!\frac{\varepsilon}{\varepsilon-1}}\!,\quad P_t = \!\left(\int_0^1 P_{j,t}^{1-\varepsilon}dj\right)^{\!\frac{1}{1-\varepsilon}}\!,\quad c_{j,t} = \!\left(\frac{P_{j,t}}{P_t}\right)^{-\varepsilon}\!C_t\]
+      </div>
+      <div class="info-block wide" style="margin-top:0;">
+        <div class="info-label">式の意味</div>
+        <div class="info-text">家計は区間\([0,1]\)の差別化財\(c_{j,t}\)をCES型で合成する。費用最小化の解として各財への需要関数\(c_{j,t}=(P_{j,t}/P_t)^{-\varepsilon}C_t\)が得られ、集計支出が\(\int P_{j,t}c_{j,t}dj = P_tC_t\)に集約される。\(\varepsilon\)が代替弾力性（大きいほど財間が競争的）。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">3</div>
+      <div class="eq-head-title">家計の資産定義（政府部門込み） <span class="new-badge">v2追加</span></div>
+      <span class="eq-ref">RBC §1 Eq.2と同構造</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[a_t^{NK} = K_t + b_t, \qquad b_t = \frac{B_t}{P_t}\quad\text{（実質国債残高）}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">RBC §1 Eq.2との対応</div>
+          <div class="info-text">RBCの総資産定義\(a_t = k_t + b_t\)（実物資本＋実質国債）と完全に同一の構造。NKでは国債が名目（\(B_t\)）なので物価水準\(P_t\)で実質化して\(b_t = B_t/P_t\)とする。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">展開の意図</div>
+          <div class="info-text">家計が資本と国債の両方を保有するとき、無裁定条件（資本のグロス実質リターン＝国債のグロス実質リターン）が一階条件（Eq.24・25）として得られる。また横断性条件（TVC）が\(a_t^{NK}\)に課される。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">4</div>
+      <div class="eq-head-title">家計のフロー予算制約式（資本・国債・税込み） <span class="new-badge">v2拡張</span></div>
+      <span class="eq-ref">RBC §1 Eq.3の名目対応版</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[P_tC_t + P_tI_t + B_t = W_tH_t + \underbrace{\left(R_t^k+(1-\delta)P_t\right)}_{\text{資本の名目グロスリターン}}K_t + (1+i_{t-1})B_{t-1} + P_t\Pi_t - P_t\tau_t\]
+      </div>
+      <table class="var-table">
+        <tr><th>変数</th><th>内容</th><th>区分</th></tr>
+        <tr><td>\(I_t\)</td><td>実質投資。資本蓄積：\(K_{t+1}=(1-\delta)K_t+I_t\)（→Eq.31）</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+        <tr><td>\(R_t^k\)</td><td>名目資本レンタル料。実質値\(r_t^k=R_t^k/P_t\)</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span> <span class="tag nom">名目変数</span></td></tr>
+        <tr><td>\(B_t\)</td><td>家計（民間）保有の名目国債残高（期末）</td><td><span class="tag endo">内生変数</span> <span class="tag state">状態変数</span> <span class="tag nom">名目変数</span></td></tr>
+        <tr><td>\(i_t\)</td><td>名目政策金利（テイラー・ルールで決定）</td><td><span class="tag nom">名目変数</span></td></tr>
+        <tr><td>\(W_t\)</td><td>名目賃金率</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span> <span class="tag nom">名目変数</span></td></tr>
+        <tr><td>\(\Pi_t\)</td><td>企業からの名目利潤（独占的競争→\(\Pi_t>0\)）</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+        <tr><td>\(\tau_t\)</td><td>実質一括税（政府の財源調達。外生）</td><td><span class="tag exo">外生変数</span></td></tr>
+      </table>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">式の意味</div>
+          <div class="info-text">今期の名目支出（消費\(P_tC_t\)＋投資\(P_tI_t\)＋国債購入\(B_t\)）＝名目収入（労働所得\(W_tH_t\)＋資本所得＋国債元利払い\((1+i_{t-1})B_{t-1}\)＋利潤\(P_t\Pi_t\)）－税\(P_t\tau_t\)。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">RBC §1 Eq.3との違い</div>
+          <div class="info-text">RBCは実質版（\(a_{t+1}+C_t = w_tL_t+R_ta_t+\Pi_t-\tau_t\)）で資本と国債が総資産\(a_t\)に統合される。v2では名目変数（\(P_t, W_t, i_t, R_t^k\)）が陽に現れ、資本（実物）と国債（名目）のリターンが別個に書かれる。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §2 企業の最適化問題 -->
+<div class="section" id="s2">
+  <div class="section-header">
+    <span class="section-num">§2</span>
+    <span class="section-title">企業の最適化問題（コブ＝ダグラス型生産関数）</span>
+  </div>
+
+  <div class="eq-card firm">
+    <div class="eq-head">
+      <div class="eq-num-badge">5</div>
+      <div class="eq-head-title">企業\(j\)の生産関数（コブ＝ダグラス型・資本＋労働） <span class="new-badge">v2拡張</span></div>
+      <span class="eq-ref">RBC §2 Eq.4の独占的競争版</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[Y_{j,t} = A_t\, K_{j,t}^\alpha\, l_{j,t}^{1-\alpha}\]
+      </div>
+      <table class="var-table">
+        <tr><th>変数</th><th>内容</th><th>区分</th></tr>
+        <tr><td>\(K_{j,t}\)</td><td>企業\(j\)がレンタルする資本量（集計：\(\int_0^1 K_{j,t}\,dj = K_t\)）</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+        <tr><td>\(l_{j,t}\)</td><td>企業\(j\)が雇用する労働量（集計：\(\int_0^1 l_{j,t}\,dj = H_t\)）</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+        <tr><td>\(\alpha\)</td><td>資本分配率（RBC §2と同じ深層パラメーター）</td><td><span class="tag param">パラメーター</span></td></tr>
+        <tr><td>\(A_t\)</td><td>TFP（全企業共通のヒックス中立型技術）</td><td><span class="tag exo">外生変数</span> <span class="tag state">状態変数</span></td></tr>
+      </table>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">v1からの変更点</div>
+          <div class="info-text">v1：\(Y_{j,t}=A_t l_{j,t}\)（労働のみ、\(\alpha=0\)の特殊ケース）。v2：RBCと同じコブ＝ダグラス型。企業は資本市場で\(r_t^k\)（実質レンタル料）を支払い資本をレンタルする。独占的競争のため完全競争RBCのゼロ利潤定理は成立せず\(\Pi_{j,t}>0\)。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">対称均衡の成立根拠</div>
+          <div class="info-text">全企業が同一技術\(A_t\)・同一要素価格\((r_t^k, w_t)\)に直面する。費用最小化の解として各企業の資本・労働比率が一致：\(K_{j,t}/l_{j,t}=(\alpha/(1-\alpha))\cdot(w_t/r_t^k)\)。対称均衡では\(K_{j,t}=K_t, l_{j,t}=H_t\)として集計できる。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card firm">
+    <div class="eq-head">
+      <div class="eq-num-badge">6</div>
+      <div class="eq-head-title">費用最小化と名目限界費用（資本込み） <span class="new-badge">v2拡張</span></div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\min_{K_{j,t},\,l_{j,t}} R_t^k K_{j,t} + W_t l_{j,t}\quad\text{s.t.}\quad A_tK_{j,t}^\alpha l_{j,t}^{1-\alpha} \geq Y_{j,t}\]
+        \[\Longrightarrow\quad MC_t = \frac{1}{A_t}\!\left(\frac{R_t^k}{\alpha}\right)^{\!\alpha}\!\left(\frac{W_t}{1-\alpha}\right)^{\!1-\alpha}\!,\qquad mc_t^r = \frac{MC_t}{P_t} = \frac{1}{A_t}\!\left(\frac{r_t^k}{\alpha}\right)^{\!\alpha}\!\left(\frac{w_t}{1-\alpha}\right)^{\!1-\alpha}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">導出</div>
+          <div class="info-text">ラグランジュ乗数\(=MC_t\)（名目限界費用）とし、\(K_{j,t}\)と\(l_{j,t}\)の一階条件から費用最小化の資本・労働比率：\(K_{j,t}/l_{j,t}=(\alpha/(1-\alpha))\cdot(W_t/R_t^k)\)を求め、生産制約に代入して整理すると上式が得られる。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">v1との違い</div>
+          <div class="info-text">v1：\(MC_t=W_t/A_t\)（労働のみ）。v2：資本レンタル料\(r_t^k\)と実質賃金\(w_t\)の両方が限界費用に入る。対称均衡では全企業の\(mc_t^r\)が同一（要素比率が同じ）→価格設定問題の入力となる（§3）。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card firm">
+    <div class="eq-head">
+      <div class="eq-num-badge">7</div>
+      <div class="eq-head-title">財\(j\)への需要関数（CES費用最小化の解、v1と同一）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[Y_{j,t} = \left(\frac{P_{j,t}}{P_t}\right)^{-\varepsilon}\!Y_t\]
+      </div>
+      <div class="info-block wide" style="margin-top:0;">
+        <div class="info-label">式の意味</div>
+        <div class="info-text">差別化財\(j\)への需要は相対価格\(P_{j,t}/P_t\)の\(-\varepsilon\)乗に比例する。最適マークアップ（伸縮価格均衡）：\(\mu^*=\varepsilon/(\varepsilon-1)\)。資本を加えても差別化財市場の需要構造は変わらない。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §3 カルボ型価格設定と実質限界費用 -->
+<div class="section" id="s3">
+  <div class="section-header">
+    <span class="section-num">§3</span>
+    <span class="section-title">カルボ型価格設定と実質限界費用のGDPギャップへの接続</span>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">8</div>
+      <div class="eq-head-title">カルボ型価格設定・集計価格水準・最適価格（v1と同構造）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[P_t = \!\left[(1-\mu)(P_t^*)^{1-\varepsilon}+\mu P_{t-1}^{1-\varepsilon}\right]^{\!\frac{1}{1-\varepsilon}}\]
+        \[\frac{P_t^*}{P_t} = \frac{\varepsilon}{\varepsilon-1}\cdot\frac{E_t\displaystyle\sum_{\tau=0}^{\infty}(\mu\beta)^\tau P_{t+\tau}^\varepsilon Y_{t+\tau}\,mc_{t+\tau}^r}{E_t\displaystyle\sum_{\tau=0}^{\infty}(\mu\beta)^\tau P_{t+\tau}^{\varepsilon-1}Y_{t+\tau}}\]
+      </div>
+      <div class="info-block wide" style="margin-top:0;">
+        <div class="info-label">v2での変更点</div>
+        <div class="info-text">カルボ型確率構造はv1と同じ（各期に確率\(1-\mu\)で価格改定可能）。最適価格の計算に用いる実質限界費用\(mc_{t+\tau}^r\)が資本込みの式（Eq.6）に変わる。対数線形化→集計→NKPCの傾きが変化する（Eq.10で導出）。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">9</div>
+      <div class="eq-head-title">NKフィリップス曲線の傾き——資本の追加による変化 <span class="new-badge">v2拡張</span></div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\hat{mc}_t = \alpha\,\hat{r}_t^k + (1-\alpha)\,\hat{w}_t - \hat{A}_t \;\approx\; \left(\sigma + \frac{\phi}{1-\alpha}\right)x_t\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">導出の流れ</div>
+          <div class="info-text">①対称均衡での資本MPK：\(\hat{r}_t^k \approx \hat{Y}_t - \hat{K}_t\)（短期に資本固定→産出増でMPK上昇）<br>②労働供給条件（Eq.23）：\(\hat{w}_t = \sigma\hat{C}_t + \phi\hat{H}_t\)<br>③生産関数：\(\hat{Y}_t = \hat{A}_t + \alpha\hat{K}_t + (1-\alpha)\hat{H}_t\)<br>④GDPギャップ\(x_t\)で整理→上式</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">v1との違い・経済的直観</div>
+          <div class="info-text"><strong>v1（\(\alpha=0\)）：</strong>\(\hat{mc}_t = (\sigma+\phi)x_t\)<br><strong>v2（\(\alpha>0\)）：</strong>\(\hat{mc}_t = (\sigma+\phi/(1-\alpha))x_t\)<br>資本あり（\(\alpha>0\)）では分母\(1-\alpha<1\)→傾きが急になる。短期に資本固定→産出増は労働投入増で賄う→実質賃金・MCが急上昇→インフレ圧力が強い。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card nk">
+    <div class="eq-head">
+      <div class="eq-num-badge">10</div>
+      <div class="eq-head-title">NKフィリップス曲線（NKPC）——資本込みの傾き <span class="new-badge">v2拡張</span></div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\pi_t = \beta E_t[\pi_{t+1}] + \tilde{\kappa}\,x_t\]
+        \[\tilde{\kappa} = \kappa\!\left(\sigma+\frac{\phi}{1-\alpha}\right),\quad \kappa = \frac{(1-\mu)(1-\mu\beta)}{\mu}\]
+        \[\text{【比較】v1：}\;\tilde{\kappa}^{(1)} = \kappa(\sigma+\phi)\quad\text{v2：}\;\tilde{\kappa}^{(2)} = \kappa\!\left(\sigma+\frac{\phi}{1-\alpha}\right) > \tilde{\kappa}^{(1)}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">式の意味（v1と共通の部分）</div>
+          <div class="info-text">インフレ\(\pi_t\)＝将来インフレ期待\(\beta E_t\pi_{t+1}\)＋現在の費用圧力\(\tilde\kappa x_t\)。フォワード・ルッキング構造（繰り返し代入すると\(\pi_t = \tilde\kappa\sum_{k=0}^\infty\beta^k E_t x_{t+k}\)）。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">財政政策とNKPCの接続</div>
+          <div class="info-text">財政支出\(G_t\)はGDPギャップ\(x_t\)を変化させることを通じてNKPCに影響する。政府支出拡大→\(x_t\uparrow\)→\(\pi_t\uparrow\)（需要プル型インフレ）。財政が価格安定目標にとってどの程度のコストか見えやすくなる。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §4 政府部門 -->
+<div class="section" id="s4">
+  <div class="section-header">
+    <span class="section-num">§4</span>
+    <span class="section-title">政府部門（財政政策）<span class="new-badge">v2新規追加</span></span>
+  </div>
+
+  <div class="eq-card gov">
+    <div class="eq-head">
+      <div class="eq-num-badge">11</div>
+      <div class="eq-head-title">政府のフロー予算制約式（名目・実質）</div>
+      <span class="eq-ref">RBC §3 Eq.6の名目対応版</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\underbrace{(1+i_{t-1})B_{t-1}}_{{\text{前期国債の元利払い}}} + P_tG_t = \underbrace{P_t\tau_t}_{{\text{税収}}} + \underbrace{B_t}_{{\text{新規国債発行}}} + \underbrace{\Omega_t}_{{\text{CB利益移転（シニョレッジ）}}}\]
+        \[\text{実質版：}\quad b_t + \tau_t + \omega_t = G_t + \underbrace{\frac{1+i_{t-1}}{1+\pi_t}}_{\equiv\,R_t^B}b_{t-1} \quad\left(\omega_t = \frac{\Omega_t}{P_t}\right)\]
+        \[\text{（左辺：今期の資金使途。右辺：今期の資金源泉。}b_t\text{は今期末の期末残高として左辺に）}\]
+      </div>
+      <table class="var-table">
+        <tr><th>変数</th><th>内容</th><th>区分</th></tr>
+        <tr><td>\(R_t^B = (1+i_{t-1})/(1+\pi_t)\)</td><td>名目国債の事後実質グロスリターン（フィッシャー方程式）</td><td><span class="tag endo">内生変数</span></td></tr>
+        <tr><td>\(b_t = B_t/P_t\)</td><td>実質国債残高（民間保有分）</td><td><span class="tag endo">内生変数</span> <span class="tag state">状態変数</span></td></tr>
+        <tr><td>\(G_t\)</td><td>政府実質支出（外生。財市場清算：\(Y_t=C_t+I_t+G_t\)）</td><td><span class="tag exo">外生変数</span></td></tr>
+        <tr><td>\(\tau_t\)</td><td>実質一括税（外生）</td><td><span class="tag exo">外生変数</span></td></tr>
+        <tr><td>\(\omega_t = \Omega_t/P_t\)</td><td>実質シニョレッジ移転（§5で定義）</td><td><span class="tag cbt">中央銀行変数</span></td></tr>
+      </table>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">RBC §3 Eq.6との対応</div>
+          <div class="info-text">RBCの実質版：\(b_{t+1} = R_tb_t + G_t - \tau_t\)に対応。NKでは（i）名目金利\(i_{t-1}\)とインフレ\(\pi_t\)が分離して現れる、（ii）中央銀行のシニョレッジ移転\(\omega_t\)が歳入に加わる、という2点が追加される。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">インフレ税の意味</div>
+          <div class="info-text">実質版の係数\(R_t^B=(1+i_{t-1})/(1+\pi_t)\)では、インフレが高いほど既存の名目国債の実質負担が軽減される（インフレ税）。中央銀行が意図的にインフレを起こすことで政府の実質債務を圧縮できる経路がここに現れる——財政と金融政策の相互作用の核心。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card gov">
+    <div class="eq-head">
+      <div class="eq-num-badge">12</div>
+      <div class="eq-head-title">政府の異時点間予算制約式（逐次代入）</div>
+      <span class="eq-ref">RBC §3 Eq.7と同構造</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[b_{t-1} = \sum_{s=0}^{T-1}\frac{\tau_{t+s}+\omega_{t+s}-G_{t+s}}{\prod_{k=0}^{s}R_{t+k}^B} + \frac{b_{t+T-1}}{\prod_{k=0}^{T-1}R_{t+k}^B}\]
+      </div>
+      <div class="info-block wide" style="margin-top:0;">
+        <div class="info-label">導出</div>
+        <div class="info-text">Eq.11の実質版\(b_t = R_t^B b_{t-1} - G_t + \tau_t + \omega_t\)を将来に向けて逐次代入し、両辺を\(R_t^B R_{t+1}^B\cdots\)で割ると上式が得られる。RBC §3 Eq.7と全く同じ操作。\(T\to\infty\)でノンポンジ条件（Eq.13）を適用することで政府の生涯予算制約が完成する。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card gov">
+    <div class="eq-head">
+      <div class="eq-num-badge">13</div>
+      <div class="eq-head-title">ノンポンジ（No-Ponzi）条件</div>
+      <span class="eq-ref">RBC §3 Eq.8と同一</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\lim_{T\to\infty}\frac{b_{t+T-1}}{\prod_{k=0}^{T-1}R_{t+k}^B} = 0\]
+      </div>
+      <div class="info-block wide" style="margin-top:0;">
+        <div class="info-label">式の意味</div>
+        <div class="info-text">政府は国債を永遠にロールオーバー（借り換え）し続けることはできない（ねずみ講禁止条件）。この条件をEq.12の\(T\to\infty\)に適用すると右辺第2項が消え、「現在の国債残高＝将来のプライマリー収支（税収＋シニョレッジ－政府支出）の割引現在価値」が政府の生涯予算制約として得られる。RBC §3 Eq.8と完全に同一。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card gov">
+    <div class="eq-head">
+      <div class="eq-num-badge">14</div>
+      <div class="eq-head-title">リカードの等価定理——家計の生涯予算制約</div>
+      <span class="eq-ref">RBC §3 Eq.9と同構造</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\sum_{s=0}^{\infty}\frac{C_{t+s} - w_{t+s}H_{t+s} + r_{t+s}^k K_{t+s} - \Pi_{t+s}/P_{t+s}}{\prod_{k=0}^{s}R_{t+k}^B} = a_t^{NK} - \sum_{s=0}^{\infty}\frac{G_{t+s}}{\prod_{k=0}^{s}R_{t+k}^B}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">成立条件</div>
+          <div class="info-text">① 家計のEq.4を逐次代入し横断性条件（TVC：\(\lim_{T\to\infty}a_{T+1}^{NK}/\prod R_{t+k}^B=0\)）を適用。② 政府の生涯予算制約（Eq.12＋Eq.13）を代入すると\(\tau_t\)と\(b_t\)が消去される。残るのは\(G_t\)の現在価値のみ。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">NKにおける意義と限界</div>
+          <div class="info-text">代表的家計・完全資本市場・一括税のもとでNKでもリカード等価が成立——国債発行か増税かのタイミング変更は実体経済に中立。<strong>政府支出\(G_t\)の現在価値のみが均衡に影響する</strong>（DIS・NKPCに作用）。流動性制約・異質家計（HANK）があると成立しない。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §5 中央銀行の予算制約式 -->
+<div class="section" id="s5">
+  <div class="section-header">
+    <span class="section-num">§5</span>
+    <span class="section-title">中央銀行の予算制約式<span class="new-badge">v2新規追加</span></span>
+  </div>
+
+  <div class="eq-card cb">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="font-size:.65rem; line-height:1.2;">CB<br>B/S</div>
+      <div class="eq-head-title">中央銀行のバランスシート（ストック関係）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\underbrace{B_t^{CB}}_{\text{資産：政府国債保有}} \;=\; \underbrace{M_t}_{\text{負債：ベースマネー}}\]
+        \[\text{（期末残高の恒等式）}\]
+      </div>
+      <table class="var-table">
+        <tr><th>変数</th><th>内容</th><th>区分</th></tr>
+        <tr><td>\(B_t^{CB}\)</td><td>中央銀行保有の政府名目国債（資産サイド）</td><td><span class="tag cbt">中央銀行変数</span> <span class="tag nom">名目変数</span></td></tr>
+        <tr><td>\(M_t\)</td><td>ベースマネー：現金通貨＋準備預金（負債サイド）</td><td><span class="tag cbt">中央銀行変数</span> <span class="tag nom">名目変数</span></td></tr>
+      </table>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">単純化の仮定</div>
+          <div class="info-text">最もシンプルなCBバランスシート：資産＝政府国債のみ、負債＝ベースマネーのみ、自己資本ゼロ（利潤はすべて政府へ移転）。現実のCBは外貨準備・民間への貸付等も保有するが、金融政策の核心を抽出するためのシンプル化。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">政府BCとの接続</div>
+          <div class="info-text">政府の総国債：\(B_t^{total} = B_t + B_t^{CB} = B_t + M_t\)（民間保有＋CB保有）。Eq.11の政府BCは民間保有分\(B_t\)のみを扱う。CB保有分は§6の統合政府BCで統合される。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card cb">
+    <div class="eq-head">
+      <div class="eq-num-badge">15</div>
+      <div class="eq-head-title">中央銀行のフロー予算制約式（資金フローの恒等式）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\underbrace{(1+i_{t-1})B_{t-1}^{CB}}_{\text{前期国債の元利受取}} = \underbrace{B_t^{CB}}_{\text{新規国債購入}} + \underbrace{\Omega_t}_{\text{政府への利益移転}} + \underbrace{(M_t - M_{t-1})}_{\text{ベースマネー増加}}\cdot\,(-1)\]
+        \[\text{整理すると：}\quad M_t - M_{t-1} = \underbrace{(B_t^{CB} - B_{t-1}^{CB})}_{\text{純公開市場操作（OMO）}} + \underbrace{i_{t-1}B_{t-1}^{CB}}_{\Omega_t\;:\;\text{シニョレッジ（政府へ移転）}}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">資金フローの詳細</div>
+          <div class="info-text"><strong>収入：</strong>保有国債の元利\((1+i_{t-1})B_{t-1}^{CB}\)<br><strong>支出①：</strong>新規国債購入\(B_t^{CB}\)<br><strong>支出②：</strong>政府への利益移転\(\Omega_t\)<br><strong>収支差：</strong>\(M_t - M_{t-1}\)（ベースマネー増加で調整）<br>収支が正→ベースマネー創造、負→ベースマネー回収。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">政府BС（Eq.11）との整合性</div>
+          <div class="info-text">Eq.11でシニョレッジ\(\Omega_t\)が政府歳入に計上されている。整理式より\(\Omega_t = i_{t-1}B_{t-1}^{CB} = i_{t-1}M_{t-1}\)（CB保有国債＝\(M_{t-1}\)のため）。つまり<strong>シニョレッジ＝前期名目政策金利×前期ベースマネー残高</strong>。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card cb">
+    <div class="eq-head">
+      <div class="eq-num-badge">16</div>
+      <div class="eq-head-title">シニョレッジの定義と実質化——インフレ税との分解</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\Omega_t = i_{t-1}M_{t-1} \quad\Longrightarrow\quad \omega_t = \frac{\Omega_t}{P_t} = \frac{i_{t-1}M_{t-1}}{P_t} = i_{t-1}\,\frac{m_{t-1}}{1+\pi_t}\;\approx\; i_{t-1}\,m_{t-1}\quad\text{（定常\(\pi^*=0\)付近での近似）}\]
+        \[\text{フィッシャー分解（近似）：}\quad \omega_t \approx \underbrace{r_{t-1}m_{t-1}}_{\text{実質シニョレッジ}} + \underbrace{\pi_t m_{t-1}}_{\text{インフレ税}},\qquad m_t \equiv \frac{M_t}{P_t}\]
+      </div>
+      <table class="var-table">
+        <tr><th>変数</th><th>内容</th></tr>
+        <tr><td>\(m_t = M_t/P_t\)</td><td>実質ベースマネー残高（実質貨幣残高）</td></tr>
+        <tr><td>\(\pi_t m_{t-1}\)</td><td>インフレ税：インフレにより既存のベースマネー保有者から政府へ実質価値が移転する経路</td></tr>
+        <tr><td>\(r_{t-1}m_{t-1}\)</td><td>貨幣増発益（実質マネーストックの純増分に対応する実質リターン）</td></tr>
+      </table>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">キャッシュレス極限</div>
+          <div class="info-text">Woodford（2003）が指摘する「キャッシュレス極限（cashless limit）」：\(m_t \to 0\)とすると\(\omega_t \to 0\)。この極限では標準NKモデルのように貨幣需要方程式なしに分析できる。v2の一般設定はこの極限への経路を明示的に示す。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">財政的インフレ（FTPL）との接続</div>
+          <div class="info-text">高インフレ下では政府がインフレ税\(\pi_t m_{t-1}\)で財政赤字を実質的に補填する「財政的インフレ（fiscally-driven inflation）」が発生しうる。これが物価水準の財政理論（FTPL）の核心——物価が財政IGBCを充足するように動く（Leeper 1991, Cochrane 2001）。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card cb">
+    <div class="eq-head">
+      <div class="eq-num-badge">17</div>
+      <div class="eq-head-title">中央銀行の異時点間予算制約（CBノンポンジ条件）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\lim_{T\to\infty}\frac{M_T}{\prod_{s=0}^{T-1}(1+i_s)} = 0\]
+        \[\Longleftrightarrow\quad m_0 = \sum_{t=0}^{\infty}\beta^t\,\omega_t \quad\text{（現在のベースマネー＝将来シニョレッジの割引現在価値）}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">政府ノンポンジ条件（Eq.13）との対比</div>
+          <div class="info-text">政府：\(\lim_{T\to\infty}b_{T}/\prod R_{t+k}^B = 0\)（国債のノンポンジ）<br>CB：\(\lim_{T\to\infty}M_T/\prod(1+i_s) = 0\)（ベースマネーのノンポンジ）<br>両者を組み合わせると統合政府の予算制約（§6）が成立する。RBC §3 Eq.8と完全に対応する構造。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">式の意味</div>
+          <div class="info-text">現在のベースマネー残高\(m_0\)は将来のシニョレッジ\(\omega_t\)の割引現在価値に等しい——「CBも無限のマネー創造は（実質ベースで）できない」という持続可能性条件。キャッシュレス極限（\(m_0=0\)）では右辺もゼロ→シニョレッジなし→RBCの政府BCに収束。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card cb">
+    <div class="eq-head">
+      <div class="eq-num-badge">18</div>
+      <div class="eq-head-title">中央銀行の金融政策操作——テイラー・ルールと公開市場操作の接続</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\text{テイラー・ルール（§10、対数線形化）：}\quad \hat{i}_t \equiv i_t - \bar{i} = \delta_\pi\pi_t + \delta_x x_t + u_t\]
+        \[\text{公開市場操作（OMO）：}\quad \Delta B_t^{CB} \equiv B_t^{CB} - B_{t-1}^{CB} = (M_t - M_{t-1}) - i_{t-1}M_{t-1}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">金利ターゲットの含意</div>
+          <div class="info-text">CBは名目金利\(i_t\)をテイラー・ルールで決定し、その金利を実現するために必要な量の国債を公開市場操作（OMO）で購入・売却する。「金利ターゲット」下では\(M_t\)（ベースマネー）が受動的に決まる——\(i_t\)が政策手段で\(M_t\)は内生変数。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">量的緩和（QE）のモデル上の意味</div>
+          <div class="info-text">ZLB（\(i_t=0\)）でテイラー・ルールが機能しないとき、CBは\(\Delta B_t^{CB} > 0\)（大規模国債購入）を通じて\(M_t\uparrow\)（量的緩和）を実施する。標準NK「キャッシュレス極限」ではQEの実物効果ゼロ。しかし将来の政策コミットメント（フォワード・ガイダンス）を通じた期待チャンネルは機能する。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §6 統合政府の予算制約 -->
+<div class="section" id="s6">
+  <div class="section-header">
+    <span class="section-num">§6</span>
+    <span class="section-title">統合政府（財政当局＋中央銀行）の予算制約<span class="new-badge">v2新規追加</span></span>
+  </div>
+
+  <div class="eq-card gov">
+    <div class="eq-head">
+      <div class="eq-num-badge">19</div>
+      <div class="eq-head-title">統合政府のフロー予算制約式——\(\Omega_t\)がキャンセル</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\text{政府BC（Eq.11）＋CB BC（Eq.15）を統合：}\]
+        \[(1+i_{t-1})\underbrace{(B_{t-1}+B_{t-1}^{CB})}_{=\,B_{t-1}^{total}} + P_tG_t = P_t\tau_t + \underbrace{(B_t + B_t^{CB})}_{=\,B_t^{total}} + (M_t - M_{t-1})\]
+        \[\text{ここで}\;B_t^{CB} = M_t\;\text{（CB BSの恒等式）を代入：}\]
+        \[(1+i_{t-1})(B_{t-1}+M_{t-1}) + P_tG_t = P_t\tau_t + B_t + M_t + (M_t - M_{t-1})\]
+        \[\Longrightarrow\quad (1+i_{t-1})B_{t-1} + P_tG_t = P_t\tau_t + B_t + \underbrace{(M_t - M_{t-1})}_{\text{ベースマネー増加＝統合財源}}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">統合の論理</div>
+          <div class="info-text">政府BCのEq.11（\(\Omega_t\)が歳入）とCB BCのEq.15（\(\Omega_t\)が支出）を加算すると\(\Omega_t\)がキャンセルされる。CB内部の資金移転が消え、外部から見える変数（民間国債\(B_t\)・ベースマネー\(M_t\)・税\(\tau_t\)・支出\(G_t\)）のみの方程式が得られる。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">実質版（統合政府BC）</div>
+          <div class="info-text">両辺を\(P_t\)で割ると：\[R_t^B b_{t-1} + G_t = \tau_t + b_t + \underbrace{\Delta m_t + \pi_t m_{t-1}}_{\text{実質シニョレッジ}\,=\,\omega_t}\]RBCの政府BC（\(b_{t+1} = R_tb_t + G_t - \tau_t\)）は\(m_t\equiv 0\)（キャッシュレス極限）の特殊ケース。</div>
+        </div>
+        <div class="info-block wide">
+          <div class="info-label">財政・金融政策の分離——Leeper（1991）の枠組みとNK v2の立場</div>
+          <div class="info-text">統合政府BCのもとで均衡が決まるには金融政策と財政政策の「レジーム」を明確にする必要がある：<br>
+          <strong>アクティブ金融・パッシブ財政（NK標準）：</strong>CBがテイラー原理（\(\delta_\pi>1\)）で能動的に\(i_t\)を設定し、財政当局はIGBC充足のために増税調整（受動的）。v2の基本設定はこのレジームを採用。<br>
+          <strong>パッシブ金融・アクティブ財政（FTPL）：</strong>CBが\(\delta_\pi<1\)（または\(i_t\)固定）で財政当局が独立に支出・税収を決定。物価水準\(P_t\)が跳んで統合政府IGBCを充足（物価水準の財政理論）。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card gov">
+    <div class="eq-head">
+      <div class="eq-num-badge">20</div>
+      <div class="eq-head-title">統合政府の異時点間予算制約とノンポンジ</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[b_{t-1} + m_{t-1} = \sum_{s=0}^{\infty}\frac{\tau_{t+s} - G_{t+s}}{\prod_{k=0}^{s}R_{t+k}^B} + \sum_{s=0}^{\infty}\frac{\omega_{t+s}^{total}}{\prod_{k=0}^{s}R_{t+k}^B}\]
+        \[\text{ここで}\quad \omega_t^{total} = \omega_t\;\text{（実質シニョレッジ全体）};\quad \lim_{T\to\infty}\frac{b_{t+T}+m_{t+T}}{\prod_{k=0}^{T}R_{t+k}^B} = 0\]
+      </div>
+      <div class="info-block wide" style="margin-top:0;">
+        <div class="info-label">式の意味</div>
+        <div class="info-text">現在の「民間国債\(b_{t-1}\)＋実質ベースマネー\(m_{t-1}\)」の合計（統合政府の実質負債）は、将来の「財政黒字（税収－政府支出）＋実質シニョレッジ」の割引現在価値の合計に等しい。キャッシュレス極限（\(m_t\to 0\)）ではRBC §3のIGBCに帰着する。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §7 市場清算条件 -->
+<div class="section" id="s7">
+  <div class="section-header">
+    <span class="section-num">§7</span>
+    <span class="section-title">市場清算条件（資本・財政込み）</span>
+  </div>
+
+  <div class="eq-card market">
+    <div class="eq-head">
+      <div class="eq-num-badge">21</div>
+      <div class="eq-head-title">財市場の需給一致条件（資本蓄積・政府支出込み） <span class="new-badge">v2拡張</span></div>
+      <span class="eq-ref">RBC §4 Eq.10と同形</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[Y_t = C_t + I_t + G_t\]
+        \[\text{対数線形化：}\quad \hat{Y}_t = s_C\hat{C}_t + s_I\hat{I}_t + s_G\hat{G}_t,\qquad s_C+s_I+s_G=1\]
+        \[s_C = \bar{C}/\bar{Y},\quad s_I = \delta\bar{K}/\bar{Y},\quad s_G = \bar{G}/\bar{Y}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">v1との違い</div>
+          <div class="info-text">v1：\(Y_t = C_t\)（投資・政府支出ゼロ）。v2：\(Y_t = C_t + I_t + G_t\)（RBC §4と同一）。政府支出シェア\(s_G > 0\)が追加されることで財政乗数の分析が可能になる。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">財政乗数の直観</div>
+          <div class="info-text">\(\hat{G}_t\uparrow\)→\(\hat{Y}_t\uparrow s_G\)（直接効果）→NKPCで\(\pi_t\uparrow\)→テイラー・ルールで\(i_t\uparrow\)→消費・投資のクラウドアウト。純財政乗数は\(s_G\)より一般に小さい（\(\delta_\pi>1\)の場合は特に）。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card market">
+    <div class="eq-head">
+      <div class="eq-num-badge">22</div>
+      <div class="eq-head-title">資本市場・労働市場の需給一致条件 <span class="new-badge">v2追加</span></div>
+      <span class="eq-ref">RBC §4 Eq.11・12と同一</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\int_0^1 K_{j,t}\,dj = K_t\quad\text{（資本市場）},\qquad \int_0^1 l_{j,t}\,dj = H_t\quad\text{（労働市場）}\]
+      </div>
+      <div class="info-block wide" style="margin-top:0;">
+        <div class="info-label">式の意味</div>
+        <div class="info-text">対称均衡のもとで各企業の資本需要の集計＝家計の資本供給\(K_t\)、各企業の労働需要の集計＝家計の労働供給\(H_t\)が一致する。資本レンタル市場（Eq.25）と労働市場（Eq.23＋Eq.26）がそれぞれ清算される条件。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §8 一階条件の導出 -->
+<div class="section" id="s8">
+  <div class="section-header">
+    <span class="section-num">§8</span>
+    <span class="section-title">一階条件の導出（ラグランジアン法）</span>
+  </div>
+
+  <div class="eq-card foc">
+    <div class="eq-head">
+      <div class="eq-num-badge">23</div>
+      <div class="eq-head-title">家計のラグランジアン（資本・国債・税込み） <span class="new-badge">v2拡張</span></div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\mathcal{L} = E_0\!\sum_{t=0}^{\infty}\!\beta^t\!\left[\frac{C_t^{1-\sigma}}{1-\sigma} - \chi\frac{H_t^{1+\phi}}{1+\phi} + \lambda_t\!\left\{W_tH_t + (R_t^k+(1-\delta)P_t)K_t + (1+i_{t-1})B_{t-1} + P_t\Pi_t - P_t\tau_t - P_tC_t - P_tI_t - B_t\right\}\right]\]
+      </div>
+      <div class="info-block wide" style="margin-top:0;">
+        <div class="info-label">v2の選択変数と一階条件</div>
+        <div class="info-text">選択変数：\((C_t, H_t, K_{t+1}, B_t)\)の4本。対応するFOC：①消費（Eq.24）、②労働供給（Eq.25）、③資本保有＝投資のオイラー方程式（Eq.27）【v2新規】、④国債保有＝名目オイラー方程式（Eq.28）。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card foc">
+    <div class="eq-head">
+      <div class="eq-num-badge">24</div>
+      <div class="eq-head-title">FOC①：消費の限界効用＝シャドー・プライス（v1と同一）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">\[C_t^{-\sigma} = \lambda_t P_t\]</div>
+      <div class="info-block wide" style="margin-top:0;"><div class="info-label">式の意味</div><div class="info-text">消費の実質限界効用\(C_t^{-\sigma}\)＝名目シャドー・プライス\(\lambda_t\)×物価\(P_t\)。整理すると実質シャドー・プライス：\(\lambda_t P_t = C_t^{-\sigma}\)。以降の一階条件でこれを利用して\(\lambda_t\)を消去する。RBC §5 Eq.14と対応。</div></div>
+    </div>
+  </div>
+
+  <div class="eq-card foc">
+    <div class="eq-head">
+      <div class="eq-num-badge">25</div>
+      <div class="eq-head-title">FOC②：労働供給条件（MRS）（v1と同一）</div>
+      <span class="eq-ref">RBC §5 Eq.18の名目版</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">\[\chi H_t^\phi = \lambda_t W_t \quad\Longleftrightarrow\quad w_t = \frac{W_t}{P_t} = \chi H_t^\phi C_t^\sigma\]</div>
+      <div class="info-block wide" style="margin-top:0;"><div class="info-label">式の意味</div><div class="info-text">実質賃金\(w_t\)＝労働の限界不効用\(\chi H_t^\phi\)÷消費の限界効用\(C_t^{-\sigma}\)（＝MRS）。実質賃金が上がると労働供給が増える。RBCの[Eq.18]（\(w_t = \chi L_t^\gamma C_t^\sigma\)）と同形（表記が\(H_t, \phi\)か\(L_t, \gamma\)かの違いのみ）。</div></div>
+    </div>
+  </div>
+
+  <div class="eq-card foc">
+    <div class="eq-head">
+      <div class="eq-num-badge">26</div>
+      <div class="eq-head-title">企業FOC①：資本の限界生産物＝実質レンタル料 <span class="new-badge">v2追加</span></div>
+      <span class="eq-ref">RBC §5 Eq.19の独占的競争版</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[r_t^k = \alpha\,A_t\left(\frac{K_t}{H_t}\right)^{\alpha-1} = \frac{\alpha Y_t}{K_t}\]
+      </div>
+      <div class="info-block wide" style="margin-top:0;">
+        <div class="info-label">式の意味・RBC §5 Eq.19との対応</div>
+        <div class="info-text">企業は実質資本レンタル料\(r_t^k\)が資本の限界生産物（MPK）と等しくなるまで資本をレンタルする。RBCのEq.19：\(R_t - 1 + \delta = \alpha A_t(K_t/L_t)^{\alpha-1}\)に対応（NKでは資本コストをレンタル料\(r_t^k\)と分解する点が異なる）。対称均衡では全企業同一。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card foc">
+    <div class="eq-head">
+      <div class="eq-num-badge">27</div>
+      <div class="eq-head-title">企業FOC②：実質賃金＝労働の限界生産物（MPL） <span class="new-badge">v2拡張</span></div>
+      <span class="eq-ref">RBC §5 Eq.20と同形</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[w_t = (1-\alpha)A_t\left(\frac{K_t}{H_t}\right)^\alpha = \frac{(1-\alpha)Y_t}{H_t}\]
+      </div>
+      <div class="info-block wide" style="margin-top:0;"><div class="info-label">式の意味</div><div class="info-text">実質賃金＝労働の限界生産物（MPL）。RBC §5 Eq.20と同一の形式。Eq.25の家計労働供給条件と連立することで均衡賃金\(w_t\)・均衡労働\(H_t\)が決まる。</div></div>
+    </div>
+  </div>
+
+  <div class="eq-card foc">
+    <div class="eq-head">
+      <div class="eq-num-badge">28</div>
+      <div class="eq-head-title">FOC③（資本）：投資のオイラー方程式 <span class="new-badge">v2新規追加</span></div>
+      <span class="eq-ref">RBC §5 Eq.16・17の名目版</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\lambda_t P_t = \beta E_t\!\left[\lambda_{t+1}(R_{t+1}^k + (1-\delta)P_{t+1})\right]\]
+        \[\Longleftrightarrow\quad 1 = \beta E_t\!\left[\left(\frac{C_{t+1}}{C_t}\right)^{-\sigma}\!\!\left(r_{t+1}^k + 1-\delta\right)\right]\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">導出</div>
+          <div class="info-text">Lagrangian（Eq.23）を\(K_{t+1}\)で偏微分してゼロ（\(K_{t+1}\)は資本蓄積式\(K_{t+1}=(1-\delta)K_t+I_t\)を通じてt+1期の生産・資産価値に影響）。\(\lambda_t P_t = C_t^{-\sigma}\)（Eq.24）を代入して\(\lambda_t\)を消去すると最終式が得られる。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">RBC §5 Eq.17との対応</div>
+          <div class="info-text">RBCのオイラー方程式：\(1 = \beta R_{t+1}(C_{t+1}/C_t)^{-\sigma}\)（\(R_{t+1}=r_{t+1}^k+1-\delta\)がグロス実質リターン）と完全に同一の形式。定常状態では\(r^{k*}+1-\delta = 1/\beta\)（修正黄金律、RBC §8と同一）。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card foc">
+    <div class="eq-head">
+      <div class="eq-num-badge">29</div>
+      <div class="eq-head-title">FOC④（国債）：名目オイラー方程式（v1と同一）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[1 = \beta(1+i_t)\,E_t\!\left[\left(\frac{C_{t+1}}{C_t}\right)^{-\sigma}\!\frac{P_t}{P_{t+1}}\right] = \beta(1+i_t)\,E_t\!\left[\left(\frac{C_{t+1}}{C_t}\right)^{-\sigma}\!\frac{1}{1+\pi_{t+1}}\right]\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">無裁定条件（資本vs国債）</div>
+          <div class="info-text">Eq.28（資本のオイラー）とEq.29（国債のオイラー）を連立すると：\[r_{t+1}^k + 1-\delta = \frac{1+i_t}{E_t(1+\pi_{t+1})} \approx 1+i_t-E_t\pi_{t+1}\]「資本の実質グロスリターン＝国債の実質グロスリターン」——完全資本市場・リスクプレミアムゼロのもとでの無裁定条件。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">金融政策の需要チャンネル</div>
+          <div class="info-text">CBが\(i_t\uparrow\)（金融引締）→右辺\((1+i_t)/(1+E_t\pi_{t+1})\uparrow\)（実質金利上昇）→Eq.28より資本投資に移る誘引が強まる一方、国債のリターンも上昇して消費を抑制→DIS（Eq.35）でGDPギャップ\(x_t\downarrow\)。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §9 資本蓄積・TFP・政府支出過程 -->
+<div class="section" id="s9">
+  <div class="section-header">
+    <span class="section-num">§9</span>
+    <span class="section-title">資本蓄積式・TFP確率過程・政府支出過程</span>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">30</div>
+      <div class="eq-head-title">資本蓄積式（RBCと完全に同一） <span class="new-badge">v2追加</span></div>
+      <span class="eq-ref">RBC §7 Eq.22と同一</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[K_{t+1} = (1-\delta)K_t + I_t \quad\Longleftrightarrow\quad I_t = K_{t+1} - (1-\delta)K_t\]
+        \[\text{対数線形化：}\quad \hat{K}_{t+1} = (1-\delta)\hat{K}_t + \delta\hat{I}_t\]
+      </div>
+      <div class="info-block wide" style="margin-top:0;">
+        <div class="info-label">式の意味・NKモデルの動学への影響</div>
+        <div class="info-text">RBC §7 Eq.22と完全に同一。来期の資本ストック＝今期の減耗後の資本＋投資。定常状態では\(\bar{I}=\delta\bar{K}\)。<strong>資本蓄積式の追加によりNKモデルに先決変数（\(\hat{K}_t\)）が加わる</strong>——v1が先決変数ゼロ・ジャンプ変数のみだったのに対し、v2は鞍点均衡（先決変数\(\hat{K}_t\)＋ジャンプ変数\(x_t, \pi_t\)）という構造になる（§13で詳述）。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">31</div>
+      <div class="eq-head-title">TFP確率過程・政府支出過程（外生ショック） <span class="new-badge">v2拡張</span></div>
+      <span class="eq-ref">RBC §7 Eq.23・政府支出AR(1)</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\hat{A}_{t+1} = \rho_a\hat{A}_t + \varepsilon_{t+1}^a,\quad |\rho_a|<1,\quad \varepsilon_t^a\sim iid\,N(0,\sigma_a^2)\]
+        \[\hat{G}_{t+1} = \rho_g\hat{G}_t + \varepsilon_{t+1}^g,\quad |\rho_g|<1,\quad \varepsilon_t^g\sim iid\,N(0,\sigma_g^2)\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">TFP過程：RBC §7との対応</div>
+          <div class="info-text">RBC §7 Eq.23と同一。\(\rho_a\)が高いほどTFPショックが持続する。TFPショックは自然利子率\(r_t^n\)を変化させ（\(r_t^n \approx \sigma\rho_a\hat{A}_t\)）、DISを通じてGDPギャップに影響する。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">政府支出過程：v2の追加</div>
+          <div class="info-text">政府支出\(G_t\)をAR(1)外生過程として定式化（RBCの財政政策設定と同一）。一時的な財政拡張（\(\varepsilon_t^g>0\)）はDISを通じてGDPギャップを押し上げ（財政乗数効果）、NKPCを通じてインフレ圧力を生む。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §10 均衡方程式体系 -->
+<div class="section" id="s10">
+  <div class="section-header">
+    <span class="section-num">§10</span>
+    <span class="section-title">均衡方程式体系（完全なNK v2システム）</span>
+  </div>
+
+  <div class="eq-card nk">
+    <div class="eq-head">
+      <div class="eq-num-badge">32</div>
+      <div class="eq-head-title">自然産出水準と自然利子率（v2版）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[Y_t^n \equiv \text{（}P_t\text{が完全伸縮的なときの均衡産出）},\quad x_t = \hat{Y}_t - \hat{Y}_t^n\]
+        \[r_t^n = \sigma E_t[\hat{Y}_{t+1}^n - \hat{Y}_t^n] \approx \sigma\rho_a\hat{A}_t + \frac{\sigma s_G(\rho_g-1)}{s_C+s_I}\hat{G}_t\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">v1との違い（自然利子率への財政効果）</div>
+          <div class="info-text">v1：\(r_t^n = \sigma\rho_a\hat{A}_t\)（TFPのみ）。v2：政府支出変化も自然産出水準を動かすため、自然利子率に\(s_G\)を含む財政ショックの項が加わる。恒久的政府支出（\(\rho_g\to 1\)）では追加項→0（長期中立性）。一時的支出（\(\rho_g<1\)）では係数\((\rho_g-1)<0\)となり自然利子率を押し下げる方向に働く。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">【符号の注記】標準NK文献との比較</div>
+          <div class="info-text">標準的なGalí (2008) 型モデルでは一時的政府支出の増加が自然利子率を<strong>上昇</strong>させる（現在の資源逼迫→貯蓄動機の変化→自然レートアップ）。本モデルでの負符号は、市場清算条件\(Y_t^n = C_t^n+I_t^n+G_t\)から派生する自然産出の変化ペース（\(E_t[\hat{Y}_{t+1}^n - \hat{Y}_t^n]\)）の符号によって決まる——本モデル固有の集計係数\(s_C+s_I\)（資本込み）に依存するため、標準NKと結果が異なりうる。シミュレーションで正負を確認することを推奨。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">GDPギャップの解釈</div>
+          <div class="info-text">\(x_t>0\)：実際の産出が自然水準（価格伸縮時の産出）を上回る→インフレ圧力。\(x_t<0\)：デフレ圧力。自然産出水準\(Y_t^n\)自体もTFPショック・資本蓄積・政府支出によって動く（v2で複雑化）。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card nk">
+    <div class="eq-head">
+      <div class="eq-num-badge">33</div>
+      <div class="eq-head-title">動学的IS曲線（DIS）——v2：資本・財政拡張版</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[x_t = E_t[x_{t+1}] - \frac{1}{\bar\sigma}(\hat{i}_t - E_t[\pi_{t+1}] - r_t^n) + \frac{s_G}{\bar\sigma}\!\left(\hat{G}_t - E_t[\hat{G}_{t+1}]\right)\]
+        \[\hat{i}_t \equiv i_t - \bar{i},\quad r_t^n \equiv \text{自然利子率（定常値}r^*\text{からの乖離）}\]
+        \[\frac{1}{\bar\sigma} = \frac{s_C}{\sigma} + \frac{s_I\beta r^{k*}}{\sigma}\cdot(\text{投資の実質金利弾力性})\;\approx\;\frac{1}{\sigma}\text{（簡略版）}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">v1との違い①：有効IESパラメーター</div>
+          <div class="info-text">v1では\(1/\sigma\)のみ（消費の異時点間代替）。v2では投資が実質金利に反応するため有効パラメーター\(1/\bar\sigma\)が増大。資本収益性（\(r^{k*}\)）が高いほど、金融政策の需要への影響が強くなる。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">v1との違い②：財政効果項</div>
+          <div class="info-text">第3項\(+(s_G/\bar\sigma)(\hat{G}_t - E_t\hat{G}_{t+1})\)が財政の直接効果。<strong>一時的な政府支出拡大</strong>（\(\hat{G}_t > E_t\hat{G}_{t+1}\)）はGDPギャップをプラスに押し上げる（財政乗数）。恒久的な拡大（\(\hat{G}_t = E_t\hat{G}_{t+1}\)）では消費が完全にクラウドアウトされ直接効果ゼロ（リカード等価定理の動学的表現）。</div>
+        </div>
+        <div class="info-block wide">
+          <div class="info-label">3つの需要チャンネルの整理</div>
+          <div class="info-text">①<strong>消費チャンネル</strong>：\(-(1/\bar\sigma)(i_t - E_t\pi_{t+1} - r_t^n)\)——実質金利が自然利子率を上回ると消費抑制（v1と同じ）<br>②<strong>投資チャンネル</strong>（v2追加）：資本のMPKが下がると投資抑制、資本蓄積式（Eq.30）の動学が波及<br>③<strong>財政チャンネル</strong>（v2追加）：一時的政府支出拡大がGDPギャップを押し上げる（財政乗数）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card nk">
+    <div class="eq-head">
+      <div class="eq-num-badge">34</div>
+      <div class="eq-head-title">NKフィリップス曲線（NKPC）——Eq.10の再掲</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\pi_t = \beta E_t[\pi_{t+1}] + \tilde{\kappa}\,x_t,\qquad \tilde{\kappa} = \kappa\!\left(\sigma+\frac{\phi}{1-\alpha}\right),\quad\kappa=\frac{(1-\mu)(1-\mu\beta)}{\mu}\]
+      </div>
+      <div class="info-block wide" style="margin-top:0;"><div class="info-label">v1との比較</div><div class="info-text">v1の傾き\(\tilde\kappa^{(1)}=\kappa(\sigma+\phi)\)よりv2の\(\tilde\kappa^{(2)}=\kappa(\sigma+\phi/(1-\alpha))\)の方が大きい（\(\alpha>0\)のとき）。資本があると短期に固定された資本に対して労働で産出増を賄う→賃金・実質MC上昇が急→NKPCの傾きが急。\(\alpha\to 0\)でv1に収束。</div></div>
+    </div>
+  </div>
+
+  <div class="eq-card gov">
+    <div class="eq-head">
+      <div class="eq-num-badge">35</div>
+      <div class="eq-head-title">テイラー・ルール（v1と同形）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\hat{i}_t = \delta_\pi\pi_t + \delta_x x_t + u_t,\qquad\delta_\pi > 1\;\text{（テイラー原理）}\]
+        \[\text{水準表示：}\quad i_t = \underbrace{\bar{i}}_{\displaystyle=r^*=\tfrac{1}{\beta}-1} + \delta_\pi\pi_t + \delta_x x_t + u_t,\qquad \hat{i}_t \equiv i_t - \bar{i}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">v1との変更なし（形式）・v3表記統一</div>
+          <div class="info-text">テイラー・ルールの形式はv1と同一。v3では対数線形化体系の他の変数（DIS・NKPC）との整合性のため\(\hat{i}_t = i_t - \bar{i}\)（定常名目金利からの乖離）で表記を統一。定常状態では\(\bar{i} = r^* = 1/\beta - 1\)かつ\(\pi^*=0, x^*=0, u^*=0\)より\(\hat{i}^*=0\)——一貫性が確保される。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">財政政策との相互作用</div>
+          <div class="info-text">財政拡張（\(\hat{G}_t\uparrow\）→DIS（Eq.33）で\(x_t\uparrow\)→テイラー・ルールで\(i_t\uparrow\)→DISの\((i_t-E_t\pi_{t+1})\uparrow\)→クラウドアウト。テイラー原理（\(\delta_\pi>1\)）が強いほど財政乗数が小さくなる（価格安定と財政安定の相互依存）。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card system">
+    <div class="eq-head">
+      <div class="eq-num-badge">36</div>
+      <div class="eq-head-title">v2の完全均衡方程式体系——コアブロック（対数線形化済み）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\begin{aligned}
+        \textbf{(I)}&\quad x_t = E_t[x_{t+1}] - \tfrac{1}{\bar\sigma}(\hat{i}_t - E_t[\pi_{t+1}] - r_t^n) + \tfrac{s_G}{\bar\sigma}(\hat{G}_t - E_t\hat{G}_{t+1}) &\text{DIS（資本・財政拡張）}\\[6pt]
+        \textbf{(II)}&\quad \pi_t = \beta E_t[\pi_{t+1}] + \tilde\kappa\, x_t &\text{NKPC（資本込み）}\\[6pt]
+        \textbf{(III)}&\quad \hat{i}_t = \delta_\pi\pi_t + \delta_x x_t + u_t &\text{テイラー・ルール（乖離形式）}\\[6pt]
+        \textbf{(IV)}&\quad \hat{K}_{t+1} = (1-\delta)\hat{K}_t + \delta\hat{I}_t &\text{資本蓄積（先決変数の動学）}\\[6pt]
+        \textbf{(V)}&\quad \hat{Y}_t = s_C\hat{C}_t + s_I\hat{I}_t + s_G\hat{G}_t &\text{財市場清算}\\[6pt]
+        \textbf{(VI)}&\quad \hat{b}_{t} = R^{B*}\hat{b}_{t-1} + (s_G/s_B)\hat{G}_t - (s_\tau/s_B)\hat{\tau}_t - (s_\omega/s_B)\hat{\omega}_t &\text{政府BC（状態変数）}\\[6pt]
+        \textbf{(VII)}&\quad \hat{m}_t - \hat{m}_{t-1} = \widehat{\Delta B}^{\mathit{CB}}_t + \bar{i}\hat{m}_{t-1} + \bar{m}\hat{i}_{t-1} &\text{CB BC（ベースマネー動学）}\\[6pt]
+        \textbf{(VIII)}&\quad \hat{A}_{t+1} = \rho_a\hat{A}_t + \varepsilon_{t+1}^a;\quad \hat{G}_{t+1}=\rho_g\hat{G}_t+\varepsilon_{t+1}^g &\text{外生ショック過程}
+        \end{aligned}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">変数の自由度</div>
+          <div class="info-text"><strong>先決変数：</strong>\(\hat{K}_t, \hat{b}_t, \hat{m}_t, \hat{A}_t, \hat{G}_t\)（5本）<br><strong>ジャンプ変数（非先決）：</strong>\(x_t, \pi_t, i_t, \hat{C}_t, \hat{I}_t, \hat{H}_t, \hat{Y}_t\)（7本）<br>v1の3本（\(x_t,\pi_t,i_t\)）から大幅に拡張。先決変数が増えたことでBK条件の分析が複雑化（§13）。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">リカード等価・キャッシュレス極限での簡略化</div>
+          <div class="info-text">① リカード等価（代表的家計・一括税）が成立するとき：\(\hat{b}_t\)（VI）と\(\hat\tau_t\)はコアブロック（I）〜（V）に影響しない（分離）。② キャッシュレス極限（\(\bar{m}=0\)）：（VII）が恒等的に\(0=0\)となり消える。これら二つの仮定のもとで（I）〜（V）と（VIII）の6本が実質的な均衡システムを形成。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §11 定常状態 -->
+<div class="section" id="s11">
+  <div class="section-header">
+    <span class="section-num">§11</span>
+    <span class="section-title">定常状態の計算（RBC §8と対応）</span>
+  </div>
+
+  <div class="eq-card ss">
+    <div class="eq-head">
+      <div class="eq-num-badge">37</div>
+      <div class="eq-head-title">定常状態の均衡条件一覧（v2：資本・財政・CB込み）</div>
+      <span class="eq-ref">RBC §8 Eq.24と同構造</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\begin{aligned}
+        &\text{（i）名目変数：}\quad \pi^* = 0,\quad x^* = 0,\quad \bar{i} = r^* = \tfrac{1}{\beta}-1\\[6pt]
+        &\text{（ii）修正黄金律（RBC §8 Eq.24-Iと同一）：}\quad r^{k*} + 1-\delta = \tfrac{1}{\beta}\\[6pt]
+        &\text{（iii）定常投資（RBC §8 Eq.24-IIと同一）：}\quad \bar{I} = \delta\bar{K},\quad\bar{K} = \!\left(\frac{r^{k*}}{\alpha\bar{A}}\right)^{\!\frac{1}{\alpha-1}}\!\bar{H}\\[6pt]
+        &\text{（iv）定常産出・消費：}\quad \bar{Y} = \bar{A}\bar{K}^\alpha\bar{H}^{1-\alpha},\quad \bar{C} = \bar{Y}-\bar{I}-\bar{G}\\[6pt]
+        &\text{（v）定常実質賃金・労働：}\quad \bar{w} = (1-\alpha)\bar{A}(\bar{K}/\bar{H})^\alpha,\quad \chi\bar{H}^\phi = \bar{w}\,\bar{C}^{-\sigma}\\[6pt]
+        &\text{（vi）政府BC定常値：}\quad (\bar{R}^B-1)\bar{b} = \bar{G}-\bar\tau-\bar\omega\quad\left(\bar{R}^B = \tfrac{1}{\beta}\right)\\[6pt]
+        &\text{（vii）CB BS定常値：}\quad \bar{m} = \frac{\bar\omega}{\bar{i}} = \bar\omega\beta\quad\text{（シニョレッジ＝金利×マネー）}
+        \end{aligned}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">RBC §8との対応（i）〜（v）</div>
+          <div class="info-text">修正黄金律（ii）・定常投資（iii）・産出（iv）・賃金（v）はRBC §8 Eq.24（I'）〜（V'）と完全に同一の形式。NKでは名目変数の定常値（i）が加わる。インフレ目標\(\pi^*>0\)に一般化するときは\(\bar{R}^B=(1+\bar{i})/(1+\pi^*)\)に修正。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">財政・CB定常値（vi）（vii）</div>
+          <div class="info-text">（vi）「利払い費＝プライマリー赤字＋シニョレッジ」：財政の持続可能性。（vii）「シニョレッジ＝名目金利×ベースマネー」：定常では\(\bar\Omega/P^* = \bar{i}\bar{m}\)。キャッシュレス極限（\(\bar{m}=0\)）では（vii）が消え、（vi）は\(\bar{G}=\bar\tau\)（均衡財政）に帰着してRBCに収束。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §12 対数線形近似と状態空間表現 -->
+<div class="section" id="s12">
+  <div class="section-header">
+    <span class="section-num">§12</span>
+    <span class="section-title">対数線形近似と状態空間表現（全変数・財政余力分析）<span class="new-badge">v3拡張</span></span>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">38</div>
+      <div class="eq-head-title">先決変数とジャンプ変数の分類（v3の完全リスト）</div>
+    </div>
+    <div class="eq-body">
+      <table class="var-table">
+        <tr><th>変数</th><th>区分</th><th>決定のタイミング</th><th>v1との差異</th></tr>
+        <tr>
+          <td>\(\hat{K}_t\)</td>
+          <td><span class="tag state">先決変数</span></td>
+          <td>t-1期末の投資決定により物理的に確定（Eq.30）</td>
+          <td><strong>v2追加</strong>（v1では存在しない）</td>
+        </tr>
+        <tr>
+          <td>\(\hat{b}_t\)</td>
+          <td><span class="tag state">先決変数</span></td>
+          <td>t-1期末の国債発行量で確定（Eq.11政府BC）</td>
+          <td><strong>v2追加</strong></td>
+        </tr>
+        <tr>
+          <td>\(\hat{m}_t\)</td>
+          <td><span class="tag state">先決変数（政策依存）</span></td>
+          <td>CBの金融操作で決定（Eq.15 CB BC）</td>
+          <td><strong>v2追加</strong></td>
+        </tr>
+        <tr>
+          <td>\(\hat{A}_t, \hat{G}_t\)</td>
+          <td><span class="tag exo">外生・先決変数</span></td>
+          <td>AR(1)過程で前期から引き継ぎ（Eq.31）</td>
+          <td>\(\hat{G}_t\)はv2追加</td>
+        </tr>
+        <tr>
+          <td>\(x_t, \pi_t\)</td>
+          <td><span class="tag jump">ジャンプ変数</span></td>
+          <td>t期にDIS・NKPC・TRで内生決定</td>
+          <td>v1と同じ</td>
+        </tr>
+        <tr>
+          <td>\(i_t\)</td>
+          <td><span class="tag jump">ジャンプ変数</span></td>
+          <td>テイラー・ルール（Eq.35）で\(\pi_t, x_t\)と同時決定</td>
+          <td>v1と同じ</td>
+        </tr>
+        <tr>
+          <td>\(\hat{C}_t, \hat{I}_t, \hat{H}_t, \hat{Y}_t, \hat{w}_t, \hat{r}_t^k\)</td>
+          <td><span class="tag jump">ジャンプ変数（静学的）</span></td>
+          <td>同時点の代数方程式（Eq.25〜Eq.36）で決定</td>
+          <td>\(\hat{I}_t, \hat{r}_t^k\)はv2追加</td>
+        </tr>
+      </table>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">v1→v2での変化</div>
+          <div class="info-text"><strong>v1</strong>：先決変数0本、ジャンプ変数2本（\(x_t, \pi_t\)）→「BK：不安定2＝ジャンプ2」<br><strong>v2</strong>：先決変数3本（\(\hat{K}_t, \hat{b}_t, \hat{m}_t\)）＋外生2本、ジャンプ2本→「BK：不安定2、安定≥3」という構造に変化（§13参照）。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">実効的な縮約</div>
+          <div class="info-text">リカード等価（\(\hat{b}_t\)→実体変数に影響しない）＋キャッシュレス極限（\(\hat{m}_t=0\)）を仮定するとコアシステムは先決変数\(\hat{K}_t\)（1本）＋ジャンプ変数\(x_t, \pi_t\)（2本）に縮約。これがv2の「有効な」状態空間（§13で分析）。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card system">
+    <div class="eq-head">
+      <div class="eq-num-badge">39</div>
+      <div class="eq-head-title">縮約版の状態空間表現（先決変数\(\hat{K}_t\)＋ジャンプ変数\((x_t,\pi_t)\)）——リカード等価＋キャッシュレス極限</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\begin{bmatrix}E_t x_{t+1}\\ E_t\pi_{t+1}\end{bmatrix} = \underbrace{\begin{bmatrix}1+\tfrac{\delta_x}{\bar\sigma} & \tfrac{\delta_\pi}{\bar\sigma}\\ -\tilde\kappa & \tfrac{1}{\beta}\end{bmatrix}}_{\Gamma_{JJ}}\begin{bmatrix}x_t\\ \pi_t\end{bmatrix} + \underbrace{\begin{bmatrix}-\tfrac{1}{\bar\sigma}\\ 0\end{bmatrix}}_{} r_t^n + \underbrace{\begin{bmatrix}\tfrac{s_G}{\bar\sigma}\\ 0\end{bmatrix}}_{}(\hat{G}_t-E_t\hat{G}_{t+1})\]
+        \[\hat{K}_{t+1} = (1-\delta)\hat{K}_t + \delta\hat{I}_t\quad\text{（先決変数の遷移方程式）}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">ブロック構造（RBC §9〜10との比較）</div>
+          <div class="info-text">RBCでは\((\hat{K}_t, \hat{C}_t)\)の2×2行列差分方程式（§9の\(\Gamma_{2\times2}\)）で鞍点均衡を分析。v2では資本ブロック（\(\hat{K}_t, \hat{I}_t\)）とNKブロック（\(x_t, \pi_t\)）が連立する。資本の動学が自然産出水準を通じてNKブロックのドライビング項\(r_t^n\)に影響する。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">縮約の仮定——Eq.40で全変数に拡張</div>
+          <div class="info-text">本式はリカード等価（\(\hat{b}_t\)がコアブロックに影響しない）＋キャッシュレス極限（\(\hat{m}_t=0\)）の2条件下での縮約版。<strong>財政余力分析や量的緩和の分析には\(\hat{b}_t, \hat{m}_t\)を保持した全変数版（Eq.40）が必要。</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Eq.40: Full State Space -->
+  <div class="eq-card system">
+    <div class="eq-head">
+      <div class="eq-num-badge">40</div>
+      <div class="eq-head-title">全変数の完全状態空間表現（財政余力分析用）<span class="new-badge">v3追加</span></div>
+    </div>
+    <div class="eq-body">
+
+      <!-- 1. Variable Definitions -->
+      <div class="info-block wide" style="margin-bottom:1rem;">
+        <div class="info-label">状態ベクトルの定義（7次元完全システム）</div>
+        <div class="info-text">
+          先決変数（状態）：\(\mathbf{s}_t = \bigl(\hat{K}_t,\;\hat{b}_t,\;\hat{m}_t,\;\hat{A}_t,\;\hat{G}_t\bigr)^{\!\top}\in\mathbb{R}^5\) &nbsp;|&nbsp;
+          ジャンプ変数：\(\mathbf{j}_t = \bigl(x_t,\;\pi_t\bigr)^{\!\top}\in\mathbb{R}^2\) &nbsp;|&nbsp;
+          補助変数（静学的決定）：\(\hat{i}_t,\;\hat{C}_t,\;\hat{I}_t,\;\hat{H}_t,\;\hat{Y}_t,\;\hat{r}_t^k,\;\hat{\omega}_t\)
+        </div>
+      </div>
+
+      <!-- 2. Full block matrix system -->
+      <div class="formula-box">
+        \[\underbrace{\begin{bmatrix}E_t[x_{t+1}]\\[4pt]E_t[\pi_{t+1}]\\[4pt]\hat{K}_{t+1}\\[4pt]\hat{b}_{t+1}\\[4pt]\hat{m}_{t+1}\\[4pt]\hat{A}_{t+1}\\[4pt]\hat{G}_{t+1}\end{bmatrix}}_{\mathbf{F}_{t+1}}
+        = \underbrace{\begin{bmatrix}\Gamma_{JJ} & \Gamma_{JS}\\[4pt] \Gamma_{SJ} & \Gamma_{SS}\end{bmatrix}}_{\Gamma_{7\times7}}\underbrace{\begin{bmatrix}x_t\\\pi_t\\\hat{K}_t\\\hat{b}_t\\\hat{m}_t\\\hat{A}_t\\\hat{G}_t\end{bmatrix}}_{\mathbf{z}_t}
+        + \underbrace{\begin{bmatrix}u_t/\bar{\sigma}\\0\\0\\-\tfrac{s_\omega}{s_B}u_t\bar{m}\\\bar{m}\,u_t\\0\\0\end{bmatrix}}_{\text{金融ショック項}}
+        + \underbrace{\begin{bmatrix}0\\0\\0\\\tfrac{s_G}{s_B}\varepsilon_{t+1}^g\\0\\\varepsilon_{t+1}^a\\\varepsilon_{t+1}^g\end{bmatrix}}_{\text{構造ショック項}}\]
+      </div>
+
+      <!-- 3. Gamma_JJ and Gamma_JS -->
+      <div class="formula-box">
+        \[\text{【ジャンプ変数ブロック（NK コア）】}\]
+        \[\Gamma_{JJ} = \begin{bmatrix}1+\dfrac{\delta_x}{\bar\sigma} & \dfrac{\delta_\pi}{\bar\sigma}\\[10pt]-\tilde\kappa & \dfrac{1}{\beta}\end{bmatrix}\]
+        \[\Gamma_{JS} = \begin{bmatrix}0 & 0 & 0 & \gamma_{xA} & \gamma_{xG}\\[6pt] 0 & 0 & 0 & 0 & 0\end{bmatrix}\]
+        \[\gamma_{xA} \equiv -\frac{\sigma\rho_a}{\bar\sigma}\quad\text{（TFPショック→自然利子率→DIS）}\]
+        \[\gamma_{xG} \equiv \frac{s_G(1-\rho_g)}{\bar\sigma}\cdot\frac{s_C+s_I+\sigma}{s_C+s_I}\quad\text{（一時的財政拡張→自然利子率＋DIS直接効果）}\]
+      </div>
+
+      <!-- 4. State evolution matrices -->
+      <div class="formula-box">
+        \[\text{【先決変数ブロック（状態遷移）】}\]
+        \[\Gamma_{SJ} = \begin{bmatrix}\psi_{Kx} & \psi_{K\pi}\\[4pt]-\dfrac{s_\omega\bar{m}\,\delta_x}{s_B} & -\dfrac{s_\omega\bar{m}\,\delta_\pi}{s_B}\\[4pt]\bar{m}\,\delta_x & \bar{m}\,\delta_\pi\\[4pt]0 & 0\\[4pt]0 & 0\end{bmatrix}\]
+        \[\Gamma_{SS} = \begin{bmatrix}(1-\delta) & 0 & 0 & \psi_{KA} & \psi_{KG}\\[4pt]0 & R^{B*} & -\dfrac{s_\omega\bar{i}}{s_B} & 0 & \dfrac{s_G\rho_g}{s_B}\\[4pt]0 & 0 & (1+\bar{i}) & 0 & 0\\[4pt]0 & 0 & 0 & \rho_a & 0\\[4pt]0 & 0 & 0 & 0 & \rho_g\end{bmatrix}\]
+      </div>
+
+      <table class="var-table" style="margin-top:0.5rem;">
+        <tr><th>係数</th><th>定義・出所</th><th>計算方法</th></tr>
+        <tr><td>\(\psi_{Kx},\psi_{K\pi}\)</td><td>\((x_t,\pi_t)\to\hat{I}_t\to\hat{K}_{t+1}\)への部分効果</td><td>市場清算（V）＋静学均衡条件から数値的に計算（モデルパラメーター依存）</td></tr>
+        <tr><td>\(\psi_{KA},\psi_{KG}\)</td><td>\((\hat{A}_t,\hat{G}_t)\to\hat{I}_t^n\to\hat{K}_{t+1}\)（自然産出経由）</td><td>同上</td></tr>
+        <tr><td>\(R^{B*}=1/\beta\)</td><td>定常実質国債グロスリターン（修正黄金律）</td><td>\(\bar{R}^B = 1/\beta\)</td></tr>
+        <tr><td>\(\bar{m}\delta_\pi,\;\bar{m}\delta_x\)</td><td>テイラー・ルール→名目金利\(\hat{i}_t\)→シニョレッジ→貨幣残高への波及</td><td>\(\hat{\omega}_t = \bar{i}\hat{m}_{t-1}+\bar{m}\hat{i}_{t-1}\)の対数線形化</td></tr>
+      </table>
+
+      <!-- 5. Fiscal space module - THE KEY PART -->
+      <div class="summary-box" style="margin-top:1.2rem;">
+        <h3>【財政余力分析モジュール】——政府債務ダイナミクスの完全展開</h3>
+        <div class="formula-box" style="background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.15);">
+          \[\text{（Eq.36-VI を展開・全変数で明示）}\]
+          \[\hat{b}_{t+1} = \underbrace{R^{B*}\hat{b}_t}_{\text{利払い費}} + \underbrace{\frac{s_G}{s_B}\hat{G}_{t+1}}_{\text{財政支出}} - \underbrace{\frac{s_\tau}{s_B}\hat{\tau}_{t+1}}_{\text{税収}} - \underbrace{\frac{s_\omega}{s_B}\hat{\omega}_{t+1}}_{\text{シニョレッジ}}\]
+          \[\text{シニョレッジの展開：}\quad\hat{\omega}_{t+1} = \bar{i}\hat{m}_t + \bar{m}\hat{i}_t = \bar{i}\hat{m}_t + \bar{m}(\delta_\pi\pi_t + \delta_x x_t + u_t)\]
+          \[\Longrightarrow\quad \hat{b}_{t+1} = R^{B*}\hat{b}_t + \frac{s_G\rho_g}{s_B}\hat{G}_t - \frac{s_\tau}{s_B}\hat{\tau}_{t+1} - \frac{s_\omega\bar{i}}{s_B}\hat{m}_t - \frac{s_\omega\bar{m}}{s_B}(\delta_\pi\pi_t+\delta_x x_t) + \frac{s_G}{s_B}\varepsilon_{t+1}^g - \frac{s_\omega\bar{m}}{s_B}u_t\]
+        </div>
+        <div class="summary-flow">
+          <div class="flow-item">
+            <div class="flow-label">金融政策チャンネル</div>
+            <div class="flow-desc">CB利上げ（\(\hat{i}_t\uparrow\)→\(\delta_\pi\pi_t + \delta_x x_t\uparrow\)）はシニョレッジ\(\hat{\omega}\uparrow\)を増やし\(\hat{b}_{t+1}\)を抑制。ただし同時に利払い費\(R^{B*}\hat{b}_t\)は変わらず（\(R^{B*}=1/\beta\)は定常値）。</div>
+          </div>
+          <div class="flow-item">
+            <div class="flow-label">財政ショックチャンネル</div>
+            <div class="flow-desc">政府支出ショック\(\varepsilon_{t+1}^g\)は\(\hat{b}\)を\(s_G/s_B\)倍で直接増加させる（財政乗数の「財政コスト」）。恒久的支出（\(\rho_g\to1\)）はAR(1)経由で\(\hat{G}_t\)を永続させ累積的に\(\hat{b}\)を押し上げる。</div>
+          </div>
+          <div class="flow-item">
+            <div class="flow-label">貨幣残高チャンネル</div>
+            <div class="flow-desc">\(\hat{m}_t\)が増えるとシニョレッジ増加（\(\bar{i}\hat{m}_t\)）→\(\hat{b}\)を抑制。QE（\(\hat{m}\uparrow\)）の「財政支援効果」の経路。キャッシュレス極限（\(\bar{m}\to0\)）では消滅。</div>
+          </div>
+          <div class="flow-item">
+            <div class="flow-label">NKコアとの連動</div>
+            <div class="flow-desc">GDP乖離\(x_t>0\)→インフレ→テイラー・ルールで\(\hat{i}_t\uparrow\)→シニョレッジ収入増加。景気回復は財政余力改善に寄与する（NK版の「自動安定化装置」）。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Fiscal Space / Sustainability -->
+      <div class="formula-box" style="margin-top:1rem;">
+        \[\text{【財政余力（Fiscal Space）の定量化】}\]
+        \[\text{FiscalSpace}_t \equiv E_t\!\left[\sum_{s=0}^{\infty}\beta^s\left(\frac{s_\tau}{s_B}\hat{\tau}_{t+s} + \frac{s_\omega}{s_B}\hat{\omega}_{t+s} - \frac{s_G}{s_B}\hat{G}_{t+s}\right)\right] = \hat{b}_t\]
+        \[\text{（統合政府の異時点間BC（Eq.20）の線形近似——}\hat{b}_t\text{が将来プライマリー収支・シニョレッジ改善の現在価値に等しい）}\]
+        \[\text{財政持続可能性条件：}\quad \lim_{T\to\infty}\beta^T\hat{b}_{T+t} = 0 \quad\Leftrightarrow\quad |R^{B*}\lambda_{\max}(\Gamma_{SS}^{b\text{-block}})| < 1\]
+      </div>
+
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">財政余力分析のシミュレーション手順</div>
+          <div class="info-text"><strong>Step 1：</strong>NKコア（Eq.39の\(\Gamma_{JJ}, \Gamma_{JS}\)）を解いて\((x_t,\pi_t)\)のインパルス応答を計算。<br><strong>Step 2：</strong>\(\hat{i}_t = \delta_\pi\pi_t + \delta_x x_t + u_t\)でNK金利経路を取得。<br><strong>Step 3：</strong>上記財政モジュールに代入して\(\hat{b}_{t+1}\)の経路を計算（財政ルール\(\hat{\tau}_{t+1}\)の仮定が必要）。<br><strong>Step 4：</strong>FiscalSpace指標の変化を各ショック別に分解（財政支出vs金融政策vs貨幣残高）。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">財政ルールの設定例（アクティブ財政 vs. パッシブ財政）</div>
+          <div class="info-text"><strong>パッシブ財政（標準NK）：</strong>\(\hat{\tau}_{t+1} = \phi_b\hat{b}_t + \phi_g\hat{G}_{t+1}\)——債務が増えると増税（\(\phi_b>0\)）。IGBCを満たすため\(\phi_b > R^{B*}-1 = 1/\beta-1\)が必要（Leeper 1991）。<br><strong>アクティブ財政（FTPL）：</strong>\(\hat{\tau}_{t+1}\)が独立に決定→物価\(P_t\)が跳んでIGBCを充足（§6参照）。</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- §13 均衡の決定性（BK条件） -->
+<div class="section" id="s13">
+  <div class="section-header">
+    <span class="section-num">§13</span>
+    <span class="section-title">均衡の決定性（Blanchard-Kahn条件）——v1→v2→v3（全変数）の変化</span>
+  </div>
+
+  <div class="eq-card system">
+    <div class="eq-head">
+      <div class="eq-num-badge">41</div>
+      <div class="eq-head-title">BK条件——v1・v2縮約・v2全変数（Eq.40）・RBCの比較</div>
+    </div>
+    <div class="eq-body">
+      <table class="var-table">
+        <tr><th>モデル</th><th>先決変数の数</th><th>ジャンプ変数の数</th><th>BK条件の要求</th><th>テイラー原理との関係</th></tr>
+        <tr>
+          <td><strong>NK v1</strong></td>
+          <td>0本</td>
+          <td>2本（\(x_t, \pi_t\)）</td>
+          <td>不安定固有値2本（\(\Gamma_{JJ}\)の固有値2本とも\(|\lambda|>1\)）</td>
+          <td>\(\delta_\pi>1\)で充足（テイラー原理）</td>
+        </tr>
+        <tr>
+          <td><strong>NK v2（縮約・Eq.39）</strong></td>
+          <td>1本（\(\hat{K}_t\)）</td>
+          <td>2本（\(x_t, \pi_t\)）</td>
+          <td>不安定2本＋安定≥1本（資本の方向に安定パスが存在）</td>
+          <td>テイラー原理に加え、資本の動学との整合が必要</td>
+        </tr>
+        <tr>
+          <td><strong>NK v3（全変数・Eq.40）</strong></td>
+          <td>5本（\(\hat{K}_t,\hat{b}_t,\hat{m}_t,\hat{A}_t,\hat{G}_t\)）</td>
+          <td>2本（\(x_t, \pi_t\)）</td>
+          <td>\(\Gamma_{7\times7}\)の不安定固有値がちょうど2本（ジャンプ変数の本数）、安定固有値5本（先決変数の本数）</td>
+          <td>テイラー原理＋財政ルール（\(\phi_b>0\)でパッシブ財政）で充足</td>
+        </tr>
+        <tr>
+          <td><strong>RBC（政府部門入り）</strong></td>
+          <td>2本（\(\hat{K}_t, \hat{b}_t\)）</td>
+          <td>2本（\(\hat{C}_t, \hat{R}_t\)）</td>
+          <td>不安定2本・安定2本の鞍点均衡（BK：不安定数＝ジャンプ数）</td>
+          <td>テイラー原理なし（実物モデル）</td>
+        </tr>
+      </table>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">全変数版（Eq.40）でのBK条件</div>
+          <div class="info-text"><strong>NKジャンプ方向（\(x_t, \pi_t\)）：</strong>\(\Gamma_{JJ}\)の固有値2本がともに\(|\lambda|>1\)——テイラー原理\(\delta_\pi>1\)で保証。<br><strong>財政方向（\(\hat{b}_t\)）：</strong>パッシブ財政ルール（\(\phi_b>R^{B*}-1\)）が成立するとき\(\hat{b}_t\)のダイナミクスが収束——先決変数の安定固有値として対応。<br><strong>貨幣残高方向（\(\hat{m}_t\)）：</strong>キャッシュレス極限（\(\bar{m}\to0\)）で\(\hat{m}_t\)の方程式が脱落——BK次元が縮約版（Eq.39）に帰着する。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">NKとRBCの均衡選択の融合</div>
+          <div class="info-text">全変数v3は「RBCの鞍点均衡（\(\hat{K}_t, \hat{b}_t\)の安定サドルパス）」と「NKの均衡決定性（\(x_t,\pi_t\)の不安定パスからの逃避）」と「貨幣・財政の持続可能性（\(\hat{m}_t\)のBK安定化）」の3条件が同時に必要。特に財政ルールの不在（アクティブ財政）では\(\hat{b}_t\)の固有値が\(R^{B*}=1/\beta>1\)で爆発的になり、均衡は物価の財政理論（FTPL）で決定される（§6参照）。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- §14 金融政策の目標関数・ZLB -->
+<div class="section" id="s14">
+  <div class="section-header">
+    <span class="section-num">§14</span>
+    <span class="section-title">金融政策の目標関数・ゼロ金利制約（ZLB）</span>
+  </div>
+
+  <div class="eq-card gov">
+    <div class="eq-head">
+      <div class="eq-num-badge">42</div>
+      <div class="eq-head-title">中央銀行の損失関数（ミクロ的基礎から）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\mathcal{W} = E_0\sum_{t=0}^{\infty}\beta^t\mathcal{L}_t,\qquad \mathcal{L}_t = \pi_t^2 + \lambda_x x_t^2\]
+        \[\lambda_x = \frac{\tilde\kappa}{\varepsilon} = \frac{\kappa(\sigma+\phi/(1-\alpha))}{\varepsilon}\quad\text{（\(\alpha>0\)のためv1より大）}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">損失関数のミクロ的導出</div>
+          <div class="info-text">Woodford（2003）の手法：家計効用関数（Eq.1）の2次近似として導出。\(\pi_t^2\)の項は企業間の価格格差（カルボ型不均一価格による資源配分の歪み）を表し、\(\lambda_x x_t^2\)の項は産出の独占的競争均衡からの乖離コスト。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">v2/v3での変化</div>
+          <div class="info-text">損失関数の形式はv1と同一だが、\(\lambda_x\)の値が変わる。資本（\(\alpha>0\)）により\(\tilde\kappa\)が大きいため\(\lambda_x^{v2}>\lambda_x^{v1}\)——GDPギャップに対するウェイトが増大。「神の分け前（divine coincidence）」（コストプッシュなければ\(x_t=0\)で\(\pi_t=0\)も達成）はv3でも成立する。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card" style="border-left-color:var(--accent2);">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="background:var(--accent2);">ZLB</div>
+      <div class="eq-head-title">ゼロ金利制約（ZLB）——資本・財政政策・CB予算制約との接続</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[i_t = \max\{0,\;\bar{i}+\delta_\pi\pi_t+\delta_x x_t+u_t\} \quad\Longleftrightarrow\quad \hat{i}_t = \max\{-\bar{i},\;\delta_\pi\pi_t+\delta_x x_t+u_t\}\]
+        \[\text{ZLB下（}\hat{i}_t=-\bar{i},\;i_t=0\text{）のDIS：}\quad x_t = E_t[x_{t+1}] + \frac{E_t[\pi_{t+1}]+r_t^n}{\bar\sigma} + \frac{s_G}{\bar\sigma}(\hat{G}_t-E_t\hat{G}_{t+1})\]
+        \[\text{ZLB下の財政余力（Eq.40財政モジュール）：}\quad \hat{b}_{t+1}\big|_{i_t=0} = R^{B*}\hat{b}_t + \frac{s_G\rho_g}{s_B}\hat{G}_t - \frac{s_\tau}{s_B}\hat{\tau}_{t+1} - \frac{s_\omega\bar{i}}{s_B}\hat{m}_t\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">ZLB下での財政政策の有効性</div>
+          <div class="info-text">テイラー・ルールが機能しない（\(\hat{i}_t=-\bar{i}\)固定）とき、DISの財政効果項\(+(s_G/\bar\sigma)(\hat{G}_t-E_t\hat{G}_{t+1})\)が唯一の積極的な需要刺激手段。一時的政府支出拡大（\(\hat{G}_t>E_t\hat{G}_{t+1}\)）がGDPギャップを改善する。ZLB下での財政乗数は通常時より大きい（Christiano et al. 2011）。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">ZLB×財政余力（v3 Eq.40の接続）</div>
+          <div class="info-text">ZLBでは\(\hat{i}_t=-\bar{i}\)のためシニョレッジの\(\bar{m}\delta_\pi\pi_t\)・\(\bar{m}\delta_x x_t\)項が消え、貨幣残高チャンネルは\(\bar{i}\hat{m}_t\)のみ有効。財政拡張による\(\hat{b}_{t+1}\)の上昇を抑えるには増税（\(\hat{\tau}_{t+1}\uparrow\)）またはQE（\(\hat{m}_t\uparrow\)によるシニョレッジ増）が必要——v3の財政余力モジュール（Eq.40）でこの相互依存を定量化できる。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Box -->
+  <div class="summary-box">
+    <h3>★ NK v3 の全体構造まとめ——RBCとv1・v2からの拡張経路</h3>
+    <div class="summary-flow">
+      <div class="flow-item">
+        <div class="flow-label">§1〜2　家計・企業</div>
+        <div class="flow-desc">資産定義に資本\(K_t\)と国債\(b_t\)。予算制約に投資\(I_t\)・税\(\tau_t\)。コブ＝ダグラス生産（RBC §1・§2と同設定）。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§3　カルボ価格設定</div>
+        <div class="flow-desc">NKPCの傾き\(\tilde\kappa=\kappa(\sigma+\phi/(1-\alpha))\)：資本により急傾斜（v1の\(\kappa(\sigma+\phi)\)より大）。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§4　財政政策</div>
+        <div class="flow-desc">政府フローBC・異時点間BC・ノンポンジ・リカード等価定理（RBC §3と同設定）。一時的財政拡大→DIS経由でGDPギャップ押し上げ。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§5　中央銀行BC</div>
+        <div class="flow-desc">CBバランスシート（\(B^{CB}=M\)）・シニョレッジ（\(\Omega_t=i_{t-1}M_{t-1}\)，定常\(\pi^*=0\)付近近似）・CB異時点間BC。テイラー・ルール↔公開市場操作の接続。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§6　統合政府BC</div>
+        <div class="flow-desc">政府BC＋CB BC→\(\Omega_t\)がキャンセル→統合BCはベースマネー増加が財源。アクティブ金融・パッシブ財政（標準NK）またはFTPL。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§10　均衡体系（v3表記統一）</div>
+        <div class="flow-desc">DIS・NKPC・テイラー・ルール（\(\hat{i}_t\)に統一）・資本蓄積・財市場・政府BC・CB BCの8方程式。KaTeX表記（\(\widehat{\Delta B}^{\mathit{CB}}_t\)等）も安定化。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§12 Eq.39　縮約版状態空間</div>
+        <div class="flow-desc">リカード等価＋キャッシュレス極限下で先決変数\(\hat{K}_t\)（1本）＋ジャンプ変数\((x_t,\pi_t)\)（2本）に縮約。BK条件：テイラー原理が核心。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§12 Eq.40【v3新規】全変数状態空間</div>
+        <div class="flow-desc">7次元完全システム\(\Gamma_{7\times7}\)——先決変数5本（\(\hat{K}_t,\hat{b}_t,\hat{m}_t,\hat{A}_t,\hat{G}_t\)）＋ジャンプ2本。財政余力分析モジュール（\(\hat{b}_{t+1}\)の展開・FiscalSpace指標）内包。</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 変更履歴 -->
+<div class="section" id="changelog" style="margin-top:3rem;">
+  <div class="section-header">
+    <span class="section-num">付記</span>
+    <span class="section-title">バージョン変更履歴</span>
+  </div>
+
+  <div class="changelog">
+    <span class="badge">v3→v4 修正・追加</span>
+    <span>① <strong>主要変数一覧の完全化（§0）</strong>：「v2追加の主要変数一覧」を「主要変数一覧」に改称し、モデルで使用するすべての変数（家計・企業・政府・中央銀行・外生ショック・定常値シェア比率）を網羅——数式中に不明変数が出たときの参照先として機能するよう設計</span>
+    <span>② <strong>Eq.11 実質政府BC表記統一</strong>：\(R_t^B b_{t-1}+G_t=\tau_t+b_t+\omega_t\) から \(b_t+\tau_t+\omega_t=G_t+R_t^B b_{t-1}\) に変更——\(b_t\)を期末残高として左辺に置くことで、Eq.36-(VI) の対数線形化系（\(\hat{b}_t = R^{B*}\hat{b}_{t-1}+\dots\)）との整合性が視覚的に明確に（Gemini/Grok指摘反映）</span>
+    <span>③ <strong>Eq.16 シニョレッジ分解のラベル精緻化</strong>：「実質シニョレッジ」→「貨幣増発益」に修正——Eq.19 の統合政府BC（\(\Delta m_t + \pi_t m_{t-1} = \omega_t\)）との表記の一貫性を確保（Gemini指摘反映）</span>
+    <span>④ <strong>変更履歴を末尾に移動</strong>：本文冒頭のchangelogを付記として末尾に集約——本文の読み始めをスムーズに</span>
+  </div>
+
+  <div class="changelog">
+    <span class="badge">v2→v3 修正・追加</span>
+    <span>① テイラー・ルール表記統一：\(\hat{i}_t \equiv i_t - \bar{i}\)（ハット付き乖離表記）に統一——対数線形化体系との整合性を確保（Gemini/Grok指摘反映）</span>
+    <span>② KaTeX表記修正：\(\widehat{\Delta B}^{\mathit{CB}}_t\) 等の添字・カバー表記を安定化</span>
+    <span>③ シニョレッジ近似（Eq.16）：\(\pi^*=0\)付近近似の明示</span>
+    <span>④ 自然利子率符号（Eq.32）：モデル固有の符号と標準NK文献との対比注記追加</span>
+    <span>⑤ §12 Eq.40【新規】：縮約版を全変数に拡張した完全状態空間表現——財政余力分析（\(\hat{b}_t\)ダイナミクス）に対応</span>
+  </div>
+
+  <div class="changelog">
+    <span class="badge">v1→v2 新規追加</span>
+    <span>① 資本蓄積：\(K_{t+1}=(1-\delta)K_t+I_t\)、コブ＝ダグラス生産（RBC §2・§7と同設定）</span>
+    <span>② 財政政策：政府フロー/異時点間BC・ノンポンジ・リカード等価（RBC §3と同設定）</span>
+    <span>③ 中央銀行BC：バランスシート・シニョレッジ・統合政府BC（v1にはなかった新規拡張）</span>
+  </div>
+</div>
+
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false }
+    ],
+    throwOnError: false, strict: false
+  });
+});
+</script>
+</body>
+</html>
