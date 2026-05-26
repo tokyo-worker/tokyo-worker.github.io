@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>「What about Japan?」論文 完全解説</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\\\(',right:'\\\\)',display:false},{left:'\\\\[',right:'\\\\]',display:true},{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+<style>
+:root {
+  --ink: #0f1923; --ink2: #2a3a4a;
+  --paper: #f3f0eb; --paper2: #e8e3da; --ruled: #c8c0b0;
+  --accent: #5a1a00; --accent2: #1a3a5a;
+  --gold: #9a6a00; --green: #1a5c2a; --purple: #4a1a6c;
+  --orange: #8b4a00; --teal: #0a4a5a; --cb: #5a3a00;
+  --eq-bg: #f5f0e8;
+  --mono: 'IBM Plex Mono', monospace;
+  --serif: 'Noto Serif JP', serif;
+  --sans: 'Noto Sans JP', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); background: var(--paper); color: var(--ink); line-height: 1.8; font-size: 14px; }
+
+header { background: var(--accent); color: #e8d0c0; padding: 3rem 2rem 2.5rem; position: relative; overflow: hidden; }
+header::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,255,255,.02) 40px,rgba(255,255,255,.02) 80px); }
+header .inner { position:relative; max-width:960px; margin:0 auto; }
+header .tag-line { font-family:var(--mono); font-size:.7rem; letter-spacing:.15em; color:#c8904a; margin-bottom:.8rem; text-transform:uppercase; }
+header h1 { font-family:var(--serif); font-size:1.7rem; font-weight:600; line-height:1.4; margin-bottom:1rem; }
+header .subtitle { font-size:.85rem; color:#c8a888; line-height:1.6; }
+
+main { max-width:960px; margin:0 auto; padding:2rem 1.5rem 5rem; }
+
+.changelog { display:flex; flex-wrap:wrap; gap:.5rem; background:var(--ink2); color:#c8dce8; font-family:var(--mono); font-size:.7rem; letter-spacing:.06em; padding:.75rem 1rem; margin-bottom:2rem; border-radius:2px; }
+.changelog .badge { background:var(--gold); color:#fff; padding:.1rem .45rem; border-radius:2px; }
+
+.toc { border:2px solid var(--ruled); background:white; border-radius:2px; padding:1.5rem; margin-bottom:2.5rem; }
+.toc-title { font-family:var(--serif); font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; border-bottom:1px solid var(--ruled); padding-bottom:.5rem; }
+.toc-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:.2rem 1.5rem; }
+.toc-item { display:flex; align-items:baseline; gap:.5rem; font-size:.85rem; color:var(--ink2); text-decoration:none; padding:.25rem 0; border-bottom:1px dotted transparent; transition:color .2s; }
+.toc-item:hover { color:var(--accent); border-bottom-color:var(--ruled); }
+.toc-item .toc-num { font-family:var(--mono); font-size:.7rem; color:var(--gold); flex-shrink:0; }
+
+.section { margin-bottom:3rem; }
+.section-header { display:flex; align-items:center; gap:.8rem; margin-bottom:1.5rem; padding-bottom:.6rem; border-bottom:2px solid var(--accent); }
+.section-num { font-family:var(--mono); font-size:.7rem; background:var(--accent); color:white; padding:.2rem .5rem; border-radius:2px; letter-spacing:.08em; }
+.section-title { font-family:var(--serif); font-size:1.1rem; font-weight:600; color:var(--accent); }
+
+.eq-card { background:white; border:1px solid var(--ruled); border-left:4px solid var(--accent); margin-bottom:1.5rem; border-radius:2px; }
+.eq-card.gov { border-left-color:var(--accent2); }
+.eq-card.cb { border-left-color:var(--teal); }
+.eq-card.hh { border-left-color:var(--green); }
+.eq-card.wedge { border-left-color:var(--gold); }
+.eq-card.dur { border-left-color:var(--purple); }
+.eq-card.welf { border-left-color:var(--orange); }
+.eq-card.cip { border-left-color:var(--ink2); }
+
+.eq-head { display:flex; align-items:center; gap:.8rem; padding:.65rem 1rem; border-bottom:1px solid var(--ruled); background:var(--eq-bg); }
+.eq-num-badge { font-family:var(--mono); font-size:.75rem; font-weight:500; background:var(--accent); color:white; width:2rem; height:2rem; display:flex; align-items:center; justify-content:center; border-radius:2px; flex-shrink:0; }
+.eq-card.gov .eq-num-badge { background:var(--accent2); }
+.eq-card.cb .eq-num-badge { background:var(--teal); }
+.eq-card.hh .eq-num-badge { background:var(--green); }
+.eq-card.wedge .eq-num-badge { background:var(--gold); }
+.eq-card.dur .eq-num-badge { background:var(--purple); }
+.eq-card.welf .eq-num-badge { background:var(--orange); }
+.eq-card.cip .eq-num-badge { background:var(--ink2); }
+
+.eq-head-title { font-weight:500; font-size:.9rem; color:var(--ink); flex:1; }
+.eq-ref { font-family:var(--mono); font-size:.68rem; color:#8090a0; background:var(--paper2); padding:.15rem .4rem; border-radius:2px; white-space:nowrap; }
+.eq-body { padding:1.2rem 1.2rem 1rem; }
+
+.formula-box { background:var(--paper); border:1px solid var(--ruled); padding:1rem 1.5rem; text-align:center; margin-bottom:1rem; overflow-x:auto; border-radius:2px; }
+
+.var-table { width:100%; border-collapse:collapse; font-size:.82rem; margin-bottom:1rem; }
+.var-table th { background:var(--paper2); padding:.4rem .7rem; text-align:left; border:1px solid var(--ruled); font-family:var(--mono); font-size:.72rem; letter-spacing:.05em; text-transform:uppercase; color:var(--ink2); font-weight:500; }
+.var-table td { padding:.45rem .7rem; border:1px solid var(--ruled); vertical-align:top; line-height:1.5; }
+.var-table tr:nth-child(even) td { background:#faf6f0; }
+
+.tag { display:inline-block; padding:.1rem .45rem; border-radius:2px; font-size:.68rem; font-family:var(--mono); font-weight:500; letter-spacing:.04em; color:white; margin:.1rem; white-space:nowrap; }
+.tag.exo { background:var(--green); } .tag.endo { background:var(--accent); }
+.tag.state { background:var(--purple); } .tag.param { background:var(--orange); }
+.tag.nom { background:var(--teal); } .tag.new { background:var(--gold); }
+.tag.gov { background:var(--accent2); }
+
+.info-grid { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; margin-top:.5rem; }
+@media(max-width:640px){ .info-grid { grid-template-columns:1fr; } .toc-grid { grid-template-columns:1fr; } header h1 { font-size:1.3rem; } }
+.info-block { background:var(--paper); border:1px solid var(--ruled); border-radius:2px; padding:.7rem .9rem; }
+.info-block.wide { grid-column:1/-1; }
+.info-label { font-family:var(--mono); font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); margin-bottom:.35rem; display:flex; align-items:center; gap:.3rem; }
+.info-label::before { content:'▸'; color:var(--gold); }
+.info-text { font-size:.84rem; color:var(--ink2); line-height:1.7; }
+
+.legend-strip { display:flex; flex-wrap:wrap; gap:.5rem; padding:1rem; background:var(--paper2); border:1px solid var(--ruled); margin-bottom:2rem; border-radius:2px; }
+
+.summary-box { background:var(--accent); color:#e0c8b8; border-radius:2px; padding:1.5rem; margin-top:1.5rem; }
+.summary-box h3 { font-family:var(--serif); font-size:1rem; color:white; margin-bottom:1rem; padding-bottom:.5rem; border-bottom:1px solid rgba(255,255,255,.2); }
+.summary-flow { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:.8rem; }
+.flow-item { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); padding:.8rem; border-radius:2px; }
+.flow-item .flow-label { font-family:var(--mono); font-size:.68rem; color:#c8a880; letter-spacing:.08em; margin-bottom:.3rem; }
+.flow-item .flow-desc { font-size:.82rem; color:#d8c0a8; }
+
+.param-section { background:white; border:1px solid var(--ruled); margin-bottom:2.5rem; border-radius:2px; }
+.param-section-title { background:var(--ink2); color:#d4dce8; font-family:var(--mono); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; padding:.5rem 1rem; }
+
+.highlight { background:#fff8e8; border-left:4px solid var(--gold); padding:.8rem 1rem; margin:.8rem 0; font-size:.88rem; border-radius:0 2px 2px 0; }
+.caution { background:#fef0e8; border-left:4px solid var(--orange); padding:.8rem 1rem; margin:.8rem 0; font-size:.88rem; border-radius:0 2px 2px 0; }
+
+/* Comparison table */
+.comp-table-wrap { overflow-x:auto; margin-bottom:2rem; }
+.comp-table { width:100%; border-collapse:collapse; font-size:.82rem; }
+.comp-table th { background:var(--ink2); color:#d4e0ec; padding:.6rem .8rem; text-align:left; border:1px solid var(--ruled); font-family:var(--mono); font-size:.72rem; letter-spacing:.05em; }
+.comp-table th.rbc-h { background:#1a4a2a; }
+.comp-table th.nk-h { background:#1a3a6a; }
+.comp-table th.jp-h { background:var(--accent); }
+.comp-table td { padding:.55rem .8rem; border:1px solid var(--ruled); vertical-align:top; line-height:1.6; }
+.comp-table tr:nth-child(even) td { background:#faf6f0; }
+.comp-table .row-label { font-family:var(--mono); font-size:.72rem; font-weight:500; background:var(--paper2); color:var(--ink2); white-space:nowrap; }
+.comp-table .cat-row td { background:var(--ink2); color:#c8d8e8; font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; font-weight:500; }
+
+.katex { font-size:1em; } .formula-box .katex { font-size:1.05em; }
+.new-badge { display:inline-block; font-family:var(--mono); font-size:.62rem; background:var(--teal); color:white; padding:.08rem .35rem; border-radius:2px; margin-left:.4rem; vertical-align:middle; }
+
+p { margin-bottom:.7rem; font-size:.88rem; color:var(--ink2); }
+</style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <div class="tag-line">Chien, Cole &amp; Lustig (NBER WP 31850, 2025) ― 完全解説</div>
+    <h1>「What about Japan?」論文<br>統合政府バランスシート・金融抑圧・厚生分析</h1>
+    <div class="subtitle">RBC / NKモデルの §0〜§14 と同一構成でまとめ、その後に論文固有の拡張論点を追加。<br>巻末に RBC・NK・本論文の三者比較表を掲載。</div>
+  </div>
+</header>
+<main>
+
+<div class="changelog">
+  <span class="badge">論文</span>
+  <span>Chien, Cole &amp; Lustig (2023 → 2025 revised)</span>
+  <span class="badge">対象</span>
+  <span>1997〜2023年の日本公共部門バランスシート</span>
+  <span class="badge">手法</span>
+  <span>会計分解 · 資産価格理論 · デュレーション分析 · 家計厚生計測</span>
+</div>
+
+<div class="toc">
+  <div class="toc-title">目次</div>
+  <div class="toc-grid">
+    <a class="toc-item" href="#s0"><span class="toc-num">§0</span>変数・パラメーター凡例</a>
+    <a class="toc-item" href="#s1"><span class="toc-num">§1</span>家計の最適化問題（デュレーション）</a>
+    <a class="toc-item" href="#s2"><span class="toc-num">§2</span>統合政府バランスシートの構築</a>
+    <a class="toc-item" href="#s3"><span class="toc-num">§3</span>金融抑圧のメカニズム（CIP乖離）</a>
+    <a class="toc-item" href="#s4"><span class="toc-num">§4</span>政府部門：資産付き財政BC</a>
+    <a class="toc-item" href="#s5"><span class="toc-num">§5</span>日銀のバランスシート（QE・YCC）</a>
+    <a class="toc-item" href="#s6"><span class="toc-num">§6</span>統合政府の予算制約</a>
+    <a class="toc-item" href="#s7"><span class="toc-num">§7</span>資産市場の清算条件</a>
+    <a class="toc-item" href="#s8"><span class="toc-num">§8</span>リスクプレミアム等価・リターン・ウェッジ</a>
+    <a class="toc-item" href="#s9"><span class="toc-num">§9</span>デュレーション動学（バランスシート変化）</a>
+    <a class="toc-item" href="#s10"><span class="toc-num">§10</span>均衡リターン体系と債務動学</a>
+    <a class="toc-item" href="#s11"><span class="toc-num">§11</span>リターン・ウェッジの定量化</a>
+    <a class="toc-item" href="#s12"><span class="toc-num">§12</span>デュレーション・ミスマッチと財政余力</a>
+    <a class="toc-item" href="#s13"><span class="toc-num">§13</span>財政持続可能性の条件</a>
+    <a class="toc-item" href="#s14"><span class="toc-num">§14</span>金融政策の目的と厚生分析</a>
+    <a class="toc-item" href="#s15"><span class="toc-num">§15</span>【論文固有】反事実シミュレーション</a>
+    <a class="toc-item" href="#s16"><span class="toc-num">§16</span>【論文固有】家計横断面の厚生計測</a>
+    <a class="toc-item" href="#s17"><span class="toc-num">§17</span>【論文固有】政策含意と結論</a>
+    <a class="toc-item" href="#s18"><span class="toc-num">§18</span>RBC・NK・本論文 三者比較表</a>
+  </div>
+</div>
+
+<!-- ===== §0 ===== -->
+<div class="section" id="s0">
+  <div class="section-header">
+    <span class="section-num">§0</span>
+    <span class="section-title">変数・パラメーター凡例</span>
+  </div>
+
+  <div class="legend-strip">
+    <span class="tag exo">外生変数</span>
+    <span class="tag endo">内生変数</span>
+    <span class="tag state">状態変数（先決）</span>
+    <span class="tag gov">政府・統合</span>
+    <span class="tag nom">名目変数</span>
+    <span class="tag new">論文固有</span>
+    <span class="tag param">パラメーター</span>
+  </div>
+
+  <div class="param-section">
+    <div class="param-section-title">深層パラメーター</div>
+    <table class="var-table">
+      <tr><th>記号</th><th>意味</th><th>典型値／実測</th><th>区分</th></tr>
+      <tr><td>\(\beta\)</td><td>家計の時間割引因子</td><td>0.99（四半期）</td><td><span class="tag param">パラメーター</span></td></tr>
+      <tr><td>\(\sigma\)</td><td>CRRA 相対的危険回避度</td><td>1〜2</td><td><span class="tag param">パラメーター</span></td></tr>
+      <tr><td>\(r^D\)</td><td>政府債務の実質リターン（1998-2023平均）</td><td>1.30% p.a.</td><td><span class="tag param">パラメーター</span></td></tr>
+      <tr><td>\(x\)</td><td>実質GDP成長率</td><td>0.03% p.a.（1997-2023）</td><td><span class="tag param">パラメーター</span></td></tr>
+      <tr><td>\(r^A\)</td><td>政府資産ポートフォリオの実質リターン</td><td>2.59% p.a.（1998-2023）</td><td><span class="tag param">パラメーター</span></td></tr>
+    </table>
+  </div>
+
+  <div class="param-section">
+    <div class="param-section-title">主要変数一覧</div>
+    <table class="var-table">
+      <tr><th>記号</th><th>意味</th><th>区分</th></tr>
+      <tr><td>\(D_t\)</td><td>統合政府の名目総負債残高（T-bill+国債+銀行準備）</td><td><span class="tag gov">政府・統合</span><span class="tag state">状態</span></td></tr>
+      <tr><td>\(A_t\)</td><td>統合政府の名目総資産残高（国内株+外国証券+貸出）</td><td><span class="tag gov">政府・統合</span><span class="tag state">状態</span></td></tr>
+      <tr><td>\(ND_t = D_t - A_t\)</td><td>純負債（Net Debt）</td><td><span class="tag gov">政府・統合</span><span class="tag new">論文固有</span></td></tr>
+      <tr><td>\(R^D_t\)</td><td>政府負債ポートフォリオのグロス実質リターン</td><td><span class="tag nom">名目</span></td></tr>
+      <tr><td>\(R^A_t\)</td><td>政府資産ポートフォリオのグロス実質リターン</td><td><span class="tag nom">名目</span></td></tr>
+      <tr><td>\(G_t\)</td><td>名目政府支出（利払い前）</td><td><span class="tag exo">外生</span></td></tr>
+      <tr><td>\(T_t\)</td><td>名目税収</td><td><span class="tag exo">外生</span></td></tr>
+      <tr><td>\(S_t = T_t - G_t\)</td><td>名目プライマリーサープラス</td><td><span class="tag endo">内生</span></td></tr>
+      <tr><td>\(P^S_t\)</td><td>財政余剰クレームの名目価値（cum-dividend）</td><td><span class="tag new">論文固有</span></td></tr>
+      <tr><td>\(\omega_t\)</td><td>政府債務ヴァリュエーション・ウェッジ（リターン楔）</td><td><span class="tag new">論文固有</span></td></tr>
+      <tr><td>\(D^{ND}\)</td><td>純負債のデュレーション（年）</td><td><span class="tag new">論文固有</span></td></tr>
+      <tr><td>\(D^{T-G}\)</td><td>将来財政余剰クレームのデュレーション（年）</td><td><span class="tag new">論文固有</span></td></tr>
+      <tr><td>\(D^\theta\)</td><td>家計純金融資産ポートフォリオのデュレーション</td><td><span class="tag new">論文固有</span></td></tr>
+      <tr><td>\(D^{c-y}\)</td><td>家計超過消費クレームのデュレーション</td><td><span class="tag new">論文固有</span></td></tr>
+      <tr><td>\(\theta_j\)</td><td>年齢 \(j\) の家計の純金融資産</td><td><span class="tag endo">内生</span></td></tr>
+      <tr><td>\(x_{t,t+n}\)</td><td>USD/JPY CIP乖離（Basisスプレッド、bps）</td><td><span class="tag new">論文固有</span></td></tr>
+      <tr><td>\(M^{t+1}\)</td><td>確率的割引因子（SDF）</td><td><span class="tag endo">内生</span></td></tr>
+      <tr><td>\(\beta^D_t, \beta^A_t, \beta^S_t\)</td><td>政府負債・資産・余剰クレームのリターン・ベータ</td><td><span class="tag new">論文固有</span></td></tr>
+      <tr><td>\(R^f_t\)</td><td>安全名目利子率（銀行準備金利で近似, ≈0.1%）</td><td><span class="tag param">パラメーター</span></td></tr>
+      <tr><td>\(Y_t\)</td><td>名目GDP</td><td><span class="tag exo">外生</span></td></tr>
+    </table>
+  </div>
+
+  <div class="highlight">
+    <strong>論文の最大の特徴：</strong>
+    標準的なNKモデルが「政府＝純借入主体（資産ゼロ）」を前提とするのに対し、本論文は日本政府が
+    <strong>GDP比181%の資産</strong>と<strong>GDP比276%の負債</strong>を同時に保有する巨大なレバレッジ主体であることを出発点とする。
+    この設定変更が、財政余力・金融抑圧・家計厚生のすべての分析に根本的な影響を与える。
+  </div>
+</div>
+
+<!-- ===== §1 ===== -->
+<div class="section" id="s1">
+  <div class="section-header">
+    <span class="section-num">§1</span>
+    <span class="section-title">家計の最適化問題（デュレーション中心の定式化）</span>
+  </div>
+  <p>RBC・NKモデルでは家計はCRRA効用を最大化し、標準的なオイラー方程式を導く。本論文では同じ最適化問題を出発点とするが、<strong>金融資産保有のデュレーション</strong>を中心に据えた分析を行う。</p>
+
+  <div class="eq-card hh">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">H1</div>
+      <div class="eq-head-title">家計の生涯予算制約（純資産＝超過消費の現在価値）</div>
+      <span class="eq-ref">論文 Eq.(14)</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">\[\theta_j = \sum_{s=j}^{J} R^{-(s-j)}(c_s - y_s)\]</div>
+      <table class="var-table">
+        <tr><th>記号</th><th>意味</th></tr>
+        <tr><td>\(\theta_j\)</td><td>年齢 \(j\) 時点の純金融資産（住宅除く）</td></tr>
+        <tr><td>\(c_s - y_s\)</td><td>超過消費（消費から所得を引いた純支出）</td></tr>
+        <tr><td>\(J\)</td><td>死亡年齢</td></tr>
+        <tr><td>\(R\)</td><td>実質グロス利子率</td></tr>
+      </table>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">NK §1との対応</div>
+          <div class="info-text">NKの家計予算制約と同構造。ただし本論文では「投資」は捨象し、金融資産のデュレーション分析に特化する。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">日本家計の実態（2023年末）</div>
+          <div class="info-text">GDP比189%を預金で保有（ゼロ〜超短デュレーション）、株式63%。デュレーション中央値は約21年にとどまる。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card hh">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">H2</div>
+      <div class="eq-head-title">家計のオイラー方程式（CRRA・名目）</div>
+      <span class="eq-ref">NK §8と同一</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">\[C_t^{-\sigma} = \beta (1+i_t)\, \mathbb{E}_t\!\left[\frac{C_{t+1}^{-\sigma}}{1+\pi_{t+1}}\right]\]</div>
+      <p>本論文はこの最適化条件をそのまま維持しつつ、<strong>均衡でのリターンが正常水準よりも低い</strong>（金融抑圧）ことを「ウェッジ」として定量化することに主眼を置く（§8参照）。</p>
+    </div>
+  </div>
+
+  <div class="caution">
+    <strong>日本家計の特殊性：</strong>全世帯の67%が有価証券を保有せず（ノン・パーティシパント）、資産の大半が
+    預金（デュレーション≈0〜1年）。超過消費のデュレーション（7〜10年）との<strong>デュレーション・ギャップ</strong>が大きく、
+    金利低下時に大きな厚生損失を被る（§12・§14・§16参照）。
+  </div>
+</div>
+
+<!-- ===== §2 ===== -->
+<div class="section" id="s2">
+  <div class="section-header">
+    <span class="section-num">§2</span>
+    <span class="section-title">統合政府バランスシートの構築</span>
+  </div>
+  <p>本論文の最重要な分析設定。<strong>日銀＋公的金融機関（FILP等）＋中央・地方政府＋公的年金基金</strong>を連結し、単一の「統合政府」として分析する。これにより、QEによるバランスシート操作が財政空間に与える影響を正確に捉えられる。</p>
+
+  <div class="eq-card gov">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">G1</div>
+      <div class="eq-head-title">統合政府バランスシートのスナップショット（2023年末）</div>
+      <span class="eq-ref">Table 1</span>
+    </div>
+    <div class="eq-body">
+      <table class="var-table">
+        <tr><th>資産（% of GDP）</th><th>2023</th><th>負債（% of GDP）</th><th>2023</th></tr>
+        <tr><td>預金・貸出</td><td>78.8%</td><td>通貨（現金）</td><td>21.7%</td></tr>
+        <tr><td>国内株式</td><td>38.7%</td><td>銀行準備預金（日銀）</td><td>91.1%</td></tr>
+        <tr><td>外国証券</td><td>56.6%</td><td>国債・T-bill</td><td>107.7%</td></tr>
+        <tr><td>その他</td><td>7.2%</td><td>借入・その他</td><td>55.1%</td></tr>
+        <tr><td><strong>合計資産</strong></td><td><strong>181.3%</strong></td><td><strong>合計負債</strong></td><td><strong>275.6%</strong></td></tr>
+        <tr><td colspan="2"></td><td><strong>純負債 ND</strong></td><td><strong>94.3%</strong></td></tr>
+      </table>
+      <div class="highlight">
+        QE以前（1997年）の純負債は24.7%、累積プライマリー赤字133%にもかかわらず、純負債の増加は70%にとどまる。
+        差額63%は資産運用の超過リターンで吸収された（年平均2.28% of GDP）。
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card gov">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">G2</div>
+      <div class="eq-head-title">日銀バランスシート（事実上の金利スワップ）</div>
+      <span class="eq-ref">Table 2</span>
+    </div>
+    <div class="eq-body">
+      <p>日銀はGDP比98%の長期国債を保有（2023年末）し、その資金をGDP比91%の銀行準備（変動金利負債）で調達。これは<strong>元本notional≈1GDPの固定受け・変動払い金利スワップ</strong>と等価であり、統合政府の負債デュレーションを大幅に短縮する。</p>
+      <table class="var-table">
+        <tr><th>日銀資産（% of GDP）</th><th>2023</th><th>日銀負債（% of GDP）</th><th>2023</th></tr>
+        <tr><td>国債・T-bill</td><td>98.0%</td><td>銀行準備</td><td>91.1%</td></tr>
+        <tr><td>国内株式</td><td>10.7%</td><td>通貨</td><td>21.7%</td></tr>
+        <tr><td>その他</td><td>19.2%</td><td>その他</td><td>8.1%</td></tr>
+        <tr><td><strong>合計</strong></td><td><strong>127.9%</strong></td><td><strong>合計</strong></td><td><strong>120.9%</strong></td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===== §3 ===== -->
+<div class="section" id="s3">
+  <div class="section-header">
+    <span class="section-num">§3</span>
+    <span class="section-title">金融抑圧のメカニズム：CIP乖離と資産トラップ</span>
+  </div>
+  <p>NKモデルの「カルボ型価格設定」に相当するのが本論文の「金融抑圧メカニズム」である。価格が下方硬直するように、日本国内の金利は規制・QE・YCCによって市場均衡より低い水準に抑圧される。</p>
+
+  <div class="eq-card cip">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">C1</div>
+      <div class="eq-head-title">CIP（金利平価）乖離の定義</div>
+      <span class="eq-ref">論文 §5.1</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">\[x_{t,t+n} = r^{\$,\text{Libor}}_{t,t+n} - \bigl(r^{\text{Libor}}_{t,t+n} - \rho_{t,t+n}\bigr), \quad \rho_{t,t+n} = \tfrac{1}{n}(f^n_t - s^e_t)\]</div>
+      <table class="var-table">
+        <tr><th>記号</th><th>意味</th></tr>
+        <tr><td>\(x_{t,t+n}\)</td><td>USD/JPY CIP乖離（Basis）。負値＝ドル借入コストが高い</td></tr>
+        <tr><td>\(r^{\$,\text{Libor}}\)</td><td>ドルLIBOR（現物）</td></tr>
+        <tr><td>\(r^{\text{Libor}}\)</td><td>円LIBOR</td></tr>
+        <tr><td>\(\rho_{t,t+n}\)</td><td>フォワードプレミアム（為替ヘッジコスト）</td></tr>
+      </table>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">実測値（2010-2019）</div>
+          <div class="info-text">1M: −41bps、3M: −31bps、6M: −28bps、12M: −27bps<br>5Y: −55bps、10Y: −57bps（2011-2023）</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">金融抑圧との接続</div>
+          <div class="info-text">民間金融機関は海外投資時に為替ヘッジを義務づけられるため、マイナスのCIP Basisが実質的な<strong>資産トラップ</strong>として機能し、低コスト資金が日本国内にとどまる。政府のみが無ヘッジでキャリートレードを享受。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <strong>カルボ型との対比：</strong>カルボ価格設定では企業が確率的に価格を据え置く（外生的な価格硬直性）。
+    本論文の金融抑圧では、規制・量的緩和・YCC・CIP乖離の組み合わせが、金利を市場均衡より
+    <strong>系統的に低く</strong>押さえ込む（内生的かつ政策的な金利硬直性）。
+  </div>
+</div>
+
+<!-- ===== §4 ===== -->
+<div class="section" id="s4">
+  <div class="section-header">
+    <span class="section-num">§4</span>
+    <span class="section-title">政府部門：資産付き財政予算制約</span>
+  </div>
+  <p>標準的なNKモデルの政府BCは \(G_t - T_t + D_{t-1}R^D_t = D_t\) だが、日本の場合は<strong>資産側（\(A_t\)）の項</strong>を明示的に加えることが不可欠。</p>
+
+  <div class="eq-card gov">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">G3</div>
+      <div class="eq-head-title">資産付きフロー政府予算制約</div>
+      <span class="eq-ref">論文 §4.2, Prop.4.2</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">\[G_t - T_t + D_{t-1}R^D_t - A_{t-1}R^A_t = D_t - A_t \equiv ND_t\]</div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">NK §4との差分</div>
+          <div class="info-text">NK Eq.11では \(-A_{t-1}R^A_t\) の項がゼロ（政府資産ゼロ仮定）。日本では資産 \(A\) がGDP比181%存在するため、<strong>超過リターン \((R^A_t - R^D_t)\) がプライマリー赤字を部分的に補填</strong>できる。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">ゴルディロックス条件の拡張</div>
+          <div class="info-text">Blanchard (2019) の \(r^D &lt; x\)（債務が自然消滅する条件）が日本では満たされないが、<br>\[\frac{r^A - r^D}{1+x}\frac{A}{Y} + \frac{x-r^D}{1+x}\frac{D}{Y} = \frac{G-T}{Y}\]<br>が成立すれば純負債比率は安定する。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card gov">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">G4</div>
+      <div class="eq-head-title">純負債比率の動学分解（命題4.2）</div>
+      <span class="eq-ref">論文 Prop.4.2</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">\[\frac{ND_t}{Y_t} = \sum_{j=0}^{t}\frac{G_{t-j}-T_{t-j}}{Y_{t-j}}\frac{R^D_{t-j,t}}{X_{t-j,t}} - \sum_{j=0}^{t}\frac{A_{t-j}}{Y_{t-j}}\frac{R^A_{t-j,t} - R^D_{t-j,t}}{X_{t-j,t}} + \frac{R^D_{0,t}}{X_{0,t}}\frac{ND_{-1}}{Y_{-1}}\]</div>
+      <p>第2項（超過リターン×資産規模）が正のとき、累積赤字の一部が打ち消される。<strong>1998〜2023年の実績：累積赤字133% of GDPのうち、純負債増加は70% of GDPにとどまった</strong>。残余の約63%が資産超過リターンで補われた計算。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== §5 ===== -->
+<div class="section" id="s5">
+  <div class="section-header">
+    <span class="section-num">§5</span>
+    <span class="section-title">日銀のバランスシート：QE・YCC の財政的含意</span>
+  </div>
+
+  <div class="eq-card cb">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">B1</div>
+      <div class="eq-head-title">日銀の予算制約（NK §5と対応）</div>
+      <span class="eq-ref">論文 §3.1</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">\[\underbrace{B^{CB}_{t-1}R^D_t}_{\text{国債利息収入}} - \underbrace{i^R_{t-1}M_{t-1}}_{\text{準備金利払い}} = \underbrace{\Omega_t}_{\text{日銀利益→財政移転}}\]</div>
+      <p>NKモデルの中央銀行BCに資本損益・信用供与が加わる。日銀が長期国債（固定金利）を保有し、銀行準備（変動金利）を発行することで、金利上昇時には<strong>逆ザヤリスク</strong>が顕在化する。</p>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">QEの財政効果（2013-2023）</div>
+          <div class="info-text">QEにより長期金利が2%程度低下（Hansen &amp; Imrohoroglu 2023の推計）。
+          反事実分析では、QE廃止で統合BSの純リターンが6.25% → 2.75% of GDP に低下。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">YCC（2016〜）の追加効果</div>
+          <div class="info-text">10年金利を0%に固定し、BoJが必要量を無制限買い入れ。
+          民間投資家を事実上の売り手に転換させ、国債市場を日銀が支配。2023年末に日銀は発行残高の過半（581兆円）を保有。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== §6 ===== -->
+<div class="section" id="s6">
+  <div class="section-header">
+    <span class="section-num">§6</span>
+    <span class="section-title">統合政府の予算制約</span>
+  </div>
+
+  <div class="eq-card gov">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">G5</div>
+      <div class="eq-head-title">統合政府の異時点間予算制約（IGBC）</div>
+      <span class="eq-ref">論文 §4 / NK §6と対応</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">\[ND_{t} = P^S_t + A_t - D_t \overset{!}{=} 0 \implies D_t = P^S_t + A_t\]</div>
+      <p>政府負債は（i）将来プライマリー余剰の割引現在価値 \(P^S_t\) と（ii）政府資産 \(A_t\) によってバックされる（Jiang et al. 2024）。
+      日本の場合、\(A_t\)（主に株式・外国証券）が<strong>リスク資産</strong>であるため、負債も本来はリスクを反映した高い利回りを要求されるはずだが、金融抑圧によってその要求が抑制されている。</p>
+      <div class="highlight">
+        <strong>NK §6との相違：</strong>NKの統合政府BCは「税＋シニョレッジ＝政府支出」を基礎とするが、
+        本論文では政府が巨大なリスク資産ポートフォリオを保有するため、
+        <strong>資産リターンが財政余地を規定する第3の要因</strong>として登場する。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== §7 ===== -->
+<div class="section" id="s7">
+  <div class="section-header">
+    <span class="section-num">§7</span>
+    <span class="section-title">資産市場の清算条件</span>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">M1</div>
+      <div class="eq-head-title">日本の資産市場清算（部門間整合性）</div>
+      <span class="eq-ref">論文 §7 / Flow of Funds</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">\[\underbrace{\theta^{\text{HH}}}_{\text{家計純資産}} + \underbrace{ND^{\text{Gov}}}_{\text{統合政府純負債}} = \underbrace{NFA}_{\text{対外純資産}}\]</div>
+      <table class="var-table">
+        <tr><th>部門</th><th>GDP比（2023）</th><th>主要構成</th></tr>
+        <tr><td>家計 純金融資産</td><td>+294.8%</td><td>預金189%、株式63%、保険年金90%</td></tr>
+        <tr><td>統合政府 純負債</td><td>−94.3%</td><td>短期負債(準備+T-bill)−長期資産(株・外証)</td></tr>
+        <tr><td>対外純資産（NFA）</td><td>+≈70%</td><td>世界最大の対外純債権国</td></tr>
+      </table>
+      <p>QEは家計の金融資産の<strong>デュレーションを短縮</strong>する（長期国債→銀行準備に変換）。家計は預金（ゼロデュレーション）を増やし、間接的に政府の長期リスク投資を支える構造が固定化する。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== §8 ===== -->
+<div class="section" id="s8">
+  <div class="section-header">
+    <span class="section-num">§8</span>
+    <span class="section-title">一階条件の導出：リスクプレミアム等価とリターン・ウェッジ</span>
+  </div>
+  <p>NKの一階条件（オイラー、価格設定FOC等）に相当するのが、本論文の<strong>リスクプレミアム等価式</strong>と<strong>リターン・ウェッジ定義</strong>である。</p>
+
+  <div class="eq-card wedge">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">W1</div>
+      <div class="eq-head-title">リスクプレミアム等価式（Jiang et al. 2024の拡張）</div>
+      <span class="eq-ref">論文 Eq.(3)</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">\[\mathbb{E}_t\!\left[R^D_{t+1} - R^f_t\right] \approx \left(1 - \frac{A_t}{D_t}\right)\mathbb{E}_t\!\left[R^S_{t+1} - R^f_t\right] + \frac{A_t}{D_t}\mathbb{E}_t\!\left[R^A_{t+1} - R^f_t\right]\]</div>
+      <table class="var-table">
+        <tr><th>記号</th><th>意味</th></tr>
+        <tr><td>\(R^D\)</td><td>政府負債のグロスリターン</td></tr>
+        <tr><td>\(R^S\)</td><td>将来プライマリー余剰クレームのリターン</td></tr>
+        <tr><td>\(R^A\)</td><td>政府資産ポートフォリオのリターン</td></tr>
+        <tr><td>\(A_t/D_t\)</td><td>資産対負債比率（2023年：0.66）</td></tr>
+      </table>
+      <div class="info-block" style="margin-top:.7rem">
+        <div class="info-label">経済的解釈</div>
+        <div class="info-text">政府負債のリスクプレミアムは、余剰クレームのリスクと資産ポートフォリオのリスクの加重平均に等しい。
+        財政余剰が景気循環に<strong>連動する</strong>（親景気循環）以上、\(\beta^S &gt; 0\)となり、負債の要求利回りも高くなるはずだが、
+        金融抑圧によってこの要求が抑制されている。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card wedge">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">W2</div>
+      <div class="eq-head-title">リターン・ウェッジ（金融抑圧の定量尺度）の定義</div>
+      <span class="eq-ref">論文 Definition 1, §5.3</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">\[\omega_t \equiv \mathbb{E}_t\!\left[R^D_{t+1}-R^f_t\right] - \left[\left(1-\frac{A_t}{D_t}\right)\mathbb{E}_t\!\left[R^S_{t+1}-R^f_t\right] + \frac{A_t}{D_t}\mathbb{E}_t\!\left[R^A_{t+1}-R^f_t\right]\right]\]</div>
+      <div class="formula-box">\[= \left[\beta^D_t - \left(1-\frac{A_t}{D_t}\right)\beta^S_t - \frac{A_t}{D_t}\beta^A_t\right]\alpha_t\]</div>
+      <p>ウェッジ \(\omega_t &lt; 0\) は、国債が「リスクから正当化される利回り」よりも低いリターンで発行されていることを意味する（国債の割高）。</p>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">定量化（2023年末）</div>
+          <div class="info-text">\(\omega_t \approx -1.82\%\)（主計算）<br>\(\omega_t \approx -2.23\%\)（代替計算：Table 12使用）<br>ウェッジ分解：QE起因65bps（36%）＋為替無ヘッジ56bps（31%）</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">円の実質減価との整合性</div>
+          <div class="info-text">長期UIPから、円の実質減価（1997-2023年間：45%、年率1.68%）はほぼこのウェッジで説明できる。ウェッジが消えれば円は安定するはず。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== §9 ===== -->
+<div class="section" id="s9">
+  <div class="section-header">
+    <span class="section-num">§9</span>
+    <span class="section-title">デュレーション動学（バランスシートの時系列変化）</span>
+  </div>
+  <p>RBCの資本蓄積式（\(K_{t+1}=(1-\delta)K_t+I_t\)）に相当するのが、本論文のデュレーション動学である。日本の統合政府は2012年以降、<strong>長期リスク資産への投資を急拡大</strong>させ、資産デュレーションを大幅に伸ばした。</p>
+
+  <div class="eq-card dur">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">D1</div>
+      <div class="eq-head-title">資産のデュレーション定義（命題6.1）</div>
+      <span class="eq-ref">論文 Prop.6.1</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">\[\frac{\partial \ln Z_t}{\partial \ln R} = \frac{\sum_{s=t}^{\infty} R^{-(s-t)} z_s \times (s-t)}{Z_t} \equiv -D\]</div>
+      <table class="var-table">
+        <tr><th>資産クラス</th><th>デュレーション（使用値）</th><th>根拠</th></tr>
+        <tr><td>国内株式</td><td>75.6年</td><td>ゴードン成長モデル（P/D比から推計）</td></tr>
+        <tr><td>外国証券（50%株・50%債）</td><td>≈40〜50年</td><td>米国株59年・外国債の加重平均</td></tr>
+        <tr><td>日本国債</td><td>7.19年</td><td>ICE BoA Japan Gov Bond Index</td></tr>
+        <tr><td>貸出</td><td>3年</td><td>仮定</td></tr>
+        <tr><td>現金・銀行準備</td><td>0年</td><td>変動金利＝デュレーションゼロ</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="eq-card dur">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">D2</div>
+      <div class="eq-head-title">統合政府バランスシートのデュレーション変化</div>
+      <span class="eq-ref">Figure 9, §6.2</span>
+    </div>
+    <div class="eq-body">
+      <table class="var-table">
+        <tr><th>指標</th><th>2012年</th><th>2023年</th><th>変化</th></tr>
+        <tr><td>資産デュレーション</td><td>≈15年</td><td>24.1年</td><td>＋9年</td></tr>
+        <tr><td>負債デュレーション</td><td>≈5年</td><td>3.3年</td><td>−2年（QEで短縮）</td></tr>
+        <tr><td><strong>純資産デュレーション</strong></td><td>7.5年</td><td><strong>36年（負のND）</strong></td><td>＋28年</td></tr>
+        <tr><td>財政余剰クレームのデュレーション</td><td colspan="3">≈52年（Cabinet Office 2024年予測から推計）</td></tr>
+      </table>
+      <div class="caution">
+        純負債（ND）のデュレーションは<strong>マイナス36年</strong>（資産デュレーションが負債を大幅に上回るため）。
+        つまり金利が下がると純負債の市場価値は<strong>減少</strong>（政府にとってプラス）する。
+        一方、財政余剰のデュレーション（52年）は正。この非対称性が財政余力分析の核心（§12参照）。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== §10 ===== -->
+<div class="section" id="s10">
+  <div class="section-header">
+    <span class="section-num">§10</span>
+    <span class="section-title">均衡リターン体系と債務動学</span>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">E1</div>
+      <div class="eq-head-title">実績リターンの分解（Table 4 Panel A）</div>
+      <span class="eq-ref">論文 Table 4</span>
+    </div>
+    <div class="eq-body">
+      <table class="var-table">
+        <tr><th>期間</th><th>負債リターン</th><th>資産リターン</th><th>スプレッド</th><th>純リターン（%GDP）</th></tr>
+        <tr><td>1998〜2023</td><td>0.69%</td><td>2.59%</td><td>1.90%</td><td>2.28%</td></tr>
+        <tr><td>1998〜2012</td><td>0.92%</td><td>0.89%</td><td>−0.04%</td><td>−0.63%</td></tr>
+        <tr><td><strong>2013〜2023</strong></td><td><strong>0.38%</strong></td><td><strong>5.04%</strong></td><td><strong>4.66%</strong></td><td><strong>6.25%</strong></td></tr>
+      </table>
+      <p>アベノミクス期（2013〜2023）に超過リターンが急拡大。これは（i）年金基金による株式・外国証券への大幅シフト、（ii）日銀のQE拡大による負債コスト低下、（iii）世界的な株高・円安の組み合わせによる。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== §11 ===== -->
+<div class="section" id="s11">
+  <div class="section-header">
+    <span class="section-num">§11</span>
+    <span class="section-title">定常状態の計算：リターン・ウェッジの定量化</span>
+  </div>
+
+  <div class="eq-card wedge">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">W3</div>
+      <div class="eq-head-title">ウェッジの定量計算（2023年末）</div>
+      <span class="eq-ref">論文 §5.3</span>
+    </div>
+    <div class="eq-body">
+      <p>以下の手順でウェッジを定量化する：</p>
+      <div class="formula-box">\[\beta^A_t \approx \frac{\mathbb{E}[R^A]-R^f}{\mathbb{E}[R^E]-R^f}\times\beta^E_t \approx \frac{2.59\%-0.1\%}{5.1\%-0.1\%}\times\beta^E_t = 0.5\,\beta^E_t\]</div>
+      <div class="formula-box">\[\beta^D_t = (1-0.66)\times 0.45\,\beta^E_t + 0.66\times 0.5\,\beta^E_t \approx 0.48\,\beta^E_t\]</div>
+      <div class="formula-box">\[\omega_t = -(5.0\%\times 0.48) + 0.59\% = -2.41\% + 0.59\% = \mathbf{-1.82\%}\]</div>
+      <table class="var-table">
+        <tr><th>パラメーター</th><th>値</th><th>出所</th></tr>
+        <tr><td>日本株アンレバードβ</td><td>0.45</td><td>実測</td></tr>
+        <tr><td>A/D 比率（2023）</td><td>0.66 (=181%/276%)</td><td>Table 1</td></tr>
+        <tr><td>日本株式リスクプレミアム</td><td>5.1%</td><td>AQR 2024 Capital Market Assumptions</td></tr>
+        <tr><td>無リスク金利（近似）</td><td>0.1%（準備金利平均）</td><td>Table 4</td></tr>
+        <tr><td>負債の実際の超過リターン</td><td>0.59% (=0.69%−0.1%)</td><td>Table 4</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===== §12 ===== -->
+<div class="section" id="s12">
+  <div class="section-header">
+    <span class="section-num">§12</span>
+    <span class="section-title">デュレーション・ミスマッチと財政余力</span>
+  </div>
+
+  <div class="eq-card dur">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">D3</div>
+      <div class="eq-head-title">財政余力コロラリー（系1）：金利変化 → 財政余力</div>
+      <span class="eq-ref">論文 Corollary 1, §6.1</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">\[(a)\; D^{ND} < D^{T-G} \implies \text{金利低下 → 財政余力拡大}\]</div>
+      <div class="formula-box">\[(b)\; D^{ND} > D^{T-G} \implies \text{金利低下 → 財政余力縮小}\]</div>
+      <table class="var-table">
+        <tr><th>指標</th><th>日本（2023年）</th><th>RBC・NKモデルの想定</th></tr>
+        <tr><td>純負債デュレーション \(D^{ND}\)</td><td><strong>−36年</strong></td><td>正・短期（通常5〜10年）</td></tr>
+        <tr><td>財政余剰デュレーション \(D^{T-G}\)</td><td>+52年</td><td>長期（通常30〜50年）</td></tr>
+        <tr><td>財政感応度（100bps低下時）</td><td>余剰PV: +52%<br>純負債MV: −36%（負債減）</td><td>余剰PV増加 &gt; 負債MV増加</td></tr>
+      </table>
+      <div class="highlight">
+        日本では \(D^{ND} = -36 &lt; D^{T-G} = 52\) が<strong>強く</strong>成立。100bps金利低下は
+        財政余剰PVを+52%増加させ、かつ純負債MV（負のND）を36%<strong>さらに負に</strong>（政府にとって有利に）変化させる。
+        この<strong>二重の財政余力拡大効果</strong>が、日本政府が低金利政策を維持するインセンティブを与えている。
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card dur">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">D4</div>
+      <div class="eq-head-title">財政余剰デュレーションの計算（内閣府2024年試算ベース）</div>
+      <span class="eq-ref">論文 §6.2</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">\[D^{T-G}_{2023} \approx \frac{\sum_{t=0}^{\infty} R^{-t}(T_{2023+t}-G_{2023+t})\times t}{\sum_{t=0}^{\infty} R^{-t}(T_{2023+t}-G_{2023+t})} = 52\text{ 年}\]</div>
+      <p>定常状態仮定（2033年以降）：実質長期金利0.3%＋GDPリスクプレミアム2%で割引。ND/Y=94.3%を充足するサープラス比率：1.7% of GDP。内閣府予測では2033年まで一貫してプライマリー赤字が継続する見通し。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== §13 ===== -->
+<div class="section" id="s13">
+  <div class="section-header">
+    <span class="section-num">§13</span>
+    <span class="section-title">財政持続可能性の条件（均衡決定性）</span>
+  </div>
+  <p>NKの §13（BK条件・不安定固有値）に相当するのが、日本財政の<strong>持続可能性条件</strong>である。</p>
+
+  <div class="eq-card gov">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">G6</div>
+      <div class="eq-head-title">現行の財政「均衡」が成立する条件</div>
+      <span class="eq-ref">論文 §4, §5</span>
+    </div>
+    <div class="eq-body">
+      <p>日本の現行財政は以下の3条件が<strong>すべて同時に</strong>満たされる場合にのみ持続する：</p>
+      <ol style="padding-left:1.5rem; font-size:.88rem; color:var(--ink2); line-height:2;">
+        <li><strong>金融抑圧の継続</strong>：QE・YCC・CIP乖離により国債利回りが<strong>リスクに見合う水準以下</strong>に抑制される（ウェッジ≥1.82%の維持）</li>
+        <li><strong>資産リターンの実現</strong>：GPIF等の株式・外国証券投資が超過リターン（≈4.66% p.a.スプレッド）を継続的に実現する</li>
+        <li><strong>低金利環境の維持</strong>：金利上昇は（i）負債コスト急増、（ii）長期資産の時価損失、（iii）財政余力の急減縮、の三重打撃をもたらす</li>
+      </ol>
+      <div class="caution">
+        論文の反事実分析（QE廃止＋完全為替ヘッジ）では純リターンが+6.25% → −0.38% of GDPに転落する。
+        持続可能性は金融抑圧の維持に全面的に依存しており、<strong>構造的・内在的なものではない</strong>。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== §14 ===== -->
+<div class="section" id="s14">
+  <div class="section-header">
+    <span class="section-num">§14</span>
+    <span class="section-title">金融政策の目的と家計厚生分析</span>
+  </div>
+  <p>NKモデルの §14（テイラー原理・ZLB・コミットメント問題）に相当するのが、本論文の<strong>家計厚生分析</strong>である。低金利政策の「目的」は何であり、誰が利得し誰が損失を被るかを定量化する。</p>
+
+  <div class="eq-card welf">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">V1</div>
+      <div class="eq-head-title">家計の厚生損益（命題7.1）</div>
+      <span class="eq-ref">論文 Prop.7.1 / Greenwald et al. 2022</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">\[\text{厚生利得} \approx \left(D^{c-y} - D^\theta\right) \times \theta \times d\ln R\]</div>
+      <table class="var-table">
+        <tr><th>タイプ</th><th>\(D^\theta\)</th><th>\(D^{c-y}\)</th><th>差</th><th>金利1%低下の厚生効果</th></tr>
+        <tr><td><strong>非参加者</strong>（預金のみ、67%）</td><td>≈0〜1年</td><td>6〜8年</td><td>+6〜8年</td><td><span style="color:#8b1a1a">−5〜11%（厚生損失）</span></td></tr>
+        <tr><td><strong>参加者</strong>（株式保有、23%）</td><td>12〜28年</td><td>9〜14年</td><td>−3〜−19年</td><td><span style="color:#1a5c2a">+1〜35%（厚生利得）</span></td></tr>
+        <tr><td>手口ライブ家計（10%）</td><td>0</td><td>0</td><td>0</td><td>中立（分析対象外）</td></tr>
+      </table>
+      <div class="highlight">
+        <strong>格差の方向性：</strong>低金利政策は「若年・低所得・金融非参加者」から「高齢・高所得・株式参加者」への
+        富の移転をもたらす。さらに政府（負のデュレーション）は最大の受益者。
+        <br>つまり低金利は<strong>高齢者への公的約束（年金・国債）を守るための政策手段</strong>であり、若年家計が負担する構造。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== §15 論文固有 ===== -->
+<div class="section" id="s15">
+  <div class="section-header">
+    <span class="section-num">§15</span>
+    <span class="section-title">【論文固有】反事実シミュレーション</span>
+  </div>
+  <p>本節以降は §0〜§14 のNK/RBC対応構造には存在しない、<strong>本論文に固有の分析</strong>を解説する。</p>
+
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">CF1</div>
+      <div class="eq-head-title">反事実①：QE・YCCなし（2012年以降リターン+2%仮定）</div>
+      <span class="eq-ref">論文 §5.4.1, Table 4 Panel B</span>
+    </div>
+    <div class="eq-body">
+      <table class="var-table">
+        <tr><th>指標</th><th>実績</th><th>NoQE反事実</th><th>差</th></tr>
+        <tr><td>負債リターン（2013-2023）</td><td>0.38%</td><td>1.77%</td><td>+1.39%</td></tr>
+        <tr><td>純リターン（% of GDP）</td><td>6.25%</td><td>2.75%</td><td>−3.50%</td></tr>
+        <tr><td>リターン・ウェッジへの寄与</td><td colspan="3">65bps（全体の36%）</td></tr>
+      </table>
+      <p>Hansen &amp; Imrohoroglu (2023) の推計では、QEなしでは金利が3〜5%（実績0〜2%）となり差異は平均3%。本論文では保守的に2%を採用。より積極的な300bps仮定では純リターンは6.25% → 1% of GDPに低下（Table 17）。</p>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">CF2</div>
+      <div class="eq-head-title">反事実②：外貨リスクを完全ヘッジ（民間と同条件）</div>
+      <span class="eq-ref">論文 §5.4.2, Table 4 Panel C</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">\[r^{\text{hedged}}_{t,t+n} = r^{FA,\$}_{t,t+n} - \frac{1}{n}(f^n_t - s^e_t)\]</div>
+      <table class="var-table">
+        <tr><th>指標</th><th>実績（無ヘッジ）</th><th>ヘッジ反事実</th><th>差</th></tr>
+        <tr><td>資産リターン（全期間）</td><td>2.59%</td><td>1.89%</td><td>−70bps</td></tr>
+        <tr><td>純リターン（% of GDP）</td><td>2.28%</td><td>1.07%</td><td>−1.21%</td></tr>
+        <tr><td>ウェッジへの寄与</td><td colspan="3">56bps（全体の31%）</td></tr>
+      </table>
+      <p>なお、政府が全外貨リスクをヘッジすれば追加的なヘッジ需要がCIP basisをさらに拡大させるため、これは<strong>下限推計</strong>（Du &amp; Huber 2024）。</p>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">CF3</div>
+      <div class="eq-head-title">反事実③：QE廃止＋完全ヘッジ（複合反事実）</div>
+      <span class="eq-ref">論文 Table 4 Panel D</span>
+    </div>
+    <div class="eq-body">
+      <table class="var-table">
+        <tr><th>指標</th><th>実績</th><th>複合反事実</th></tr>
+        <tr><td>純リターン（2013-2023, % of GDP）</td><td>+6.25%</td><td><span style="color:#8b1a1a"><strong>−0.38%</strong></span></td></tr>
+        <tr><td>全期間（1998-2023）</td><td>+2.28%</td><td>−0.55%</td></tr>
+      </table>
+      <div class="caution">
+        QE廃止＋完全ヘッジという「市場中立」シナリオでは、超過リターンがすべて消滅するどころかマイナスになる。
+        <strong>現行の財政「奇跡」は金融抑圧なしには成立しない</strong>ことが示される。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== §16 論文固有 ===== -->
+<div class="section" id="s16">
+  <div class="section-header">
+    <span class="section-num">§16</span>
+    <span class="section-title">【論文固有】家計横断面の厚生計測</span>
+  </div>
+
+  <div class="eq-card welf">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">V2</div>
+      <div class="eq-head-title">非参加者の厚生コスト（金利1%低下、資産×年齢別）</div>
+      <span class="eq-ref">論文 Table 9（非参加者部分）</span>
+    </div>
+    <div class="eq-body">
+      <table class="var-table">
+        <tr><th>年齢グループ</th><th>第1所得十分位</th><th>第5十分位</th><th>第10十分位</th></tr>
+        <tr><td>35歳未満</td><td>8.7%（損失）</td><td>9.1%</td><td>7.2%</td></tr>
+        <tr><td>35〜44歳</td><td>7.3%</td><td>8.5%</td><td>7.9%</td></tr>
+        <tr><td>45〜54歳</td><td>5.9%</td><td>7.8%</td><td>6.9%</td></tr>
+        <tr><td>55〜64歳</td><td>5.5%</td><td>6.4%</td><td>6.3%</td></tr>
+        <tr><td>65〜74歳</td><td>4.4%</td><td>4.1%</td><td>4.1%</td></tr>
+        <tr><td>75歳以上</td><td>−0.6%（利得）</td><td>−0.6%</td><td>−0.5%</td></tr>
+      </table>
+      <p>単位：家計現在資産の%（正値＝厚生損失）。非参加者の67%が対象。若年ほど損失大。</p>
+    </div>
+  </div>
+
+  <div class="eq-card welf">
+    <div class="eq-head">
+      <div class="eq-num-badge" style="width:2.5rem">V3</div>
+      <div class="eq-head-title">参加者の厚生利得（金利1%低下、資産×年齢別）</div>
+      <span class="eq-ref">論文 Table 9（参加者部分）</span>
+    </div>
+    <div class="eq-body">
+      <table class="var-table">
+        <tr><th>年齢グループ</th><th>第1所得十分位</th><th>第5十分位</th><th>第10十分位</th></tr>
+        <tr><td>35歳未満</td><td>−14.8%（利得）</td><td>−1.0%</td><td>−4.8%</td></tr>
+        <tr><td>45〜54歳</td><td>−34.8%</td><td>−1.1%</td><td>−15.0%</td></tr>
+        <tr><td>55〜64歳</td><td>−25.7%</td><td>−17.7%</td><td>−18.9%</td></tr>
+        <tr><td>65〜74歳</td><td>−17.4%</td><td>−20.3%</td><td>−20.1%</td></tr>
+        <tr><td>75歳以上</td><td>−19.8%</td><td>−25.1%</td><td>−28.3%</td></tr>
+      </table>
+      <p>単位：家計現在資産の%（負値＝厚生利得）。参加者23%が対象。高齢・高資産ほど利得大。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== §17 論文固有 ===== -->
+<div class="section" id="s17">
+  <div class="section-header">
+    <span class="section-num">§17</span>
+    <span class="section-title">【論文固有】政策含意と結論</span>
+  </div>
+
+  <div class="summary-box">
+    <h3>論文の主要な結論（政策・実証）</h3>
+    <div class="summary-flow">
+      <div class="flow-item">
+        <div class="flow-label">財政のリドル</div>
+        <div class="flow-desc">日本はゴルディロックス条件（r &lt; g）を満たさないにもかかわらず、r &gt; g の下でGDP比200%超の債務を維持できる。その秘密は金融抑圧による超過リターン（≈+6% of GDP p.a.）。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">デュレーション・トリック</div>
+        <div class="flow-desc">QEにより統合政府は短期変動金利で借り入れ、超長期リスク資産に投資。純負債デュレーション = −36年という「逆張りポジション」で金利低下時に財政余力が二重に拡大する。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">政府のインセンティブ</div>
+        <div class="flow-desc">低金利維持は財政余力を拡大し、高齢者への約束（年金・国債）を守る手段。これは症状ではなく<strong>政策選択</strong>。金利上昇は財政余力を急速に破壊する。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">厚生の逆進性</div>
+        <div class="flow-desc">低金利政策は若年・低所得・預金家計（非参加者67%）から、高齢・高所得・株式保有家計（参加者23%）への富の移転。世代間・階層間の逆進的再分配。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">リスクの不可視化</div>
+        <div class="flow-desc">政府はリスクフリーな約束（国債・年金）をリスク資産（株・外証）でバックしているが、金融抑圧によってこのリスクは市場価格に反映されない。「見えない爆弾」。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">普遍的含意</div>
+        <div class="flow-desc">少子高齢化・低成長・高債務は日本だけの問題でなく先進国共通。低金利政策は財政余力を一時的に拡大するが、若年・低所得家計が大きな厚生コストを負担する。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== §18 比較表 ===== -->
+<div class="section" id="s18">
+  <div class="section-header">
+    <span class="section-num">§18</span>
+    <span class="section-title">RBC・NK・「What about Japan?」論文 三者比較表</span>
+  </div>
+
+  <div class="comp-table-wrap">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th style="width:18%">カテゴリー／論点</th>
+          <th class="rbc-h" style="width:27%">RBCモデル</th>
+          <th class="nk-h" style="width:27%">NKモデル（v2）</th>
+          <th class="jp-h" style="width:28%">「What about Japan?」論文</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- 共通概念 -->
+        <tr class="cat-row"><td colspan="4">▌ 共通概念・前提</td></tr>
+
+        <tr>
+          <td class="row-label">家計最適化</td>
+          <td>CRRA効用、オイラー方程式（資本・国債・税）</td>
+          <td>同一＋名目金利（フィッシャー方程式）</td>
+          <td>同一の最適化問題を前提としつつ、デュレーション分析に特化</td>
+        </tr>
+        <tr>
+          <td class="row-label">家計予算制約</td>
+          <td>\(\theta_j = \sum R^{-(s-j)}(c_s - y_s)\)（同一構造）</td>
+          <td>同一（名目化）</td>
+          <td>同一（Eq.14）。純資産＝超過消費の割引現在価値</td>
+        </tr>
+        <tr>
+          <td class="row-label">政府IGBC・ノンポンジ条件</td>
+          <td>現在国債＝将来余剰の割引現在価値</td>
+          <td>統合政府BC（シニョレッジ含む）、NK §6</td>
+          <td>\(D_t = P^S_t + A_t\)（余剰PV＋政府資産）。構造は同一、<strong>資産側が巨大</strong>な点が異なる</td>
+        </tr>
+        <tr>
+          <td class="row-label">生産関数・市場清算</td>
+          <td>コブ＝ダグラス、\(Y=C+I+G\)</td>
+          <td>独占的競争版コブ＝ダグラス、同一財市場清算</td>
+          <td>生産関数は捨象（会計・資産価格アプローチ）。財市場清算は背景に存在</td>
+        </tr>
+        <tr>
+          <td class="row-label">確率的割引因子</td>
+          <td>\(M_{t+1} = \beta(C_{t+1}/C_t)^{-\sigma}\)</td>
+          <td>同一（名目SDF）</td>
+          <td>同一のSDFを前提に「ウェッジ」を定義（Eq.6）</td>
+        </tr>
+
+        <!-- 拡張・修正された概念 -->
+        <tr class="cat-row"><td colspan="4">▌ 拡張・修正された概念・前提</td></tr>
+
+        <tr>
+          <td class="row-label">政府資産の取り扱い</td>
+          <td>政府資産ゼロ（純借入主体）</td>
+          <td>同一（資産ゼロ仮定）</td>
+          <td><strong>GDP比181%の政府資産を明示</strong>。BCに \(-A_{t-1}R^A_t\) を追加（Prop.4.2）。資産リターンが財政余力の第3の決定要因</td>
+        </tr>
+        <tr>
+          <td class="row-label">中央銀行バランスシート</td>
+          <td>なし（または単純化）</td>
+          <td>NK §5：シニョレッジ・OMO・統合政府BC</td>
+          <td>日銀BS（GDP比128%）を明示的に統合。QE＝<strong>固定受け変動払い金利スワップ</strong>として定式化。負債デュレーション短縮効果が核心</td>
+        </tr>
+        <tr>
+          <td class="row-label">政府BCの均衡条件</td>
+          <td>\(r^D &lt; x\)（ゴルディロックス）があれば赤字継続可</td>
+          <td>同一（リカード等価も含む）</td>
+          <td>\(r^D &gt; x\)（非ゴルディロックス）でも \(r^A - r^D\) が十分大きければ純負債安定。<strong>資産超過リターンが新たな余地</strong></td>
+        </tr>
+        <tr>
+          <td class="row-label">価格硬直性（アナロジー）</td>
+          <td>なし（完全伸縮価格）</td>
+          <td>カルボ型価格固定（確率 \(\mu\) で据え置き）</td>
+          <td>金融抑圧（QE・YCC・CIP乖離・規制）が金利を市場均衡以下に固定。<strong>内生的・政策的な金利硬直性</strong></td>
+        </tr>
+        <tr>
+          <td class="row-label">デュレーション</td>
+          <td>資本蓄積式（\(K\) の動学）が実物デュレーションに対応</td>
+          <td>同一（国債残高 \(b_t\) の状態変数）</td>
+          <td>金融資産デュレーション（Prop.6.1）を財政余力・家計厚生の中心概念として明示的に定義・計測</td>
+        </tr>
+
+        <!-- 新概念 -->
+        <tr class="cat-row"><td colspan="4">▌ 新概念・前提（論文固有）</td></tr>
+
+        <tr>
+          <td class="row-label">リターン・ウェッジ \(\omega_t\)</td>
+          <td>なし</td>
+          <td>なし（オイラー方程式ウェッジとして一般論はあり）</td>
+          <td><strong>本論文の中核概念</strong>。政府負債の実際の超過リターンと、バランスシートリスクから正当化される超過リターンの差（≈−1.82%）。金融抑圧の定量尺度</td>
+        </tr>
+        <tr>
+          <td class="row-label">財政余剰クレームのデュレーション \(D^{T-G}\)</td>
+          <td>なし（財政余力は税率調整で議論）</td>
+          <td>財政余力は \(\hat{b}_t\) の安定性で分析</td>
+          <td><strong>将来プライマリー余剰の加重平均満期（52年）を明示計算</strong>。純負債デュレーション（−36年）との差が財政余力感応度を決定</td>
+        </tr>
+        <tr>
+          <td class="row-label">家計の超過消費デュレーション \(D^{c-y}\)</td>
+          <td>なし</td>
+          <td>なし</td>
+          <td><strong>家計厚生の十分統計量</strong>（Greenwald et al. 2022の応用）。\(D^{c-y} - D^\theta\) の符号が低金利の厚生損益を決定</td>
+        </tr>
+        <tr>
+          <td class="row-label">CIP乖離・資産トラップ</td>
+          <td>なし</td>
+          <td>なし</td>
+          <td>USD/JPY Basis（5〜30年: −35〜−57bps）が民間機関の外国投資ヘッジコストを引き上げ、資産を国内に閉じ込める。<strong>政府だけがトラップを回避</strong>し超過リターンを享受</td>
+        </tr>
+        <tr>
+          <td class="row-label">統合政府バランスシート連結</td>
+          <td>なし</td>
+          <td>統合政府BC（§6）はあるが資産側は捨象</td>
+          <td>日銀＋公的金融機関＋中央・地方政府＋公的年金基金を<strong>完全連結</strong>（GDP比456%の総資産・負債）。QEの効果を正確に捉える</td>
+        </tr>
+        <tr>
+          <td class="row-label">キャリートレード・通貨ミスマッチ</td>
+          <td>なし（閉鎖経済）</td>
+          <td>通常は閉鎖経済（開放経済拡張はオプション）</td>
+          <td><strong>政府が円で借入・外貨資産（GDP比57%）を無ヘッジ保有</strong>するキャリートレードを定量化。円安時の超過リターンが鍵</td>
+        </tr>
+
+        <!-- 金融政策 -->
+        <tr class="cat-row"><td colspan="4">▌ 金融政策の扱い・結論</td></tr>
+
+        <tr>
+          <td class="row-label">中央銀行の役割</td>
+          <td>外生的な貨幣供給（単純化）</td>
+          <td>テイラー・ルール（\(i_t = \bar{i} + \delta_\pi\pi_t + \delta_x x_t\)）、ZLB</td>
+          <td>QE＝<strong>大規模バランスシート操作</strong>による金利固定（YCC）と財政余地の創出。金融政策と財政政策の境界が溶解</td>
+        </tr>
+        <tr>
+          <td class="row-label">テイラー原理</td>
+          <td>なし（価格水準決定はFTPL等）</td>
+          <td>\(\delta_\pi &gt; 1\)が均衡決定性の必要条件</td>
+          <td>YCCにより長期金利を固定するため、テイラー原理は無効化。<strong>金融抑圧が均衡決定のメカニズム</strong>を置き換える</td>
+        </tr>
+        <tr>
+          <td class="row-label">物価水準決定</td>
+          <td>貨幣数量説 or FTPL</td>
+          <td>NKPCと金融政策の連立（アクティブ財政→FTPL）</td>
+          <td>金融抑圧の結果として物価を抑制（デフレ均衡の維持）。2022年以降のインフレは金融抑圧の限界を示す</td>
+        </tr>
+        <tr>
+          <td class="row-label">QE・大規模資産購入</td>
+          <td>なし</td>
+          <td>一時的に \(\hat{m}_t\) が増加（シニョレッジ）</td>
+          <td><strong>財政政策の一形態</strong>として定式化。長期国債→準備に変換し負債デュレーションを短縮、政府のリスク投資を可能にする</td>
+        </tr>
+
+        <!-- 財政政策 -->
+        <tr class="cat-row"><td colspan="4">▌ 財政政策の扱い・結論</td></tr>
+
+        <tr>
+          <td class="row-label">財政乗数</td>
+          <td>DIS曲線を通じた需要効果</td>
+          <td>GDPギャップ \(x_t\) への効果（§4, §12）</td>
+          <td>財政乗数は射程外。代わりに<strong>金融抑圧が生む隠れた財政移転（≈2〜6% of GDP/年）</strong>を分析</td>
+        </tr>
+        <tr>
+          <td class="row-label">リカード等価</td>
+          <td>成立（lump-sum税の仮定）</td>
+          <td>成立（§12で仮定可能）</td>
+          <td>形式的には成立するが、金融抑圧によって<strong>非リカード的な再分配</strong>（若年→高齢、非参加者→参加者）が発生</td>
+        </tr>
+        <tr>
+          <td class="row-label">プライマリーバランス</td>
+          <td>IGBC充足のために最終的に調整される</td>
+          <td>同一（アクティブ財政ではFTPL）</td>
+          <td>プライマリー赤字（平均5.1% of GDP）が<strong>資産超過リターンで部分的に補填</strong>される。「第二の財源」として機能</td>
+        </tr>
+        <tr>
+          <td class="row-label">財政抑圧（Financial Repression）</td>
+          <td>なし</td>
+          <td>なし（または断片的に言及）</td>
+          <td><strong>分析の中心テーマ</strong>。規制・QE・YCC・CIP乖離の組み合わせで政府が市場以下の借入コストを実現。ウェッジ≈180bpsが証拠</td>
+        </tr>
+
+        <!-- 財政余力 -->
+        <tr class="cat-row"><td colspan="4">▌ 財政余力の決定・結論</td></tr>
+
+        <tr>
+          <td class="row-label">財政余力の定義</td>
+          <td>IGBCが充足される限りの政府支出余地</td>
+          <td>\(\hat{b}_t\) の安定性＋BK条件</td>
+          <td><strong>純負債デュレーションと財政余剰デュレーションの差</strong>で決まる金利感応度として定義（Corollary 1）</td>
+        </tr>
+        <tr>
+          <td class="row-label">金利上昇の財政効果</td>
+          <td>利払い費増加でIGBC圧迫</td>
+          <td>同一（\(R^B\) 上昇→\(b_t\) 上昇）</td>
+          <td>三重打撃：①負債コスト急増、②長期リスク資産の時価損失、③財政余剰PVの低下。<strong>非線形・急速な財政悪化リスク</strong></td>
+        </tr>
+        <tr>
+          <td class="row-label">金利低下の財政効果</td>
+          <td>利払い費減少→財政余力増加（単調）</td>
+          <td>同一（テイラー・ルールで内生化）</td>
+          <td><strong>二重の財政余力拡大</strong>：①純負債MV低下（−36年デュレーション）＋②余剰PV上昇（+52年デュレーション）。標準モデルより格段に大きい財政余力効果</td>
+        </tr>
+        <tr>
+          <td class="row-label">「ゴルディロックス」条件</td>
+          <td>核心的役割（\(r &lt; g\)で赤字継続可）</td>
+          <td>同一</td>
+          <td><strong>日本には適用不能</strong>（\(r^D - x = 1.27\%\)）。代わりに資産超過リターンが財政持続の条件を決定。ゴルディロックス論の適用範囲を根本的に問い直す</td>
+        </tr>
+
+        <!-- 家計厚生 -->
+        <tr class="cat-row"><td colspan="4">▌ 家計厚生の分析</td></tr>
+
+        <tr>
+          <td class="row-label">厚生分析のアプローチ</td>
+          <td>代表的家計の定常厚生（通常は明示的に分析しない）</td>
+          <td>インフレの厚生コスト・ZLBの厚生損失</td>
+          <td><strong>横断面データ（9万家計）</strong>を用いたデュレーション・ミスマッチ分析。年齢・所得・資産参加有無別の厚生損益を定量化</td>
+        </tr>
+        <tr>
+          <td class="row-label">代表的家計の仮定</td>
+          <td>成立（代表的家計で十分）</td>
+          <td>通常は代表的家計</td>
+          <td><strong>明示的に否定</strong>。非参加者（67%）と参加者（23%）で低金利の効果が真逆。代表的家計分析は深刻な誤解を招く</td>
+        </tr>
+        <tr>
+          <td class="row-label">低金利政策の厚生効果</td>
+          <td>通常はモデル外（または中立）</td>
+          <td>インフレ安定化の厚生便益（逆三角形）</td>
+          <td><strong>逆進的再分配</strong>：非参加者（若年・低所得）に厚生損失（−5〜−11%/1%金利低下）、参加者（高齢・高所得）に厚生利得（+15〜35%）</td>
+        </tr>
+        <tr>
+          <td class="row-label">世代間分配</td>
+          <td>通常は静的（OLGに拡張可能）</td>
+          <td>通常は静的</td>
+          <td><strong>論文の核心的メッセージ</strong>：低金利政策は高齢者（年金・国債保有者）への約束を守るために若年層に課税する世代間移転メカニズム</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="summary-box">
+    <h3>三者比較のポイントまとめ</h3>
+    <div class="summary-flow">
+      <div class="flow-item">
+        <div class="flow-label">RBC → NK</div>
+        <div class="flow-desc">名目変数（価格・賃金硬直性）を追加。インフレ・金融政策が実体経済に影響するメカニズムを内生化。財政政策も拡張。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">NK → 論文</div>
+        <div class="flow-desc">政府を「巨大なレバレッジ資産家」として再定義。資産超過リターン・デュレーション・ウェッジという3つの新概念で財政余力と家計厚生を再分析。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">共通の数学的基盤</div>
+        <div class="flow-desc">CRRA効用・オイラー方程式・IGBC・SDF・ノンポンジ条件はすべて共通。論文はこれらの標準的枠組みの上に独自の「バランスシート視点」を加える。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">最大の分岐点</div>
+        <div class="flow-desc">標準モデルの「政府資産ゼロ」仮定を外すだけで、財政余力・持続可能性・厚生分析のすべてが質的に変化する。これが論文の根本的な貢献。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+</body>
+</html>
