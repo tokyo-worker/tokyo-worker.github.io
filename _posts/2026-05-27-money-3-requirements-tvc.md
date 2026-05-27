@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "貨幣の3要件とTVCの関係"
-date: 2026-06-01
+date: 2026-05-27
 description: "命題P「貨幣の三要件の価値の尺度、価値の保存、交換手段の要件を満たす」、命題Q「トランスバーサリティ条件（横断性条件：TVC）」としたとき、命題Pと命題Qの必要十分関係を検討してくださいとAIに質問してみた"
 categories: [macroeconomics]
 tags: [TVC]
