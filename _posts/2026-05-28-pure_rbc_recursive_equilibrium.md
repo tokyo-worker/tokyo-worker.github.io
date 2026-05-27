@@ -7,7 +7,21 @@ categories: [macroeconomics, RBC, DSGE]
 tags: [RBC, Recursive Equilibrium, DSGE, State Space]
 toc: true
 math: true
+mathjax: true
 ---
+
+<!-- MathJax -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
+    displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']]
+  }
+};
+</script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 
 # Pure RBC Model — Recursive Competitive Equilibrium から状態空間表現まで
 
@@ -40,7 +54,7 @@ math: true
 
 ## 1.1 家計の効用関数
 
-\[
+$$
 U
 =
 \sum_{t=0}^{\infty}
@@ -51,7 +65,7 @@ U
 \chi
 \frac{L_t^{1+\gamma}}{1+\gamma}
 \right)
-\]
+$$
 
 ### パラメータ
 
@@ -66,13 +80,13 @@ U
 
 ## 1.2 生産関数
 
-\[
+$$
 Y_t
 =
 A_t
 K_t^\alpha
 L_t^{1-\alpha}
-\]
+$$
 
 ### パラメータ
 
@@ -85,17 +99,17 @@ L_t^{1-\alpha}
 
 ## 1.3 TFP過程
 
-\[
+$$
 \log A_{t+1}
 =
 \rho \log A_t
 +
 \varepsilon_{t+1}
-\]
+$$
 
-\[
+$$
 \varepsilon_t \sim N(0,\sigma_\varepsilon^2)
-\]
+$$
 
 ---
 
@@ -105,21 +119,21 @@ L_t^{1-\alpha}
 
 ### 状態変数
 
-\[
+$$
 (K_t,A_t)
-\]
+$$
 
 ### 制御変数
 
-\[
+$$
 (C_t,L_t,K_{t+1})
-\]
+$$
 
 ---
 
 ## 2.2 Bellman Equation
 
-\[
+$$
 V(K_t,A_t)
 =
 \max_{C_t,L_t,K_{t+1}}
@@ -133,15 +147,15 @@ V(K_t,A_t)
 E_t
 V(K_{t+1},A_{t+1})
 \right\}
-\]
+$$
 
 subject to
 
-\[
+$$
 K_{t+1}+C_t
 =
 w_tL_t+R_tK_t
-\]
+$$
 
 ---
 
@@ -165,7 +179,7 @@ Bellman Equation を用いることで：
 
 企業は：
 
-\[
+$$
 \Pi_t
 =
 A_tK_t^\alpha L_t^{1-\alpha}
@@ -173,7 +187,7 @@ A_tK_t^\alpha L_t^{1-\alpha}
 w_tL_t
 -
 (R_t-1+\delta)K_t
-\]
+$$
 
 を最大化する。
 
@@ -181,7 +195,7 @@ w_tL_t
 
 ## 3.2 資本のFOC
 
-\[
+$$
 R_t
 =
 \alpha
@@ -191,13 +205,13 @@ A_t
 \right)^{\alpha-1}
 +
 1-\delta
-\]
+$$
 
 これは：
 
-\[
+$$
 MPK = \text{資本コスト}
-\]
+$$
 
 を意味する。
 
@@ -205,7 +219,7 @@ MPK = \text{資本コスト}
 
 ## 3.3 労働のFOC
 
-\[
+$$
 w_t
 =
 (1-\alpha)
@@ -213,13 +227,13 @@ A_t
 \left(
 \frac{K_t}{L_t}
 \right)^\alpha
-\]
+$$
 
 これは：
 
-\[
+$$
 MPL = w_t
-\]
+$$
 
 を意味する。
 
@@ -240,27 +254,27 @@ Recursive Competitive Equilibrium (RCE) とは：
 
 ## 4.1 財市場均衡
 
-\[
+$$
 Y_t=C_t+I_t
-\]
+$$
 
 ---
 
 ## 4.2 資本蓄積
 
-\[
+$$
 K_{t+1}
 =
 (1-\delta)K_t+I_t
-\]
+$$
 
 したがって：
 
-\[
+$$
 K_{t+1}
 =
 (1-\delta)K_t+Y_t-C_t
-\]
+$$
 
 ---
 
@@ -268,7 +282,7 @@ K_{t+1}
 
 ## 5.1 社会計画者問題
 
-\[
+$$
 \max_{\{C_t,L_t,K_{t+1}\}}
 E_0
 \sum_{t=0}^{\infty}
@@ -279,17 +293,17 @@ E_0
 \chi
 \frac{L_t^{1+\gamma}}{1+\gamma}
 \right)
-\]
+$$
 
 subject to
 
-\[
+$$
 C_t+K_{t+1}
 =
 A_tK_t^\alpha L_t^{1-\alpha}
 +
 (1-\delta)K_t
-\]
+$$
 
 ---
 
@@ -297,11 +311,11 @@ A_tK_t^\alpha L_t^{1-\alpha}
 
 完全競争・歪みなし・完全市場のもとでは：
 
-\[
+$$
 \text{Competitive Equilibrium}
 =
 \text{Planner Allocation}
-\]
+$$
 
 が成立する。
 
@@ -311,7 +325,7 @@ A_tK_t^\alpha L_t^{1-\alpha}
 
 ## 6.1 Euler Equation
 
-\[
+$$
 1
 =
 \beta
@@ -319,7 +333,7 @@ R_{t+1}
 \left(
 \frac{C_{t+1}}{C_t}
 \right)^{-\sigma}
-\]
+$$
 
 これは消費の異時点間最適化条件である。
 
@@ -327,19 +341,19 @@ R_{t+1}
 
 ## 6.2 Intratemporal Condition
 
-\[
+$$
 w_t
 =
 \chi
 L_t^\gamma
 C_t^\sigma
-\]
+$$
 
 これは：
 
-\[
+$$
 MRS = w_t
-\]
+$$
 
 を意味する。
 
@@ -347,23 +361,23 @@ MRS = w_t
 
 ## 6.3 Production Function
 
-\[
+$$
 Y_t
 =
 A_t
 K_t^\alpha
 L_t^{1-\alpha}
-\]
+$$
 
 ---
 
 ## 6.4 Capital Accumulation
 
-\[
+$$
 K_{t+1}
 =
 (1-\delta)K_t+Y_t-C_t
-\]
+$$
 
 ---
 
@@ -371,15 +385,15 @@ K_{t+1}
 
 定常状態では：
 
-\[
+$$
 A=1
-\]
+$$
 
 かつ：
 
-\[
+$$
 K_{t+1}=K_t=K
-\]
+$$
 
 となる。
 
@@ -387,7 +401,7 @@ K_{t+1}=K_t=K
 
 ## 7.1 Euler Equation
 
-\[
+$$
 1
 =
 \beta
@@ -399,20 +413,20 @@ K_{t+1}=K_t=K
 +
 1-\delta
 \right]
-\]
+$$
 
 ---
 
 ## 7.2 定常資本労働比
 
-\[
+$$
 \frac{K}{L}
 =
 \left(
 \frac{\alpha}
 {1/\beta-1+\delta}
 \right)^{\frac{1}{1-\alpha}}
-\]
+$$
 
 ---
 
@@ -420,25 +434,25 @@ K_{t+1}=K_t=K
 
 ## 8.1 State Variables
 
-\[
+$$
 x_t=(K_t,A_t)
-\]
+$$
 
 ---
 
 ## 8.2 Policy Functions
 
-\[
+$$
 C_t=C(K_t,A_t)
-\]
+$$
 
-\[
+$$
 L_t=L(K_t,A_t)
-\]
+$$
 
-\[
+$$
 K_{t+1}=G(K_t,A_t)
-\]
+$$
 
 ---
 
@@ -446,24 +460,24 @@ K_{t+1}=G(K_t,A_t)
 
 ## 9.1 定義
 
-\[
+$$
 \hat{x}_t
 =
 \log x_t-\log \bar{x}
-\]
+$$
 
 ---
 
 ## 9.2 Euler Equation の線形化
 
-\[
+$$
 \hat{C}_t
 =
 E_t\hat{C}_{t+1}
 -
 \frac{1}{\sigma}
 E_t\hat{R}_{t+1}
-\]
+$$
 
 ---
 
@@ -471,21 +485,21 @@ E_t\hat{R}_{t+1}
 
 ## 10.1 状態方程式
 
-\[
+$$
 x_{t+1}
 =
 Ax_t+B\varepsilon_{t+1}
-\]
+$$
 
 ---
 
 ## 10.2 観測方程式
 
-\[
+$$
 y_t
 =
 Cx_t
-\]
+$$
 
 ---
 
