@@ -7,10 +7,6 @@ categories: [macroeconomics]
 tags: [TVC, FTPL, MMT, NewKeynesian, RBC, monetary-theory]
 ---
 
-$$
-\newcommand{\E}{\mathbb{E}}
-$$
-
 ## はじめに
 
 不換紙幣（fiat money）を発行し、名目デフォルトが原理的に不可能な統合政府（consolidated government）を前提とするとき、「マクロ経済学が要請するトランスバーサリティ条件（transversality condition; TVC）は本当に必要か」という問いは、財政理論の物価水準（Fiscal Theory of the Price Level; FTPL）や現代貨幣理論（Modern Monetary Theory; MMT）の核心に触れる。
@@ -22,7 +18,7 @@ $$
 > **命題 Q**（TVC）：統合政府の実質総債務の現在価値が無限遠点でゼロに収束する。すなわち、
 
 $$
-\lim_{T \to \infty} \beta^T \, \E_t[m_T + b_T] = 0
+\lim_{T \to \infty} \beta^T \, \mathbb{E}_t[m_T + b_T] = 0
 $$
 
 > ただし $m_t \equiv M_t/P_t$ は実質貨幣残高、$b_t$ は実質国債残高、$\beta$ は主観的割引因子。
@@ -59,7 +55,7 @@ $$
 消費のオイラー方程式と貨幣需要関数はそれぞれ
 
 $$
-\frac{1}{C_t} = \beta(1+i_t)\,\E_t\!\left[\frac{1}{C_{t+1}(1+\pi_{t+1})}\right]
+\frac{1}{C_t} = \beta(1+i_t)\,\mathbb{E}_t\!\left[\frac{1}{C_{t+1}(1+\pi_{t+1})}\right]
 $$
 
 $$
@@ -217,11 +213,11 @@ $$
 価格硬直性を持つNKモデルでは、TVCの役割が**定性的に変化する**。標準的なNKモデル（ニューケインジアン・フィリップス曲線（NKPC）＋動学的IS曲線（DIS）＋テイラー・ルール）では、線形化されたシステムの特性根は、テイラー原理（$\delta_\pi > 1$）下で一つの安定的なサドルパスを選択する。TVCはこのサドルパスを**唯一の均衡経路として確定させる役割**を担う。
 
 $$
-\pi_t = \beta \E_t[\pi_{t+1}] + \kappa x_t \quad \text{（NKPC）}
+\pi_t = \beta \mathbb{E}_t[\pi_{t+1}] + \kappa x_t \quad \text{（NKPC）}
 $$
 
 $$
-x_t = \E_t[x_{t+1}] - \sigma^{-1}(i_t - \E_t[\pi_{t+1}] - r^n_t) \quad \text{（DIS）}
+x_t = \mathbb{E}_t[x_{t+1}] - \sigma^{-1}(i_t - \mathbb{E}_t[\pi_{t+1}] - r^n_t) \quad \text{（DIS）}
 $$
 
 ここで $x_t$ は産出ギャップ、$r^n_t$ は自然利子率、$\sigma$ は相対的リスク回避度。
@@ -233,7 +229,7 @@ TVCを除去するとシステムの解が一意に定まらなくなる（**解
 NKPCは以下のようにサンスポット項 $\xi_t$ を含む形に拡張される：
 
 $$
-\pi_t = \beta \E_t[\pi_{t+1}] + \kappa x_t + \xi_t
+\pi_t = \beta \mathbb{E}_t[\pi_{t+1}] + \kappa x_t + \xi_t
 $$
 
 ここで $\xi_t$ は Section 3 の経路3で議論した**協調ゲームの心理的シフト**に対応する。TVCというアンカーが外れることで、均衡は少なくとも二種類に分岐する：
