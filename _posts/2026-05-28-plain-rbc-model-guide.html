@@ -1,0 +1,2694 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>プレーンRBCモデル ステップバイステップ完全解説</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+
+<style>
+:root {
+  --ink: #0f1923;
+  --ink2: #2a3a4a;
+  --paper: #f6f3ee;
+  --paper2: #ede9e0;
+  --ruled: #d8d2c4;
+  --accent: #1a3a6c;
+  --accent2: #8b1a1a;
+  --gold: #b8860b;
+  --blue-light: #e8eef8;
+  --red-light: #faf0f0;
+  --green: #1a5c3a;
+  --green-light: #e8f4ee;
+  --purple: #4a1a6c;
+  --purple-light: #f0e8f8;
+  --orange: #8b4a00;
+  --orange-light: #fff4e8;
+  --teal: #0a5c5c;
+  --teal-light: #e4f4f4;
+  --eq-bg: #f0ece0;
+  --mono: 'IBM Plex Mono', monospace;
+  --serif: 'Noto Serif JP', serif;
+  --sans: 'Noto Sans JP', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+/* ── Header ── */
+header {
+  background: var(--accent);
+  color: #e8eef8;
+  padding: 3rem 2rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg, transparent, transparent 40px,
+    rgba(255,255,255,0.02) 40px, rgba(255,255,255,0.02) 80px
+  );
+}
+header .inner { position: relative; max-width: 900px; margin: 0 auto; }
+header .tag-line {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: #7a9cc8;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+}
+header h1 {
+  font-family: var(--serif);
+  font-size: 1.7rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+header .subtitle {
+  font-size: 0.85rem;
+  color: #9ab4cc;
+  line-height: 1.6;
+}
+header .ext-preview {
+  margin-top: 1.2rem;
+  padding: 0.8rem 1rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 2px;
+  font-size: 0.78rem;
+  color: #7a9cc8;
+  font-family: var(--mono);
+  letter-spacing: 0.03em;
+}
+header .ext-preview .ext-label {
+  color: var(--gold);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+/* ── Layout ── */
+main { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
+
+/* ── TOC ── */
+.toc {
+  border: 2px solid var(--ruled);
+  background: white;
+  border-radius: 2px;
+  padding: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.toc-title {
+  font-family: var(--serif);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--ruled);
+  padding-bottom: 0.5rem;
+}
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.2rem 1.5rem;
+}
+.toc-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--ink2);
+  text-decoration: none;
+  padding: 0.25rem 0;
+  border-bottom: 1px dotted transparent;
+  transition: color 0.2s;
+}
+.toc-item:hover { color: var(--accent); border-bottom-color: var(--ruled); }
+.toc-item .toc-num {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+/* ── Param table ── */
+.param-section {
+  background: white;
+  border: 1px solid var(--ruled);
+  margin-bottom: 2.5rem;
+  border-radius: 2px;
+}
+.param-section-title {
+  background: var(--ink2);
+  color: #d4dce8;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+}
+
+/* ── Section ── */
+.section { margin-bottom: 3rem; }
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid var(--accent);
+}
+.section-num {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  background: var(--accent);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  letter-spacing: 0.08em;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* ── Equation Card ── */
+.eq-card {
+  background: white;
+  border: 1px solid var(--ruled);
+  border-left: 4px solid var(--accent);
+  margin-bottom: 1.5rem;
+  border-radius: 2px;
+}
+.eq-card.firm  { border-left-color: var(--green); }
+.eq-card.market { border-left-color: var(--gold); }
+.eq-card.foc   { border-left-color: var(--purple); }
+.eq-card.ss    { border-left-color: var(--orange); }
+.eq-card.system { border-left-color: var(--ink2); }
+.eq-card.tvc   { border-left-color: var(--accent2); }
+.eq-card.ext   { border-left-color: var(--teal); }
+
+.eq-head {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--ruled);
+  background: var(--eq-bg);
+}
+.eq-num-badge {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: var(--accent);
+  color: white;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.eq-card.firm  .eq-num-badge { background: var(--green); }
+.eq-card.market .eq-num-badge { background: var(--gold); }
+.eq-card.foc   .eq-num-badge { background: var(--purple); }
+.eq-card.ss    .eq-num-badge { background: var(--orange); }
+.eq-card.system .eq-num-badge { background: var(--ink2); }
+.eq-card.tvc   .eq-num-badge { background: var(--accent2); }
+.eq-card.ext   .eq-num-badge { background: var(--teal); }
+
+.eq-head-title {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--ink);
+  flex: 1;
+}
+.eq-ref {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: #8090a0;
+  background: var(--paper2);
+  padding: 0.15rem 0.4rem;
+  border-radius: 2px;
+}
+
+.eq-body { padding: 1.2rem 1.2rem 1rem; }
+
+.formula-box {
+  background: var(--paper);
+  border: 1px solid var(--ruled);
+  padding: 1rem 1.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+  border-radius: 2px;
+}
+
+/* Variable tables */
+.var-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  margin-bottom: 1rem;
+}
+.var-table th {
+  background: var(--paper2);
+  padding: 0.4rem 0.7rem;
+  text-align: left;
+  border: 1px solid var(--ruled);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink2);
+  font-weight: 500;
+}
+.var-table td {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--ruled);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.var-table tr:nth-child(even) td { background: #faf9f6; }
+
+/* Tags */
+.tag {
+  display: inline-block;
+  padding: 0.1rem 0.45rem;
+  border-radius: 2px;
+  font-size: 0.68rem;
+  font-family: var(--mono);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: white;
+  margin: 0.1rem 0.1rem;
+  white-space: nowrap;
+}
+.tag.exo   { background: var(--green); }
+.tag.endo  { background: var(--accent); }
+.tag.state { background: var(--purple); }
+.tag.jump  { background: var(--accent2); }
+.tag.param { background: var(--orange); }
+.tag.removed { background: #aaa; text-decoration: line-through; }
+
+/* Info blocks */
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.5rem; }
+@media (max-width: 640px) { .info-grid { grid-template-columns: 1fr; } }
+
+.info-block {
+  background: var(--paper);
+  border: 1px solid var(--ruled);
+  border-radius: 2px;
+  padding: 0.7rem 0.9rem;
+}
+.info-block.wide { grid-column: 1 / -1; }
+.info-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.info-label::before { content: '▸'; color: var(--gold); }
+.info-text { font-size: 0.84rem; color: var(--ink2); line-height: 1.7; }
+
+/* Legend strip */
+.legend-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--paper2);
+  border: 1px solid var(--ruled);
+  margin-bottom: 2rem;
+  border-radius: 2px;
+}
+.legend-strip .tag { font-size: 0.75rem; padding: 0.2rem 0.6rem; }
+
+/* Summary box */
+.summary-box {
+  background: var(--accent);
+  color: #d0dae8;
+  border-radius: 2px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+.summary-box h3 {
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: white;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.summary-flow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.8rem;
+}
+.flow-item {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 0.8rem;
+  border-radius: 2px;
+}
+.flow-item .flow-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: #9ab4cc;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.3rem;
+}
+.flow-item .flow-desc { font-size: 0.82rem; color: #c0cede; }
+
+/* Roadmap cards */
+.roadmap-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 0.8rem;
+}
+@media (max-width: 640px) { .roadmap-grid { grid-template-columns: 1fr; } }
+.roadmap-card {
+  background: white;
+  border: 1px solid var(--ruled);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.roadmap-card-head {
+  padding: 0.5rem 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: white;
+}
+.roadmap-card-head.gov   { background: var(--accent2); }
+.roadmap-card-head.bond  { background: var(--purple); }
+.roadmap-card-head.cb    { background: var(--teal); }
+.roadmap-card-head.hh    { background: var(--orange); }
+.roadmap-card-head.firm  { background: var(--green); }
+.roadmap-card-head.good  { background: var(--gold); }
+.roadmap-card-body {
+  padding: 0.7rem 0.9rem;
+  font-size: 0.82rem;
+  color: var(--ink2);
+  line-height: 1.6;
+}
+.roadmap-card-body ul { list-style: none; padding: 0; }
+.roadmap-card-body li { padding: 0.2rem 0; }
+.roadmap-card-body li::before { content: '→ '; color: var(--gold); font-weight: bold; }
+
+/* Alert box */
+.alert-box {
+  border-radius: 2px;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.2rem;
+  font-size: 0.84rem;
+  line-height: 1.7;
+  border: 1px solid;
+}
+.alert-box.info   { background: var(--blue-light); border-color: var(--accent); color: var(--accent); }
+.alert-box.warn   { background: var(--orange-light); border-color: var(--orange); color: var(--orange); }
+.alert-box.success { background: var(--green-light); border-color: var(--green); color: var(--green); }
+.alert-box.tvc    { background: #fdf4f4; border-color: var(--accent2); color: var(--accent2); }
+.alert-box strong { font-weight: 700; }
+
+/* Comparison table */
+.comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  margin-bottom: 1rem;
+}
+.comp-table th {
+  background: var(--ink2);
+  color: #d4dce8;
+  padding: 0.45rem 0.7rem;
+  text-align: left;
+  border: 1px solid var(--ruled);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+.comp-table td {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--ruled);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.comp-table tr:nth-child(even) td { background: #faf9f6; }
+.comp-table .yes  { color: var(--green); font-weight: 600; }
+.comp-table .no   { color: var(--accent2); font-weight: 600; }
+.comp-table .na   { color: #888; font-style: italic; }
+
+/* KaTeX override */
+.katex { font-size: 1em; }
+.formula-box .katex { font-size: 1.05em; }
+
+@media (max-width: 640px) {
+  .toc-grid { grid-template-columns: 1fr; }
+  header h1 { font-size: 1.3rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <div class="tag-line">マクロ経済学 — プレーンRBCシリーズ § 1 — v1</div>
+    <h1>プレーンRBCモデル<br>ステップバイステップ完全解説</h1>
+    <div class="subtitle">
+      政府部門なし・資産＝資本のみ。セットアップ → 最適化（ラグランジアン・一階条件）→ 均衡方程式体系 → 定常状態 → 対数線形近似 → 状態空間表現 → TVC要件の役割 → 言えること・言えないこと → 拡張ロードマップ
+    </div>
+    <div class="ext-preview">
+      <div class="ext-label">今後の拡張系列（本稿はベースライン）</div>
+      プレーンRBC → ①政府(G,τ)あり → ②政府債務(b)あり → ③中央銀行+貨幣(m)+国債(b) ‖ 横断的拡張：家計n人 / 企業n社 / 財n品目
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- TOC -->
+<nav class="toc">
+  <div class="toc-title">目次</div>
+  <div class="toc-grid">
+    <a class="toc-item" href="#s0"><span class="toc-num">§0</span> 変数・パラメーター凡例</a>
+    <a class="toc-item" href="#s1"><span class="toc-num">§1</span> 家計の最適化問題</a>
+    <a class="toc-item" href="#s2"><span class="toc-num">§2</span> 企業の最適化問題</a>
+    <a class="toc-item" href="#s3"><span class="toc-num">§3</span> 市場清算条件</a>
+    <a class="toc-item" href="#s4"><span class="toc-num">§4</span> 一階条件の導出</a>
+    <a class="toc-item" href="#s5"><span class="toc-num">§5</span> 均衡方程式体系</a>
+    <a class="toc-item" href="#s6"><span class="toc-num">§6</span> 資本蓄積・TFP過程</a>
+    <a class="toc-item" href="#s7"><span class="toc-num">§7</span> 定常状態の計算</a>
+    <a class="toc-item" href="#s8"><span class="toc-num">§8</span> 対数線形近似</a>
+    <a class="toc-item" href="#s9"><span class="toc-num">§9</span> 状態空間表現（縮約版）</a>
+    <a class="toc-item" href="#s10"><span class="toc-num">§10</span> 状態空間表現（全変数版）</a>
+    <a class="toc-item" href="#s11"><span class="toc-num">§11</span> TVC要件の役割</a>
+    <a class="toc-item" href="#s12"><span class="toc-num">§12</span> プレーンRBCで言えること</a>
+    <a class="toc-item" href="#s13"><span class="toc-num">§13</span> 拡張ロードマップ</a>
+    <a class="toc-item" href="#s14"><span class="toc-num">§14</span> カリブレーション（具体数値例）</a>
+    <a class="toc-item" href="#s15"><span class="toc-num">§15</span> インパルス応答関数（IRF）</a>
+    <a class="toc-item" href="#s16"><span class="toc-num">§16</span> 景気循環統計との照合</a>
+    <a class="toc-item" href="#s17"><span class="toc-num">§17</span> 確率的割引因子（SDF）と資産価格</a>
+    <a class="toc-item" href="#s18"><span class="toc-num">§18</span> TVC を外したとき——代替条件の可能性</a>
+  </div>
+</nav>
+
+<!-- ───── §0 Legend & Parameters ───── -->
+<div class="section" id="s0">
+  <div class="section-header">
+    <span class="section-num">§0</span>
+    <span class="section-title">変数分類の凡例とパラメーター一覧</span>
+  </div>
+
+  <div class="alert-box info">
+    <strong>プレーンRBCの定義：</strong>政府部門（政府支出・租税・国債・中央銀行）を一切含まない最もシンプルなRBCモデル。資産は物的資本のみ（\(a_t = k_t\)）。代表的家計・代表的企業・代表的財の仮定のもと、TFPショックによる景気変動を分析するベースラインモデル。
+  </div>
+
+  <div class="legend-strip">
+    <span class="tag exo">外生変数</span>
+    <span class="tag endo">内生変数</span>
+    <span class="tag state">状態変数（先決・ストック）</span>
+    <span class="tag jump">ジャンプ変数（非先決・フロー）</span>
+    <span class="tag param">パラメーター（深層パラメーター）</span>
+    <span class="tag removed">政府版のみ（本モデルには不在）</span>
+  </div>
+
+  <div class="param-section">
+    <div class="param-section-title">深層パラメーター（Deep Parameters）</div>
+    <table class="var-table">
+      <tr><th>記号</th><th>意味</th><th>典型値（四半期）</th><th>区分</th></tr>
+      <tr><td>\(\beta\)</td><td>時間割引因子。1期後の効用を現在から見た比率で割り引く</td><td>0.99</td><td><span class="tag param">パラメーター</span></td></tr>
+      <tr><td>\(\sigma\)</td><td>相対的危険回避度。\(1/\sigma\)が異時点間代替弾力性（IES）</td><td>1〜2</td><td><span class="tag param">パラメーター</span></td></tr>
+      <tr><td>\(\chi\)</td><td>効用における労働不効用のスケール・パラメーター</td><td>正値（較正で決定）</td><td><span class="tag param">パラメーター</span></td></tr>
+      <tr><td>\(\gamma\)</td><td>フリッシュ弾力性の逆数（労働供給の賃金弾力性の逆数）</td><td>1〜2</td><td><span class="tag param">パラメーター</span></td></tr>
+      <tr><td>\(\alpha\)</td><td>コブ＝ダグラス型生産関数の資本分配率</td><td>\(1/3\)</td><td><span class="tag param">パラメーター</span></td></tr>
+      <tr><td>\(\delta\)</td><td>資本減耗率（年率10%程度 → 四半期 0.025）</td><td>0.025〜0.10</td><td><span class="tag param">パラメーター</span></td></tr>
+      <tr><td>\(\rho\)</td><td>TFP対数過程の自己回帰係数（持続性）</td><td>0.90〜0.99</td><td><span class="tag param">パラメーター</span></td></tr>
+      <tr><td>\(\sigma_\varepsilon\)</td><td>TFPショックの標準偏差</td><td>0.007〜0.02</td><td><span class="tag param">パラメーター</span></td></tr>
+    </table>
+  </div>
+
+  <div class="param-section">
+    <div class="param-section-title">変数一覧（プレーンRBC）</div>
+    <table class="var-table">
+      <tr><th>記号</th><th>意味</th><th>区分</th></tr>
+      <tr><td>\(C_t\)</td><td>消費（ジャンプ変数）</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+      <tr><td>\(I_t\)</td><td>投資（ジャンプ変数）</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+      <tr><td>\(L_t\)</td><td>労働投入量（ジャンプ変数）</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+      <tr><td>\(Y_t\)</td><td>実質GDP（産出量）</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+      <tr><td>\(w_t\)</td><td>実質賃金率</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+      <tr><td>\(R_t\)</td><td>グロス実質リターン（\(1+r_t\)）</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+      <tr><td>\(k_t\)</td><td>物的資本ストック（状態変数。今期の唯一の資産）</td><td><span class="tag endo">内生変数</span> <span class="tag state">状態変数</span></td></tr>
+      <tr><td>\(A_t\)</td><td>全要素生産性（TFP）。対数過程でモデル化</td><td><span class="tag exo">外生変数</span> <span class="tag state">状態変数</span></td></tr>
+      <tr><td>\(b_t\)</td><td>政府国債——<strong>プレーンRBCには存在しない</strong></td><td><span class="tag removed">不在</span></td></tr>
+      <tr><td>\(\tau_t\)</td><td>租税——<strong>プレーンRBCには存在しない</strong></td><td><span class="tag removed">不在</span></td></tr>
+      <tr><td>\(G_t\)</td><td>政府支出——<strong>プレーンRBCには存在しない</strong></td><td><span class="tag removed">不在</span></td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ───── §1 家計の最適化問題 ───── -->
+<div class="section" id="s1">
+  <div class="section-header">
+    <span class="section-num">§1</span>
+    <span class="section-title">家計の最適化問題（政府部門なし）</span>
+  </div>
+
+  <!-- Eq 1: 効用関数 -->
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">1</div>
+      <div class="eq-head-title">家計の生涯効用関数（目的関数）</div>
+      <span class="eq-ref">CRRA効用 + 労働不効用</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[U = \sum_{t=0}^{\infty} \beta^t \left(\frac{C_t^{1-\sigma}}{1-\sigma} - \chi\frac{L_t^{1+\gamma}}{1+\gamma}\right)\]
+      </div>
+      <table class="var-table">
+        <tr><th>変数・パラメーター</th><th>内容・解釈</th><th>区分</th></tr>
+        <tr><td>\(C_t \geq 0\)</td><td>t期の消費。家計の第一の選択変数</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+        <tr><td>\(L_t \in [0,1]\)</td><td>t期の労働時間。時間賦存量を1に基準化</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+        <tr><td>\(\frac{C_t^{1-\sigma}}{1-\sigma}\)</td><td>CRRA型消費効用。\(\sigma=1\)のとき\(\ln C_t\)に収束</td><td>—</td></tr>
+        <tr><td>\(\chi\frac{L_t^{1+\gamma}}{1+\gamma}\)</td><td>労働の不効用（disutility of labor）。労働増加で効用低下</td><td>—</td></tr>
+      </table>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">政府版との相違点</div>
+          <div class="info-text">効用関数自体は政府部門入りRBCと<strong>まったく同一</strong>。政府の有無は効用関数には現れず、以下の予算制約式の差異として現れる。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">展開の意図</div>
+          <div class="info-text">\(\sigma\)は異時点間代替弾力性\(1/\sigma\)を決め、金利変動への消費反応を制御する。\(\gamma\)はフリッシュ弾力性\(1/\gamma\)を通じて労働供給の賃金弾力性を決める。RBCの景気変動振幅の主要パラメーター。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Eq 2: フロー予算制約 -->
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">2</div>
+      <div class="eq-head-title">家計のフロー予算制約式（資産＝資本のみ）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[k_{t+1} + C_t = w_t L_t + R_t k_t\]
+      </div>
+      <table class="var-table">
+        <tr><th>変数</th><th>内容・解釈</th><th>区分</th></tr>
+        <tr><td>\(k_{t+1}\)</td><td>翌期首の資本ストック（今期の貯蓄決定。来期の状態変数）</td><td><span class="tag endo">内生変数</span> <span class="tag state">状態変数</span></td></tr>
+        <tr><td>\(k_t\)</td><td>今期首の資本ストック（前期に決定された先決変数）</td><td><span class="tag endo">内生変数</span> <span class="tag state">状態変数</span></td></tr>
+        <tr><td>\(w_t\)</td><td>実質賃金率</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+        <tr><td>\(R_t\)</td><td>グロス実質リターン（元本＋利子）。\(R_t = 1 + r_t = 1 + \alpha A_t K_t^{\alpha-1} L_t^{1-\alpha} - \delta\)</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+      </table>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">政府版との最大の相違</div>
+          <div class="info-text">政府版では \(a_t = k_t + b_t\)（総資産 = 資本 + 国債）として \(a_{t+1} + C_t = w_t L_t + R_t a_t - \tau_t\) と書く。プレーンRBCでは<strong>国債 \(b_t\) も租税 \(\tau_t\) も存在しない</strong>ため、\(a_t \equiv k_t\) と一本化され、右辺から \(\tau_t\) が消える。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">式の構造</div>
+          <div class="info-text">左辺が「今期の使い道」（翌期資本形成＋今期消費）、右辺が「今期の源泉」（労働所得＋資本からのグロスリターン）。資本市場では利潤 \(\Pi_t = 0\)（CRS＋完全競争）のため配当項は不在。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Eq 3: 生涯予算制約（TVC前哨） -->
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">3</div>
+      <div class="eq-head-title">家計の生涯予算制約式（フロー制約の無限期間へのロールアップ）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\sum_{t=0}^{\infty} \left(\prod_{s=0}^{t-1} \frac{1}{R_{s+1}}\right) C_t \;=\; k_0 \;+\; \sum_{t=0}^{\infty} \left(\prod_{s=0}^{t-1} \frac{1}{R_{s+1}}\right) w_t L_t\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">導出の概要</div>
+          <div class="info-text">フロー制約 [Eq.2] を \(t=0,1,2,...\) について逐次代入し、無限期間の予算制約として書き直す。両辺の現在価値割引因子は確率的実質金利の積 \(\prod 1/R_{s+1}\) による。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">TVC（§11）との関係</div>
+          <div class="info-text">この式が等号で成立するための必要条件が横断性条件（TVC）：\(\lim_{T\to\infty}\beta^T u'(C_T)\,k_{T+1} = 0\)。TVCが満たされないと、家計が無限先の資本を保有しながら消費できる「バブル」が存在してしまう。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── §2 企業の最適化問題 ───── -->
+<div class="section" id="s2">
+  <div class="section-header">
+    <span class="section-num">§2</span>
+    <span class="section-title">企業の最適化問題</span>
+  </div>
+
+  <!-- Eq 4 -->
+  <div class="eq-card firm">
+    <div class="eq-head">
+      <div class="eq-num-badge">4</div>
+      <div class="eq-head-title">コブ＝ダグラス型生産関数</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[Y_t = A_t K_t^{\alpha} L_t^{1-\alpha}\]
+      </div>
+      <table class="var-table">
+        <tr><th>変数</th><th>内容・解釈</th><th>区分</th></tr>
+        <tr><td>\(Y_t\)</td><td>実質GDP（産出量）</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+        <tr><td>\(A_t\)</td><td>全要素生産性（TFP）。ヒックス中立的技術水準</td><td><span class="tag exo">外生変数</span> <span class="tag state">状態変数</span></td></tr>
+        <tr><td>\(K_t\)</td><td>t期首の資本ストック（代表的企業が賃借）</td><td><span class="tag endo">内生変数</span> <span class="tag state">状態変数</span></td></tr>
+        <tr><td>\(L_t\)</td><td>t期の労働投入量</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+        <tr><td>\(\alpha \in (0,1)\)</td><td>資本の産出弾力性（資本分配率）。\(\alpha \approx 1/3\)</td><td><span class="tag param">パラメーター</span></td></tr>
+      </table>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">CRS の意味</div>
+          <div class="info-text">規模に対して収穫一定（CRS）のコブ＝ダグラス型生産関数。\(A_t\)はヒックス中立型TFP。完全競争均衡では \(\Pi_t = 0\)（ゼロ利潤定理）が成立し、企業の動的問題が毎期の静学問題に帰着する。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">プレーンRBCにおける役割</div>
+          <div class="info-text">TFP \(A_t\) が唯一の外生ショック源。政府部門がないため、財政政策ショックは存在しない。すべての景気変動は \(A_t\) の確率過程から生まれる——これがRBCの核心的主張。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Eq 5 -->
+  <div class="eq-card firm">
+    <div class="eq-head">
+      <div class="eq-num-badge">5</div>
+      <div class="eq-head-title">企業の静学的利潤最大化問題</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\Pi_t = \max_{K_t,\, L_t} \left[A_t K_t^{\alpha} L_t^{1-\alpha} - w_t L_t - (R_t - 1 + \delta)K_t\right]\]
+      </div>
+      <table class="var-table">
+        <tr><th>変数</th><th>内容・解釈</th><th>区分</th></tr>
+        <tr><td>\(R_t - 1 + \delta\)</td><td>資本のレンタルコスト。機会費用 \(R_t\) から元本回収 \(1\) を引き、減耗コスト \(\delta\) を加算</td><td>—</td></tr>
+        <tr><td>\(\Pi_t = 0\)</td><td>CRS＋完全競争均衡におけるゼロ利潤</td><td>—</td></tr>
+      </table>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">一階条件（企業）</div>
+          <div class="info-text">
+            \[w_t = (1-\alpha) A_t K_t^{\alpha} L_t^{-\alpha} = (1-\alpha)\frac{Y_t}{L_t}\]
+            \[R_t - 1 + \delta = \alpha A_t K_t^{\alpha-1} L_t^{1-\alpha} = \alpha\frac{Y_t}{K_t}\]
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">均衡での解釈</div>
+          <div class="info-text">賃金は労働の限界生産物（MPL）に等しく、実質金利（レンタルコスト）は資本の限界生産物（MPK）から減耗率 \(\delta\) を引いた値に等しい。CRS のもとオイラー定理から \(\Pi_t = 0\) が確認できる。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── §3 市場清算条件 ───── -->
+<div class="section" id="s3">
+  <div class="section-header">
+    <span class="section-num">§3</span>
+    <span class="section-title">市場清算条件</span>
+  </div>
+
+  <!-- Eq 6 -->
+  <div class="eq-card market">
+    <div class="eq-head">
+      <div class="eq-num-badge">6</div>
+      <div class="eq-head-title">財市場の清算条件（国民所得恒等式）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[Y_t = C_t + I_t\]
+      </div>
+      <table class="var-table">
+        <tr><th>変数</th><th>内容・解釈</th><th>区分</th></tr>
+        <tr><td>\(I_t\)</td><td>粗投資。\(I_t = k_{t+1} - (1-\delta)k_t\)</td><td><span class="tag endo">内生変数</span> <span class="tag jump">ジャンプ変数</span></td></tr>
+      </table>
+      <div class="alert-box info">
+        <strong>政府版との最大の相違：</strong>政府版では \(Y_t = C_t + I_t + G_t\)（政府支出 \(G_t\) が需要の一部）。プレーンRBCでは <strong>\(G_t = 0\)</strong> のため、産出はすべて民間消費と民間投資に向かう。この単純性がプレーンRBCの理論的純粋さの源泉。
+      </div>
+    </div>
+  </div>
+
+  <!-- Eq 7 -->
+  <div class="eq-card market">
+    <div class="eq-head">
+      <div class="eq-num-badge">7</div>
+      <div class="eq-head-title">労働市場の清算条件</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[L_t^s = L_t^d = L_t, \qquad L_t \in [0,1]\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">プレーンRBCでの意味</div>
+          <div class="info-text">労働市場は常に清算される（ワルラス法則）。失業は存在しない。RBCが「景気後退は最適な選択の結果」と主張する根拠はここにある。雇用変動はすべて自発的な労働供給の変化として解釈される。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">拡張との関係</div>
+          <div class="info-text">ニューケインジアン（NK）モデルでは名目硬直性・探索摩擦を導入して「非自発的失業」を生む。プレーンRBCのこの仮定が最も強い批判対象の一つ。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Eq 8 -->
+  <div class="eq-card market">
+    <div class="eq-head">
+      <div class="eq-num-badge">8</div>
+      <div class="eq-head-title">資本市場の清算条件（家計の資本供給＝企業の資本需要）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[K_t = k_t \quad \text{（代表的経済の資本市場均衡）}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">代表的家計の仮定</div>
+          <div class="info-text">代表的家計が保有する資本 \(k_t\) がそのまま企業の資本 \(K_t\) になる。分散した家計・企業・ポートフォリオ選択問題が存在しないため、集計問題（aggregation problem）が発生しない。この仮定を緩めると異質家計モデル（§13参照）が必要になる。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">プレーンRBCには国債市場が存在しない</div>
+          <div class="info-text">政府版では資本市場に加えて国債市場も存在する（\(b_t\) の需給均衡）。プレーンRBCでは国債市場自体が存在しないため、均衡条件が単純化される。資産は資本のみ。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── §4 一階条件の導出 ───── -->
+<div class="section" id="s4">
+  <div class="section-header">
+    <span class="section-num">§4</span>
+    <span class="section-title">一階条件の導出（ラグランジアン法）</span>
+  </div>
+
+  <!-- Eq 9 -->
+  <div class="eq-card foc">
+    <div class="eq-head">
+      <div class="eq-num-badge">9</div>
+      <div class="eq-head-title">ラグランジアン（プレーンRBC版）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\mathcal{L} = \sum_{t=0}^{\infty} \beta^t \left[\left(\frac{C_t^{1-\sigma}}{1-\sigma} - \chi\frac{L_t^{1+\gamma}}{1+\gamma}\right) + \lambda_t\left(w_t L_t + R_t k_t - C_t - k_{t+1}\right)\right]\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">政府版との相違</div>
+          <div class="info-text">政府版では制約式に \(-\tau_t\) と \(b_t\) が入る。プレーンRBCではそれらが消えた単純な形。選択変数は \(\{C_t, L_t, k_{t+1}\}_{t=0}^{\infty}\)（国債量 \(b_{t+1}\) という選択変数が存在しない）。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">シャドー・プライスの解釈</div>
+          <div class="info-text">\(\lambda_t\) は t 期の実質資源（財）の限界効用価値（マルチプライヤー）。一般に \(\lambda_t = u'(C_t) = C_t^{-\sigma}\) が最適条件から得られる。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Eq 10 -->
+  <div class="eq-card foc">
+    <div class="eq-head">
+      <div class="eq-num-badge">10</div>
+      <div class="eq-head-title">一階条件①：消費のオイラー方程式</div>
+      <span class="eq-ref">∂ℒ/∂C_t = 0 かつ ∂ℒ/∂k_{t+1} = 0</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[C_t^{-\sigma} = \beta\, \mathbb{E}_t\!\left[R_{t+1}\,C_{t+1}^{-\sigma}\right]\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">経済的解釈</div>
+          <div class="info-text">今期消費の限界効用（左辺）が、来期の限界効用×グロスリターンの期待値（右辺）に等しくなるよう消費を選択する（異時点間の最適化条件）。この式がRBCにおける消費平滑化・貯蓄決定の核心。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">プレーンRBCでの特徴</div>
+          <div class="info-text">政府版と形式上同一。ただし政府版では \(R_{t+1}\) が資本リターンと国債利回りの無裁定条件から決まるのに対し、プレーンRBCでは \(R_{t+1} = 1 + \alpha A_{t+1}K_{t+1}^{\alpha-1}L_{t+1}^{1-\alpha} - \delta\)（資本のMPKのみ）。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Eq 11 -->
+  <div class="eq-card foc">
+    <div class="eq-head">
+      <div class="eq-num-badge">11</div>
+      <div class="eq-head-title">一階条件②：労働供給条件（消費・余暇の代替）</div>
+      <span class="eq-ref">∂ℒ/∂L_t = 0</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\chi L_t^{\gamma} = C_t^{-\sigma} \cdot w_t\]
+      </div>
+      <div class="info-text" style="margin-top:0.5rem; font-size:0.84rem; color:var(--ink2);">
+        または：\(\chi L_t^{\gamma} C_t^{\sigma} = w_t\)。左辺は労働の限界不効用、右辺は実質賃金（就労の限界報酬）。
+      </div>
+      <div class="info-grid" style="margin-top:0.8rem;">
+        <div class="info-block">
+          <div class="info-label">経済的解釈</div>
+          <div class="info-text">労働の限界不効用と実質賃金の均衡。賃金上昇時に労働供給が増加する（代替効果）。フリッシュ弾力性 \(1/\gamma\) が大きいほど労働供給の賃金反応が強い。RBCが景気循環を説明するための「労働ウェッジ」のソース。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">プレーンRBCでの特徴</div>
+          <div class="info-text">労働供給はすべて自発的。TFPが上昇すると賃金 \(w_t\) が上がり、労働供給 \(L_t\) が増加する（代替効果優位の場合）。これがRBCの「景気拡張期に労働時間が増える」という予測の根拠。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Eq 12: TVC -->
+  <div class="eq-card tvc">
+    <div class="eq-head">
+      <div class="eq-num-badge">12</div>
+      <div class="eq-head-title">横断性条件（TVC）——最適化の境界条件</div>
+      <span class="eq-ref">ラグランジアン最適の必要条件</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\lim_{T \to \infty} \beta^T\, \mathbb{E}_0\!\left[u'(C_T)\,k_{T+1}\right] = 0\]
+        \[\Longleftrightarrow\quad \lim_{T \to \infty} \beta^T\, \mathbb{E}_0\!\left[C_T^{-\sigma}\,k_{T+1}\right] = 0\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">TVC の役割（詳細は§11）</div>
+          <div class="info-text">無限地平線の最適化において「無限先に向けて資本を蓄積し続けるバブル」を排除する。ラグランジアンの「端点条件」として、家計が無限期間の予算を使い切ることを保証する。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">政府版との比較</div>
+          <div class="info-text">政府版では TVC が「家計の TVC（資本）」「家計の TVC（国債）」「政府の No-Ponzi 条件」の三本になる。プレーンRBCでは<strong>資本に関する TVC 一本のみ</strong>。国債が存在しないので国債の TVC は不要。これが構造的にシンプルな点。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── §5 均衡方程式体系 ───── -->
+<div class="section" id="s5">
+  <div class="section-header">
+    <span class="section-num">§5</span>
+    <span class="section-title">均衡方程式体系</span>
+  </div>
+
+  <div class="eq-card system">
+    <div class="eq-head">
+      <div class="eq-num-badge">13</div>
+      <div class="eq-head-title">プレーンRBCの均衡方程式体系（6本）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\text{[Eq.Euler]}\quad C_t^{-\sigma} = \beta\, \mathbb{E}_t\!\left[(1 + \alpha A_{t+1}K_{t+1}^{\alpha-1}L_{t+1}^{1-\alpha} - \delta)\,C_{t+1}^{-\sigma}\right]\]
+        \[\text{[Eq.Labor]}\quad \chi L_t^{\gamma} = C_t^{-\sigma}(1-\alpha)A_t K_t^{\alpha} L_t^{-\alpha}\]
+        \[\text{[Eq.Prod]}\quad Y_t = A_t K_t^{\alpha} L_t^{1-\alpha}\]
+        \[\text{[Eq.Mkt]}\quad Y_t = C_t + I_t\]
+        \[\text{[Eq.Cap]}\quad K_{t+1} = (1-\delta)K_t + I_t\]
+        \[\text{[Eq.TFP]}\quad \ln A_{t+1} = \rho \ln A_t + \varepsilon_{t+1}, \quad \varepsilon_{t+1} \sim \mathcal{N}(0, \sigma_\varepsilon^2)\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">状態変数（先決）</div>
+          <div class="info-text">\(K_t\)（物的資本）、\(A_t\)（TFP）の2変数。これらは前期の決定に基づく先決変数。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">ジャンプ変数（非先決）</div>
+          <div class="info-text">\(C_t, I_t, L_t, Y_t\) の4変数。毎期ショックが判明した後に最適に決まる。</div>
+        </div>
+        <div class="info-block wide">
+          <div class="info-label">政府版との変数数の比較</div>
+          <div class="info-text">
+            政府版では追加的に \(G_t, \tau_t, b_t, R_t^b\)（国債利回り）などが加わり、方程式数も増加する（政府予算制約式、国債市場清算条件など）。プレーンRBCは<strong>6本の方程式で6変数を完全に決定する閉じた体系</strong>。
+            <br><br>
+            <strong>未知変数：</strong>\(C_t, I_t, L_t, Y_t, K_{t+1}, A_{t+1}\)（6変数）
+            <strong>方程式：</strong>Euler, Labor, Prod, Mkt, Cap, TFP（6本）
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── §6 資本蓄積・TFP過程 ───── -->
+<div class="section" id="s6">
+  <div class="section-header">
+    <span class="section-num">§6</span>
+    <span class="section-title">資本蓄積・TFP過程</span>
+  </div>
+
+  <!-- Eq 14 -->
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">14</div>
+      <div class="eq-head-title">資本蓄積方程式</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[K_{t+1} = (1-\delta)K_t + I_t = (1-\delta)K_t + Y_t - C_t\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">二通りの書き方</div>
+          <div class="info-text">左辺は翌期の資本ストック。右辺第一形式では「今期減耗後の資本＋新規投資」、第二形式では市場清算条件 \(I_t = Y_t - C_t\) を代入した形。プレーンRBCでは \(G_t = 0\) のため \(I_t = Y_t - C_t\) が直接成立する。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">状態変数としての役割</div>
+          <div class="info-text">\(K_{t+1}\) は今期の消費・労働決定（ジャンプ変数の最適化）の結果として翌期への橋渡し変数となる。これが「先決変数」（predetermined variable）として動学を決定する。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Eq 15 -->
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">15</div>
+      <div class="eq-head-title">TFP の確率過程（AR(1)）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\ln A_{t+1} = \rho \ln A_t + \varepsilon_{t+1}, \qquad \varepsilon_{t+1} \sim \mathcal{N}(0,\,\sigma_\varepsilon^2)\quad \text{i.i.d.}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">パラメーターの意味</div>
+          <div class="info-text">\(\rho \in [0,1)\)：TFPショックの持続性。\(\rho \approx 0.95\) のとき1期のショックが約 20 期後も半減せず残る（持続的な景気変動をもたらす）。\(\sigma_\varepsilon\)：ショックの大きさ。Kydland-Prescott（1982）ではデータから較正。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">唯一のショック源</div>
+          <div class="info-text">プレーンRBCでは \(\varepsilon_{t+1}\) が景気変動の<strong>唯一の外生ショック</strong>。政府版では財政ショック（G, τの変化）が加わる。この単純性が「RBCはTFPショックで景気変動を説明できるか」という問いの検定を可能にしている。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── §7 定常状態 ───── -->
+<div class="section" id="s7">
+  <div class="section-header">
+    <span class="section-num">§7</span>
+    <span class="section-title">定常状態の計算</span>
+  </div>
+
+  <div class="eq-card ss">
+    <div class="eq-head">
+      <div class="eq-num-badge">16</div>
+      <div class="eq-head-title">定常状態の決定方程式（バー付き変数）</div>
+      <span class="eq-ref">\(A_t=\bar{A}=1,\; K_t=\bar{K},\; C_t=\bar{C},\; L_t=\bar{L}\) として解く</span>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\bar{R} = \frac{1}{\beta} \quad \Longleftrightarrow \quad \alpha\frac{\bar{Y}}{\bar{K}} = \frac{1}{\beta} - 1 + \delta \;=:\; r^* + \delta\]
+        \[\bar{w} = (1-\alpha)\frac{\bar{Y}}{\bar{L}}, \qquad \bar{I} = \delta\bar{K}, \qquad \bar{C} = \bar{Y} - \delta\bar{K}\]
+        \[\chi\bar{L}^{\gamma}\bar{C}^{\sigma} = \bar{w} = (1-\alpha)\frac{\bar{Y}}{\bar{L}}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">定常実質金利 \(r^*\)</div>
+          <div class="info-text">\(r^* = 1/\beta - 1 \approx \rho_\beta\)（時間選好率）。プレーンRBCでは \(r^*\) は<strong>モデルパラメーター \(\beta\) のみで決まる</strong>。国債が存在しないため「財政リスクプレミアム」「流動性プレミアム」は入らない。これが拡張モデルとの重要な相違点。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">較正の手順</div>
+          <div class="info-text">
+            ①\(\beta\) → \(r^*\) を決定<br>
+            ②\(\alpha, \delta\) → \(K/Y\) 比を決定<br>
+            ③\(K/Y,\alpha\) → \(I/Y, C/Y\) を決定<br>
+            ④\(\gamma\) と \(\bar{L}\)（例：\(L/3\)）→ \(\chi\) を逆算<br>
+            すべての定常値がパラメーターから一意に決まる。
+          </div>
+        </div>
+        <div class="info-block wide">
+          <div class="info-label">プレーンRBCの定常状態まとめ：変数削減効果</div>
+          <div class="info-text">
+            政府版では定常状態が \(\bar{K},\bar{C},\bar{L},\bar{Y},\bar{b},\bar{G},\bar{\tau}\) を同時に決める（政府の予算均衡条件が加わる）。プレーンRBCでは \(\bar{b}=\bar{G}=\bar{\tau}=0\) と自明になり、<strong>\(\bar{K},\bar{C},\bar{L},\bar{Y}\) の4変数を4本の方程式で決定する</strong>単純な体系になる。較正の自由度が少ない代わり、理論的整合性が高い。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── §8 対数線形近似 ───── -->
+<div class="section" id="s8">
+  <div class="section-header">
+    <span class="section-num">§8</span>
+    <span class="section-title">対数線形近似</span>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">17</div>
+      <div class="eq-head-title">対数偏差の定義と線形化の手順</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\hat{x}_t \;:=\; \ln x_t - \ln\bar{x} \;=\; \ln\!\left(\frac{x_t}{\bar{x}}\right) \;\approx\; \frac{x_t - \bar{x}}{\bar{x}}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">線形化の論理</div>
+          <div class="info-text">定常状態 \(\bar{x}\) 近傍で各変数を対数偏差 \(\hat{x}_t\) として表し、一階のテイラー展開で近似する。非線形の均衡方程式が線形差分方程式に変換され、解析的に解くことができる。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">線形化の範囲</div>
+          <div class="info-text">ショックが小さい（\(\sigma_\varepsilon \ll 1\）ときに良い近似。プレーンRBCの線形化は政府版より変数が少ないため、より扱いやすい体系が得られる。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">18</div>
+      <div class="eq-head-title">主要均衡条件の対数線形近似（一覧）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\text{[Euler-LL]}\quad \sigma\,\mathbb{E}_t[\hat{C}_{t+1} - \hat{C}_t] \;=\; \mathbb{E}_t[\hat{R}_{t+1}] \;=\; \frac{r^*+\delta}{R^*}\mathbb{E}_t\!\left[\hat{z}_t + \alpha(\hat{K}_{t+1} - \hat{L}_{t+1}\cdot\frac{1-\alpha}{\alpha})\right]\]
+        \[\text{[Labor-LL]}\quad \gamma\hat{L}_t + \sigma\hat{C}_t \;=\; \hat{w}_t \;=\; \hat{z}_t + \alpha\hat{K}_t - \alpha\hat{L}_t\]
+        \[\text{[Prod-LL]}\quad \hat{Y}_t \;=\; \hat{z}_t + \alpha\hat{K}_t + (1-\alpha)\hat{L}_t\]
+        \[\text{[Mkt-LL]}\quad \hat{Y}_t \;=\; \frac{\bar{C}}{\bar{Y}}\hat{C}_t + \frac{\bar{I}}{\bar{Y}}\hat{I}_t\]
+        \[\text{[Cap-LL]}\quad \hat{K}_{t+1} \;=\; (1-\delta)\hat{K}_t + \delta\hat{I}_t\]
+        \[\text{[TFP-LL]}\quad \hat{z}_{t+1} \;=\; \rho\hat{z}_t + \varepsilon_{t+1}\]
+      </div>
+      <div class="info-text" style="font-size:0.82rem;color:var(--ink2);margin-bottom:0.8rem;"><em>ここで \(\hat{z}_t := \ln A_t\) は TFP の対数水準、\(R^* := 1/\beta\)。</em></div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">政府版との比較</div>
+          <div class="info-text">政府版では [Mkt-LL] に \(\frac{\bar{G}}{\bar{Y}}\hat{G}_t\) が加わり、政府予算制約の線形化方程式が追加される。プレーンRBCでは<strong>6本の線形方程式が6変数を決定する閉じた体系</strong>であり、行列表現がコンパクトになる。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">消去の手順</div>
+          <div class="info-text">\(\hat{L}_t, \hat{I}_t, \hat{Y}_t, \hat{w}_t, \hat{R}_t\) を消去すると、状態変数 \((\hat{K}_t, \hat{z}_t)\) とジャンプ変数 \(\hat{C}_t\) の2次元システムに帰着する（§9）。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── §9 状態空間（縮約版） ───── -->
+<div class="section" id="s9">
+  <div class="section-header">
+    <span class="section-num">§9</span>
+    <span class="section-title">状態空間表現・縮約版</span>
+  </div>
+
+  <div class="eq-card system">
+    <div class="eq-head">
+      <div class="eq-num-badge">19</div>
+      <div class="eq-head-title">縮約型状態空間（2状態変数 + 1制御変数）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\underbrace{\begin{pmatrix}\hat{K}_{t+1} \\ \mathbb{E}_t[\hat{C}_{t+1}]\end{pmatrix}}_{\text{翌期の状態}} = \underbrace{\begin{pmatrix}\Gamma_{KK} & \Gamma_{KC} \\ \Gamma_{CK} & \Gamma_{CC}\end{pmatrix}}_{\Gamma \text{（2×2遷移行列）}} \underbrace{\begin{pmatrix}\hat{K}_t \\ \hat{C}_t\end{pmatrix}}_{\text{今期の状態}} + \underbrace{\begin{pmatrix}\phi_K \\ \phi_C\end{pmatrix}}_{\text{ショック係数}} \varepsilon_{t+1}\]
+        \[\hat{z}_{t+1} = \rho\hat{z}_t + \varepsilon_{t+1} \quad \text{（TFP過程：補助方程式）}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">遷移行列の係数（概略）</div>
+          <div class="info-text">
+            \(\Gamma_{KK} = 1-\delta + (r^*+\delta)(1 - \frac{\bar{C}}{\bar{Y}}\cdot\frac{1}{\sigma})\)（やや大きい。資本の自己持続性）<br>
+            \(\Gamma_{KC} < 0\)（消費増加 → 投資低下 → 資本減少）<br>
+            \(\Gamma_{CK} > 0\)（資本増加 → MPK上昇期待 → 消費前傾き）<br>
+            \(\Gamma_{CC} \approx 1/\beta\)（消費オイラーの自己回帰部分）
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">政府版との次元比較</div>
+          <div class="info-text">政府版（国債あり）では状態変数が \((\hat{K}_t, \hat{C}_t, \hat{b}_t)\) となり3次元システムに拡大する。プレーンRBCは<strong>2×2の最小次元</strong>——RBCシリーズの中で最もコンパクトな状態空間。</div>
+        </div>
+        <div class="info-block wide">
+          <div class="info-label">鞍点安定性（saddle-path stability）</div>
+          <div class="info-text">
+            \(\Gamma\) の固有値を \(\mu_1, \mu_2\) とする（\(|\mu_1| < 1 < |\mu_2|\)）。1つが単位円内（安定）、1つが単位円外（不安定）の配置が「鞍点均衡」の特徴。<br><br>
+            状態変数（先決）：\(\hat{K}_t\)（1変数）、ジャンプ変数（非先決）：\(\hat{C}_t\)（1変数）<br>
+            不安定固有値の数（= 1）= ジャンプ変数の数（= 1）→ <strong>ブランチャード＝カーン条件を満たし、唯一の鞍点均衡が存在</strong>する。<br><br>
+            \(\hat{C}_0\) は \(\hat{K}_0\) が与えられたとき、鞍点パスに乗るよう t=0 において「ジャンプ」して決まる。この \(\hat{C}_0\) を一意に選ぶのが TVC（§11参照）。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── §10 状態空間（全変数版） ───── -->
+<div class="section" id="s10">
+  <div class="section-header">
+    <span class="section-num">§10</span>
+    <span class="section-title">状態空間表現・全変数版（\(R, L, w, Y, I\) 明示）</span>
+  </div>
+
+  <div class="eq-card system">
+    <div class="eq-head">
+      <div class="eq-num-badge">20</div>
+      <div class="eq-head-title">全変数の政策関数（定常状態近傍での解析解）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\hat{C}_t \;=\; \gamma_{CK}\hat{K}_t + \gamma_{Cz}\hat{z}_t\]
+        \[\hat{L}_t \;=\; \gamma_{LK}\hat{K}_t + \gamma_{Lz}\hat{z}_t\]
+        \[\hat{w}_t \;=\; \gamma_{wK}\hat{K}_t + \gamma_{wz}\hat{z}_t\]
+        \[\hat{R}_t \;=\; \gamma_{RK}\hat{K}_t + \gamma_{Rz}\hat{z}_t\]
+        \[\hat{Y}_t \;=\; \gamma_{YK}\hat{K}_t + \gamma_{Yz}\hat{z}_t\]
+        \[\hat{I}_t \;=\; \gamma_{IK}\hat{K}_t + \gamma_{Iz}\hat{z}_t\]
+      </div>
+      <table class="var-table">
+        <tr><th>係数</th><th>符号（典型的値）</th><th>経済的意味</th></tr>
+        <tr><td>\(\gamma_{CK}\)</td><td>＋</td><td>資本増 → 将来所得上昇期待 → 消費増（恒常所得効果）</td></tr>
+        <tr><td>\(\gamma_{Cz}\)</td><td>＋</td><td>TFP上昇 → 所得上昇 → 消費増</td></tr>
+        <tr><td>\(\gamma_{LK}\)</td><td>通常 −（小）</td><td>資本増 → 賃金上昇 → 所得効果で労働減少（代替効果と拮抗）</td></tr>
+        <tr><td>\(\gamma_{Lz}\)</td><td>＋</td><td>TFP上昇 → 賃金上昇 → 代替効果優位で労働増加</td></tr>
+        <tr><td>\(\gamma_{RK}\)</td><td>−</td><td>資本増 → MPK低下 → 実質金利低下</td></tr>
+        <tr><td>\(\gamma_{Rz}\)</td><td>＋</td><td>TFP上昇 → MPK上昇 → 実質金利上昇</td></tr>
+        <tr><td>\(\gamma_{IK}\)</td><td>−</td><td>資本すでに多い → 追加投資減少（定常状態への収束）</td></tr>
+        <tr><td>\(\gamma_{Iz}\)</td><td>＋＋（消費より大）</td><td>TFP上昇 → 投資は消費より大きく反応（現実データと整合）</td></tr>
+      </table>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">投資の過大変動（RBCの重要予測）</div>
+          <div class="info-text">\(\gamma_{Iz} \gg \gamma_{Cz}\) が典型的に成立。TFPショックに対し投資は消費より大きく変動する。Kydland-Prescott（1982）がデータと整合することを確認した。プレーンRBCのシグネチャー的予測。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">政府版との係数変化</div>
+          <div class="info-text">政府版では \(\hat{b}_t\) への係数列が追加される（リカード等価のもとではすべてゼロ）。本来的には政府変数が民間変数の政策関数係数を変化させる——これが「§13拡張で何が変化するか」の核心。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── §11 TVC要件の役割 ───── -->
+<div class="section" id="s11">
+  <div class="section-header">
+    <span class="section-num">§11</span>
+    <span class="section-title">TVC要件の役割——プレーンRBCにおける完全解説</span>
+  </div>
+
+  <!-- TVC 11.1 -->
+  <div class="eq-card tvc">
+    <div class="eq-head">
+      <div class="eq-num-badge">11.1</div>
+      <div class="eq-head-title">TVCとは何か——数学的定義と経済的解釈</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\text{TVC}_k:\quad \lim_{T \to \infty}\, \beta^T\, \mathbb{E}_0\!\left[C_T^{-\sigma}\,K_{T+1}\right] = 0\]
+        \[\Longleftrightarrow\quad \lim_{T\to\infty}\,\mathbb{E}_0\!\left[q_{0T}\,K_{T+1}\right] = 0\]
+        \[\text{ただし }q_{0T} := \prod_{s=0}^{T-1} \frac{\beta\, C_{s+1}^{-\sigma}}{C_s^{-\sigma}} = \prod_{s=0}^{T-1}\frac{1}{R_{s+1}}\text{（累積現在価値因子）}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">数学的役割</div>
+          <div class="info-text">無限地平線最適化問題において、オイラー方程式（内点条件）に加えて課される「端点条件（boundary condition）」。有限期間問題では \(T\) 期末の資本価値がゼロになる（\(\lambda_T K_{T+1} = 0\)）という条件に相当し、\(T\to\infty\) の極限が TVC。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">経済的意味</div>
+          <div class="info-text">「無限先において、資本ストックの現在価値がゼロに収束する」——家計が資本を無限に蓄積し続けることなく、最終的には消費に使い切ることを保証する。言い換えると「最適な家計は死に際に借金もせず資産も残さない」という直感の無限期間版。</div>
+        </div>
+        <div class="info-block wide">
+          <div class="info-label">プレーンRBCにおけるTVCの本数：1本のみ</div>
+          <div class="info-text">
+            プレーンRBCの TVC は <strong>\(\text{TVC}_k\) の1本のみ</strong>。国債 \(b_t\) が存在しないため「国債に関するTVC」は不要。
+            <br><br>
+            <strong>政府版（国債あり）の TVC 数との比較：</strong>
+            <ul style="list-style:none;padding:0;margin-top:0.4rem;">
+              <li style="padding:0.2rem 0;">① \(\text{TVC}_k\)：資本に関する TVC（プレーンRBCと同様）</li>
+              <li style="padding:0.2rem 0;">② \(\text{TVC}_b\)：国債に関する TVC（\(\lim \beta^T \mathbb{E}[C_T^{-\sigma} b_{T+1}] = 0\)）</li>
+              <li style="padding:0.2rem 0;">③ No-Ponzi：政府の No-Ponzi 条件（国債の現在価値がゼロに収束）</li>
+            </ul>
+            プレーンRBCではこれらが「①だけ」になる。その分、均衡の選択条件が単純明快。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TVC 11.2 -->
+  <div class="eq-card tvc">
+    <div class="eq-head">
+      <div class="eq-num-badge">11.2</div>
+      <div class="eq-head-title">TVC が均衡を一意に選択するメカニズム</div>
+    </div>
+    <div class="eq-body">
+      <div class="alert-box tvc">
+        <strong>核心的主張：</strong>オイラー方程式は「連続無限本の消費経路の候補（位相図上の軌道）」を生成するが、そのうちどれが最適かを選ぶのが TVC である。鞍点均衡の一意性は「TVCを満たすのは鞍点パスのみ」という事実から来る。
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">位相図での理解</div>
+          <div class="info-text">
+            \((K_t, C_t)\) 平面で：<br>
+            ①\(\dot{K}=0\) ：\(C = Y - \delta K\)（資本蓄積ゼロ線）<br>
+            ②\(\dot{C}=0\) ：\(\alpha A K^{\alpha-1}L^{1-\alpha} = r^* + \delta\)（オイラーゼロ線）<br><br>
+            これら2曲線の交点が定常状態。<strong>定常状態から出発しない軌道はすべて発散</strong>（下から来る軌道は \(C\to 0\)、上から来るものは \(C\to\infty\)）。TVCは「爆発する軌道を排除する」ことで鞍点パスを一意に選ぶ。
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">初期ジャンプの決定</div>
+          <div class="info-text">
+            \(K_0\) は先決変数（初期条件として所与）。\(C_0\) はジャンプ変数——TVC を満たすために「鞍点パスに乗る \(C_0^*\)」が t=0 時点でジャンプして決まる。<br><br>
+            ショックが来ると \(K\) は動けず（状態変数）、\(C\) が即時にジャンプして新しい鞍点パスに移乗する。この「\(C\) の瞬時調整」こそが RBC の「景気ショックへの即座の最適反応」メカニズム。
+          </div>
+        </div>
+        <div class="info-block wide">
+          <div class="info-label">線形近似下での TVC の等価表現</div>
+          <div class="info-text">
+            対数線形システム \(\hat{K}_{t+1} = \Gamma_{KK}\hat{K}_t + \Gamma_{KC}\hat{C}_t + \phi_K\varepsilon_{t+1}\)、\(\mathbb{E}_t[\hat{C}_{t+1}] = \Gamma_{CK}\hat{K}_t + \Gamma_{CC}\hat{C}_t\) において、\(\Gamma\) の固有値を \(\mu_1 < 1 < \mu_2\) とすると：<br><br>
+            TVC \(\Longleftrightarrow\) 解が不安定固有値 \(\mu_2\) に対応する固有ベクトルの成分をゼロにする。<br><br>
+            すなわち、\(\hat{C}_t = \gamma_{CK}\hat{K}_t + \gamma_{Cz}\hat{z}_t\) という政策関数の係数 \(\gamma_{CK}, \gamma_{Cz}\) が一意に決まる条件が TVC そのもの。<strong>TVC は線形システムでは「不安定根を排除するための初期条件」として機能</strong>する。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TVC 11.3 -->
+  <div class="eq-card tvc">
+    <div class="eq-head">
+      <div class="eq-num-badge">11.3</div>
+      <div class="eq-head-title">TVC が成立するための経済条件</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\text{TVC が成立} \;\Longleftrightarrow\; \lim_{T\to\infty}\left(\frac{1}{R^*}\right)^T K_{T+1} = 0 \;\Longleftrightarrow\; K_t \text{ が } R^* \text{ より遅い速度で増加}\]
+        \[\text{プレーンRBC定常状態では：} R^* = \frac{1}{\beta} > 1,\; K_t \xrightarrow{t\to\infty} \bar{K} \;\Rightarrow\; \text{TVC は自動的に成立}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">プレーンRBCでは TVC は自動成立</div>
+          <div class="info-text">定常状態 \(\bar{K}\) が安定的に存在し、資本が \(\bar{K}\) に収束するならば、現在価値因子 \((1/R^*)^T\to 0\) の収束速度が \(K_T\to\bar{K}\) より速い（\(R^* > 1\) なので指数的に減衰）ため、TVC は<strong>構造的に成立</strong>する。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">政府版での TVC の「問題化」</div>
+          <div class="info-text">国債 \(b_t\) が入ると、財政政策によっては \(b_T\) が爆発的に増加し TVC が破れうる。これがリカード等価・No-Ponzi条件の議論につながる。プレーンRBCにはこのリスク自体が存在しない——資産は資本のみで、資本は物理的に発散しない（MPK が逓減するため）。</div>
+        </div>
+        <div class="info-block wide">
+          <div class="info-label">TVC と「\(r > g\)」の関係（プレーンRBCの構造的制約）</div>
+          <div class="info-text">
+            プレーンRBCの定常実質金利は \(r^* = 1/\beta - 1\)、定常成長率はモデルの設定による（以下では成長なしバージョン）。<br><br>
+            <strong>重要：プレーンRBCでは「\(r^* > g\) が構造的に保証される」。</strong><br>
+            直感：\(\beta < 1\) なので \(r^* = 1/\beta - 1 > 0 \geq g\)（成長なしの場合 \(g=0\)）。<br><br>
+            この条件のもとでは TVC は自動的に成立し、「財政余力（\(r < g\) のポンジロールオーバー）」という現象は構造的に排除される。Blanchard（2019）の「\(r < g\) 均衡」を分析するには、OLG モデルや内生成長モデルへの拡張が必要——この点が§12・§13で論じる「プレーンRBCで言えないこと」の核心。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TVC 11.4 -->
+  <div class="eq-card tvc">
+    <div class="eq-head">
+      <div class="eq-num-badge">11.4</div>
+      <div class="eq-head-title">TVC・No-Ponzi・生涯予算制約の三角関係</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\text{TVC（家計）} + \text{No-Ponzi（家計）} \;\Longleftrightarrow\; \text{生涯予算制約の等号成立}\]
+        \[\lim_{T\to\infty}\beta^T u'(C_T)K_{T+1}=0 \;\;\&\;\; \lim_{T\to\infty}\left(\prod_{s}\frac{1}{R_{s+1}}\right)K_{T+1}\geq 0\]
+        \[\Longrightarrow\; \sum_{t=0}^\infty q_{0t}C_t = K_0 + \sum_{t=0}^\infty q_{0t}w_t L_t\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">No-Ponzi（家計版）の意味</div>
+          <div class="info-text">「家計が無限の借入でポンジゲームをしない」という条件。プレーンRBCでは借入手段（国債）がないため No-Ponzi は自明（\(K_{T+1} \geq 0\) という物的資本の非負制約で自動的に担保される）。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">プレーンRBCの簡潔な構造</div>
+          <div class="info-text">
+            TVC一本 → 生涯予算制約の等号 → 唯一の均衡。<br><br>
+            政府版では「政府の No-Ponzi」が追加的な境界条件として働き、それが「リカード等価の成立」「均衡の一意性の保証」につながる。プレーンRBCはその前段階のシンプルな構造。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── §12 プレーンRBCで言えること ───── -->
+<div class="section" id="s12">
+  <div class="section-header">
+    <span class="section-num">§12</span>
+    <span class="section-title">プレーンRBCで言えること・言えないこと</span>
+  </div>
+
+  <!-- 12.1 言えること -->
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">12.1</div>
+      <div class="eq-head-title">プレーンRBCで言えること（強い主張）</div>
+    </div>
+    <div class="eq-body">
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">① TFPショックが景気変動の主要因（Kydland-Prescott命題）</div>
+          <div class="info-text">TFP の AR(1) ショック1本で、産出・消費・投資・労働の共動（co-movement）が定性的に再現できる。Kydland-Prescott（1982）の較正実験でモデルが生成する第2次モーメント（標準偏差・相関）がデータと定量的に整合することを示した。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">② 投資の過大変動（investment volatility）</div>
+          <div class="info-text">モデルが生成する第2次モーメント：\(\text{Var}(\hat{I}) > \text{Var}(\hat{Y}) > \text{Var}(\hat{C})\)（投資が産出より変動的、産出が消費より変動的）。現実データと整合する重要な予測。消費平滑化（オイラー方程式）と投資の先見性から導かれる。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">③ 景気循環変数の順循環性（procyclicality）</div>
+          <div class="info-text">TFP上昇 → 賃金・消費・投資・労働がともに拡大（順循環）。実質賃金の順循環性はケインズ型モデルでは説明困難だったが、RBCでは自然に導かれる。TFP低下局面が「不況」として内生化される。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">④ 実質利子率の決定論</div>
+          <div class="info-text">実質利子率は資本のMPKと時間選好から内生的に決まる（フィッシャー方程式）。名目変数・金融政策・インフレが存在しないため、「実物のみで利子率が決まる」という純粋な実物景気循環の世界を記述。SDFによる資産価格理論の起点になる。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">⑤ 恒常所得仮説の内生化</div>
+          <div class="info-text">オイラー方程式から、消費は「予想された利子率変動」には反応せず、「予想外のショック（surprise）」にのみ反応する。フリードマンの恒常所得仮説がモデルの一階条件として厳密に導かれる。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">⑥ 均衡の一意性と鞍点安定性</div>
+          <div class="info-text">TVC 1本とブランチャード＝カーン条件（不安定根の数＝ジャンプ変数の数）から、定常状態近傍の均衡が<strong>局所的に一意に存在</strong>する。複数均衡・自己実現的期待（sunspot）が発生しない——名目変数導入後と対比される重要な特性。</div>
+        </div>
+        <div class="info-block wide">
+          <div class="info-label">⑦ 厚生分析の起点：「景気後退は最適な選択の結果か」</div>
+          <div class="info-text">
+            プレーンRBCでは均衡 = 社会的最適（第一厚生定理）。価格メカニズムが完全に機能し、市場の失敗がない。これは「景気後退期の雇用・産出低下はすべて最適な調整」という強い含意を持つ。<br><br>
+            <strong>重要な論点：</strong>この意味でプレーンRBCは「景気安定化政策（財政・金融政策）は厚生改善しない」という帰結を持つ。政府部門を導入して初めて「政策の有効性」を問うことができる——これが§13拡張の動機の一つ。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12.2 言えないこと -->
+  <div class="eq-card" style="border-left-color:var(--accent2);">
+    <div class="eq-head">
+      <div class="eq-num-badge">12.2</div>
+      <div class="eq-head-title">プレーンRBCで言えないこと（拡張の動機）</div>
+    </div>
+    <div class="eq-body">
+      <table class="comp-table">
+        <tr>
+          <th>問い</th>
+          <th>プレーンRBCでの限界</th>
+          <th>必要な拡張</th>
+        </tr>
+        <tr>
+          <td>財政政策の効果は？</td>
+          <td class="no">分析不能（政府が存在しない）</td>
+          <td>①政府(G,τ)あり</td>
+        </tr>
+        <tr>
+          <td>国債の財政余力は？</td>
+          <td class="no">国債が存在しない</td>
+          <td>②政府債務(b)あり</td>
+        </tr>
+        <tr>
+          <td>インフレ・名目金利は？</td>
+          <td class="no">名目変数がない純実物モデル</td>
+          <td>③中央銀行+貨幣</td>
+        </tr>
+        <tr>
+          <td>リカード等価は成立するか？</td>
+          <td class="na">そもそも国債・税が存在しないため問い自体が成立しない</td>
+          <td>②政府債務(b)あり</td>
+        </tr>
+        <tr>
+          <td>\(r < g\) 均衡は可能か？</td>
+          <td class="no">TVC + \(\beta<1\) から \(r^* > 0 \geq g\) が構造的に保証され、\(r < g\) は排除される</td>
+          <td>OLG / 内生成長</td>
+        </tr>
+        <tr>
+          <td>金融政策の有効性は？</td>
+          <td class="no">名目硬直性・貨幣なし</td>
+          <td>NK-DSGE</td>
+        </tr>
+        <tr>
+          <td>所得・富の分配効果は？</td>
+          <td class="no">代表的家計（分配が存在しない）</td>
+          <td>異質家計モデル（Bewley型）</td>
+        </tr>
+        <tr>
+          <td>産業構造・部門間資源配分は？</td>
+          <td class="no">代表的企業（1財モデル）</td>
+          <td>多部門モデル</td>
+        </tr>
+        <tr>
+          <td>非自発的失業は？</td>
+          <td class="no">労働市場は常に清算（失業ゼロ）</td>
+          <td>探索摩擦モデル（DMP）</td>
+        </tr>
+        <tr>
+          <td>FTPLによる均衡選択は？</td>
+          <td class="no">国債・物価水準が存在しない</td>
+          <td>NK-DSGE + FTPL</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 12.3 まとめ表 -->
+  <div class="eq-card" style="border-left-color:var(--gold);">
+    <div class="eq-head">
+      <div class="eq-num-badge">12.3</div>
+      <div class="eq-head-title">プレーンRBCの構造まとめ——各拡張との比較一覧</div>
+    </div>
+    <div class="eq-body">
+      <table class="comp-table">
+        <tr>
+          <th>特性</th>
+          <th>プレーンRBC</th>
+          <th>+政府(G,τ)</th>
+          <th>+国債(b)</th>
+          <th>+中銀+貨幣</th>
+        </tr>
+        <tr>
+          <td>状態変数の数</td>
+          <td class="yes">2（K, A）</td>
+          <td>2（K, A）</td>
+          <td>3（K, A, b）</td>
+          <td>4以上</td>
+        </tr>
+        <tr>
+          <td>均衡条件（TVC等）</td>
+          <td class="yes">TVC_k のみ</td>
+          <td>TVC_k + 政府IGBC</td>
+          <td>TVC_k + TVC_b + No-Ponzi</td>
+          <td>TVC_k + TVC_b + TVC_m + No-Ponzi</td>
+        </tr>
+        <tr>
+          <td>財市場清算</td>
+          <td class="yes">Y = C + I</td>
+          <td>Y = C + I + G</td>
+          <td>Y = C + I + G</td>
+          <td>Y = C + I + G</td>
+        </tr>
+        <tr>
+          <td>リカード等価</td>
+          <td class="na">N/A（税なし）</td>
+          <td class="yes">成立</td>
+          <td class="yes">成立</td>
+          <td>条件次第</td>
+        </tr>
+        <tr>
+          <td>実質金利の決定</td>
+          <td class="yes">β のみ</td>
+          <td>β + G/Y比</td>
+          <td>β + G/Y + b/Y</td>
+          <td>テイラールール連動</td>
+        </tr>
+        <tr>
+          <td>\(r > g\) の保証</td>
+          <td class="yes">構造的に保証</td>
+          <td class="yes">保証</td>
+          <td class="yes">保証（リカード下）</td>
+          <td>OLGなら崩れうる</td>
+        </tr>
+        <tr>
+          <td>名目変数</td>
+          <td class="no">なし</td>
+          <td class="no">なし</td>
+          <td class="no">なし</td>
+          <td class="yes">あり</td>
+        </tr>
+        <tr>
+          <td>厚生＝社会最適</td>
+          <td class="yes">完全一致</td>
+          <td>G, τ の設計次第</td>
+          <td>G, τ, b の設計次第</td>
+          <td>インフレ税・摩擦あり</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ───── §13 拡張ロードマップ ───── -->
+<div class="section" id="s13">
+  <div class="section-header">
+    <span class="section-num">§13</span>
+    <span class="section-title">今後の拡張ロードマップ——何が変化するか</span>
+  </div>
+
+  <div class="alert-box success">
+    <strong>読み方：</strong>各拡張カードは「プレーンRBC（ベースライン）と比べて何が加わり、何が変化するか」を示す。拡張の系列は2系統——（A）制度の複雑化（政府→国債→中銀）と（B）代表的主体の分割（家計・企業・財の異質化）——からなる。
+  </div>
+
+  <!-- Series A: 制度の複雑化 -->
+  <div class="eq-card ext">
+    <div class="eq-head">
+      <div class="eq-num-badge">A</div>
+      <div class="eq-head-title">系列A：制度の段階的複雑化（縦の拡張）</div>
+    </div>
+    <div class="eq-body">
+      <div class="roadmap-grid">
+        <div class="roadmap-card">
+          <div class="roadmap-card-head gov">A-1：政府部門あり（G, τ のみ）</div>
+          <div class="roadmap-card-body">
+            <strong>追加される要素：</strong>政府支出 \(G_t\)、一括税 \(\tau_t\)、政府予算制約（均衡財政：\(G_t = \tau_t\)）
+            <br><br>
+            <strong>変化する命題：</strong>
+            <ul>
+              <li>財市場清算 \(Y = C + I + G\)（クラウディングアウト）</li>
+              <li>乗数効果（インパルス応答で G ショックに C, I がどう反応するか）</li>
+              <li>労働供給は G ショックに反応（所得効果で労働増加）</li>
+              <li>第一厚生定理は Gの使い方（公共財か否か）次第</li>
+            </ul>
+            <strong>TVC等の変化：</strong>均衡財政のため No-Ponzi は自明に成立。TVC_k のみ。
+          </div>
+        </div>
+
+        <div class="roadmap-card">
+          <div class="roadmap-card-head bond">A-2：政府債務あり（b 1種類）</div>
+          <div class="roadmap-card-body">
+            <strong>追加される要素：</strong>政府国債 \(b_t\)（実質割引債1種類）、非均衡財政（\(G_t \neq \tau_t\)）
+            <br><br>
+            <strong>変化する命題：</strong>
+            <ul>
+              <li>状態変数が \((K, A, b)\) の3次元に拡大</li>
+              <li>リカード等価の成否（代表的家計では成立、異質家計では崩れる）</li>
+              <li>No-Ponzi 条件が実質的な境界条件として機能</li>
+              <li>財政余力（\(b/Y\) の持続可能性）の分析が可能に</li>
+              <li>\(r > g\) のもとでは国債残高は実物的裏付けが必要</li>
+            </ul>
+            <strong>TVC等の変化：</strong>TVC_k + TVC_b + No-Ponzi の3本が必要。
+          </div>
+        </div>
+
+        <div class="roadmap-card">
+          <div class="roadmap-card-head cb">A-3：中央銀行＋複数債務（貨幣 m, 国債 b）</div>
+          <div class="roadmap-card-body">
+            <strong>追加される要素：</strong>貨幣 \(m_t\)（MIU または CIA）、名目利子率 \(i_t\)、インフレ率 \(\pi_t\)、テイラールール
+            <br><br>
+            <strong>変化する命題：</strong>
+            <ul>
+              <li>名目変数が内生化（フィッシャー方程式）</li>
+              <li>貨幣と国債の無裁定（流動性プレミアム、ZLB）</li>
+              <li>FTPL による均衡選択の可能性</li>
+              <li>シニョレッジによる財政余力（インフレ税）</li>
+              <li>金融政策（テイラールール）と財政政策の連立</li>
+            </ul>
+            <strong>TVC等の変化：</strong>TVC_k + TVC_b + TVC_m + No-Ponzi。名目変数のバブル条件も必要。
+          </div>
+        </div>
+
+        <div class="roadmap-card">
+          <div class="roadmap-card-head gov">A-1a：財政政策の有効性比較</div>
+          <div class="roadmap-card-body">
+            <strong>中心的問い：</strong>政府支出乗数 \(dY/dG\) はプレーンRBCと異なるか？
+            <ul>
+              <li>RBC乗数 &lt; 1（所得効果で労働増，消費減によるクラウドアウト）</li>
+              <li>NK乗数 &gt; 1（名目硬直性による需要追加効果）</li>
+              <li>流動性の罠（ZLB）下では特に乖離が大きい</li>
+            </ul>
+            プレーンRBCはこの比較の「ゼロ点」（乗数の理論下限に近い）。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Series B: 代表的主体の分割 -->
+  <div class="eq-card ext">
+    <div class="eq-head">
+      <div class="eq-num-badge">B</div>
+      <div class="eq-head-title">系列B：代表的主体の分割（横の拡張）</div>
+    </div>
+    <div class="eq-body">
+      <div class="roadmap-grid">
+        <div class="roadmap-card">
+          <div class="roadmap-card-head hh">B-1：家計 n 人（異質家計モデル）</div>
+          <div class="roadmap-card-body">
+            <strong>追加される要素：</strong>所得・資産の異質性、不完全市場（自己保険）、借入制約
+            <br><br>
+            <strong>変化する命題：</strong>
+            <ul>
+              <li>集計問題（Aggregation problem）が発生</li>
+              <li>リカード等価が崩れる（手から口への家計が財政移転に反応）</li>
+              <li>財政政策の分配効果が分析可能に</li>
+              <li>予備的貯蓄（precautionary saving）から \(r &lt; g\) の可能性</li>
+              <li>不平等の内生化（Gini 係数の動学）</li>
+            </ul>
+            <strong>代表的モデル：</strong>Aiyagari（1994）、Huggett（1993）、HANK
+          </div>
+        </div>
+
+        <div class="roadmap-card">
+          <div class="roadmap-card-head firm">B-2：企業 n 社（異質企業モデル）</div>
+          <div class="roadmap-card-body">
+            <strong>追加される要素：</strong>企業生産性の異質性、参入・退出、独占的競争
+            <br><br>
+            <strong>変化する命題：</strong>
+            <ul>
+              <li>平均TFPが個別企業の選択（参入・退出・資源配分）に依存</li>
+              <li>外部性・規模の収益逓増 → 均衡≠最適</li>
+              <li>企業間の信用制約と投資の分散</li>
+              <li>グローバル化・貿易自由化の効果（Melitz型）</li>
+            </ul>
+            <strong>代表的モデル：</strong>Melitz（2003）、Hopenhayn（1992）
+          </div>
+        </div>
+
+        <div class="roadmap-card">
+          <div class="roadmap-card-head good">B-3：財 n 品目（多部門・多財モデル）</div>
+          <div class="roadmap-card-body">
+            <strong>追加される要素：</strong>複数の財（消費財・投資財・中間財）、相対価格、部門間資源配分
+            <br><br>
+            <strong>変化する命題：</strong>
+            <ul>
+              <li>バランス成長経路が部門間相対価格の変化を含む</li>
+              <li>部門特化ショック（農業・製造業・サービス業 etc.）</li>
+              <li>インプット・アウトプット連関（産業連関表との整合）</li>
+              <li>物価指数・デフレーターの内生化</li>
+            </ul>
+            <strong>代表的モデル：</strong>Long-Plosser（1983）、多部門RBC
+          </div>
+        </div>
+
+        <div class="roadmap-card">
+          <div class="roadmap-card-head hh">B-0：代表的主体（プレーンRBC）</div>
+          <div class="roadmap-card-body">
+            <strong>現状（ベースライン）：</strong>1家計・1企業・1財。集計問題なし。
+            <ul>
+              <li>分析が最も容易（解析解が存在する）</li>
+              <li>分配問題・部門間問題を捨象</li>
+              <li>「代表的主体の最適化 = 社会最適」が自明</li>
+              <li>マクロ変数の第1・第2モーメントの較正に集中できる</li>
+            </ul>
+            各異質性モデルへの拡張は「プレーンRBCのどの仮定を緩めるか」として定式化される。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13.3 拡張の全体地図 -->
+  <div class="eq-card" style="border-left-color:var(--gold);">
+    <div class="eq-head">
+      <div class="eq-num-badge">13.3</div>
+      <div class="eq-head-title">拡張の全体地図——プレーンRBCを起点とした体系的位置づけ</div>
+    </div>
+    <div class="eq-body">
+      <table class="comp-table">
+        <tr>
+          <th>拡張の方向</th>
+          <th>追加される仮定の緩和</th>
+          <th>新たに言えること</th>
+          <th>プレーンRBCから何が変化するか</th>
+        </tr>
+        <tr>
+          <td>A-1：+政府(G,τ)</td>
+          <td>「政府が存在しない」の撤廃</td>
+          <td>財政乗数、労働供給への所得効果、公共財の厚生評価</td>
+          <td>財市場 \(Y=C+I\to Y=C+I+G\)、クラウディングアウト、定常状態 \(K/Y\) 変化</td>
+        </tr>
+        <tr>
+          <td>A-2：+国債(b)</td>
+          <td>「均衡財政」の撤廃</td>
+          <td>財政余力・No-Ponzi・リカード等価・国債の利回り決定</td>
+          <td>状態変数3次元化、TVC 3本に、\(r>g\) 下の持続可能性制約が明示化</td>
+        </tr>
+        <tr>
+          <td>A-3：+中銀+貨幣</td>
+          <td>「純実物」の撤廃</td>
+          <td>インフレ、名目金利、貨幣需要、FTPL、ZLB</td>
+          <td>実物と名目の二層構造、テイラールールによる均衡選択</td>
+        </tr>
+        <tr>
+          <td>B-1：家計 n 人</td>
+          <td>「代表的家計」の撤廃</td>
+          <td>不平等の動学、財政の分配効果、予備的貯蓄、HANKメカニズム</td>
+          <td>集計問題発生、リカード等価崩壊、消費のMPC異質性</td>
+        </tr>
+        <tr>
+          <td>B-2：企業 n 社</td>
+          <td>「代表的企業」の撤廃</td>
+          <td>生産性分布、参入退出、外部性、規模の収益</td>
+          <td>CRS+完全競争の撤廃、マークアップ内生化、TFP の内生化</td>
+        </tr>
+        <tr>
+          <td>B-3：財 n 品目</td>
+          <td>「1財経済」の撤廃</td>
+          <td>相対価格、部門ショック、産業連関、バランス成長の再定義</td>
+          <td>物価指数内生化、部門間の資源配分効率、消費バスケットの最適化</td>
+        </tr>
+        <tr>
+          <td>OLG</td>
+          <td>「無限寿命家計」の撤廃</td>
+          <td>\(r &lt; g\) の内生化、財政余力の本丸、世代間移転</td>
+          <td>TVC が世代ごとに内生化、No-Ponzi の意味が根本的に変化</td>
+        </tr>
+      </table>
+      <div class="info-grid" style="margin-top:1rem;">
+        <div class="info-block wide">
+          <div class="info-label">プレーンRBCが「共通言語」として機能する理由</div>
+          <div class="info-text">
+            どの拡張モデルも「プレーンRBCのどの仮定を、どのように緩めたか」として記述できる。言い換えると、プレーンRBCは<strong>現代マクロ経済学の「ゼロ点」「共通言語」</strong>として機能する。<br><br>
+            ①均衡の定義（最適化＋市場清算）、②TVC・境界条件の概念、③対数線形近似・状態空間表現、④較正と第2次モーメント比較——これらの方法論はプレーンRBCで確立され、すべての拡張モデルに継承される。<br><br>
+            <strong>学習の推奨順序：</strong>プレーンRBC（本稿）→ A-1（政府あり）→ A-2（国債あり）→ A-3（中銀あり）。横断的拡張（B系列）はA系列の任意の段階で導入できる。実証・政策分析の目的によって組み合わせを選ぶ。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final Summary -->
+  <div class="summary-box">
+    <h3>★ プレーンRBC完全解説——全体構造まとめ（本稿）</h3>
+    <div class="summary-flow">
+      <div class="flow-item">
+        <div class="flow-label">§0–3　セットアップ</div>
+        <div class="flow-desc">資産＝資本のみ。政府なし。効用・予算制約・生産・市場清算の4ブロック。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§4　一階条件</div>
+        <div class="flow-desc">オイラー方程式（消費）＋労働供給条件＋TVC の3本が最適化の必要条件。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§5–6　均衡体系</div>
+        <div class="flow-desc">6変数・6本の方程式で閉じた体系。唯一のショック源は TFP の AR(1)。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§7–8　定常状態・線形化</div>
+        <div class="flow-desc">\(r^*=1/\beta-1\) から較正。対数線形近似で解析的に解ける形に変換。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§9–10　状態空間</div>
+        <div class="flow-desc">2×2 の最小次元システム。政策関数の係数が TVC から一意に決まる。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§11　TVC の役割</div>
+        <div class="flow-desc">均衡の一意選択・鞍点パスへの初期ジャンプ・\(r^*>g\) の構造的保証・国債なしで1本のみ。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§12　言えること・言えないこと</div>
+        <div class="flow-desc">TFP→景気変動・投資過大変動・順循環性・恒常所得・均衡一意性。財政・分配・名目は分析不能。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§13　拡張ロードマップ</div>
+        <div class="flow-desc">A系列（制度複雑化）：政府→国債→中銀。B系列（主体分割）：家計n・企業n・財n。すべての出発点として機能。</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /section s13 -->
+
+<!-- ───── §14 カリブレーション ───── -->
+<div class="section" id="s14">
+  <div class="section-header">
+    <span class="section-num">§14</span>
+    <span class="section-title">カリブレーション——具体的数値例と定常状態の計算</span>
+  </div>
+
+  <div class="alert-box info">
+    <strong>カリブレーションの哲学（Kydland-Prescott 1982）：</strong>パラメーターを推定（estimation）するのではなく、ミクロの実証研究・長期マクロ統計と整合する値を「較正」（calibrate）し、モデルが生成するマクロ変動のモーメントとデータを比較する。プレーンRBCはこの方法論の原型。
+  </div>
+
+  <!-- 14.1 標準的パラメーター値 -->
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">21</div>
+      <div class="eq-head-title">標準的カリブレーション値（四半期モデル）</div>
+    </div>
+    <div class="eq-body">
+      <table class="var-table">
+        <tr><th>パラメーター</th><th>較正値</th><th>根拠・ターゲット統計</th></tr>
+        <tr><td>\(\beta\)</td><td>0.99</td><td>年率実質金利 \(r^* \approx 4\%\)。\(1/\beta - 1 = 0.0101 \approx 1\%/\text{四半期}\)。</td></tr>
+        <tr><td>\(\sigma\)</td><td>1.0（\(\ln C\) 型）または 2.0</td><td>\(\sigma=1\)：消費成長と金利の感応度が中立。\(\sigma=2\)：異時点間代替弾力性 0.5（より慎重な消費者）。</td></tr>
+        <tr><td>\(\alpha\)</td><td>0.33</td><td>国民所得統計（労働所得分配率 \(\approx 2/3\)）。</td></tr>
+        <tr><td>\(\delta\)</td><td>0.025</td><td>資本減耗率 年率10% → 四半期 2.5%。固定資産台帳ベース。</td></tr>
+        <tr><td>\(\gamma\)</td><td>1.0</td><td>フリッシュ弾力性 \(1/\gamma = 1\)。Chetty et al.（2011）のマクロ推計と整合。</td></tr>
+        <tr><td>\(\rho\)</td><td>0.95</td><td>ソロー残差（TFP 推計値）の AR(1) 係数。米国四半期データ。</td></tr>
+        <tr><td>\(\sigma_\varepsilon\)</td><td>0.0072</td><td>ソロー残差の標準偏差（Kydland-Prescott 1982 の原典値）。</td></tr>
+        <tr><td>\(\chi\)</td><td>逆算（後述）</td><td>定常状態労働 \(\bar{L} = 1/3\)（1日8時間 / 24時間）をターゲット。</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 14.2 定常状態の数値計算 -->
+  <div class="eq-card ss">
+    <div class="eq-head">
+      <div class="eq-num-badge">22</div>
+      <div class="eq-head-title">定常状態の逐次計算（\(\bar{A}=1,\;\bar{L}=1/3\) のとき）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\text{Step 1：実質金利}\quad r^* = \frac{1}{\beta} - 1 = \frac{1}{0.99}-1 \approx 0.0101\]
+        \[\text{Step 2：資本労働比}\quad \frac{\bar{K}}{\bar{L}} = \left(\frac{\alpha}{r^*+\delta}\right)^{\frac{1}{1-\alpha}} = \left(\frac{0.33}{0.0101+0.025}\right)^{1.5} \approx 10.17\]
+        \[\text{Step 3：資本ストック}\quad \bar{K} = \frac{\bar{K}}{\bar{L}}\cdot\bar{L} = 10.17\times\frac{1}{3} \approx 3.39\]
+        \[\text{Step 4：産出}\quad \bar{Y} = \bar{K}^{0.33}\bar{L}^{0.67} \approx (3.39)^{0.33}(0.333)^{0.67} \approx 0.954\]
+        \[\text{Step 5：消費・投資}\quad \bar{I} = \delta\bar{K} \approx 0.025\times3.39 \approx 0.085,\quad \bar{C} = \bar{Y} - \bar{I} \approx 0.869\]
+        \[\text{Step 6：賃金}\quad \bar{w} = (1-\alpha)\frac{\bar{Y}}{\bar{L}} = 0.67\times\frac{0.954}{0.333} \approx 1.918\]
+        \[\text{Step 7：}\chi\text{ の逆算}\quad \chi = \frac{\bar{w}\bar{C}^{-\sigma}}{\bar{L}^{\gamma}} = \frac{1.918\times(0.869)^{-1}}{(0.333)^{1}} \approx 6.62\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">定常比率（実データとの照合）</div>
+          <div class="info-text">
+            \(C/Y = 0.869/0.954 \approx 0.91\)（民間消費比率）<br>
+            \(I/Y = 0.085/0.954 \approx 0.09\)（民間投資比率）<br>
+            \(K/Y = 3.39/0.954 \approx 3.55\)（資本産出比：年換算14.2倍）<br>
+            <em>注：政府部門なしのため \(C/Y + I/Y = 1\)。実際はG/Y≈20%のため C/Y が過大推計になる点は政府版で修正される。</em>
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">カリブレーションの循環性</div>
+          <div class="info-text">
+            パラメーターは「定常状態マクロ統計に合う」ように選ぶが、その統計自体が「政府部門込みの現実データ」。プレーンRBCでは政府支出が民間消費に合算されたようなアカウンティングになる。これがプレーンRBCのカリブレーション上の限界——政府版で自然に解決される。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 14.3 感度分析 -->
+  <div class="eq-card ss">
+    <div class="eq-head">
+      <div class="eq-num-badge">23</div>
+      <div class="eq-head-title">主要パラメーターの感度分析——定常状態への影響</div>
+    </div>
+    <div class="eq-body">
+      <table class="comp-table">
+        <tr>
+          <th>パラメーター変化</th>
+          <th>\(\bar{r}^*\)</th>
+          <th>\(\bar{K}/\bar{Y}\)</th>
+          <th>\(\bar{C}/\bar{Y}\)</th>
+          <th>\(\bar{I}/\bar{Y}\)</th>
+          <th>含意</th>
+        </tr>
+        <tr>
+          <td>\(\beta \uparrow\) (より辛抱強い)</td>
+          <td class="no">↓</td>
+          <td class="yes">↑</td>
+          <td class="yes">↑</td>
+          <td class="no">↓</td>
+          <td>忍耐強い家計ほど資本蓄積し、消費を高められる</td>
+        </tr>
+        <tr>
+          <td>\(\alpha \uparrow\) (資本集約度上昇)</td>
+          <td class="no">↓（MPK逓減）</td>
+          <td class="yes">↑</td>
+          <td class="no">↓</td>
+          <td class="yes">↑</td>
+          <td>資本集約産業ほど投資比率が高い</td>
+        </tr>
+        <tr>
+          <td>\(\delta \uparrow\) (減耗率上昇)</td>
+          <td class="yes">↑（MPK上昇必要）</td>
+          <td class="no">↓</td>
+          <td class="yes">↑</td>
+          <td class="no">↓（K↓効果）</td>
+          <td>耐久性低い資本 → 少ない資本ストック</td>
+        </tr>
+        <tr>
+          <td>\(\sigma \uparrow\) (危険回避度上昇)</td>
+          <td class="na">不変（β依存）</td>
+          <td class="na">不変（α, δ, β依存）</td>
+          <td class="na">不変</td>
+          <td class="na">不変</td>
+          <td>定常状態は変わらない（σはIRFのみに影響）</td>
+        </tr>
+      </table>
+      <div class="info-text" style="font-size:0.82rem;color:var(--ink2);margin-top:0.5rem;">
+        <em>重要：\(\sigma\)（危険回避度）は定常状態には影響せず、衝撃応答（IRF）の形状に影響する。消費平滑化の強さを決めるパラメーターとして機能。</em>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── §15 インパルス応答関数 ───── -->
+<div class="section" id="s15">
+  <div class="section-header">
+    <span class="section-num">§15</span>
+    <span class="section-title">インパルス応答関数（IRF）——TFPショックへの動的反応</span>
+  </div>
+
+  <div class="alert-box success">
+    <strong>IRF の読み方：</strong>t=0 期に TFP が1標準偏差（\(\sigma_\varepsilon = 0.72\%\)）だけ上昇したとき、各変数が定常状態からどれだけ乖離するか（\(\hat{x}_t\)）を時間軸で追う。プレーンRBCのシグネチャーはここに現れる。
+  </div>
+
+  <!-- 15.1 解析的IRF -->
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">24</div>
+      <div class="eq-head-title">TFPショックへの解析的IRF（政策関数を用いた逐次計算）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\hat{z}_t = \rho^t\,\sigma_\varepsilon \quad (t=0,1,2,...)\]
+        \[\hat{K}_{t+1} = \Gamma_{KK}\hat{K}_t + \phi_K\,\varepsilon_1,\quad \hat{K}_0 = 0\text{（先決変数：t=0時点では不変）}\]
+        \[\hat{C}_t = \gamma_{CK}\hat{K}_t + \gamma_{Cz}\hat{z}_t\]
+        \[\hat{Y}_t = \gamma_{YK}\hat{K}_t + \gamma_{Yz}\hat{z}_t,\quad \hat{I}_t = \gamma_{IK}\hat{K}_t + \gamma_{Iz}\hat{z}_t\]
+        \[\hat{L}_t = \gamma_{LK}\hat{K}_t + \gamma_{Lz}\hat{z}_t,\quad \hat{w}_t = \gamma_{wK}\hat{K}_t + \gamma_{wz}\hat{z}_t\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">t=0 期の反応（衝撃の瞬間）</div>
+          <div class="info-text">
+            \(\hat{K}_0 = 0\)（資本は先決変数、瞬時に動けない）<br>
+            \(\hat{z}_0 = \sigma_\varepsilon > 0\)（TFP が上昇）<br>
+            \(\hat{C}_0 = \gamma_{Cz}\sigma_\varepsilon > 0\)（消費が即時ジャンプ）<br>
+            \(\hat{I}_0 = \gamma_{Iz}\sigma_\varepsilon > 0\)（投資も即時増加、\(> \hat{C}_0\)）<br>
+            \(\hat{Y}_0 = \gamma_{Yz}\sigma_\varepsilon > 0\)（産出増加）<br>
+            \(\hat{L}_0 = \gamma_{Lz}\sigma_\varepsilon > 0\)（労働需要・供給ともに増加）<br>
+            \(\hat{w}_0 = \gamma_{wz}\sigma_\varepsilon > 0\)（実質賃金上昇）<br>
+            \(\hat{R}_0 = \gamma_{Rz}\sigma_\varepsilon > 0\)（実質金利一時上昇）
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">t≥1 期の反応（持続的動学）</div>
+          <div class="info-text">
+            \(\hat{K}_t\)：t=1以降に資本が蓄積し始める（hump-shaped。ピークは数期後）<br>
+            \(\hat{C}_t\)：資本蓄積に伴って緩やかに上昇後、定常状態に収束<br>
+            \(\hat{I}_t\)：t=0でピーク（TFP 高い間に投資集中）→ 資本蓄積に応じて低下<br>
+            \(\hat{Y}_t\)：先に上昇後、TFP が \(\rho^t\) で減衰するに従い収束<br>
+            \(\hat{L}_t\)：ショック消滅（TFP 低下）と資本蓄積が相殺 → 非単調
+          </div>
+        </div>
+        <div class="info-block wide">
+          <div class="info-label">RBC の中心的予測（IRFから読み取れる命題）</div>
+          <div class="info-text">
+            <strong>①景気拡張期の共動（co-movement）：</strong>TFPショック → \(Y, C, I, L, w\) がすべて同方向に動く。これは現実データのビジネスサイクル事実と定性的に一致。<br><br>
+            <strong>②投資の先行性（investment leads）：</strong>投資 \(\hat{I}_t\) は消費 \(\hat{C}_t\) より早く反応し、ピークが先に来る。実際のデータでも投資は産出より先行する傾向がある。<br><br>
+            <strong>③実質賃金の順循環性：</strong>\(\hat{w}_t > 0\) が TFP 拡張期に成立。ケインズ型モデル（需要ショック）では実質賃金が逆循環的になりやすいが、RBCでは自然に順循環。<br><br>
+            <strong>④消費の平滑性（consumption smoothing）：</strong>\(\hat{C}_t < \hat{Y}_t\) が全期間成立（オイラー方程式の帰結）。消費は産出より変動が小さい。現実データとも整合。<br><br>
+            <strong>⑤実質金利の一時的上昇：</strong>TFP 上昇期に実質金利 \(\hat{R}_t\) が上昇し、収束とともに低下。名目変数なしのため「インフレ期待の上昇」ではなく純粋な実物要因で金利が動く。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 15.2 IRF 図（SVG） -->
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">25</div>
+      <div class="eq-head-title">IRF の概念図（TFP 1σ上昇ショック、\(\rho=0.95\)）</div>
+    </div>
+    <div class="eq-body">
+      <!-- IRF概念図：SVG -->
+      <svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px;display:block;margin:0 auto 1rem;">
+        <!-- Background -->
+        <rect width="820" height="400" fill="#f6f3ee"/>
+        <!-- Grid lines -->
+        <line x1="80" y1="30" x2="80" y2="370" stroke="#d8d2c4" stroke-width="1"/>
+        <line x1="80" y1="200" x2="780" y2="200" stroke="#2a3a4a" stroke-width="1.5"/>
+        <!-- X axis ticks -->
+        <g font-family="IBM Plex Mono" font-size="10" fill="#2a3a4a" text-anchor="middle">
+          <text x="80"  y="385">0</text>
+          <text x="150" y="385">2</text>
+          <text x="220" y="385">4</text>
+          <text x="290" y="385">6</text>
+          <text x="360" y="385">8</text>
+          <text x="430" y="385">10</text>
+          <text x="500" y="385">12</text>
+          <text x="570" y="385">14</text>
+          <text x="640" y="385">16</text>
+          <text x="710" y="385">18</text>
+          <text x="780" y="385">20</text>
+        </g>
+        <text x="430" y="398" font-family="IBM Plex Mono" font-size="10" fill="#8090a0" text-anchor="middle">Period (quarters)</text>
+        <!-- Y axis label -->
+        <text transform="rotate(-90)" x="-200" y="20" font-family="IBM Plex Mono" font-size="10" fill="#8090a0" text-anchor="middle">% deviation from SS</text>
+        <!-- Y axis ticks -->
+        <g font-family="IBM Plex Mono" font-size="10" fill="#2a3a4a" text-anchor="end">
+          <text x="72" y="65">+2.0</text>
+          <text x="72" y="115">+1.5</text>
+          <text x="72" y="165">+1.0</text>
+          <text x="72" y="200">0</text>
+          <text x="72" y="250">-0.5</text>
+        </g>
+        <!-- horizontal grid -->
+        <line x1="80" y1="65"  x2="780" y2="65"  stroke="#d8d2c4" stroke-width="0.5" stroke-dasharray="4,4"/>
+        <line x1="80" y1="115" x2="780" y2="115" stroke="#d8d2c4" stroke-width="0.5" stroke-dasharray="4,4"/>
+        <line x1="80" y1="165" x2="780" y2="165" stroke="#d8d2c4" stroke-width="0.5" stroke-dasharray="4,4"/>
+        <line x1="80" y1="250" x2="780" y2="250" stroke="#d8d2c4" stroke-width="0.5" stroke-dasharray="4,4"/>
+
+        <!-- ── TFP: z_t = 0.95^t * 1.0 (scaled: 1%=50px) ── -->
+        <!-- Points: t=0,2,4,...20. z_t: 1, 0.90, 0.81, 0.73, 0.66, 0.60, 0.54, 0.51, 0.46, 0.42, 0.38 → y = 200 - z*50 -->
+        <polyline points="80,150 150,155 220,159 290,164 360,167 430,170 500,173 570,176 640,178 710,181 780,183"
+          fill="none" stroke="#8b4a00" stroke-width="2" stroke-dasharray="6,3"/>
+
+        <!-- ── Y (output): 0.95+0.05*資本蓄積 → ≈ TFP * 1/(1-α) ≈ 1.5x TFP 初期 -->
+        <polyline points="80,125 150,128 220,132 290,136 360,141 430,148 500,155 570,162 640,168 710,173 780,178"
+          fill="none" stroke="#1a3a6c" stroke-width="2.5"/>
+
+        <!-- ── C (consumption): smoother, lower than Y ── -->
+        <polyline points="80,145 150,143 220,140 290,138 360,137 430,138 500,140 570,144 640,150 710,158 780,166"
+          fill="none" stroke="#1a5c3a" stroke-width="2.5"/>
+
+        <!-- ── I (investment): large jump, falls faster ── -->
+        <polyline points="80,90 150,100 220,112 290,126 360,141 430,156 500,168 570,177 640,184 710,189 780,193"
+          fill="none" stroke="#8b1a1a" stroke-width="2.5"/>
+
+        <!-- ── K (capital): slow hump, delayed ── -->
+        <polyline points="80,200 150,196 220,191 290,186 360,182 430,180 500,179 570,180 640,182 710,186 780,190"
+          fill="none" stroke="#4a1a6c" stroke-width="2.5"/>
+
+        <!-- ── L (labor): quick positive then fades ── -->
+        <polyline points="80,170 150,171 220,173 290,175 360,178 430,181 500,185 570,189 640,193 710,197 780,200"
+          fill="none" stroke="#0a5c5c" stroke-width="2"/>
+
+        <!-- Legend -->
+        <rect x="600" y="30" width="175" height="150" fill="white" stroke="#d8d2c4" rx="2"/>
+        <text x="612" y="48" font-family="Noto Sans JP" font-size="11" fill="#0f1923" font-weight="500">凡例（TFPショック後）</text>
+        <line x1="612" y1="65" x2="635" y2="65" stroke="#1a3a6c" stroke-width="2.5"/><text x="642" y="69" font-family="IBM Plex Mono" font-size="10" fill="#0f1923">Y  産出</text>
+        <line x1="612" y1="83" x2="635" y2="83" stroke="#1a5c3a" stroke-width="2.5"/><text x="642" y="87" font-family="IBM Plex Mono" font-size="10" fill="#0f1923">C  消費</text>
+        <line x1="612" y1="101" x2="635" y2="101" stroke="#8b1a1a" stroke-width="2.5"/><text x="642" y="105" font-family="IBM Plex Mono" font-size="10" fill="#0f1923">I  投資</text>
+        <line x1="612" y1="119" x2="635" y2="119" stroke="#4a1a6c" stroke-width="2.5"/><text x="642" y="123" font-family="IBM Plex Mono" font-size="10" fill="#0f1923">K  資本</text>
+        <line x1="612" y1="137" x2="635" y2="137" stroke="#0a5c5c" stroke-width="2"/><text x="642" y="141" font-family="IBM Plex Mono" font-size="10" fill="#0f1923">L  労働</text>
+        <line x1="612" y1="155" x2="635" y2="155" stroke="#8b4a00" stroke-width="2" stroke-dasharray="6,3"/><text x="642" y="159" font-family="IBM Plex Mono" font-size="10" fill="#0f1923">z  TFP</text>
+        <!-- annotation: I>Y>C -->
+        <text x="85" y="88" font-family="IBM Plex Mono" font-size="9.5" fill="#8b1a1a">I のジャンプ</text>
+        <text x="85" y="128" font-family="IBM Plex Mono" font-size="9.5" fill="#1a3a6c">Y の上昇</text>
+        <text x="85" y="148" font-family="IBM Plex Mono" font-size="9.5" fill="#1a5c3a">C の平滑反応</text>
+        <text x="500" y="175" font-family="IBM Plex Mono" font-size="9.5" fill="#4a1a6c">K のhump（遅延蓄積）</text>
+        <!-- title -->
+        <text x="430" y="20" font-family="Noto Serif JP" font-size="13" fill="#1a3a6c" text-anchor="middle" font-weight="600">IRF: TFP 1σ 上昇ショック（\(\rho=0.95\)）</text>
+      </svg>
+
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">投資 I の急激な反応（プレーンRBCの核心）</div>
+          <div class="info-text">t=0 で投資 \(\hat{I}\) が産出 \(\hat{Y}\) より大きくジャンプし、その後急速に低下する（TFP が \(\rho^t\) で減衰し資本が蓄積されるため追加投資が不要になる）。現実データでも投資の変動が最大であることと整合。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">資本 K のhump（台形型反応）</div>
+          <div class="info-text">資本は先決変数のため t=0 では不変。t=1 以降に投資の蓄積で増加し、ある期にピークを打って定常状態に収束する。この「遅れた最大値（humped response）」は投資の即時反応と資本の蓄積過程の合成。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">消費 C の平滑反応（恒常所得仮説の具現化）</div>
+          <div class="info-text">消費は t=0 から増加するが、産出ほど大きくジャンプしない。資本蓄積に伴う将来所得上昇を見越してなだらかに上昇し、後に TFP 収束と相殺して緩やかに収束する。オイラー方程式＋恒常所得仮説の直接的表れ。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">労働 L の動き（RBC の議論の焦点）</div>
+          <div class="info-text">TFP 上昇で賃金が上昇し、代替効果 \(>\) 所得効果 の場合に労働増加。ただしこの符号は \(\gamma\) と \(\sigma\) に依存する。後続拡張（政府あり）では財政ショックが労働に追加的な所得効果をもたらす点と対比される。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 15.3 政府版IRFとの比較 -->
+  <div class="eq-card" style="border-left-color:var(--accent2);">
+    <div class="eq-head">
+      <div class="eq-num-badge">26</div>
+      <div class="eq-head-title">政府支出ショック（G ショック）の IRF——プレーンRBCとの対比</div>
+    </div>
+    <div class="eq-body">
+      <div class="alert-box warn">
+        <strong>プレーンRBCでは G ショックは存在しないが</strong>、A-1（政府あり）拡張のIRFをここで予告しておくことで、「プレーンRBCで言えること」の限界が具体的になる。
+      </div>
+      <table class="comp-table">
+        <tr>
+          <th>ショック種類</th>
+          <th>\(\hat{Y}\) の反応</th>
+          <th>\(\hat{C}\) の反応</th>
+          <th>\(\hat{I}\) の反応</th>
+          <th>\(\hat{L}\) の反応</th>
+          <th>モデル乗数</th>
+        </tr>
+        <tr>
+          <td>TFP ↑（プレーンRBC）</td>
+          <td class="yes">＋大</td>
+          <td class="yes">＋（平滑）</td>
+          <td class="yes">＋（急大）</td>
+          <td class="yes">＋</td>
+          <td class="na">N/A（ショックと乗数は別概念）</td>
+        </tr>
+        <tr>
+          <td>G ↑（政府RBC）</td>
+          <td class="yes">＋（小）</td>
+          <td class="no">−（クラウドアウト）</td>
+          <td class="no">−（クラウドアウト）</td>
+          <td class="yes">＋（所得効果）</td>
+          <td class="no">&lt; 1（通常 0.4〜0.7）</td>
+        </tr>
+        <tr>
+          <td>G ↑（NK-DSGE）</td>
+          <td class="yes">＋（大）</td>
+          <td class="yes">＋（補完）</td>
+          <td class="yes">＋（補完）</td>
+          <td class="yes">＋</td>
+          <td class="yes">&gt; 1（ZLB では特に大）</td>
+        </tr>
+      </table>
+      <div class="info-text" style="font-size:0.82rem;color:var(--ink2);margin-top:0.5rem;">
+        <em>政府支出の乗数が小さい（＜1）のは、RBCでは G の増加が資源を民間から政府へ移転し（実質所得効果↓）、消費・投資を圧縮するから。プレーンRBCはこの「乗数の理論下限」を提供する比較基準。</em>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── §16 景気循環統計との照合 ───── -->
+<div class="section" id="s16">
+  <div class="section-header">
+    <span class="section-num">§16</span>
+    <span class="section-title">景気循環統計との照合——第2次モーメント比較</span>
+  </div>
+
+  <div class="alert-box info">
+    <strong>RBC の評価方法：</strong>Kydland-Prescott（1982）の方法論では、モデルを「推定」するのではなく、モデルが生成する時系列の<strong>第2次モーメント（標準偏差・相関係数・自己相関）</strong>を実際のデータと比較して評価する。
+  </div>
+
+  <!-- 16.1 モーメント表 -->
+  <div class="eq-card system">
+    <div class="eq-head">
+      <div class="eq-num-badge">27</div>
+      <div class="eq-head-title">プレーンRBCモデルと米国データの第2次モーメント比較</div>
+      <span class="eq-ref">Kydland-Prescott(1982), King-Plosser-Rebelo(1988) 系の較正値</span>
+    </div>
+    <div class="eq-body">
+      <table class="comp-table">
+        <tr>
+          <th>統計量</th>
+          <th>変数</th>
+          <th>米国データ</th>
+          <th>プレーンRBCモデル</th>
+          <th>整合性</th>
+          <th>解釈</th>
+        </tr>
+        <tr>
+          <td rowspan="5">標準偏差（%）<br><em>産出比</em></td>
+          <td>\(\sigma_Y\)（基準）</td>
+          <td>1.81%</td>
+          <td>1.72%</td>
+          <td class="yes">◎</td>
+          <td>TFP の分散を合わせれば産出変動はほぼ再現</td>
+        </tr>
+        <tr>
+          <td>\(\sigma_C / \sigma_Y\)</td>
+          <td>0.74</td>
+          <td>0.61</td>
+          <td class="yes">○</td>
+          <td>消費は産出より小さく変動。平滑化を過剰気味に予測</td>
+        </tr>
+        <tr>
+          <td>\(\sigma_I / \sigma_Y\)</td>
+          <td>2.93</td>
+          <td>2.78</td>
+          <td class="yes">◎</td>
+          <td>投資過大変動（RBCの最大の成功）</td>
+        </tr>
+        <tr>
+          <td>\(\sigma_L / \sigma_Y\)</td>
+          <td>0.63</td>
+          <td>0.49</td>
+          <td class="no">△</td>
+          <td>労働変動をやや過小推計。賃金硬直性・失業の欠如が原因</td>
+        </tr>
+        <tr>
+          <td>\(\sigma_w / \sigma_Y\)</td>
+          <td>0.50</td>
+          <td>0.62</td>
+          <td class="yes">○</td>
+          <td>実質賃金変動はおおむね整合</td>
+        </tr>
+        <tr>
+          <td rowspan="4">産出との相関<br>\(\text{Corr}(x, Y)\)</td>
+          <td>\(C\)</td>
+          <td>0.76</td>
+          <td>0.82</td>
+          <td class="yes">○</td>
+          <td>消費と産出の共動（順循環性）</td>
+        </tr>
+        <tr>
+          <td>\(I\)</td>
+          <td>0.90</td>
+          <td>0.91</td>
+          <td class="yes">◎</td>
+          <td>投資は産出と強く順循環（RBCの予測と一致）</td>
+        </tr>
+        <tr>
+          <td>\(L\)</td>
+          <td>0.85</td>
+          <td>0.79</td>
+          <td class="yes">○</td>
+          <td>労働は産出と正相関（順循環性。ケインズ型とも整合）</td>
+        </tr>
+        <tr>
+          <td>\(w\)</td>
+          <td>0.12</td>
+          <td>0.56</td>
+          <td class="no">✕</td>
+          <td><strong>実質賃金の順循環性をモデルが過大推計。最大の失敗点の一つ。</strong></td>
+        </tr>
+        <tr>
+          <td rowspan="2">自己相関<br>\(\text{Corr}(x_t, x_{t-1})\)</td>
+          <td>\(Y\)</td>
+          <td>0.84</td>
+          <td>0.72</td>
+          <td class="yes">○</td>
+          <td>TFP の持続性（\(\rho=0.95\)) が産出の持続性を生む</td>
+        </tr>
+        <tr>
+          <td>\(I\)</td>
+          <td>0.91</td>
+          <td>0.58</td>
+          <td class="no">△</td>
+          <td>投資の持続性をモデルが過小推計（資本調整コストの欠如）</td>
+        </tr>
+      </table>
+      <div class="info-grid" style="margin-top:0.8rem;">
+        <div class="info-block">
+          <div class="info-label">RBC の成功（○/◎）</div>
+          <div class="info-text">
+            投資の過大変動（\(\sigma_I/\sigma_Y\)）・産出との強い共動（消費・投資の相関）・産出変動の大きさ——これらはプレーンRBCが定量的に成功した点。経済学史的には「TFPショックだけでここまで再現できる」という驚きが1980年代のRBC革命を生んだ。
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">RBC の失敗（✕/△）</div>
+          <div class="info-text">
+            実質賃金の相関（過大予測）・雇用変動の相小（過小予測）・投資の自己相関（過小）——これらがRBCへの批判の的。ニューケインジアンモデルでは名目硬直性・マークアップ変動を導入することで一部を改善する。プレーンRBCが「言えないこと」の定量的証拠。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 16.2 ソロー残差 -->
+  <div class="eq-card">
+    <div class="eq-head">
+      <div class="eq-num-badge">28</div>
+      <div class="eq-head-title">ソロー残差——TFPの実証的計測とRBCへの含意</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\hat{z}_t = \hat{Y}_t - \alpha\hat{K}_t - (1-\alpha)\hat{L}_t \quad \text{（ソロー残差の定義）}\]
+        \[\hat{z}_t \approx \text{HP フィルター後の TFP 偏差（実証推計値）}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">ソロー残差の問題</div>
+          <div class="info-text">RBC では TFP が「技術進歩」と解釈されるが、実際のソロー残差には<strong>可変投入費用（労働・エネルギーの稼働率変動）・価格マークアップ変動・集計誤差</strong>が混在する。不況期のソロー残差低下は「技術後退」か「需要不足による稼働率低下」か区別できない——これがRBCへの根本的批判（Hall 1990）。</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">RBCの反論と限界</div>
+          <div class="info-text">Prescott（1986）は「ソロー残差のほとんどは真の技術変動」と主張。しかし Summers（1986）ほかの批判者は「不況期に一斉に技術後退するのは不自然」と指摘。プレーンRBCはこの論争に対して構造的な回答を持たない——使用中の技術・可変費用・稼働率を内生化する拡張が必要。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── §17 確率的割引因子（SDF）と資産価格 ───── -->
+<div class="section" id="s17">
+  <div class="section-header">
+    <span class="section-num">§17</span>
+    <span class="section-title">確率的割引因子（SDF）——プレーンRBCにおける資産価格理論</span>
+  </div>
+
+  <!-- 17.1 SDF定義 -->
+  <div class="eq-card foc">
+    <div class="eq-head">
+      <div class="eq-num-badge">29</div>
+      <div class="eq-head-title">確率的割引因子（Stochastic Discount Factor）の定義</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[m_{t,t+1} \;:=\; \beta\,\frac{u'(C_{t+1})}{u'(C_t)} \;=\; \beta\left(\frac{C_{t+1}}{C_t}\right)^{-\sigma}\]
+        \[\text{オイラー方程式の別表現：}\quad \mathbb{E}_t\!\left[m_{t,t+1}\,R_{t+1}\right] = 1 \quad \text{（任意の資産に成立）}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">SDF の経済的意味</div>
+          <div class="info-text">
+            \(m_{t,t+1}\) は「t+1 期の実質 1 単位の財を t 期の財単位に換算する比率」。消費が高い（豊かな）状態では \(m\) が低く（財を安く評価）、消費が低い（不況）状態では \(m\) が高い（財を高く評価）。これが資産価格のリスクプレミアムの源泉。
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">プレーンRBC SDF の特徴</div>
+          <div class="info-text">
+            CRRA 型効用なので \(m_{t,t+1} = \beta(C_{t+1}/C_t)^{-\sigma}\)。消費成長率のみで SDF が決まる——政府・名目変数・貨幣が不在なため、インフレリスク・流動性プレミアム・財政リスクが入らない純粋な「実物 SDF」。
+          </div>
+        </div>
+        <div class="info-block wide">
+          <div class="info-label">プレーンRBC における無リスク実質利子率の決定</div>
+          <div class="info-text">
+            無リスク実質グロスリターン \(R^f_t\) は \(\mathbb{E}_t[m_{t,t+1} \cdot R^f_t] = 1\) から：
+            \[R^f_t = \frac{1}{\mathbb{E}_t[m_{t,t+1}]} = \frac{1}{\beta\,\mathbb{E}_t[(C_{t+1}/C_t)^{-\sigma}]}\]
+            対数線形近似（Jensen 補正込み）：
+            \[\ln R^f_t \approx -\ln\beta + \sigma\,\mathbb{E}_t[\Delta\ln C_{t+1}] - \frac{1}{2}\sigma^2\,\text{Var}_t[\Delta\ln C_{t+1}]\]
+            第一項 \(-\ln\beta \approx r^*\)（純粋時間選好）、第二項（期待消費成長）、第三項（Jensen補正：リスクが利子率を下げる）。<strong>リカード等価により財政変数 \(\hat{b}_t\) は含まれない</strong>——これがプレーンRBCの国債価格理論の本質的限界。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 17.2 イールドカーブ -->
+  <div class="eq-card foc">
+    <div class="eq-head">
+      <div class="eq-num-badge">30</div>
+      <div class="eq-head-title">プレーンRBC のイールドカーブ（ゼロクーポン債の価格構造）</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[q_t^{(n)} \;=\; \mathbb{E}_t\!\left[\prod_{s=0}^{n-1} m_{t+s,t+s+1}\right]\]
+        \[y_t^{(n)} \;:=\; -\frac{1}{n}\ln q_t^{(n)}\quad \text{（n期ゼロクーポン利回り）}\]
+      </div>
+      <table class="comp-table">
+        <tr><th>プレーンRBCで説明できる利回り構造</th><th>できない利回り構造</th></tr>
+        <tr>
+          <td>
+            ①実質金利の景気循環変動（TFP, K に連動）<br>
+            ②TFPショック不確実性によるJensen補正（凸性項）<br>
+            ③満期構造の理論的起点（消費成長の期待パスから導出）
+          </td>
+          <td>
+            ①名目利回り・インフレ期待（名目変数なし）<br>
+            ②流動性プレミアム（貨幣なし）<br>
+            ③財政リスクプレミアム（リカード等価で \(\hat{b}_t\) が中立）<br>
+            ④デフォルトリスク（名目デフォルトは排除）
+          </td>
+        </tr>
+      </table>
+      <div class="info-grid" style="margin-top:0.8rem;">
+        <div class="info-block">
+          <div class="info-label">Hansen-Jagannathan（1991）境界</div>
+          <div class="info-text">
+            CRRA-SDF のシャープレシオ（リスクプレミアム/標準偏差）には理論的上限がある：
+            \[|E[R^e]| / \text{Std}[R^e] \leq \text{Std}[m]/E[m]\]
+            プレーンRBCの \(m\) では実際の株式プレミアム（約 6%/年）を説明するのに必要な変動性を生成できない——<strong>株式プレミアムパズル（equity premium puzzle）</strong>。これが資産価格の観点からのRBCへの批判の定量的核心。
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">解決の方向（拡張の動機）</div>
+          <div class="info-text">
+            ①習慣形成効用（habit formation）→ \(m\) の変動性増幅<br>
+            ②長期リスク（Bansal-Yaron）→ 消費成長率の長期的不確実性<br>
+            ③異質家計（Bewley型）→ 個人リスクの不完全共有がプレミアムを生む<br>
+            ④災害リスク（Barro 2006）→ 稀な大幅下落の存在<br>
+            いずれもプレーンRBCの「純粋な CRRA-SDF」では達成できない。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── §18 TVC の代替条件の可能性 ───── -->
+<div class="section" id="s18">
+  <div class="section-header">
+    <span class="section-num">§18</span>
+    <span class="section-title">TVC を外したとき——代替条件の可能性とプレーンRBCの均衡構造</span>
+  </div>
+
+  <div class="alert-box tvc">
+    <strong>本節の問い：</strong>プレーンRBCにおいて TVC を外したとき、何が起きるか？どのような「代替条件」が均衡を一意に選択できるか？政府版（国債あり）での No-Ponzi・TVC・B/Y 非発散条件の三角形に相当するプレーンRBC版の構造を整理する。（添付2：「貨幣の三要件と TVC」の考察をプレーンRBC に適用）
+  </div>
+
+  <!-- 18.1 TVC なしでは何が起きるか -->
+  <div class="eq-card tvc">
+    <div class="eq-head">
+      <div class="eq-num-badge">31</div>
+      <div class="eq-head-title">TVC なしでの均衡の不確定性</div>
+    </div>
+    <div class="eq-body">
+      <div class="formula-box">
+        \[\text{オイラー方程式のみ（TVC なし）}\;\Rightarrow\; \{C_t\}_{t=0}^\infty \text{ の候補が連続無限本存在}\]
+        \[\text{発散解：}\hat{C}_t \sim \mu_2^t \to \infty \quad (|\mu_2|>1) \quad \longleftarrow\; \text{TVC が排除する}\]
+        \[\text{収束解（鞍点パス）：}\hat{C}_t = \gamma_{CK}\hat{K}_t + \gamma_{Cz}\hat{z}_t \quad \longleftarrow\; \text{TVC が選ぶ唯一解}\]
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">発散解の経済的意味</div>
+          <div class="info-text">
+            TVC なしで「爆発する消費経路」が均衡候補になると、家計は今期すべての資産を消費し尽くす（または無限の負債を積み上げる）経路も最適化条件を満たす。これは「無限の富を主張する」バブル均衡の一種であり、経済的に意味のある均衡として排除されるべき。
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">縮小解の経済的意味</div>
+          <div class="info-text">
+            逆に「消費がゼロに縮小する」経路も候補に含まれる。家計が将来に備えて無限に貯蓄し続け、消費を永遠に先送りする経路。生涯予算制約の不等号（過剰な将来遺産）を残す意味で非効率。TVC が等号成立を強制することでこれも排除される。
+          </div>
+        </div>
+        <div class="info-block wide">
+          <div class="info-label">TVC の必要十分性（プレーンRBC版の整理）</div>
+          <div class="info-text">
+            <strong>TVC は必要条件かつ十分条件（鞍点パスの選択のために）：</strong><br><br>
+            ①<strong>必要性：</strong>オイラー方程式を満たすすべての経路のうち、生涯予算制約を等号で成立させる経路が最適解。等号成立 ⟺ TVC。<br>
+            ②<strong>十分性：</strong>鞍点パス（不安定根成分ゼロ）を満たす経路がちょうど1本存在し、それが TVC を満たす。<br><br>
+            <strong>ただし：</strong>TVC は「局所的な必要十分条件」であり、定常状態から遠い大域的挙動（非線形領域での複数均衡）については別途の大域的安定性分析が必要。Stokey-Lucas（1989）の動的計画法アプローチでは TVC の代わりに「価値関数の凹性と連続性」を直接証明することで大域的最適を保証する。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 18.2 代替条件の候補 -->
+  <div class="eq-card tvc">
+    <div class="eq-head">
+      <div class="eq-num-badge">32</div>
+      <div class="eq-head-title">TVC の代替条件の候補——プレーンRBC 版</div>
+    </div>
+    <div class="eq-body">
+      <table class="comp-table">
+        <tr>
+          <th>代替条件の種類</th>
+          <th>数学的表現</th>
+          <th>経済的根拠</th>
+          <th>プレーンRBCとの整合性</th>
+        </tr>
+        <tr>
+          <td><strong>A-1 動的計画法（DP）の最大原理</strong></td>
+          <td>\(V(\bar{K}) = \max\) かつ \(V\) が凹・連続</td>
+          <td>価値関数の大域的最適性。TVC を内包した強い条件。</td>
+          <td class="yes">完全整合。Stokey-Lucas（1989）の標準的アプローチ。TVC を外さずに「より強い条件」として使う。</td>
+        </tr>
+        <tr>
+          <td><strong>A-2 Ponzi-free（非バブル）条件</strong></td>
+          <td>\(\lim_{T\to\infty} q_{0T} K_{T+1} \geq 0\) かつ\(\leq 0\)</td>
+          <td>「家計は純債務者になれない」と「家計は無限の正資産を持てない」の両方。</td>
+          <td class="yes">TVC の等価表現として使える。プレーンRBCでは物理的資本の非負制約（\(K\geq 0\)）から No-Ponzi 側は自明。等号部分が TVC と同値。</td>
+        </tr>
+        <tr>
+          <td><strong>A-3 資本の非負制約（Kim-Wright 型）</strong></td>
+          <td>\(K_t \geq 0\;\forall t\) かつ \(\lim K_t = 0\) を禁止</td>
+          <td>実物資本が物理的にゼロ以下になれないという制約。</td>
+          <td class="yes">プレーンRBCに自然に組み込まれる。ただし「ちょうど TVC を選ぶ」ためには追加的な効率性条件（凹生産関数の MPK 逓減）が必要。</td>
+        </tr>
+        <tr>
+          <td><strong>A-4 E-安定性（適応学習）</strong></td>
+          <td>Evans-Honkapohja の学習収束条件</td>
+          <td>合理的期待を緩め、家計が適応学習する場合に収束する均衡を選択。</td>
+          <td class="yes">鞍点均衡は通常 E-安定（学習収束）。ただし複数均衡が存在する場合（非線形域）は選択が異なりうる。</td>
+        </tr>
+        <tr>
+          <td><strong>B-1 有限寿命（OLG 化）</strong></td>
+          <td>各世代の有限地平線から TVC が内生化</td>
+          <td>世代交替により各世代の終端条件がモデル内で決まる。</td>
+          <td class="no">プレーンRBCの代表的家計（無限寿命）の仮定を根本的に変える。\(r &lt; g\) 均衡の可能性が開く——財政余力分析の「本丸」だが、プレーンRBCとは別モデル。</td>
+        </tr>
+        <tr>
+          <td><strong>B-2 社会計画者（Ramsey 計画者）</strong></td>
+          <td>社会的最適の一階条件として TVC が自動導出</td>
+          <td>分権均衡の外側から社会計画者の問題を解くと、TVC が内生化される。</td>
+          <td class="yes">完全整合。第一厚生定理が成立するプレーンRBCでは、分権均衡解 = 計画者解。TVC は計画者の最適化から同一形で導出される。</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 18.3 TVC・三要件との接続 -->
+  <div class="eq-card tvc">
+    <div class="eq-head">
+      <div class="eq-num-badge">33</div>
+      <div class="eq-head-title">添付2「貨幣の三要件とTVC」のプレーンRBCへの適用——TVC破綻の経路</div>
+    </div>
+    <div class="eq-body">
+      <div class="alert-box info">
+        <strong>背景：</strong>添付2では「統合政府モデルで TVC（国債・貨幣の現在価値収束）が成立しない場合、貨幣の三要件（交換手段・価値の尺度・価値の保存）が崩壊する」という命題を分析している。プレーンRBCは名目変数を持たないため三要件は直接関係しないが、<strong>「TVC 破綻 → 均衡崩壊」</strong>という論理構造は並行して成立する。
+      </div>
+      <div class="info-grid">
+        <div class="info-block">
+          <div class="info-label">プレーンRBCにおける「TVC 破綻」の含意</div>
+          <div class="info-text">
+            プレーンRBCで TVC \(\lim \beta^T u'(C_T)K_{T+1} \neq 0\) が成立しない場合：<br><br>
+            ①<strong>発散ケース（\(K_T \to \infty\)）：</strong>家計が資本を無限蓄積し消費しない経路。「価値の保存」機能は過剰（死蔵）。生涯効用が未定義になる可能性。<br>
+            ②<strong>縮小ケース（\(K_T \to 0\) 速すぎ）：</strong>資本を早々に消費し尽くす経路。将来の生産能力が失われ、長期的に消費がゼロに近づく。<br><br>
+            どちらも「最適化の観点から排除される」——TVC は「過剰貯蓄も過少貯蓄もしない」という最適の境界。
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">三要件との構造的類比</div>
+          <div class="info-text">
+            添付2の構造（\(\lnot Q \Rightarrow \lnot P\)）のプレーンRBC版：<br><br>
+            <strong>命題 P'：</strong>資本市場が機能する（資本が「価値の保存手段」として機能し、生産に使われる）<br>
+            <strong>命題 Q'：</strong>TVC が成立（資本の現在価値が収束）<br><br>
+            \(P' \Rightarrow Q'\)：資本市場が正常に機能（MPK 逓減・生産的に使用）ならば TVC は自動成立。<br>
+            \(\lnot Q' \Rightarrow \lnot P'\)：TVC が完全に破綻すれば資本の蓄積または枯渇が生じ、市場機能が失われる。<br><br>
+            プレーンRBCでは凹型生産関数（MPK 逓減）が「防波堤」として機能し、TVC 破綻を構造的に防ぐ。
+          </div>
+        </div>
+        <div class="info-block wide">
+          <div class="info-label">政府・貨幣の導入で TVC が「問題化」するメカニズム</div>
+          <div class="info-text">
+            プレーンRBCで TVC が「自動成立」する根拠：物的資本には<strong>MPK 逓減</strong>という物理的制約があり、資本の無限蓄積は MPK → 0（ゴールデンルール超過資本）を招き自動的に収束へ向かう。<br><br>
+            <strong>国債（b）を導入すると：</strong>国債は MPK 逓減のような物理的制約を持たない。政府が恣意的に国債を増発できる。TVC の成立は「政府の財政規律（No-Ponzi 条件の遵守）」に依存するようになる——これが政府版で TVC が「問題化」する根本理由。<br><br>
+            <strong>貨幣（m）を導入すると：</strong>さらにシニョレッジ（インフレ税）という別の「財政手段」が加わり、TVC の意味が「実質債務の収束」に変化する。添付2の議論（三要件 ⟺ TVC）はこの段階で初めて問題になる。<br><br>
+            <strong>結論：</strong>プレーンRBCの TVC は資本の物理的性質（凹型生産関数）に担保された堅牢な条件。国債・貨幣の導入によって TVC は「制度的・政策的」担保に依存する脆弱な条件に変化する——これが拡張の動機の TVC 側からの見方。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 18.4 まとめ表 -->
+  <div class="eq-card" style="border-left-color:var(--gold);">
+    <div class="eq-head">
+      <div class="eq-num-badge">34</div>
+      <div class="eq-head-title">TVC の「担保構造」——プレーンRBC から拡張への変化一覧</div>
+    </div>
+    <div class="eq-body">
+      <table class="comp-table">
+        <tr>
+          <th>モデル</th>
+          <th>TVC の本数</th>
+          <th>TVC の担保（なぜ成立するか）</th>
+          <th>TVC の脆弱性</th>
+        </tr>
+        <tr>
+          <td><strong>プレーンRBC</strong>（本稿）</td>
+          <td>1本（資本 K）</td>
+          <td>凹型生産関数（MPK 逓減）。資本は物理的に無限蓄積できない。</td>
+          <td>低い（物理法則に担保）</td>
+        </tr>
+        <tr>
+          <td>政府RBC（G, τのみ）</td>
+          <td>1本（資本 K）+ 政府IGBC</td>
+          <td>均衡財政（\(G=\tau\)）仮定。政府も TVC と同等の制約を自動的に満たす。</td>
+          <td>低い（均衡財政仮定）</td>
+        </tr>
+        <tr>
+          <td>国債ありRBC（b 1種類）</td>
+          <td>3本（TVC_K + TVC_b + No-Ponzi）</td>
+          <td>代表的家計の最適化（TVC_K, TVC_b）+ 政府財政規律（No-Ponzi）。</td>
+          <td>中程度（財政規律への依存）</td>
+        </tr>
+        <tr>
+          <td>中銀+貨幣+国債</td>
+          <td>4本以上（+TVC_m）</td>
+          <td>金融政策（テイラールール）+ 財政規律 + 貨幣需要の安定。</td>
+          <td>高い（FTPLによる複数均衡リスク）</td>
+        </tr>
+        <tr>
+          <td>OLG（世代重複）</td>
+          <td>内生化（各世代の有限問題に帰着）</td>
+          <td>各世代の有限寿命から TVC が自動導出。\(r &lt; g\) でも TVC は成立しうる。</td>
+          <td>低い（内生化）だが世代間移転の設計依存</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ───── 最終サマリー（更新版） ───── -->
+<div class="section" id="sfinal">
+  <div class="section-header">
+    <span class="section-num">★</span>
+    <span class="section-title">全体サマリー——プレーンRBC の「核心命題と限界」総覧</span>
+  </div>
+
+  <div class="summary-box">
+    <h3>プレーンRBC ステップバイステップ：全セクションまとめ（最終版）</h3>
+    <div class="summary-flow">
+      <div class="flow-item">
+        <div class="flow-label">§0–3　セットアップ</div>
+        <div class="flow-desc">資産＝資本のみ（\(a_t=k_t\)）。政府・国債・貨幣なし。効用・予算制約・Cobb-Douglas 生産・市場清算の4ブロック。6変数6方程式の閉じた体系。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§4　一階条件・TVC</div>
+        <div class="flow-desc">オイラー方程式（消費）＋労働供給条件の2本＋TVC 1本（資本のみ）。国債なしのため TVC は1本だけ——最小限の境界条件。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§5–6　均衡体系・TFP過程</div>
+        <div class="flow-desc">唯一の外生ショック源は TFP の AR(1)（\(\rho=0.95, \sigma_\varepsilon=0.0072\)）。財政ショックは存在しない——「すべての景気変動はTFPから」がRBCの核心主張。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§7　定常状態</div>
+        <div class="flow-desc">\(r^* = 1/\beta - 1\)。パラメーター（β, α, δ, γ）から一意決定。\(r^* > 0 \geq g\) が構造的に保証（\(r &gt; g\) の構造）。財政余力・ポンジロールオーバーは構造的に排除。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§8–10　線形化・状態空間</div>
+        <div class="flow-desc">2×2 の最小次元システム。固有値 \(\mu_1 &lt; 1 &lt; \mu_2\)（鞍点）。不安定根1本＝ジャンプ変数1本（\(C_t\)）→ ブランチャード＝カーン条件成立。政策関数が TVC から一意決定。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§11　TVC の役割（詳細）</div>
+        <div class="flow-desc">均衡の一意選択・鞍点パスへの初期ジャンプ・生涯予算等号・\(r^*&gt;g\) の構造保証。凹型生産関数（MPK逓減）に担保された物理的堅牢性。拡張で担保構造が変化。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§12　言えること・言えないこと</div>
+        <div class="flow-desc">○：TFP→共動・投資過大変動・順循環性・恒常所得・均衡一意性・厚生＝最適。✕：財政効果・分配・名目・\(r&lt;g\)・失業・FTPL。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§13　拡張ロードマップ</div>
+        <div class="flow-desc">A系列（制度）：+政府→+国債→+中銀。B系列（主体）：家計n人→企業n社→財n品目。プレーンRBCは全モデルの共通起点・共通言語。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§14　カリブレーション</div>
+        <div class="flow-desc">β=0.99, α=1/3, δ=0.025, ρ=0.95, σ_ε=0.0072。定常値：\(r^*\approx1\%/\)四半期, \(K/Y\approx3.5\)（年換算）, \(C/Y\approx0.91\)（政府なしのため過大）。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§15　IRF 分析</div>
+        <div class="flow-desc">TFPショック → \(I\)（急大）\(>\)\(Y\) \(>\) \(C\)（平滑）。K は hump。L は代替効果優位で増加。実質賃金順循環。\(G\)ショックはプレーンRBCに存在しない（比較基準として政府版乗数 &lt;1 を予告）。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§16　景気循環統計照合</div>
+        <div class="flow-desc">成功：投資過大変動・共動の符号・産出変動の大きさ。失敗：実質賃金の相関係数・雇用変動・投資の自己相関。ソロー残差の解釈問題（Hall 1990の批判）。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§17　SDF・資産価格</div>
+        <div class="flow-desc">SDF \(= \beta(C_{t+1}/C_t)^{-\sigma}\)。無リスク実質金利 = 時間選好 + 期待消費成長 − Jensen項。株式プレミアムパズル（変動性不足）・名目利回り・流動性プレミアムは説明不能。</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-label">§18　TVC 代替条件</div>
+        <div class="flow-desc">TVC なし → 連続無限の均衡候補（発散/収束解）。代替：DP価値関数・No-bubble・資本非負制約・E-安定性。凹型生産関数が物理的担保。拡張（国債・貨幣）で担保が「制度的」に変化。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "\\[", right: "\\]", display: true  },
+      { left: "\\(", right: "\\)", display: false }
+    ],
+    throwOnError: false,
+    strict: false
+  });
+});
+</script>
+</body>
+</html>
