@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "オリベラ＝タンジ効果の数理 V7：相転移モデル・FTPL均衡消滅の証明・ギャンブラーの破産による財政破産リスク定量化"
-date: 2026-05-28
+date: 2026-05-28 13:00:00 +0900
 categories: economics
 math_scripts:
   - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js
