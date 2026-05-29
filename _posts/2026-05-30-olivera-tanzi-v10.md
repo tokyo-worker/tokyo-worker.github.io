@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "オリベラ＝タンジ効果の数理 V10：累進課税・2相財政ダイナミクス・FTPL均衡消滅の厳密化・G8財政破産リスク比較・ハイパーインフレ史的検証"
-date: 2026-05-30 00:00:00 +0900
+date: 2026-05-30 08:00:00 +0900
 categories: economics
 math_scripts:
   - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js
