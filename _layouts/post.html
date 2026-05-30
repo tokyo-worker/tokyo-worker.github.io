@@ -47,6 +47,31 @@ layout: default
   {{ content }}
 </div>
 
+<!-- Copyright / License block -->
+<div class="post-license mt-5 pt-4 border-top">
+  <div class="card bg-light border-0">
+    <div class="card-body py-3">
+      <p class="mb-1 small">
+        <i class="fas fa-copyright mr-1"></i>
+        <strong>&copy; {{ page.date | date: "%Y" }} {{ site.author }}</strong>. All Rights Reserved.
+      </p>
+      <p class="mb-1 small text-muted">
+        本記事および数理モデルの著作権は著者に帰属します。学術的リサーチ・引用・非営利目的の共有は
+        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.ja" target="_blank" rel="noopener noreferrer">
+          CC BY-NC-ND 4.0
+        </a>
+        の下で許可されます。商用利用・共同研究・モデルの拡張は別途ご相談ください。
+      </p>
+      <p class="mb-0 small text-muted">
+        <i class="fas fa-clock mr-1"></i>
+        First published: {{ page.date | date: "%Y-%m-%d" }} &nbsp;|&nbsp;
+        <i class="fas fa-link mr-1"></i>
+        <a href="{{ site.url }}{{ page.url }}">{{ site.url }}{{ page.url }}</a>
+      </p>
+    </div>
+  </div>
+</div>
+
 <!-- Post footer navigation -->
 <div class="post-footer mt-5 pt-4 border-top">
   <div class="row">
