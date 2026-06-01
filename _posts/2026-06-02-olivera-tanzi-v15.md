@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "オリベラ＝タンジ効果の数理 V14：BC-OT財政安定性フレームワーク――インフレ・税制・金利・財政持続性の統合理論"
-date: 2026-06-01 00:00:00 +0900
+title: "オリベラ＝タンジ効果の数理 V15：BC-OT財政安定性フレームワーク――インフレ・税制・金利・財政持続性の統合理論"
+date: 2026-06-02 00:00:00 +0900
 categories: economics
 math_scripts:
   - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js
