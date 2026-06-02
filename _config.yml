@@ -23,7 +23,7 @@ kramdown:
       line_numbers: false
     block:
       line_numbers: false
-  math_engine: mathjax
+  math_engine: null
   parse_block_html: true
 
 plugins:
