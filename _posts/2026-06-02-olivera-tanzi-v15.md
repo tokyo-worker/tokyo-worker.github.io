@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "オリベラ＝タンジ効果の数理 V15：BC-OT財政安定性フレームワーク――インフレ・税制・金利・財政持続性の統合理論"
-date: 2026-06-02 00:00:00 +0900
+date: 2026-06-02 08:00:00 +0900
 categories: economics
 math_scripts:
   - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js
@@ -178,12 +178,54 @@ $$\frac{\partial R^{\mathrm{real}}(\pi^*)}{\partial \pi} = 0 \tag{式1}$$
 
 ## ◆ 図2：π（インフレ）変化が τ・g・r・財政余力に与える影響の方向図
 
-| π（インフレ率）の変化 | τ（実効税率） | g（成長率） | r（金利・リスクプレミアム） | FM（財政余力） | Q(n)（破産確率） |
-|:---|:---:|:---:|:---:|:---:|:---:|
-| **低インフレ域** π↑（BC優勢） | ↑（BC効果） | 微低下 | ほぼ変化なし | ↓（π*に近づく） | ↓（改善） |
-| **臨界点 π≈π*** | ↑（飽和） | 低下 | やや↑ | → 0 | 中立 |
-| **高インフレ域** π↑（OT優勢） | ↑（飽和・固定） | ↓↓ | ↑↑（リスクプレミアム） | ↓↓（FM<0へ） | ↑↑（急増） |
-| **ハイパーインフレ** | 飽和 | ↓↓↓ | ↑↑↑（死のループ） | ≪0 | →1（確実な崩壊） |
+<div style="overflow-x:auto;">
+<table style="border-collapse:collapse; width:100%; font-size:0.9em;">
+<thead>
+<tr style="background:#3a3a5c; color:white; text-align:center;">
+  <th style="padding:8px 10px; text-align:left; min-width:180px;">π（インフレ率）の変化</th>
+  <th style="padding:8px 10px;">τ（実効税率）</th>
+  <th style="padding:8px 10px;">g（成長率）</th>
+  <th style="padding:8px 10px;">r（金利・リスクプレミアム）</th>
+  <th style="padding:8px 10px;">FM（財政余力）</th>
+  <th style="padding:8px 10px;">Q(n)（破産確率）</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background:#d4edda;">
+  <td style="padding:8px 10px; font-weight:bold;">✅ 低インフレ域 π↑（BC優勢）</td>
+  <td style="padding:8px 10px; text-align:center;">↑（BC効果）</td>
+  <td style="padding:8px 10px; text-align:center;">微低下</td>
+  <td style="padding:8px 10px; text-align:center;">ほぼ変化なし</td>
+  <td style="padding:8px 10px; text-align:center;">↓（π*に近づく）</td>
+  <td style="padding:8px 10px; text-align:center;">↓（改善）</td>
+</tr>
+<tr style="background:#fff3cd;">
+  <td style="padding:8px 10px; font-weight:bold;">⚡ 臨界点 π≈π*</td>
+  <td style="padding:8px 10px; text-align:center;">↑（飽和）</td>
+  <td style="padding:8px 10px; text-align:center;">低下</td>
+  <td style="padding:8px 10px; text-align:center;">やや↑</td>
+  <td style="padding:8px 10px; text-align:center;">→ 0</td>
+  <td style="padding:8px 10px; text-align:center;">中立</td>
+</tr>
+<tr style="background:#fde8d8;">
+  <td style="padding:8px 10px; font-weight:bold;">⚠️ 高インフレ域 π↑（OT優勢）</td>
+  <td style="padding:8px 10px; text-align:center;">↑（飽和・固定）</td>
+  <td style="padding:8px 10px; text-align:center;">↓↓</td>
+  <td style="padding:8px 10px; text-align:center;">↑↑（リスクプレミアム）</td>
+  <td style="padding:8px 10px; text-align:center;">↓↓（FM&lt;0へ）</td>
+  <td style="padding:8px 10px; text-align:center;">↑↑（急増）</td>
+</tr>
+<tr style="background:#f8d7da;">
+  <td style="padding:8px 10px; font-weight:bold;">🔴 ハイパーインフレ</td>
+  <td style="padding:8px 10px; text-align:center;">飽和</td>
+  <td style="padding:8px 10px; text-align:center;">↓↓↓</td>
+  <td style="padding:8px 10px; text-align:center;">↑↑↑（死のループ）</td>
+  <td style="padding:8px 10px; text-align:center;">≪0</td>
+  <td style="padding:8px 10px; text-align:center;">→1（確実な崩壊）</td>
+</tr>
+</tbody>
+</table>
+</div>
 
 > **各変数の動きのロジック：**
 > - **τ（実効税率）の動き：** π上昇→累進課税ブラケットの自動移動（BC効果）により実効税率が上昇。ただし最高税率（$\tau_{\max}$）で飽和するため高インフレ域では変化しなくなる（§2.1参照）。
@@ -273,27 +315,82 @@ $(\pi, \tau, r)$ の三次元空間において、$\pi^*(\tau, r) = \pi$ を満�
 
 ---
 
-## ◆ 図3：財政安定フロンティアの概念図（π-r 平面の断面図）
+## ◆ 図3a：財政安定フロンティアの概念図（π-r 平面の断面図）
 
+> **読み方：** 縦軸が金利 $r$、横軸がインフレ率 $\pi$。フロンティア線より**左下（低π・低r側）が安全域（FM>0）**、右上が危険域（FM<0）。金利が上がるほどフロンティアは左にシフトし（安全域が狭まる）、徴税ラグ短縮や成長率向上でフロンティアは右にシフトする（安全域が広がる）。
+
+```mermaid
+graph LR
+    subgraph 安全域["✅ 安全域 FM &gt; 0（BC優勢）"]
+        JP["🇯🇵 日本現在地<br/>π ≈ 2%<br/>FM ≈ 11〜13%"]
+    end
+    subgraph 危険域["⚠️ 危険域 FM &lt; 0（OT優勢・破産リスク高）"]
+        CRISIS["財政危機ゾーン<br/>実質税収崩落"]
+    end
+
+    FRONTIER["━━━ 財政安定フロンティア π*(τ,r)=π ━━━<br/>← r↑でフロンティアが左シフト（安全域縮小）<br/>→ ℓ₀↓（徴税ラグ短縮）でフロンティアが右シフト<br/>→ g↑（成長率向上）でフロンティアが右上シフト"]
+
+    JP --- FRONTIER
+    FRONTIER --- CRISIS
+
+    REFORM["改革後フロンティア<br/>π*(τ,r,ℓ₀_new)<br/>（徴税ラグ短縮・成長政策後）"]
+    FRONTIER -.->|構造改革で右シフト| REFORM
+
+    style 安全域 fill:#d4edda,stroke:#28a745,stroke-width:2px
+    style 危険域 fill:#f8d7da,stroke:#dc3545,stroke-width:2px
+    style FRONTIER fill:#fff3cd,stroke:#ffc107,stroke-width:2px
+    style REFORM fill:#cce5ff,stroke:#004085,stroke-width:2px
 ```
-   r（金利）
-   ↑
-   │  危険域（FM<0）         安全域（FM>0）
-   │  OT優勢・破産リスク高   BC優勢・財政健全
-   │                │
-   │   r↑→π*↓   │← 財政安定フロンティア π*(τ,r)=π
-   │   (フロンティア│   ℓ₀↓（徴税タイムラグ短縮）→右シフト
-   │   が左下に)   │   g↑（成長率向上）→右上シフト
-   │               │
-   │               │← 日本現在地：π≈2%, FM≈11-13%
-   └───────────────┴────────────────────→ π（インフレ率）
-                  π*(τ,r)    π*(τ,r,ℓ₀_new) ← 改革後の新フロンティア
-                               （徴税ラグ短縮・成長政策後）
+
+## ◆ 図3b：財政安定フロンティアの概念図（π-τ 平面の断面図）
+
+> **読み方：** 縦軸が実効税率 $\tau$、横軸がインフレ率 $\pi$。フロンティア線より**左上（低π・高τ側）が安全域**。増税（τ↑）は短期には安全域を広げるが、長期的には成長阻害（歪みコスト）で逆に縮小する二面性がある（式4・式32参照）。
+
+```mermaid
+graph LR
+    subgraph 安全域τ["✅ 安全域 FM &gt; 0<br/>（十分な税率・低インフレ）"]
+        JP2["🇯🇵 日本現在地<br/>π ≈ 2%, τ ≈ 30%前後<br/>FM ≈ 11〜13%"]
+    end
+    subgraph 危険域τ["⚠️ 危険域 FM &lt; 0<br/>（OT優勢・実質税収崩落）"]
+        CRISIS2["財政危機ゾーン<br/>τ飽和 × 高π"]
+    end
+
+    FRONTIER2["━━━ 財政安定フロンティア π*(τ,r)=π ━━━<br/>τ↑（増税）: 短期→フロンティア上昇、長期→歪みコストで下降（二面性）<br/>τ_max到達後：BC飽和、OT侵食のみが残存"]
+
+    JP2 --- FRONTIER2
+    FRONTIER2 --- CRISIS2
+
+    NOTE["⚠️ 税率の二面性<br/>歪みコスト（λ）が小さい改革→π*↑<br/>歪みコストが大きい場合→π*↓<br/>（課税ベース拡大型の改革が鍵）"]
+    FRONTIER2 -.->|税制の質に依存| NOTE
+
+    style 安全域τ fill:#d4edda,stroke:#28a745,stroke-width:2px
+    style 危険域τ fill:#f8d7da,stroke:#dc3545,stroke-width:2px
+    style FRONTIER2 fill:#fff3cd,stroke:#ffc107,stroke-width:2px
+    style NOTE fill:#e2d9f3,stroke:#6f42c1,stroke-width:2px
 ```
 
 ---
 
 ## 5. 最低税率・最高金利・金利フィードバック：破産を免れるための境界条件
+
+### 5.0 経済的本質：なぜ「下限税率」と「上限金利」が必要か
+
+数式に入る前に、このセクション全体が何を目指しているかを直感的に把握しておきたい。
+
+**大局的な問い：** 財政運営者は「どこまで減税できるか」「中央銀行はどこまで利上げしても財政が安全か」を知りたい。これを答えるには、**財政が崩壊しないギリギリの境界線**を特定する必要がある。その境界線が「最低実効税率 $\tau_{\min}^{\mathrm{risk}}$」と「最大許容金利 $r_{\max}$」である。
+
+**二つの境界線の算定に、なぜ異なるロジックを使うのか：**
+
+本稿では、$\tau_{\min}^{\mathrm{risk}}$（税率の下限）と $r_{\max}$（金利の上限）を**異なる基準**で定義している。これは恣意的ではなく、それぞれの変数が財政に作用する**時間的性格の違い**から必然的に生じる設計選択である。
+
+| 変数 | 性格 | 適切な算定基準 | 理由 |
+|:---|:---|:---|:---|
+| **税率 $\tau$**（下限） | **累積的・長期的** に財政バッファを決定する | **財政破産確率 $Q(n) \le \epsilon$** | 税率は徐々に変わり、長期的な「勝率 $p$」を左右する。確率的な持続可能性（$Q(n)$）で評価すべき |
+| **金利 $r$**（上限） | **フロー的・即時的** に財政収支を決定する | **プライマリーバランス $PS \ge 0$** | 金利は毎期の利払いに即時反映され、単年度収支（PS）を直撃する。フロー収支基準が自然 |
+
+**実務家向けの直感：** 税率政策は「長い戦略ゲーム」——毎年少しずつ財政バッファを積み上げるか取り崩すかを決める確率的ゲームの「勝率」を設定する。だから**長期的な破産確率（Q(n)）**で下限を決める。一方、金利は「当期の損益計算書」に直撃するキャッシュフロー変数——プライマリーバランス（PS）がゼロを下回るとその瞬間から債務が発散し始めるため、**単年度のPSゼロ制約**で上限を決める。この非対称な設計により、「長期リスク（確率）」と「短期収支（フロー）」の両方を同時に管理できる財政監視体制が実現する。
+
+**大学生向けの直感：** 税率は「貯金の積立ペース」で、金利は「クレジットカードの利率」のようなものだ。貯金ペース（税率）は、長期的に「破綻せずにいられる確率」で評価する。利率（金利）は、毎月の収支がマイナスになった瞬間に借金が増え始めるから、「収支がゼロになる利率の水準」で上限を決める——これが二つの基準の違いである。
 
 ### 5.1 リスク調整最低税率 $\tau_{\min}^{\mathrm{risk}}$
 
@@ -538,11 +635,42 @@ $$Y_t^{\mathrm{cost-push}} = Y_0 e^{(g_0 - \mu_C \pi)t}, \quad \mu_C > 0 \tag{�
 
 ### 10.1 現状の定量評価（例示的キャリブレーション）
 
-| シナリオ | $\pi$ | $FM = \pi^* - \pi$ | $Q(8)$ | 財政状況 |
-| :--- | :---: | :---: | :---: | :--- |
-| 現行 | 2% | 約11〜13% | 約1.4% | BC優勢フェーズ・安全 |
-| ストレス | 10% | 約3〜5% | 約60% | Stress regime入口 |
-| 臨界点超過 | 15% | 0以下 | 約99% | 事実上の財政崩壊域 |
+<div style="overflow-x:auto;">
+<table style="border-collapse:collapse; width:100%; font-size:0.92em;">
+<thead>
+<tr style="background:#3a3a5c; color:white; text-align:center;">
+  <th style="padding:8px 12px; text-align:left;">シナリオ</th>
+  <th style="padding:8px 12px;">π（インフレ率）</th>
+  <th style="padding:8px 12px;">FM = π*−π</th>
+  <th style="padding:8px 12px;">Q(8)（破産確率）</th>
+  <th style="padding:8px 12px; text-align:left;">財政状況</th>
+</tr>
+</thead>
+<tbody>
+<tr style="background:#d4edda;">
+  <td style="padding:8px 12px; font-weight:bold;">✅ 現行</td>
+  <td style="padding:8px 12px; text-align:center;">2%</td>
+  <td style="padding:8px 12px; text-align:center;">約11〜13%</td>
+  <td style="padding:8px 12px; text-align:center;">約1.4%</td>
+  <td style="padding:8px 12px;">BC優勢フェーズ・安全</td>
+</tr>
+<tr style="background:#fff3cd;">
+  <td style="padding:8px 12px; font-weight:bold;">⚠️ ストレス</td>
+  <td style="padding:8px 12px; text-align:center;">10%</td>
+  <td style="padding:8px 12px; text-align:center;">約3〜5%</td>
+  <td style="padding:8px 12px; text-align:center;">約60%</td>
+  <td style="padding:8px 12px;">Stress regime入口</td>
+</tr>
+<tr style="background:#f8d7da;">
+  <td style="padding:8px 12px; font-weight:bold;">🔴 臨界点超過</td>
+  <td style="padding:8px 12px; text-align:center;">15%</td>
+  <td style="padding:8px 12px; text-align:center;">0以下</td>
+  <td style="padding:8px 12px; text-align:center;">約99%</td>
+  <td style="padding:8px 12px;">事実上の財政崩壊域</td>
+</tr>
+</tbody>
+</table>
+</div>
 
 > **注：** 上記は先進国の典型的なパラメーターを用いた**例示的キャリブレーション**であり、各国のデータを用いた構造推定は今後の課題である。
 
@@ -974,23 +1102,109 @@ $$\dot{b}^{\mathrm{net}}(t) = \mathcal{D}_t \cdot b^{\mathrm{net}}(t) - \omega (
 
 ## L. リスク調整最低税率と最大許容金利 {#taumin}
 
-### L.1 リスク調整最低税率 $\tau_{\min}^{\mathrm{risk}}$
+### L.0 二つの基準の設計思想（なぜ異なるロジックか）
+
+$\tau_{\min}^{\mathrm{risk}}$ と $r_{\max}$ は、同じ「財政の安全域の境界」を定量化するが、異なる評価軸を使う。その理由は §5.0（本文）で論じた通りであるが、Technical Appendix として数理的に再整理する。
+
+**公理的な対比：**
+
+| | $\tau_{\min}^{\mathrm{risk}}$ | $r_{\max}$ |
+|:---|:---|:---|
+| **評価基準** | 長期確率的持続可能性：$Q(n) \le \epsilon$ | 単年度フロー収支：$PS \ge 0$ |
+| **時間軸** | 無限期間（破産確率の漸近挙動） | 単期（当期プライマリーバランス） |
+| **数理構造** | ギャンブラーの破産問題（式41） | 静的な予算制約の等号条件 |
+| **政策含意** | 税制改革は長期的なゲームの勝率を変える | 金利は当期の収支に即時に効く |
+
+この非対称設計は恣意的ではなく、各変数の**経済的作用チャネルの性格の違い**を数理的に正確に反映している。
+
+---
+
+### L.1 リスク調整最低税率 $\tau_{\min}^{\mathrm{risk}}$（ステップバイステップ）
 
 $$\tau_{\min}^{\mathrm{risk}} \equiv \inf \left\{ \tau \;\middle|\; R^{\mathrm{real}}(\pi; \tau) \ge g^{\mathrm{gov}} + \mathcal{D}_t b^{\mathrm{net}} + PS^*(\epsilon) \right\} \tag{式43}$$
 
-計算手順：
-1. $Q(n) \le \epsilon$ から逆算して、限界 $\gamma^*$ を求める
-2. $\gamma^* = q/p^* \le 1$ から $p^* \ge 1/(1+\gamma^*)$ を導出
-3. $p^* = \Lambda(\delta_0 + \delta_1 PS^*)$ から $PS^*(\epsilon)$ を求める
-4. $PS^* = R^{\mathrm{real}}(\pi; \tau) - g^{\mathrm{gov}} - \mathcal{D}_t b^{\mathrm{net}}$ から $\tau_{\min}^{\mathrm{risk}}$ を解く
+**なぜ「財政破産確率 $Q(n) \le \epsilon$」を基準にするか：**
 
-### L.2 最大許容金利 $r_{\max}$
+税率は毎年の財政収支（PS）を通じて財政バッファ $S_t$ を徐々に変化させる。このバッファが枯渇するリスクを評価するには、一時点の収支ではなく**長期的な確率的軌道**を見る必要がある。ギャンブラーの破産問題（式41）は、まさにこの「長期的に破綻しない確率」を解析的に与えるものであり、$Q(n) \le \epsilon$（例：破産確率5%以下）という基準が税率の下限設定に自然に対応する。
+
+**ステップ1：許容破産確率から限界勝率 $p^*$ を逆算する**
+
+破産確率の式（式41）：$Q(n) = \dfrac{\gamma^a - \gamma^n}{\gamma^a - 1}$、$\gamma = (1-p)/p$
+
+$Q(n) \le \epsilon$ を満たす最小勝率 $p^*$ を求める。$Q(n)$ は $p$（勝率）の単調減少関数であるから、$Q(n) = \epsilon$ となる $\gamma^*$ を数値的に逆算し：
+
+$$\gamma^* \le 1 \;\Rightarrow\; p^* = \frac{1}{1 + \gamma^*} \ge 0.5$$
+
+例（$n=8, a=20, \epsilon=5\%$）：$Q(8)=\epsilon=0.05$ を満たす $\gamma^* \approx 0.754$（BC優勢フェーズ相当）、$p^* \approx 0.57$。
+
+**ステップ2：限界勝率から必要プライマリーバランス $PS^*$ を求める**
+
+勝率関数（式40）：$p(\pi_t) = \Lambda(\delta_0 + \delta_1 \cdot PS_t)$
+
+$p^* = \Lambda(\delta_0 + \delta_1 \cdot PS^*)$ を $PS^*$ について逆解きする：
+
+$$PS^* = \frac{\text{logit}(p^*) - \delta_0}{\delta_1}, \quad \text{logit}(p) = \ln\frac{p}{1-p}$$
+
+例：$p^* = 0.57$、$\delta_0 = 0.3$、$\delta_1 = 2.0$ のとき、$\text{logit}(0.57) \approx 0.28$、$PS^* = (0.28 - 0.3)/2.0 = -0.01$（わずかな赤字でも許容される水準）。
+
+**ステップ3：$PS^*$ から最低税率 $\tau_{\min}^{\mathrm{risk}}$ を解く**
+
+プライマリーバランスの定義：$PS_t = R^{\mathrm{real}}(\pi_t; \tau) - g^{\mathrm{gov}} - \mathcal{D}_t b^{\mathrm{net}}$
+
+$PS_t \ge PS^*$ の条件を $\tau$ について解く。$R^{\mathrm{real}}(\pi; \tau)$ は $\tau$ の増加関数（ただしラッファー曲線の上昇域に限る）ため：
+
+$$R^{\mathrm{real}}(\pi; \tau_{\min}^{\mathrm{risk}}) = g^{\mathrm{gov}} + \mathcal{D}_t b^{\mathrm{net}} + PS^*(\epsilon)$$
+
+この方程式を $\tau$ について数値的に解いたものが $\tau_{\min}^{\mathrm{risk}}$ である。
+
+**ステップ4：財政安全マージン（FSM）の評価**
+
+$$FSM = \tau_{\mathrm{current}}(\pi) - \tau_{\min}^{\mathrm{risk}} \tag{式44'} $$
+
+$FSM > 0$：現在の税率に余裕あり（減税余地 = $FSM$の大きさ）。$FSM < 0$：財政危険域。
+
+> **注意（税率のラッファー的二面性）：** $\tau$ を引き上げても $R^{\mathrm{real}}$ は単調増加しない。高税率域では歪みコスト（$\lambda\tau$）が増収を上回り始め、$R^{\mathrm{real}}$ が減少に転じる（動学的ラッファー条件・式22参照）。したがって単純な増税でこの制約を満たそうとすると逆効果になりうる。
+
+---
+
+### L.2 最大許容金利 $r_{\max}$（ステップバイステップ）
 
 $$r_{\max} \equiv g(\tau) + \frac{R^{\mathrm{real}}(\pi) - g^{\mathrm{gov}}}{b^{\mathrm{net}}} \tag{式44}$$
 
-中央銀行が $r_{\max}$ を超えると財政は OT レジームへ転落するリスクが急増する。
+**なぜ「プライマリーバランス $PS \ge 0$」を基準にするか：**
 
-### L.3 財政金利余力（FIM）
+金利は毎期の利払い（$r \cdot b^{\mathrm{net}}$）を通じて当期のプライマリーバランスに即時に作用する。プライマリーバランスがマイナスになった瞬間から、純有利子負債の動学方程式（式42）において債務比率が加速的に発散し始める（Blanchard の $r > g$ 条件と接続）。この「フロー収支の符号転換点」は長期確率計算を待たずに特定できるため、$PS = 0$ のゼロ条件が金利の上限定義として自然かつ実用的である。
+
+**ステップ1：プライマリーバランスをゼロにする金利方程式を立てる**
+
+プライマリーバランスの定義式より：
+
+$$PS = R^{\mathrm{real}}(\pi) - g^{\mathrm{gov}} - \underbrace{(r - g(\tau))}_{= \mathcal{D}_t} \cdot b^{\mathrm{net}} = 0$$
+
+**ステップ2：$r$ について解く**
+
+$$r_{\max} = g(\tau) + \frac{R^{\mathrm{real}}(\pi) - g^{\mathrm{gov}}}{b^{\mathrm{net}}}$$
+
+この式の直感：
+
+- **第1項 $g(\tau)$：** 経済成長率。成長が速いほど債務のGDP比が自然に下がるため、より高い金利を許容できる（Blanchard命題）。
+- **第2項 $\dfrac{R^{\mathrm{real}}(\pi) - g^{\mathrm{gov}}}{b^{\mathrm{net}}}$：** 実質税収から政府支出成長を引いた「財政の余剰創出力」を純債務で割ったもの。税収余剰が大きいほど、また純債務が小さいほど、より高い金利に耐えられる。
+
+例（日本の基準パラメーター）：$g(\tau) \approx 0.7\% - 0.04 \times 0.3 = 0.58\%$、$R^{\mathrm{real}} \approx 0.15$（GDP比）、$g^{\mathrm{gov}} \approx 0.18$（GDP比）、$b^{\mathrm{net}} \approx 0.50$（GDP比純有利子負債）のとき、$r_{\max} \approx 0.58\% + (0.15 - 0.18)/0.50 = 0.58\% - 6\% = -5.42\%$。
+
+これは現実には「名目金利でこの水準を超えると財政収支が悪化を始める」ことを示す。実質金利換算（フィッシャー方程式で調整）すると、金融政策の安全余地（FIM）が算出される。
+
+**ステップ3：財政金利余力（FIM）の評価**
+
+$$FIM = r_{\max} - r_{\mathrm{current}} \tag{式45}$$
+
+$FIM > 0$：現在の金利は安全域内（中央銀行に引き締め余地あり）。$FIM < 0$：現在の金利がすでに財政の安全水準を超過している。
+
+> **純債務ベースの注意：** $b^{\mathrm{net}}$ は政府のグロス債務ではなく、資産（GPIF・外準等）の運用収益を差し引いたネット有利子負債。日本の場合、グロス対比でネットは大幅に小さくなるため $r_{\max}$ の計算で重要。
+
+---
+
+### L.3 財政金利余力（FIM）と三指標の統合
 
 $$FIM \equiv r_{\max} - r_{\mathrm{current}} \tag{式45}$$
 
@@ -1001,6 +1215,8 @@ FM・FSM・FIMの三指標が財政健全性の多角的評価を可能にする
 | $FM = \pi^* - \pi$ | インフレ空間 | 安全域 | 危険域 |
 | $FSM = \tau - \tau_{\min}^{\mathrm{risk}}$ | 税率空間 | 減税余地あり | 増税必要 |
 | $FIM = r_{\max} - r$ | 金利空間 | 引き締め余地 | 金利が危険水準超過 |
+
+**三指標の一致性チェック：** 三指標が同時にプラスなら財政は多面的に安全。いずれか一つがマイナスに転じると要警戒。FM・FSM・FIMのうち一つが危険域でも他二つが安全域にある場合、そのシグナルを軽視するのは危険であり、複合的なリスク評価が必要である。
 
 ---
 
@@ -1162,6 +1378,94 @@ $$\frac{B_t}{P_t} = E_t \sum_{j=0}^{\infty} \beta^j PS_{t+j}$$
 | 式38〜41 | 確率動学・破産確率（Technical） | Part II §J |
 | 式42 | 純債務動学方程式 | Part II §K |
 | 式43〜45 | τ_min, r_max, FIM（Technical） | Part II §L |
+
+---
+
+---
+
+## ブログ設定ガイド：MermaidとKaTeXを正しく表示するために {#blog-config}
+
+本稿はJekyllブログへの掲載を想定している。MermaidフローチャートとKaTeX数式が正しくレンダリングされるには、以下の設定が必要である。
+
+### KaTeX数式が表示されない場合
+
+**原因：** KaTeXのauto-renderスクリプトが正しく呼び出されていない、またはデリミタ設定が不足している。
+
+**対処（`_layouts/post.html` または `_includes/head.html` に追加）：**
+
+```html
+<!-- KaTeX CSS -->
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+<!-- KaTeX JS -->
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {
+    delimiters: [
+      {left: '$$', right: '$$', display: true},
+      {left: '$',  right: '$',  display: false},
+      {left: '\\\\(', right: '\\\\)', display: false},
+      {left: '\\\\[', right: '\\\\]', display: true}
+    ],
+    throwOnError: false
+  });"></script>
+```
+
+**`_config.yml` の確認：** Kramdownを使っている場合、数式の処理エンジンを明示する。
+
+```yaml
+markdown: kramdown
+kramdown:
+  math_engine: null   # KaTeXをJSで処理するためnullに設定
+  input: GFM
+```
+
+### Mermaid図が表示されない場合
+
+**原因：** Jekyllのデフォルト設定ではMermaidコードブロックはただのコードとして表示される。Mermaidを有効化するJSが必要。
+
+**対処（`_layouts/post.html` の `</body>` 直前に追加）：**
+
+```html
+<!-- Mermaid.js -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'default',
+    flowchart: { useMaxWidth: true, htmlLabels: true }
+  });
+</script>
+```
+
+**コードブロックの書き方：** Markdownで以下のように記述すれば、Mermaid.jsが自動検出してSVGに変換する。
+
+````markdown
+```mermaid
+flowchart TD
+    A[ノードA] --> B[ノードB]
+```
+````
+
+**Jekyll theme別の注意：**
+- **Minima（デフォルト）：** `_layouts/post.html` をオーバーライドして上記スクリプトを追加。
+- **Chirpy・Minimal Mistakes等：** テーマによってはMermaidサポートが内蔵されている場合がある。テーマのドキュメントで `mermaid: true` などのfront matter設定を確認。
+- **GitHub Pages：** GitHub PagesはJekyllプラグインを制限するが、上記のCDN経由のJS追加は問題なく動作する。
+
+### front matterの `math_scripts` について
+
+本稿のfront matterに `math_scripts:` キーが記述されているが、デフォルトのJekyllはこれを自動処理しない。`_layouts/post.html` で以下のようにfont matterの値を読み取る処理を追加する必要がある：
+
+```html
+{% if page.math_scripts %}
+  {% for script in page.math_scripts %}
+  <script defer src="{{ script }}"></script>
+  {% endfor %}
+{% endif %}
+```
 
 ---
 
