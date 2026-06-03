@@ -47,6 +47,44 @@ layout: default
   {{ content }}
 </div>
 
+<!-- KaTeX scripts (render math after content is in DOM) -->
+{% if page.math_scripts %}
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {
+    delimiters: [
+      {left: '$$', right: '$$', display: true},
+      {left: '$',  right: '$',  display: false},
+      {left: '\\\\(', right: '\\\\)', display: false},
+      {left: '\\\\[', right: '\\\\]', display: true}
+    ],
+    throwOnError: false
+  });"></script>
+{% endif %}
+
+<!-- Mermaid (render diagrams) -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Wrap bare ```mermaid code blocks (kramdown renders them as <code class="language-mermaid">)
+    document.querySelectorAll('pre > code.language-mermaid').forEach(function(code) {
+      var pre = code.parentElement;
+      var div = document.createElement('div');
+      div.className = 'mermaid';
+      div.textContent = code.textContent;
+      pre.parentNode.replaceChild(div, pre);
+    });
+
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'default',
+      flowchart: { useMaxWidth: true, htmlLabels: true },
+      securityLevel: 'loose'
+    });
+  });
+</script>
+
 <!-- Copyright / License block -->
 <div class="post-license mt-5 pt-4 border-top">
   <div class="card bg-light border-0">
