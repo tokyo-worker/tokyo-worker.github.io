@@ -1,7 +1,11 @@
 ---
 layout: post
 title: "Technical Appendix: BC-OT フレームワークと財政破産確率の解析"
-math: true
+date: 2026-06-05 00:00:00 +0900
+categories: economics
+math_scripts:
+  - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js
+  - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js
 ---
 
 # Technical Appendix: BC-OT フレームワークと財政破産確率の解析
