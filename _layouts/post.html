@@ -49,18 +49,50 @@ layout: default
 
 <!-- KaTeX scripts (render math after content is in DOM) -->
 {% if page.math_scripts %}
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-<script defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-  onload="renderMathInElement(document.body, {
-    delimiters: [
-      {left: '$$', right: '$$', display: true},
-      {left: '$',  right: '$',  display: false},
-      {left: '\\\\(', right: '\\\\)', display: false},
-      {left: '\\\\[', right: '\\\\]', display: true}
-    ],
-    throwOnError: false
-  });"></script>
+<script>
+  // KaTeX を順番どおりに読み込む。
+  // defer + onload の組み合わせはブラウザによって onload が発火しないため、
+  // Promise チェーンで katex.min.js → auto-render.min.js の順を保証する。
+  function loadScript(src) {
+    return new Promise(function(resolve, reject) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  loadScript('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js')
+    .then(function() {
+      return loadScript('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js');
+    })
+    .then(function() {
+      // kramdown (math_engine: mathjax) が出力する <script type="math/tex"> タグを処理する
+      document.querySelectorAll('script[type="math/tex"]').forEach(function(el) {
+        var span = document.createElement('span');
+        katex.render(el.textContent, span, { throwOnError: false, displayMode: false });
+        el.parentNode.replaceChild(span, el);
+      });
+      document.querySelectorAll('script[type="math/tex; mode=display"]').forEach(function(el) {
+        var div = document.createElement('div');
+        div.className = 'katex-display';
+        katex.render(el.textContent, div, { throwOnError: false, displayMode: true });
+        el.parentNode.replaceChild(div, el);
+      });
+
+      // フォールバック：プレーンテキストの $…$ / $$…$$ デリミタも処理する
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '$',  right: '$',  display: false},
+          {left: '\\(', right: '\\)', display: false},
+          {left: '\\[', right: '\\]', display: true}
+        ],
+        throwOnError: false
+      });
+    });
+</script>
 {% endif %}
 
 <!-- Mermaid (render diagrams) -->
