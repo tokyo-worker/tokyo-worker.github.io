@@ -53,7 +53,7 @@ $$
 この構造から得られる**金利セクターのネットキャッシュフロー**は、次のように分解される。
 
 $$
-r^A_t A_t - r^D_t D_t = \underbrace{\eta_t A_t}_{\text{スプレッド・マージン（プラス）}} + \underbrace{r^f_t E_t}_{\text{純資産への安全金利（符号はE_tに依存）}}
+r^A_t A_t - r^D_t D_t = \underbrace{\eta_t A_t}_{\text{スプレッド・マージン（プラス）}} + \underbrace{r^f_t E_t}_{\text{純資産への安全金利（符号は}E_t\text{に依存）}}
 \tag{A.0c}
 $$
 
@@ -400,8 +400,17 @@ $$
 
 ここで：
 
-- $$\epsilon^{\mathrm{BC}}_\pi := \frac{\partial \log[\tau(\pi)(1+\pi)(1-\lambda\tau(\pi))]}{\partial \log(1+\pi)}\bigg|_{\bar{\pi}}$$：BC効果の弾力性（正）
-- $$\epsilon^{\mathrm{OT}}_\pi := \frac{\partial [\pi \ell(\pi)]}{\partial \pi}\bigg|_{\bar{\pi}} = \ell(\bar{\pi}) + \bar{\pi}\ell'(\bar{\pi})$$：OT効果の限界侵食力（正）
+$$
+\epsilon^{\mathrm{BC}}_\pi := \frac{\partial \log[\tau(\pi)(1+\pi)(1-\lambda\tau(\pi))]}{\partial \log(1+\pi)}\bigg|_{\bar{\pi}}
+$$
+
+（BC効果の弾力性（正））
+
+$$
+\epsilon^{\mathrm{OT}}_\pi := \frac{\partial [\pi \ell(\pi)]}{\partial \pi}\bigg|_{\bar{\pi}} = \ell(\bar{\pi}) + \bar{\pi}\ell'(\bar{\pi})
+$$
+
+（OT効果の限界侵食力（正））
 
 **$$\hat{Y}_t$$ の追加について：** 元の式(C.10)では GDP 効果の $$\hat{Y}_t$$ 項が欠落していた。RBC との整合のため明示的に追加した。$$\epsilon^{\mathrm{net}}_\pi > 0$$ ならば BC 優勢、$$\epsilon^{\mathrm{net}}_\pi < 0$$ ならば OT 優勢フェーズ。
 
