@@ -16,21 +16,13 @@ categories: economics
 
 
 
-\## 1. Model Core \& Mathematical Derivation
+\## 1. Model Core \& Step-by-Step Derivation
 
 
 
-\### Household's Stochastic Discount Factor (SDF)
+\### \[Step 1] Canonical Euler Equations \& Stochastic Discount Factor (SDF)
 
-Let $M\_{t}$ be the household's intertemporal marginal rate of substitution (Stochastic Discount Factor). Under a constant consumption path $C\_t = C\_{t+1} = Y - G$ induced by market-clearing, $M\_t$ collapses to the household's subjective discount factor $\\beta$:
-
-$$M\_t \\equiv \\beta \\left( \\frac{C\_t}{C\_{t-1}} \\right)^{-\\sigma} \\implies \\mathbb{E}\_{t-1}\[M\_t] = \\beta$$
-
-
-
-\### Canonical Euler Equations
-
-The utility-maximizing representative household must be indifferent at the margin between investing in the real risk-free asset ($r\_{t-1}$) and the private risky asset ($R^K\_t$):
+The utility-maximizing representative household optimizes its intertemporal asset portfolio. At the margin, the household must be indifferent between investing in the real risk-free asset ($r\_{t-1}$) and the private risky asset ($R^K\_t$):
 
 $$1 = \\mathbb{E}\_{t-1} \\left\[ M\_t (1 + r\_{t-1}) \\right] \\tag{A.1}$$
 
@@ -38,37 +30,49 @@ $$1 = \\mathbb{E}\_{t-1} \\left\[ M\_t (1 + R^K\_t) \\right] \\tag{A.2}$$
 
 
 
-\### Covariance Decomposition of the Risky Asset
+where $M\_t$ is the household's marginal rate of substitution (Stochastic Discount Factor), defined by the consumption path and the coefficient of relative risk aversion $\\sigma$:
 
-Applying the identity $\\mathbb{E}\[XY] = \\mathbb{E}\[X]\\mathbb{E}\[Y] + \\text{Cov}(X,Y)$ to the risky Euler equation (A.2):
+$$M\_t \\equiv \\beta \\left( \\frac{C\_t}{C\_{t-1}} \\right)^{-\\sigma}$$
+
+
+
+\### \[Step 2] Covariance Decomposition
+
+Applying the statistical identity $\\mathbb{E}\[XY] = \\mathbb{E}\[X]\\mathbb{E}\[Y] + \\text{Cov}(X,Y)$ to \[Eq. A.2]:
 
 $$1 = \\mathbb{E}\_{t-1}\[M\_t] \\cdot \\mathbb{E}\_{t-1}\[1 + R^K\_t] + \\text{Cov}\_{t-1}(M\_t, 1 + R^K\_t)$$
 
 
 
-Substituting $\\mathbb{E}\_{t-1}\[M\_t] = \\frac{1}{1 + r\_{t-1}}$ from (A.1) yields:
+Since the risk-free rate $r\_{t-1}$ is predetermined and known at $t-1$, \[Eq. A.1] isolates the expected SDF as $\\mathbb{E}\_{t-1}\[M\_t] = \\frac{1}{1 + r\_{t-1}}$. Substituting this into the decomposed equation:
 
 $$1 = \\frac{1}{1 + r\_{t-1}} \\mathbb{E}\_{t-1}\[1 + R^K\_t] + \\text{Cov}\_{t-1}(M\_t, R^K\_t)$$
 
 
 
-Multiplying both sides by $(1 + r\_{t-1})$ and isolating the expected return $\\mathbb{E}\_{t-1}\[R^K\_t]$:
+\### \[Step 3] Isolating the Expected Return
+
+Multiplying both sides by $(1 + r\_{t-1})$ to eliminate the fraction:
+
+$$1 + r\_{t-1} = \\mathbb{E}\_{t-1}\[1 + R^K\_t] + (1 + r\_{t-1})\\text{Cov}\_{t-1}(M\_t, R^K\_t)$$
+
+$$r\_{t-1} = \\mathbb{E}\_{t-1}\[R^K\_t] + (1 + r\_{t-1})\\text{Cov}\_{t-1}(M\_t, R^K\_t)$$
+
+
+
+Solving for the expected return on the private risky asset $\\mathbb{E}\_{t-1}\[R^K\_t]$:
 
 $$\\mathbb{E}\_{t-1}\[R^K\_t] = r\_{t-1} - (1 + r\_{t-1})\\text{Cov}\_{t-1}(M\_t, R^K\_t) \\tag{A.3}$$
 
 
 
-\### Definition of the Macroeconomic Risk Premium \& Asset Spread
+\### \[Step 4] Definition of the Macroeconomic Risk Premium \& Asset Spread
 
 We formally define the structural macroeconomic risk premium $\\bar{\\rho}\_{t-1}$ and the government's real asset management spread $\\eta\_t$ as:
 
-$$\\bar{\\rho}\_{t-1} \\equiv - (1 + r\_{t-1})\\text{Cov}\_{t-1}(M\_t, R^K\_t)$$
+$$\\bar{\\rho}\_{t-1} \\equiv - (1 + r\_{t-1})\\text{Cov}\_{t-1}(M\_t, R^K\_t) \\tag{A.4}$$
 
-$$\\eta\_t \\equiv \\mathbb{E}\_{t-1}\[R^K\_t] - r\_{t-1} - \\bar{\\rho}\_{t-1} \\tag{A.4}$$
-
-
-
-Under price stability ($\\pi\_t \\le \\pi^\*$), the absence of nominal distortions ensures $\\eta\_t = \\bar{R}^K - r - \\bar{\\rho} \\equiv \\eta$.
+$$\\eta\_t \\equiv \\mathbb{E}\_{t-1}\[R^K\_t] - r\_{t-1} - \\bar{\\rho}\_{t-1} \\tag{A.5}$$
 
 
 
@@ -76,57 +80,59 @@ Under price stability ($\\pi\_t \\le \\pi^\*$), the absence of nominal distortio
 
 
 
-\## 2. 数理的解釈と経済学的メカニズム
+\## 2. 数理的導出のブレイクダウンと経済学的解釈
 
 
 
-本稿は、統合政府の通時的予算制約式（IBC）モデルにおける最重要の価格評価条件である\*\*式(4)\*\*：
-
-$$\\eta\_t \\equiv \\mathbb{E}\_{t-1}\[R^K\_t] - r\_{t-1} - \\bar{\\rho}\_{t-1}$$
-
-について、プレーンRBC由来の資本蓄積等の動学ノイズを完全に排し、その数理的起源とマクロ財政的な含意を最小限の構成で解説するものである。
+モデル内の\*\*式(4)（リスク資産の価格評価条件）\*\*は、金融経済学の基盤である「確率的割引因子（SDF）の理論」および家計の投資行動の最適化（最適ポートフォリオ選択）の帰結として直接導出される均衡条件である。以下にその数理的ギャップを補完する詳細な解説を展開する。
 
 
 
-\### ① オイラー方程式からの直線的導出
+\### ① オイラー方程式と限界代替率（Step 1）
 
-家計の最適ポートフォリオ選択において、無リスク資産（国債）と民間リスク資産（生産資本・株式）の間の裁定関係は、確率的割引因子（SDF: $M\_t$）を介して完全に記述される。
+家計は、手元にある1単位の消費を我慢して「無リスク資産（国債）」に投資することも、「民間リスク資産（株式や生産資本）」に投資することも自由に選択できる。家計が最適化行動をとった結果、これら2つの資産に対してオイラー方程式（\[Eq. A.1], \[Eq. A.2]）が同時に成立しなければならない。
 
-確率変数の積の期待値を「期待値の積」と「共分散」に分解する数理操作を課すことで、民間リスク資産に要求される期待超過リターンは以下のように一意に決定される。
-
-$$\\mathbb{E}\_{t-1}\[R^K\_t] - r\_{t-1} = - (1 + r\_{t-1})\\text{Cov}\_{t-1}(M\_t, R^K\_t)$$
+ここで $M\_t$ は限界代替率（SDF）であり、家計の効用関数（相対的危険回避度 $\\sigma$）から消費の伸び率の関数として定義される。
 
 
 
-\### ② マクロ経済リスクプレミアム $\\bar{\\rho}\_{t-1}$ の符号条件
+\### ② 共分散の性質を用いた展開（Step 2 \& 3）
 
-景気が良い（消費 $C\_t$ が大きい）ときには、限界効用およびSDF（$M\_t \\propto C\_t^{-\\sigma}$）は低下する。一方で、民間リスク資産の実質リターン $R^K\_t$ は景気循環に対して正の相関を持つため上昇する。
+民間リスク資産の条件（\[Eq. A.2]）に対し、確率変数の積の期待値に関する性質 $\\mathbb{E}\[XY] = \\mathbb{E}\[X]\\mathbb{E}\[Y] + \\text{Cov}(X,Y)$ を適用して展開を行う。
 
-したがって、両者の条件付き共分散は通常レジームにおいて必ず\*\*負（マイナス）\*\*となる。
+無リスク金利 $r\_{t-1}$ は $t-1$ 期時点で既知の確定値であるため、\[Eq. A.1] より $\\mathbb{E}\_{t-1}\[M\_t] = \\frac{1}{1 + r\_{t-1}}$ となる。これを代入して民間リスク資産の「期待リターン $\\mathbb{E}\_{t-1}\[R^K\_t]$」について整理することで、以下の関係式が導かれる。
+
+$$\\mathbb{E}\_{t-1}\[R^K\_t] = r\_{t-1} - (1 + r\_{t-1})\\text{Cov}\_{t-1}(M\_t, R^K\_t)$$
+
+
+
+\### ③ リスクプレミアム $\\bar{\\rho}\_{t-1}$ の経済学的符号（Step 4）
+
+上式の右辺第2項（共分散のパート）に注目する。通常、景気が良い（消費 $C\_t$ が大きい）ときには、限界効用およびSDF（$M\_t \\propto C\_t^{-\\sigma}$）は小さくなる。一方で、景気が良いときは民間リスク資産のリターン $R^K\_t$ は高くなる。したがって、両者の条件付き共分散は\*\*負（マイナス）\*\*になる。
 
 $$\\text{Cov}\_{t-1}(M\_t, R^K\_t) < 0$$
 
-この負の共分散にマイナスを乗じたものがマクロ経済のリスクプレミアム $\\bar{\\rho}\_{t-1}$ として定義されるため、符号は常に正（ $\\bar{\\rho}\_{t-1} > 0$ ）となり、家計が不確実性を引き受けるための上乗せ報酬（CAPMの一般化）として機能する。
+家計は「景気が悪いときに一緒にリターンが下がってしまう不確実性（マクロ経済リスク）」を嫌うため、そのリスクを引き受ける分だけ上乗せの報酬（プレミアム）を要求する。この不確実性のコストをマクロ経済のリスクプレミアム $\\bar{\\rho}\_{t-1}$（\[Eq. A.4]）として正の符号（ $\\bar{\\rho}\_{t-1} > 0$ ）で定義することで、一般化された資本資産価格モデル（CAPM）が導出される。
+
+$$\\mathbb{E}\_{t-1}\[R^K\_t] = r\_{t-1} + \\bar{\\rho}\_{t-1}$$
 
 
 
-\### ③ 政府の運用スプレッド $\\eta\_t$ におけるプレミアム控除の必然性
+\### ④ 統合政府の運用スプレッド $\\eta\_t$ への帰結
 
-政府が民間リスク資産を保有してシニョリッジや財政補填の財源とする際、市場から得られる期待超過リターンは $\\mathbb{E}\_{t-1}\[R^K\_t] - r\_{t-1}$ である。しかし、政府がこの資産を抱えることは、家計が嫌悪する「景気悪化時にリターンが同時に落ち込むというマクロ不確実性（共分散リスク）」を、政府（＝裏側にいる納税者としての家計）が肩代わりすることを意味する。
-
-
-
-したがって、財政の持続可能性を真に担保する「純粋な経済学的付加価値（アルファ）」を計測するためには、単なる利ざやから\*\*リスク引き受けの経済的コスト（リスクプレミアム $\\bar{\\rho}\_{t-1}$）をあらかじめ差し引いたスプレッド $\\eta\_t$\*\* を定義せねばならない。
+公的金融資産の実質運用スプレッド $\\eta\_t$ は、市場で実現した民間リターン $R^K\_t$ から政府の調達金利（無リスク金利）$r\_{t-1}$ を差し引いた超過リターンとして評価される。しかし、政府が民間リスク資産を保有することは、上記の「家計が直面しているマクロ経済リスク（共分散リスク）」を政府（ひいては納税者である家計全体）が同様に引き受けることを意味する。
 
 
 
-\### ④ インフレ安定レジーム（Case A/B）からOT暴走（Case C）への架け橋
-
-インフレ率が臨界閾値以下（ $\\pi\_t \\le \\pi^\*$ ）に制御されている安定レジームでは、市場の価格シグナルが正常に機能するため、プレミアムは実物側の構造定数（ $\\bar{\\rho}\_{t-1} = \\bar{\\rho}$ ）にピン留めされ、結果として政府の純運用益もまた定数 $\\eta$ として安定的に財政赤字を補填できる。
+したがって、「市場全体の期待超過リターン」から「不確実性の引き受けコスト（プレミアム）」を厳密に差し引いた、純粋な経済学的付加価値（アルファ）を定義するために、あらかじめプレミアムを控除した形（\[Eq. A.5]）でアイデンティティが構築されている。
 
 
 
-しかし、「ケースC（OT暴走）」に突入しインフレが制御不能になると、名目の不確実性が極限まで跳ね上がる。これにより家計のSDFのボラティリティが爆発し、共分散が負の方向へ無限大に発散（ $\\text{Cov}\_{t-1}(M\_t, R^K\_t) \\to -\\infty$ ）、すなわち\*\*リスクプレミアムが無限大へと暴走（ $\\bar{\\rho}\_{t-1} \\to \\infty$ ）\*\*を始める。
+\### ⑤ レジーム移行の動学（定常からOT暴走へ）
 
-この結果、式(4)より、政府が期待できる実質運用スプレッド $\\eta\_t$ は正の値を維持できず、マイナス領域へと滑落する。これが、増税なき公的運用ファイナンスの代替性を内生的に破壊する数理的トリガーとなる。
+インフレが安定的（ $\\pi\_t \\le \\pi^\*$ ）な通常レジーム（ケースA/B）では、市場が効率的に機能しているため、期待リターンがちょうどリスクに見合った分だけ調達金利を上回り、スプレッド $\\eta\_t$ は実物側の構造定数 $\\eta$ にきれいにピン留めされる（ $\\eta = \\bar{R}^K - r - \\bar{\\rho}$ ）。
+
+
+
+しかし、第5節の「ケースC（OT暴走）」に突入すると、名目の不確実性によって家計のSDFとリターンの共分散が爆発し、リスクプレミアムが無限大へ発散（ $\\bar{\\rho}\_{t-1} \\to \\infty$ ）を始める。結果として、政府が期待できる純スプレッド $\\eta\_t$ がマイナスへと転落し、増税なき運用ファイナンスの持続可能性が内生的に崩壊する動学ストーリーへと繋がっている。
 
