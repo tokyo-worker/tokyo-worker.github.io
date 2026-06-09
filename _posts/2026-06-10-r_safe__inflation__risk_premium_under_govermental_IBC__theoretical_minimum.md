@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "統合政府IBCにおける安全資産利子率、インフレ率、リスクプレミアムの共同調整の動学最小限モデル"
+title: "統合政府IBCにおける安全資産利子率、インフレ率、リスクプレミアムの共同調整の動学最小限モデル v2"
 date: 2026-06-10 00:00:00 +0900
 categories: economics
 math_scripts:
