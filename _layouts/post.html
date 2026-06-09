@@ -37,10 +37,8 @@ layout: default
   {% endif %}
 </div>
 
-<!-- KaTeX CSS (if needed by post) -->
-{% if page.math_scripts %}
+<!-- KaTeX CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-{% endif %}
 
 <!-- Post content (full HTML from the original post) -->
 <div class="post-content-wrapper">
@@ -48,11 +46,7 @@ layout: default
 </div>
 
 <!-- KaTeX scripts (render math after content is in DOM) -->
-{% if page.math_scripts %}
 <script>
-  // KaTeX を順番どおりに読み込む。
-  // defer + onload の組み合わせはブラウザによって onload が発火しないため、
-  // Promise チェーンで katex.min.js → auto-render.min.js の順を保証する。
   function loadScript(src) {
     return new Promise(function(resolve, reject) {
       var s = document.createElement('script');
@@ -93,7 +87,6 @@ layout: default
       });
     });
 </script>
-{% endif %}
 
 <!-- Mermaid (render diagrams) -->
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
