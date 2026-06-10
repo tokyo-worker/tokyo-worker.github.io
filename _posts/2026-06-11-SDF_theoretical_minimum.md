@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "確率的割引因子（SDF）の説明"
+title: "確率的割引因子（SDF）の理論：Theoretical Minimum"
 date: 2026-06-11 00:00:00 +0900
-categories: economics
+categories: economics finance
+math: true
 ---
-
 
 # 確率的割引因子（Stochastic Discount Factor）の理論
 ### Theoretical Minimum
@@ -28,7 +28,9 @@ categories: economics
 
 ### 1.1 中心命題
 
+{% raw %}
 $$\boxed{P_t = E_t\!\left[M_{t+1}\, X_{t+1}\right]}$$
+{% endraw %}
 
 *すべての金融資産の時点 $t$ における価格 $P_t$ は，将来ペイオフ $X_{t+1}$ に確率的割引因子 $M_{t+1}$ を乗じた期待値に等しい．*
 
@@ -50,11 +52,11 @@ $$\boxed{P_t = E_t\!\left[M_{t+1}\, X_{t+1}\right]}$$
 
 ### 1.3 設定と仮定
 
-| \# | 仮定 | 内容 |
+| No. | 仮定 | 内容 |
 |---|---|---|
 | A1 | **2期間経済** | 意思決定時点 $t=0$，実現時点 $t=1$．後に多期間へ拡張可能． |
 | A2 | **完全市場・無摩擦** | 取引費用ゼロ，空売り制限なし，資産は連続的に可分． |
-| A3 | **合理的代表的投資家** | 主観的期待効用 $\max_\xi\bigl\{U(C_0)+\beta\,E[U(C_1)]\bigr\}$ を最大化する． |
+| A3 | **合理的代表的投資家** | 主観的期待効用 $\max_\xi \bigl( U(C_0)+\beta\,E[U(C_1)] \bigr)$ を最大化する． |
 | A4 | **正の限界効用・逓減** | $U'>0$，$U''<0$（消費が増えるほど満足度は上がるが，増分は逓減）． |
 | A5 | **状態の不確実性** | $t=1$ には有限個の状態 $s\in\mathcal{S}$ が確率 $\pi_s>0$ で実現． |
 
@@ -64,33 +66,43 @@ $$\boxed{P_t = E_t\!\left[M_{t+1}\, X_{t+1}\right]}$$
 
 **予算制約（財布の出し入れ）．** 投資家は資産を $\xi$ 単位購入し，現在と将来の消費を以下のように決定する：
 
+{% raw %}
 $$\underbrace{C_0}_{\text{現在消費}} = \underbrace{e_0}_{\text{現在初期財産}} - \underbrace{P\,\xi}_{\text{購入支出}} \tag{1}$$
 
 $$\underbrace{C_1}_{\text{将来消費（確率変数）}} = \underbrace{e_1}_{\text{将来初期財産}} + \underbrace{X\,\xi}_{\text{ペイオフ収入}} \tag{2}$$
+{% endraw %}
 
 > **式(1)(2)の意図．** 「今消費を我慢して投資し，将来ペイオフを受け取る」という通時的トレードオフを形式化する．これが最適化問題の可行集合を定める．
 
 **目的関数（予想効用）．** $(1)(2)$ を代入し $\xi$ だけの関数とする：
 
+{% raw %}
 $$V(\xi) = U(e_0 - P\xi) + \beta\, E\!\left[U(e_1 + X\xi)\right] \tag{3}$$
+{% endraw %}
 
 > **式(3)の意図．** $\xi$ を制御変数として効用最大化問題を単変量最適化に帰着させる．
 
 **一階条件（最適性）．** $V$ が最大化される $\xi^*$ において $dV/d\xi=0$：
 
+{% raw %}
 $$\frac{dV}{d\xi} = \underbrace{-P\cdot U'(C_0)}_{\text{現在消費の限界コスト}} + \underbrace{\beta\,E\!\left[U'(C_1)\cdot X\right]}_{\text{将来効用の限界便益}} = 0 \tag{4}$$
+{% endraw %}
 
 > **式(4)の意図．** 「資産を1単位追加購入したとき，現在の消費を $P$ だけ削る苦痛」と「将来ペイオフ $X$ から得られる効用の期待増分」が均衡する条件．これが価格と将来ペイオフを接続する蝶番である．（微分の詳細は補論 A を参照．）
 
 **変形．** $(4)$ を整理し，$U'(C_0)$（現時点で確定した定数）で両辺を除する：
 
+{% raw %}
 $$P\cdot U'(C_0) = \beta\, E\!\left[U'(C_1)\cdot X\right] \tag{5}$$
 
 $$P = E\!\left[\frac{\beta\, U'(C_1)}{U'(C_0)}\cdot X\right] \tag{6}$$
+{% endraw %}
 
 **SDFの定義．** $(6)$ の期待値の中で $X$ に乗じている因子を $M$ と置く：
 
+{% raw %}
 $$\boxed{M \;\equiv\; \beta\,\frac{U'(C_1)}{U'(C_0)}} \tag{7}$$
+{% endraw %}
 
 よって
 
@@ -100,7 +112,9 @@ $$P = E[M\,X] \tag{8}$$
 
 ### 1.5 式(7)(8)の経済的解釈
 
-$$M = \underbrace{\beta}_{\substack{\text{時間割引}\\\text{（未来は今より価値が低い）}}} \times \underbrace{\dfrac{U'(C_1)}{U'(C_0)}}_{\substack{\text{限界代替率（MRS）}\\\text{（将来vs.現在の「1円の価値」比）}}}$$
+{% raw %}
+$$M = \underbrace{\beta}_{\substack{\text{時間割引}\\\text{（未来は今より価値が低い）}}} \times \underbrace{\dfrac{U'(C_1)}{U'(C_0)}}_{\substack{\text{限界代替率（MRS）}\\\text{（将来 vs. 現在の「1円の価値」比）}}}$$
+{% endraw %}
 
 | 状態 | $C_1$ | $U'(C_1)$ | $M$ | 解釈 |
 |---|---|---|---|---|
@@ -115,7 +129,9 @@ $$M = \underbrace{\beta}_{\substack{\text{時間割引}\\\text{（未来は今�
 
 資産の総収益率を $R_{t+1}\equiv X_{t+1}/P_t$ と定義すると，$(8)$ は
 
+{% raw %}
 $$1 = E_t\!\left[M_{t+1}\,R_{t+1}\right] \tag{9}$$
+{% endraw %}
 
 無リスク資産の収益率 $R^f$（確定的）については
 
@@ -125,7 +141,7 @@ $(9)$ と $(10)$ から超過収益率 $R_{t+1}-R^f$ の価格式を導く：
 
 $$E_t[R_{t+1}-R^f] = -R^f\,\text{Cov}_t(M_{t+1},\,R_{t+1}) \tag{11}$$
 
-> **式(11)の意図．** リスクプレミアムの決定要因を明示する．**超過収益率の期待値 $=$ $M$ との共分散の符号・大きさで決まる．** CAPM はこれを市場ポートフォリオとの共分散に限定した特殊ケース（補論 B 参照）．
+> **式(11)の意図．** リスクプレミアムの決定要因を明示する．**超過収益率の期待値は $M$ との共分散の符号・大きさで決まる．** CAPM はこれを市場ポートフォリオとの共分散に限定した特殊ケース（補論 B 参照）．
 
 ---
 
@@ -140,10 +156,10 @@ $$E_t[R_{t+1}-R^f] = -R^f\,\text{Cov}_t(M_{t+1},\,R_{t+1}) \tag{11}$$
 | $R_{t+1}$ | 総収益率 $\equiv X_{t+1}/P_t$ | **内生変数** | 確率変数 |
 | $R^f$ | 無リスク収益率 | **外生変数** | 確定値 |
 | $M_{t+1}$ | 確率的割引因子（SDF，pricing kernel） | **内生変数** | 確率変数 |
-| $C_t$ | 代表的投資家の時点 $t$ の消費量 | **内生変数** | $t{=}0$：確定，$t{=}1$：確率変数 |
-| $e_t$ | 時点 $t$ の初期財産（エンダウメント） | **外生変数** | $t{=}0$：確定，$t{=}1$：確率変数 |
+| $C_t$ | 代表的投資家の時点 $t$ の消費量 | **内生変数** | $t=0$：確定，$t=1$：確率変数 |
+| $e_t$ | 時点 $t$ の初期財産（エンダウメント） | **外生変数** | $t=0$：確定，$t=1$：確率変数 |
 | $\xi$ | 資産の購入数量 | **内生変数** | 確定値（最適化で決定） |
-| $U(\cdot)$ | 効用関数（$U'>0,\,U''<0$） | **パラメタ関数** | — |
+| $U(\cdot)$ | 効用関数（$U'>0$，$U''<0$） | **パラメタ関数** | — |
 | $\beta$ | 主観的時間割引因子 | **パラメータ** | $0<\beta\le 1$ |
 
 ---
@@ -157,7 +173,7 @@ $$E_t[R_{t+1}-R^f] = -R^f\,\text{Cov}_t(M_{t+1},\,R_{t+1}) \tag{11}$$
 消費量 $C$ から得られる主観的厚生を測る関数．標準的仮定は $U'>0$（非飽和性）・$U''<0$（限界効用逓減）．
 
 **限界効用（Marginal Utility）$U'(C)$**
-消費を微小量 $dC$ だけ増やしたときの効用増分 $dU/dC$．消費水準が高いほど小さい（=豊かなときの1円の有難みは薄い）．
+消費を微小量 $dC$ だけ増やしたときの効用増分 $dU/dC$．消費水準が高いほど小さい（豊かなときの1円の有難みは薄い）．
 
 **主観的時間割引因子（Subjective Discount Factor）$\beta$**
 投資家が「今の1単位の効用」と「1期後の1単位の効用」をどう相対評価するかを表すパラメータ．$\beta<1$ は今を将来より高く評価することを意味する．
@@ -237,7 +253,7 @@ $$= 0.6\times 0.7917\times 15 + 0.4\times 1.1875\times 5 = 7.125 + 2.375 = \boxe
 
 **Step 4．** 無リスク収益率を確認する：
 
-$$R^f = \frac{1}{E[M]} = \frac{1}{0.6\times 0.7917 + 0.4\times 1.1875} = \frac{1}{0.475+0.475} = \frac{1}{0.950} \approx 1.053$$
+$$R^f = \frac{1}{E[M]} = \frac{1}{0.6\times 0.7917 + 0.4\times 1.1875} = \frac{1}{0.950} \approx 1.053$$
 
 年率リターン約5.3%であり，$\beta=0.95$ の時間割引と整合する．
 
@@ -265,15 +281,15 @@ $(13)$ と $(14)$ を比較すると $b = -(E[R^m]-R^f)/(R^f\,\text{Var}(R^m))$ 
 
 **べき乗（CRRA）効用関数**を採用する：
 
-$$U(C) = \frac{C^{1-\gamma}}{1-\gamma}, \qquad \gamma>0, \; \gamma\neq 1 \tag{15}$$
+$$U(C) = \frac{C^{1-\gamma}}{1-\gamma}, \qquad \gamma>0,\; \gamma\neq 1 \tag{15}$$
 
 限界効用は $U'(C)=C^{-\gamma}$，よってSDFは
 
 $$M_{t+1} = \beta\left(\frac{C_{t+1}}{C_t}\right)^{-\gamma} \tag{16}$$
 
-$g_{t+1}\equiv C_{t+1}/C_t - 1$（消費成長率）として，$M_{t+1}\approx\beta(1+g_{t+1})^{-\gamma}\approx\beta\,e^{-\gamma g_{t+1}}$（小変化近似）と書ける．
+$g_{t+1}\equiv C_{t+1}/C_t - 1$（消費成長率）として，$M_{t+1}\approx\beta\,e^{-\gamma g_{t+1}}$（小変化近似）と書ける．
 
-**Euler 方程式に代入する**と，対数正規性の仮定 $(\ln g_{t+1}\sim\mathcal{N}(\mu_g,\sigma_g^2))$ のもとで
+**Euler 方程式に代入する**と，対数正規性の仮定 $\ln(1+g_{t+1})\sim\mathcal{N}(\mu_g,\sigma_g^2)$ のもとで
 
 $$\ln R^f \approx -\ln\beta + \gamma\mu_g - \frac{1}{2}\gamma^2\sigma_g^2 \tag{17}$$
 
@@ -281,7 +297,7 @@ $$E[\ln R^i - \ln R^f] \approx \gamma\,\text{Cov}(\Delta\ln C_{t+1},\ln R^i_{t+1
 
 > **式(18)の意図．** **CCAPM**：リスクプレミアムは市場ポートフォリオではなく**消費成長率との共分散**で決まる．マクロ経済の消費動学と株価リターンの接続点である．$\gamma$ は相対的リスク回避係数であり，消費成長率の不確実性に対する価格付けの感応度を測る．
 
-**エクイティ・プレミアム・パズル（Mehra–Prescott, 1985）**：実際のデータで $(18)$ を推計すると，観察されるリスクプレミアム約6%を説明するには $\gamma\approx 30\text{–}50$ が必要となる．これは CRRA 効用のもとでの CCAPM の実証的失敗を示す「謎」であり，habit formation，long-run risk，rare disasters などの拡張モデルの出発点となっている．
+**エクイティ・プレミアム・パズル（Mehra–Prescott, 1985）**：実際のデータで $(18)$ を推計すると，観察されるリスクプレミアム約6%を説明するには $\gamma\approx 30$–$50$ が必要となる．これは CRRA 効用のもとでの CCAPM の実証的失敗を示す「謎」であり，habit formation，long-run risk，rare disasters などの拡張モデルの出発点となっている．
 
 ---
 
@@ -295,9 +311,9 @@ SDF 理論 $P=E[MX]$ は以下の諸理論の**共通基盤**として機能す�
 | **CCAPM** | $M=\beta(C_{t+1}/C_t)^{-\gamma}$（CRRA 効用） |
 | **無裁定・リスク中立評価** | $M/E[M]$ をニュメレールにした測度変換（$Q$ 測度）→ Black–Scholes |
 | **金利期間構造** | ゼロクーポン債価格 $P^{(n)}_t = E_t[M_{t+1}\cdots M_{t+n}]$ |
-| **国際ファイナンス** | 実質為替レートの変化率 $\approx M^*/M$（Backus–Smith 条件） |
+| **国際ファイナンス** | 実質為替レートの変化率 $\approx M^{\ast}/M$（Backus–Smith 条件） |
 | **資産価格評価の基本定理** | 無裁定 $\Leftrightarrow$ $M>0$ が存在（ハーン・バナッハ分離定理） |
-| **Hansen–Jagannathan Bound** | $\text{Std}(M)/E[M]\ge |E[R^i]-R^f|/\text{Std}(R^i)$（SDF の分散に対する下界） |
+| **Hansen–Jagannathan Bound** | $\text{Std}(M)/E[M]\ge (E[R^i]-R^f)/\text{Std}(R^i)$（SDF 分散の下界） |
 
 ---
 
@@ -313,7 +329,9 @@ $$\frac{d}{d\xi}U(e_0-P\xi) = U'(e_0-P\xi)\cdot(-P) = -P\cdot U'(C_0)$$
 
 **第2項：** 期待値の線形性（$E[\cdot]$ は積分であるから微分と交換可能）および連鎖律より
 
-$$\frac{d}{d\xi}\,E\!\left[U(e_1+X\xi)\right] = E\!\left[\frac{d}{d\xi}U(e_1+X\xi)\right] = E\!\left[U'(e_1+X\xi)\cdot X\right] = E\!\left[U'(C_1)\cdot X\right]$$
+{% raw %}
+$$\frac{d}{d\xi}\,E\!\left[U(e_1+X\xi)\right] = E\!\left[\frac{d}{d\xi}U(e_1+X\xi)\right] = E\!\left[U'(C_1)\cdot X\right]$$
+{% endraw %}
 
 以上を合わせると式 $(4)$ が得られる．$\blacksquare$
 
@@ -321,7 +339,9 @@ $$\frac{d}{d\xi}\,E\!\left[U(e_1+X\xi)\right] = E\!\left[\frac{d}{d\xi}U(e_1+X\x
 
 $C_0 = e_0 - P\xi^*$ は $t=0$ で確定する定数（投資量 $\xi^*$ は最適化の結果として $t=0$ に決定される）．よって $U'(C_0)$ は確率変数ではなく，$E[\cdot]$ の外に出すことができる：
 
+{% raw %}
 $$E\!\left[U'(C_0)\cdot U'(C_1)\cdot X\right] = U'(C_0)\cdot E\!\left[U'(C_1)\cdot X\right]$$
+{% endraw %}
 
 ---
 
@@ -335,7 +355,7 @@ $$P_j = E[M\,X_j] \quad \forall j \tag{B.1}$$
 
 を満たす正のランダム変数 $M>0$ が存在する．
 
-### B.2 スケッチ
+### B.2 証明のスケッチ
 
 $N$ 個の資産の価格ベクトルを $\mathbf{p}\in\mathbb{R}^N$，状態 $s=1,\ldots,S$ でのペイオフ行列を $\mathbf{D}\in\mathbb{R}^{S\times N}$ とする．
 
@@ -343,7 +363,9 @@ $N$ 個の資産の価格ベクトルを $\mathbf{p}\in\mathbb{R}^N$，状態 $s
 
 線形代数の **Farkas の補題**（ハーン–バナッハ分離定理の有限次元版）を適用すると，ある正ベクトル $\boldsymbol{q}\in\mathbb{R}^S_{++}$（状態価格）が存在して $\mathbf{p} = \mathbf{D}^\top\boldsymbol{q}$，すなわち
 
+{% raw %}
 $$p_j = \sum_s q_s X_j(s) = \sum_s \pi_s \underbrace{\frac{q_s}{\pi_s}}_{M(s)} X_j(s) = E[M\,X_j]$$
+{% endraw %}
 
 となる．$M(s)\equiv q_s/\pi_s>0$ が SDF である．$\blacksquare$
 
