@@ -2,7 +2,7 @@
 layout: post
 title: "マクロ閉包の手法：変分原理と制約付き動学：Theoretical Minimum"
 date: 2026-06-12 00:00:00 +0900
-categories: [macroeconomics] [analytical_mechanics]
+categories: [macroeconomics, analytical_mechanics]
 math: true
 ---
 

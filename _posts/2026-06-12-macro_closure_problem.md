@@ -2,7 +2,7 @@
 layout: post
 title: "マクロ・モデルの閉包問題：Theoretical Minimum"
 date: 2026-06-12 00:00:00 +0900
-categories: [macroeconomics] [mathematical_economics]
+categories: [macroeconomics, mathematical_economics]
 math: true
 ---
 
