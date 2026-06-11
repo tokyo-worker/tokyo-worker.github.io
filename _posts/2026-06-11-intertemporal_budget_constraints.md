@@ -2,7 +2,7 @@
 layout: post
 title: "通時的予算制約の理論：Theoretical Minimum"
 date: 2026-06-11 00:00:00 +0900
-categories: [マクロ経済学] [財政理論]
+categories: [マクロ経済学, 財政理論]
 math: true
 ---
 
