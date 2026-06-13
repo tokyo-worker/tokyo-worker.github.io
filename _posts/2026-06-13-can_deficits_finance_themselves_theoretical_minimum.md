@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "「財政赤字は自己資金調達できるか」の理論：Theoretical Minimum — Angeletos, Lian & Wolf (2023)"
+title: "Can Deficits Finance Themselves?(財政赤字は自己資金調達できるか)：Theoretical Minimum — Angeletos, Lian & Wolf (2023)"
 date: 2026-06-13 00:00:00 +0900
 categories: [Macroeconomics, Fiscal Policy, New Keynesian]
 math: true
 ---
 
-# 「財政赤字は自己資金調達できるか」の理論
+# "Can Deficits Finance Themselves?"(財政赤字は自己資金調達できるか)の理論
 ### Theoretical Minimum
 
 > **本稿の位置付け．** Angeletos, Lian & Wolf (2023) "Can Deficits Finance Themselves?" (NBER Working Paper 31185, 改訂版 2024年2月) は，New Keynesian マクロ経済学における財政赤字の自己資金調達 (self-financing) メカニズムを理論・定量両面から解明した論文である．
