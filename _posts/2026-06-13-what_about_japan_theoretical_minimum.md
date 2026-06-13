@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "What about Japan?(日本の財政・金融抑圧)：Theoretical Minimum"
+title: "What about Japan?(日本の財政・金融抑圧)：Theoretical Minimum — Chien, Cole, Lustig（2023）"
 date: 2026-06-13 00:00:00 +0900
 categories: [macroeconomics, fiscal_theory, financial_repression]
 math: true
