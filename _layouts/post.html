@@ -26,6 +26,20 @@ layout: default
       <span class="badge badge-primary-custom mr-1">{{ cat }}</span>
       {% endfor %}
     {% endif %}
+
+    <!-- =====================================================
+         Goatcounter ページ別 PV カウンター表示
+         このページの訪問者数バッジを記事ヘッダーに表示
+    ====================================================== -->
+    <span class="ml-auto">
+      <a href="https://tokyo-worker.goatcounter.com/" target="_blank" rel="noopener noreferrer"
+         title="このページの訪問者数" style="text-decoration:none;">
+        <img src="https://tokyo-worker.goatcounter.com/counter/{{ site.url }}{{ page.url }}.svg"
+             alt="Page Views"
+             style="height:20px; vertical-align:middle;">
+      </a>
+    </span>
+
   </div>
 
   {% if page.tags %}
@@ -158,4 +172,31 @@ layout: default
       <i class="fas fa-list mr-1"></i> 記事一覧に戻る
     </a>
   </div>
+</div>
+
+<!-- =====================================================
+     giscus コメント欄
+     以下の 3 箇所を自分の値に書き換えてください：
+       1. data-repo         → "tokyo-worker/tokyo-worker.github.io"（そのまま）
+       2. data-repo-id      → giscus.app で取得した repo-id
+       3. data-category-id  → giscus.app で取得した category-id
+     取得手順は README_SETUP.md を参照してください。
+====================================================== -->
+<div class="post-comments mt-5 pt-4 border-top">
+  <h5 class="mb-4"><i class="fas fa-comments mr-2"></i>コメント</h5>
+  <script src="https://giscus.app/client.js"
+          data-repo="tokyo-worker/tokyo-worker.github.io"
+          data-repo-id="REPLACE_REPO_ID"
+          data-category="Announcements"
+          data-category-id="REPLACE_CATEGORY_ID"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="light"
+          data-lang="ja"
+          crossorigin="anonymous"
+          async>
+  </script>
 </div>
