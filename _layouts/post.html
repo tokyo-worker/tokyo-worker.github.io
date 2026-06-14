@@ -34,7 +34,7 @@ layout: default
     <span class="ml-auto">
       <a href="https://tokyo-worker.goatcounter.com/" target="_blank" rel="noopener noreferrer"
          title="このページの訪問者数" style="text-decoration:none;">
-        <img src="https://tokyo-worker.goatcounter.com/counter/{{ page.url }}.svg"
+        <img src="https://tokyo-worker.goatcounter.com/counter/{{ page.url | remove_last: '/' }}.svg"
              alt="Page Views"
              style="height:20px; vertical-align:middle;">
       </a>
