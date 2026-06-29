@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "オプション戦略の数理：アイアンコンドルのTheoretical Minimum"
-date: 2025-06-29 00:00:00 +0900
+date: 2026-06-29 00:00:00 +0900
 categories: [デリバティブ, オプション戦略]
 math: true
 ---
