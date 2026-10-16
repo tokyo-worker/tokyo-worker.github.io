@@ -7,28 +7,7 @@ math: true
 ---
 
 {% raw %}
-<style>
-.hb{margin:1.4em 0;font-size:.95em;line-height:1.7}
-.hbt{font-weight:700;padding:4px 10px;border:1px solid currentColor;border-bottom:0;background:rgba(128,128,128,.12);margin-top:1.6em}
-.hbs{display:grid;grid-template-columns:minmax(0,1fr) 14rem;border:1px solid currentColor}
-.hbs.one{grid-template-columns:minmax(0,1fr)}
-.hbr{min-width:0;border-right:1px solid currentColor}
-.hbs.one .hbr{border-right:0}
-.hbrow{display:grid;grid-template-columns:6.8rem minmax(0,1fr);border-top:1px solid rgba(128,128,128,.45)}
-.hbrow:first-child{border-top:0}
-.hbl{padding:8px;font-weight:700;font-size:.9em;border-right:1px solid rgba(128,128,128,.45)}
-.hbe{padding:6px 12px;overflow-x:auto}
-.hbq{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:5px 0}
-.hbq .n{flex:none;opacity:.75;white-space:nowrap}
-.hbn{font-size:.85em;opacity:.8;padding-bottom:3px}
-.hbk{padding:8px 12px;font-size:.85em}
-.hbk div{display:grid;grid-template-columns:3.8rem 1fr;gap:4px;padding:1px 0}
-.hb table{border-collapse:collapse;font-size:.9em;width:100%}
-.hb th,.hb td{border:1px solid rgba(128,128,128,.5);padding:3px 8px;text-align:left}
-@media(max-width:760px){.hbs{grid-template-columns:1fr}.hbr{border-right:0;border-bottom:1px solid currentColor}.hbs.one .hbr{border-bottom:0}.hbrow{grid-template-columns:1fr}.hbl{border-right:0;padding-bottom:0}}
-</style>
-
-# 信用創造の理論的最小限モデル：数理モデル早見表
+# 信用創造の理論的最小限モデル：数理モデル・サマリー
 ### Theoretical Minimum
 
 ---
@@ -45,14 +24,270 @@ math: true
 
 ## 1. 数理モデル {#sec1}
 
-<div class="hb">
-<div class="hbt">1.0 前提</div><div class="hbs"><div class="hbr"><div class="hbrow"><div class="hbl">主体・時間</div><div class="hbe"><div class="hbq"><span>預金者・銀行・借り手の3主体、1契約期間の静学モデル。規制当局は主体ではなく外生的な制約。$\sigma,\pi$ は共通知識。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">A1 契約の分離</div><div class="hbe"><div class="hbq"><span>預金契約（消費寄託）と貸出契約（金銭消費貸借）は法的に別個の双務契約。参加制約（PC）を別々に立てる根拠。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">A2 期待値基準</div><div class="hbe"><div class="hbq"><span>各主体はリスク中立で、参加条件は期待値で評価する。外すとテールリスクがPCに入り、規制の必要性の出発点が失われる。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">A3 情報対称</div><div class="hbe"><div class="hbq"><span>$\sigma,\pi$ は共通知識。外すと誘因整合性制約（IC）が必要になる。本稿はPCのみを扱う。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">A4 同時記帳</div><div class="hbe"><div class="hbq"><span>貸出実行時に貸出資産と預金負債が同額認識される。会計恒等式であり、最適化の選択変数ではない。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">A5 銀行の行動</div><div class="hbe"><div class="hbq"><span>預金金利（調達コスト）の最小化と貸出金利（スプレッド）の最大化を、両PCと恒等式の下で行う。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">A6 市場構造</div><div class="hbe"><div class="hbq"><span>貸出金利の一意な均衡値を決める市場構造は特定しない。PCだけでは金利は区間としてしか決まらない。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">A7 ペイオフ</div><div class="hbe"><div class="hbq"><span>預金者：存続なら利息 $i_D$、破綻なら元本の割合 $1-\rho_B$ を失う。貸し手：返済なら利息 $r$、デフォルトなら元本の割合 $1-\rho$ を失う。借り手：返済時に $R(x)-x(1+r)$、デフォルト時は0（有限責任）。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">A8 正則条件</div><div class="hbe"><div class="hbq"><span>$\sigma\in(0,1],\ \pi\in[0,1),\ \rho\in[0,1],\ \rho_B\in[0,1),\ \rho_0-\ell+(1-\sigma)(1-\rho_B)\ge0,\ R(0)\ge0$</span><span class="n"></span></div></div></div></div><div class="hbk"><div><span>$PC$</span><span>参加制約：参加しない場合の利得と比べて期待利得が減らないこと</span></div><div><span>$IC$</span><span>誘因整合性制約（本稿では扱わない）</span></div><div><span>$\Delta D=\Delta L$</span><span>会計恒等式（選択変数ではない）</span></div></div></div>
-<div class="hbt">1.1 契約①　消費寄託契約（預金）</div><div class="hbs"><div class="hbr"><div class="hbrow"><div class="hbl">預金者の期待利得</div><div class="hbe"><div class="hbq"><span>$E[\Pi_{dep}]=D\Big[\underbrace{\sigma i_D}_{\text{存続時の利息}}-\underbrace{(1-\sigma)(1-\rho_B)}_{\text{破綻時の期待元本損失}}+\underbrace{\ell}_{\text{流動性便益}}-\underbrace{\rho_0}_{\text{機会費用}}\Big]$</span><span class="n">(1)</span></div></div></div><div class="hbrow"><div class="hbl">参加制約<br>PC-dep</div><div class="hbe"><div class="hbq"><span>$\underbrace{\sigma i_D-(1-\sigma)(1-\rho_B)+\ell-\rho_0}_{\text{E[\Pi_{dep}]/D\ \text{（預金1円あたりの期待利得）}}}\ \ge\ \underbrace{0}_{\text{留保水準}}$</span><span class="n">(2)</span></div></div></div><div class="hbrow"><div class="hbl">均衡預金金利</div><div class="hbe"><div class="hbq"><span>$i_D^{*}=\dfrac{\underbrace{\rho_0-\ell}_{\text{機会費用−流動性便益}}+\underbrace{(1-\sigma)(1-\rho_B)}_{\text{破綻リスクの補償}}}{\underbrace{\sigma}_{\text{利息を受け取れる確率}}}$</span><span class="n">(3)</span></div><div class="hbn">銀行は調達コスト $i_D D$ を最小化するので、PC-dep を等号で満たす点を選ぶ</div></div></div></div><div class="hbk"><div><span>$D$</span><span>預金残高</span></div><div><span>$i_D$</span><span>預金金利</span></div><div><span>$\sigma$</span><span>銀行の存続確率</span></div><div><span>$\rho_B$</span><span>銀行破綻時の預金回収率</span></div><div><span>$\ell$</span><span>流動性プレミアム</span></div><div><span>$\rho_0$</span><span>預金者の機会費用</span></div></div></div>
-<div class="hbt">1.2 契約②　金銭消費貸借契約（貸出）</div><div class="hbs"><div class="hbr"><div class="hbrow"><div class="hbl">貸し手のPC<br>PC-lend</div><div class="hbe"><div class="hbq"><span>$\underbrace{(1-\pi)\,r}_{\text{返済時の期待利息}}-\underbrace{\pi(1-\rho)}_{\text{期待元本損失}}\ge0\iff r\ge r^{*}_{lend}\equiv\dfrac{\underbrace{\pi(1-\rho)}_{\text{期待損失率}}}{\underbrace{1-\pi}_{\text{返済確率}}}$</span><span class="n">(4)</span></div></div></div><div class="hbrow"><div class="hbl">借り手のPC<br>PC-borrow</div><div class="hbe"><div class="hbq"><span>$\underbrace{R(x)}_{\text{事業収益}}\ge\underbrace{x(1+r)}_{\text{元利返済額}}\iff r\le r^{*}_{mono}\equiv\underbrace{\dfrac{R(x)}{x}}_{\text{事業収益率}}-1$</span><span class="n">(5)</span></div></div></div><div class="hbrow"><div class="hbl">実行可能区間</div><div class="hbe"><div class="hbq"><span>$r\in\Big[\underbrace{r^{*}_{lend}}_{\text{貸し手の下限}},\ \underbrace{r^{*}_{mono}}_{\text{借り手の上限}}\Big]$</span><span class="n">(6)</span></div><div class="hbq"><span>$\underbrace{\dfrac{\pi(1-\rho)}{1-\pi}}_{\text{貸し手の下限}}\le\underbrace{\dfrac{R(x)}{x}-1}_{\text{借り手の上限}}$</span><span class="n">(7)</span></div><div class="hbn">下の式は区間が非空となる条件。満たさなければ貸出契約は成立しない</div></div></div></div><div class="hbk"><div><span>$x$</span><span>貸付元本</span></div><div><span>$r$</span><span>約定金利</span></div><div><span>$\pi$</span><span>借り手のデフォルト確率</span></div><div><span>$\rho$</span><span>デフォルト時回収率</span></div><div><span>$R(x)$</span><span>借り手の期待収益（$R'>0,\ R''\le0$）</span></div></div></div>
-<div class="hbt">1.3 結合と銀行の最適化</div><div class="hbs"><div class="hbr"><div class="hbrow"><div class="hbl">会計恒等式</div><div class="hbe"><div class="hbq"><span>$\underbrace{\Delta D}_{\text{新規預金（負債）}}=\underbrace{\Delta L}_{\text{新規貸出（資産）}}=x$</span><span class="n">(8)</span></div><div class="hbn">選択変数ではなく複式簿記の恒等関係。増分（フロー）についての式であり、残高の等式ではない</div></div></div><div class="hbrow"><div class="hbl">銀行の統合問題</div><div class="hbe"><div class="hbq"><span>$\max_{r,\,i_D}\ \Pi_{bank}=x\Big[\underbrace{(1-\pi)r}_{\text{期待利息収入}}-\underbrace{\pi(1-\rho)}_{\text{期待貸倒損失}}-\underbrace{i_D}_{\text{預金の調達コスト}}\Big]$</span><span class="n">(9)</span></div><div class="hbq"><span>$\text{s.t.}\ \ PC\text{-}dep,\ PC\text{-}lend,\ PC\text{-}borrow$</span><span class="n"></span></div><div class="hbn">$r$ について増加、$i_D$ について減少。単独の最適解は角点 $(r^{*}_{mono},\,i_D^{*})$（貸し手が完全な価格支配力を持つ場合）</div></div></div><div class="hbrow"><div class="hbl">損益分岐金利</div><div class="hbe"><div class="hbq"><span>$r_{BE}\equiv\dfrac{\underbrace{\pi(1-\rho)}_{\text{期待貸倒損失}}+\underbrace{i_D^{*}}_{\text{預金の調達コスト}}}{\underbrace{1-\pi}_{\text{返済確率}}}$</span><span class="n">(10)</span></div><div class="hbq"><span>$\underbrace{r_{BE}-r^{*}_{lend}}_{\text{損益分岐と下限の差}}=\underbrace{\dfrac{i_D^{*}}{1-\pi}}_{\text{調達コスト分の上乗せ}}\ge0$</span><span class="n">(11)</span></div></div></div><div class="hbrow"><div class="hbl">期待マージン率</div><div class="hbe"><div class="hbq"><span>$m(r)=\underbrace{(1-\pi)r}_{\text{期待利息収入}}-\underbrace{\pi(1-\rho)}_{\text{期待貸倒損失}}-\underbrace{i_D^{*}}_{\text{調達コスト}}$</span><span class="n">(12)</span></div><div class="hbn">$m(r)\ge0\iff r\ge r_{BE}$</div></div></div></div><div class="hbk"><div><span>$\Pi_{bank}$</span><span>銀行の期待利潤</span></div><div><span>$r_{BE}$</span><span>銀行全体の損益分岐金利</span></div><div><span>$m$</span><span>期待マージン率</span></div><div><span>$\Delta D$</span><span>新規預金</span></div><div><span>$\Delta L$</span><span>新規貸出</span></div></div></div>
-<div class="hbt">1.4 規制レイヤーと全体問題</div><div class="hbs"><div class="hbr"><div class="hbrow"><div class="hbl">全体問題</div><div class="hbe"><div class="hbq"><span>$\begin{aligned}\max_{x,\,r,\,i_D}\quad&\Pi_{bank}=x\big[(1-\pi)r-\pi(1-\rho)-i_D\big]\\\text{s.t.}\quad&\underbrace{\sigma i_D-(1-\sigma)(1-\rho_B)+\ell-\rho_0\ \ge\ 0}_{\text{預金契約のPC}}\\&\underbrace{(1-\pi)r-\pi(1-\rho)\ \ge\ 0}_{\text{貸出契約のPC（貸し手）}}\\&\underbrace{R(x)\ \ge\ x(1+r)}_{\text{貸出契約のPC（借り手）}}\\&\underbrace{\Delta D=\Delta L=x}_{\text{会計恒等式（選択変数ではない）}}\\&\underbrace{E\ \ge\ \kappa\textstyle\sum_i w_ix_i}_{\text{自己資本規制：貸出のテールリスクに対応}}\\&\underbrace{M\ \ge\ \varphi\textstyle\sum_jD_j}_{\text{準備率・流動性規制：預金の満期ミスマッチに対応}}\end{aligned}$</span><span class="n">(13)</span></div><div class="hbn">上の4行が信用創造の最小構造、下の2行が外側から課される追加制約</div></div></div><div class="hbrow"><div class="hbl">規制下の資金構成</div><div class="hbe"><div class="hbq"><span>$\underbrace{x}_{\text{貸出}}+\underbrace{M}_{\text{準備金}}=\underbrace{D}_{\text{預金}}+\underbrace{E}_{\text{自己資本}}$</span><span class="n">(14)</span></div><div class="hbq"><span>$\underbrace{E=\kappa w x}_{\text{自己資本規制（等号）}},\quad\underbrace{M=\varphi D}_{\text{準備率規制（等号）}}$</span><span class="n">(15)</span></div><div class="hbq"><span>$\underbrace{D=\dfrac{1-\kappa w}{1-\varphi}\,x}_{\text{預金}},\ \ \underbrace{E=\kappa w\,x}_{\text{自己資本}},\ \ \underbrace{M=\dfrac{\varphi(1-\kappa w)}{1-\varphi}\,x}_{\text{準備金}}$</span><span class="n">(16)</span></div></div></div><div class="hbrow"><div class="hbl">規制下の損益分岐金利</div><div class="hbe"><div class="hbq"><span>$r^{*}_{reg}=\dfrac{\underbrace{\pi(1-\rho)}_{\text{期待貸倒損失}}+\underbrace{i_D\dfrac{1-\kappa w}{1-\varphi}}_{\text{預金の調達費用}}+\underbrace{i_E\,\kappa w}_{\text{自己資本の調達費用}}}{1-\pi}$</span><span class="n">(17)</span></div><div class="hbn">$\kappa=\varphi=0$ のとき式(10)の $r_{BE}$ に一致する</div></div></div><div class="hbrow"><div class="hbl">規模の上限</div><div class="hbe"><div class="hbq"><span>$x\ \le\ \underbrace{\dfrac{E}{\kappa w}}_{\text{自己資本が支えられる貸出額}}$</span><span class="n">(18)</span></div><div class="hbn">規模を抑えるのは既存預金の量ではなく自己資本</div></div></div><div class="hbrow"><div class="hbl">規制の感応度</div><div class="hbe"><div class="hbq"><span>$\dfrac{\partial r^{*}_{reg}}{\partial\kappa}=\dfrac{w\big[\underbrace{i_E}_{\text{自己資本のコスト}}-\underbrace{\dfrac{i_D}{1-\varphi}}_{\text{預金のコスト}}\big]}{1-\pi}$</span><span class="n">(19)</span></div><div class="hbq"><span>$\dfrac{\partial r^{*}_{reg}}{\partial\varphi}=\dfrac{i_D(1-\kappa w)}{(1-\varphi)^{2}(1-\pi)}>0$</span><span class="n">(20)</span></div><div class="hbn">$\kappa$ の効果は $i_E>i_D/(1-\varphi)$ のとき正。$\varphi$ の効果は $i_D>0$ なら常に正</div></div></div></div><div class="hbk"><div><span>$E$</span><span>自己資本</span></div><div><span>$M$</span><span>準備金・流動資産</span></div><div><span>$\kappa$</span><span>所要自己資本比率</span></div><div><span>$\varphi$</span><span>所要準備率</span></div><div><span>$w_i$</span><span>貸出 $i$ のリスクウェイト</span></div><div><span>$i_E$</span><span>自己資本の要求収益率</span></div><div><span>$r^{*}_{reg}$</span><span>規制下の損益分岐金利</span></div></div></div>
-<div class="hbt">1.5 主要帰結</div><div class="hbs one"><div class="hbr"><div class="hbrow"><div class="hbl">主要式</div><div class="hbe"><div class="hbq"><span>$\boxed{\begin{aligned}i_D^{*}&=\underbrace{\dfrac{\rho_0-\ell+(1-\sigma)(1-\rho_B)}{\sigma}}_{\text{預金契約のリスクだけで決まる}}\\ r&\in\underbrace{\Big[\dfrac{\pi(1-\rho)}{1-\pi},\ \dfrac{R(x)}{x}-1\Big]}_{\text{貸出契約のリスクだけで決まる区間}}\\ \Delta D&=\Delta L=\underbrace{x}_{\text{両者を結ぶ会計恒等式}}\end{aligned}}$</span><span class="n">(21)</span></div><div class="hbn">両者は会計恒等式で結ばれるが、一方が他方を決めることはない</div></div></div><div class="hbrow"><div class="hbl">比較静学</div><div class="hbe"><table><tr><th>変化</th><th>結果</th><th>符号・式</th></tr><tr><td>$\sigma\uparrow$</td><td>$i_D^{*}$</td><td>低下　$-(a+b)/\sigma^{2}<0$</td></tr><tr><td>$\ell\uparrow$</td><td>$i_D^{*}$</td><td>低下　$-1/\sigma$</td></tr><tr><td>$\rho_0\uparrow$</td><td>$i_D^{*}$</td><td>上昇　$+1/\sigma$</td></tr><tr><td>$\pi\uparrow$</td><td>$r^{*}_{lend}$</td><td>上昇　$(1-\rho)/(1-\pi)^{2}$</td></tr><tr><td>$\rho\uparrow$</td><td>$r^{*}_{lend}$</td><td>低下　$-\pi/(1-\pi)$</td></tr><tr><td>$\sigma\uparrow$</td><td>$m$</td><td>上昇　$(a+b)/\sigma^{2}>0$</td></tr><tr><td>$\pi\uparrow$</td><td>$m$</td><td>$r$ 固定なら低下 $-r-(1-\rho)$、競争的に $r=r_{BE}$ なら 0</td></tr></table><div class="hbn">$a=\rho_0-\ell,\ b=1-\rho_B$。導出は付録 A.6</div></div></div><div class="hbrow"><div class="hbl">特殊ケース</div><div class="hbe"><div class="hbq"><span>$\sigma=1\Rightarrow i_D^{*}=\rho_0-\ell$</span><span class="n"></span></div><div class="hbq"><span>$\pi=0\ \text{または}\ \rho=1\Rightarrow r^{*}_{lend}=0$</span><span class="n"></span></div><div class="hbq"><span>$r^{*}_{mono}<r^{*}_{lend}\Rightarrow\text{区間が空で貸出契約は不成立}$</span><span class="n"></span></div></div></div></div></div>
-</div>
+
+### 1.0 前提
+
+**主体・時間**
+
+預金者・銀行・借り手の3主体、1契約期間の静学モデル。規制当局は主体ではなく外生的な制約。$\sigma,\pi$ は共通知識。
+
+**A1 契約の分離**
+
+預金契約（消費寄託）と貸出契約（金銭消費貸借）は法的に別個の双務契約。参加制約（PC）を別々に立てる根拠。
+
+**A2 期待値基準**
+
+各主体はリスク中立で、参加条件は期待値で評価する。外すとテールリスクがPCに入り、規制の必要性の出発点が失われる。
+
+**A3 情報対称**
+
+$\sigma,\pi$ は共通知識。外すと誘因整合性制約（IC）が必要になる。本稿はPCのみを扱う。
+
+**A4 同時記帳**
+
+貸出実行時に貸出資産と預金負債が同額認識される。会計恒等式であり、最適化の選択変数ではない。
+
+**A5 銀行の行動**
+
+預金金利（調達コスト）の最小化と貸出金利（スプレッド）の最大化を、両PCと恒等式の下で行う。
+
+**A6 市場構造**
+
+貸出金利の一意な均衡値を決める市場構造は特定しない。PCだけでは金利は区間としてしか決まらない。
+
+**A7 ペイオフ**
+
+預金者：存続なら利息 $i_D$、破綻なら元本の割合 $1-\rho_B$ を失う。貸し手：返済なら利息 $r$、デフォルトなら元本の割合 $1-\rho$ を失う。借り手：返済時に $R(x)-x(1+r)$、デフォルト時は0（有限責任）。
+
+**A8 正則条件**
+
+$$
+\sigma\in(0,1],\ \pi\in[0,1),\ \rho\in[0,1],\ \rho_B\in[0,1),\ \rho_0-\ell+(1-\sigma)(1-\rho_B)\ge0,\ R(0)\ge0
+$$
+
+| 記号・項目 | 意味 |
+|---|---|
+| PC | 参加制約：参加しない場合の利得と比べて期待利得が減らないこと |
+| IC | 誘因整合性制約（本稿では扱わない） |
+| $\Delta D=\Delta L$ | 会計恒等式（選択変数ではない） |
+
+
+### 1.1 契約①　消費寄託契約（預金）
+
+**預金者の期待利得**
+
+$$
+E[\Pi_{dep}]=D\Big[\underbrace{\sigma i_D}_{\text{存続時の利息}}-\underbrace{(1-\sigma)(1-\rho_B)}_{\text{破綻時の期待元本損失}}+\underbrace{\ell}_{\text{流動性便益}}-\underbrace{\rho_0}_{\text{機会費用}}\Big]\tag{1}
+$$
+
+**参加制約　PC-dep**
+
+$$
+\underbrace{\sigma i_D-(1-\sigma)(1-\rho_B)+\ell-\rho_0}_{\text{預金1円あたりの期待利得 }E[\Pi_{dep}]/D}\ \ge\ \underbrace{0}_{\text{留保水準}}\tag{2}
+$$
+
+**均衡預金金利**
+
+$$
+i_D^{\ast}=\dfrac{\underbrace{\rho_0-\ell}_{\text{機会費用−流動性便益}}+\underbrace{(1-\sigma)(1-\rho_B)}_{\text{破綻リスクの補償}}}{\underbrace{\sigma}_{\text{利息を受け取れる確率}}}\tag{3}
+$$
+
+> 銀行は調達コスト $i_D D$ を最小化するので、PC-dep を等号で満たす点を選ぶ
+
+| 記号・項目 | 意味 |
+|---|---|
+| $D$ | 預金残高 |
+| $i_D$ | 預金金利 |
+| $\sigma$ | 銀行の存続確率 |
+| $\rho_B$ | 銀行破綻時の預金回収率 |
+| $\ell$ | 流動性プレミアム |
+| $\rho_0$ | 預金者の機会費用 |
+
+
+### 1.2 契約②　金銭消費貸借契約（貸出）
+
+**貸し手のPC　PC-lend**
+
+$$
+\underbrace{(1-\pi)\,r}_{\text{返済時の期待利息}}-\underbrace{\pi(1-\rho)}_{\text{期待元本損失}}\ge0\iff r\ge r^{\ast}_{lend}\equiv\dfrac{\underbrace{\pi(1-\rho)}_{\text{期待損失率}}}{\underbrace{1-\pi}_{\text{返済確率}}}\tag{4}
+$$
+
+**借り手のPC　PC-borrow**
+
+$$
+\underbrace{R(x)}_{\text{事業収益}}\ge\underbrace{x(1+r)}_{\text{元利返済額}}\iff r\le r^{\ast}_{mono}\equiv\underbrace{\dfrac{R(x)}{x}}_{\text{事業収益率}}-1\tag{5}
+$$
+
+**実行可能区間**
+
+$$
+r\in\Big[\underbrace{r^{\ast}_{lend}}_{\text{貸し手の下限}},\ \underbrace{r^{\ast}_{mono}}_{\text{借り手の上限}}\Big]\tag{6}
+$$
+
+$$
+\underbrace{\dfrac{\pi(1-\rho)}{1-\pi}}_{\text{貸し手の下限}}\le\underbrace{\dfrac{R(x)}{x}-1}_{\text{借り手の上限}}\tag{7}
+$$
+
+> 下の式は区間が非空となる条件。満たさなければ貸出契約は成立しない
+
+| 記号・項目 | 意味 |
+|---|---|
+| $x$ | 貸付元本 |
+| $r$ | 約定金利 |
+| $\pi$ | 借り手のデフォルト確率 |
+| $\rho$ | デフォルト時回収率 |
+| $R(x)$ | 借り手の期待収益（$R'>0,\ R''\le0$） |
+
+
+### 1.3 結合と銀行の最適化
+
+**会計恒等式**
+
+$$
+\underbrace{\Delta D}_{\text{新規預金（負債）}}=\underbrace{\Delta L}_{\text{新規貸出（資産）}}=x\tag{8}
+$$
+
+> 選択変数ではなく複式簿記の恒等関係。増分（フロー）についての式であり、残高の等式ではない
+
+**銀行の統合問題**
+
+$$
+\max_{r,\,i_D}\ \Pi_{bank}=x\Big[\underbrace{(1-\pi)r}_{\text{期待利息収入}}-\underbrace{\pi(1-\rho)}_{\text{期待貸倒損失}}-\underbrace{i_D}_{\text{預金の調達コスト}}\Big]\tag{9}
+$$
+
+$$
+\text{s.t.}\ \ PC\text{-}dep,\ PC\text{-}lend,\ PC\text{-}borrow
+$$
+
+> $r$ について増加、$i_D$ について減少。単独の最適解は角点 $(r^{\ast}_{mono},\,i_D^{\ast})$（貸し手が完全な価格支配力を持つ場合）
+
+**損益分岐金利**
+
+$$
+r_{BE}\equiv\dfrac{\underbrace{\pi(1-\rho)}_{\text{期待貸倒損失}}+\underbrace{i_D^{\ast}}_{\text{預金の調達コスト}}}{\underbrace{1-\pi}_{\text{返済確率}}}\tag{10}
+$$
+
+$$
+\underbrace{r_{BE}-r^{\ast}_{lend}}_{\text{損益分岐と下限の差}}=\underbrace{\dfrac{i_D^{\ast}}{1-\pi}}_{\text{調達コスト分の上乗せ}}\ge0\tag{11}
+$$
+
+**期待マージン率**
+
+$$
+m(r)=\underbrace{(1-\pi)r}_{\text{期待利息収入}}-\underbrace{\pi(1-\rho)}_{\text{期待貸倒損失}}-\underbrace{i_D^{\ast}}_{\text{調達コスト}}\tag{12}
+$$
+
+> $m(r)\ge0\iff r\ge r_{BE}$
+
+| 記号・項目 | 意味 |
+|---|---|
+| $\Pi_{bank}$ | 銀行の期待利潤 |
+| $r_{BE}$ | 銀行全体の損益分岐金利 |
+| $m$ | 期待マージン率 |
+| $\Delta D$ | 新規預金 |
+| $\Delta L$ | 新規貸出 |
+
+
+### 1.4 規制レイヤーと全体問題
+
+**全体問題**
+
+$$
+\begin{aligned}\max_{x,\,r,\,i_D}\quad&\Pi_{bank}=x\big[(1-\pi)r-\pi(1-\rho)-i_D\big]\\\text{s.t.}\quad&\underbrace{\sigma i_D-(1-\sigma)(1-\rho_B)+\ell-\rho_0\ \ge\ 0}_{\text{預金契約のPC}}\\&\underbrace{(1-\pi)r-\pi(1-\rho)\ \ge\ 0}_{\text{貸出契約のPC（貸し手）}}\\&\underbrace{R(x)\ \ge\ x(1+r)}_{\text{貸出契約のPC（借り手）}}\\&\underbrace{\Delta D=\Delta L=x}_{\text{会計恒等式（選択変数ではない）}}\\&\underbrace{E\ \ge\ \kappa\textstyle\sum_i w_ix_i}_{\text{自己資本規制：貸出のテールリスクに対応}}\\&\underbrace{M\ \ge\ \varphi\textstyle\sum_jD_j}_{\text{準備率・流動性規制：預金の満期ミスマッチに対応}}\end{aligned}\tag{13}
+$$
+
+> 上の4行が信用創造の最小構造、下の2行が外側から課される追加制約
+
+**規制下の資金構成**
+
+$$
+\underbrace{x}_{\text{貸出}}+\underbrace{M}_{\text{準備金}}=\underbrace{D}_{\text{預金}}+\underbrace{E}_{\text{自己資本}}\tag{14}
+$$
+
+$$
+\underbrace{E=\kappa w x}_{\text{自己資本規制（等号）}},\quad\underbrace{M=\varphi D}_{\text{準備率規制（等号）}}\tag{15}
+$$
+
+$$
+\underbrace{D=\dfrac{1-\kappa w}{1-\varphi}\,x}_{\text{預金}},\ \ \underbrace{E=\kappa w\,x}_{\text{自己資本}},\ \ \underbrace{M=\dfrac{\varphi(1-\kappa w)}{1-\varphi}\,x}_{\text{準備金}}\tag{16}
+$$
+
+**規制下の損益分岐金利**
+
+$$
+r^{\ast}_{reg}=\dfrac{\underbrace{\pi(1-\rho)}_{\text{期待貸倒損失}}+\underbrace{i_D\dfrac{1-\kappa w}{1-\varphi}}_{\text{預金の調達費用}}+\underbrace{i_E\,\kappa w}_{\text{自己資本の調達費用}}}{1-\pi}\tag{17}
+$$
+
+> $\kappa=\varphi=0$ のとき式(10)の $r_{BE}$ に一致する
+
+**規模の上限**
+
+$$
+x\ \le\ \underbrace{\dfrac{E}{\kappa w}}_{\text{自己資本が支えられる貸出額}}\tag{18}
+$$
+
+> 規模を抑えるのは既存預金の量ではなく自己資本
+
+**規制の感応度**
+
+$$
+\dfrac{\partial r^{\ast}_{reg}}{\partial\kappa}=\dfrac{w\big[\underbrace{i_E}_{\text{自己資本のコスト}}-\underbrace{\dfrac{i_D}{1-\varphi}}_{\text{預金のコスト}}\big]}{1-\pi}\tag{19}
+$$
+
+$$
+\dfrac{\partial r^{\ast}_{reg}}{\partial\varphi}=\dfrac{i_D(1-\kappa w)}{(1-\varphi)^{2}(1-\pi)}>0\tag{20}
+$$
+
+> $\kappa$ の効果は $i_E>i_D/(1-\varphi)$ のとき正。$\varphi$ の効果は $i_D>0$ なら常に正
+
+| 記号・項目 | 意味 |
+|---|---|
+| $E$ | 自己資本 |
+| $M$ | 準備金・流動資産 |
+| $\kappa$ | 所要自己資本比率 |
+| $\varphi$ | 所要準備率 |
+| $w_i$ | 貸出 $i$ のリスクウェイト |
+| $i_E$ | 自己資本の要求収益率 |
+| $r^{\ast}_{reg}$ | 規制下の損益分岐金利 |
+
+
+### 1.5 主要帰結
+
+**主要式**
+
+$$
+\boxed{\begin{aligned}i_D^{\ast}&=\underbrace{\dfrac{\rho_0-\ell+(1-\sigma)(1-\rho_B)}{\sigma}}_{\text{預金契約のリスクだけで決まる}}\\ r&\in\underbrace{\Big[\dfrac{\pi(1-\rho)}{1-\pi},\ \dfrac{R(x)}{x}-1\Big]}_{\text{貸出契約のリスクだけで決まる区間}}\\ \Delta D&=\Delta L=\underbrace{x}_{\text{両者を結ぶ会計恒等式}}\end{aligned}}\tag{21}
+$$
+
+> 両者は会計恒等式で結ばれるが、一方が他方を決めることはない
+
+**比較静学**
+
+| 変化 | 結果 | 符号・式 |
+|---|---|---|
+| $\sigma\uparrow$ | $i_D^{\ast}$ | 低下　$-(a+b)/\sigma^{2}\lt 0$ |
+| $\ell\uparrow$ | $i_D^{\ast}$ | 低下　$-1/\sigma$ |
+| $\rho_0\uparrow$ | $i_D^{\ast}$ | 上昇　$+1/\sigma$ |
+| $\pi\uparrow$ | $r^{\ast}_{lend}$ | 上昇　$(1-\rho)/(1-\pi)^{2}$ |
+| $\rho\uparrow$ | $r^{\ast}_{lend}$ | 低下　$-\pi/(1-\pi)$ |
+| $\sigma\uparrow$ | $m$ | 上昇　$(a+b)/\sigma^{2}>0$ |
+| $\pi\uparrow$ | $m$ | $r$ 固定なら低下 $-r-(1-\rho)$、競争的に $r=r_{BE}$ なら 0 |
+
+> $a=\rho_0-\ell,\ b=1-\rho_B$。導出は付録 A.6
+
+**特殊ケース**
+
+$$
+\sigma=1\Rightarrow i_D^{\ast}=\rho_0-\ell
+$$
+
+$$
+\pi=0\ \text{または}\ \rho=1\Rightarrow r^{\ast}_{lend}=0
+$$
+
+$$
+r^{\ast}_{mono}\lt r^{\ast}_{lend}\Rightarrow\text{区間が空で貸出契約は不成立}
+$$
 
 ---
 
@@ -62,8 +297,8 @@ math: true
 |---|---|
 | 銀行貸出による預金（信用）の創造 | 貸出実行時に $\Delta D = \Delta L = x$ という会計恒等式が成立する。既存預金を「集めてから貸す」必要はなく、貸出資産と預金負債が同時に認識される。 |
 | 「元手なしで貸せる」と「規制がある」ことの両立 | 会計恒等式（技術的成立）と、自己資本規制・準備率／流動性規制（追加的制約）は論理的に異なる層に属する。両者は矛盾しない。 |
-| 預金金利の決まり方 | $i_D^{*}$ は預金契約側のリスク（銀行存続確率 $\sigma$、破綻時回収率 $\rho_B$、流動性プレミアム $\ell$、機会費用 $\rho_0$）だけで決まる。貸出側の条件とは独立。 |
-| 貸出金利の実行可能範囲 | 下限は貸し手のデフォルト損失カバー（$r_{lend}^{*}$）、上限は借り手の事業収益率（$r_{mono}^{*}$）。この区間内のどこに実際の金利が定まるかは、追加の市場構造が必要。 |
+| 預金金利の決まり方 | $i_D^{\ast}$ は預金契約側のリスク（銀行存続確率 $\sigma$、破綻時回収率 $\rho_B$、流動性プレミアム $\ell$、機会費用 $\rho_0$）だけで決まる。貸出側の条件とは独立。 |
+| 貸出金利の実行可能範囲 | 下限は貸し手のデフォルト損失カバー（$r_{lend}^{\ast}$）、上限は借り手の事業収益率（$r_{mono}^{\ast}$）。この区間内のどこに実際の金利が定まるかは、追加の市場構造が必要。 |
 | 二つの契約のリスク源泉の分離 | 預金契約のリスクは「銀行自身の信用力」、貸出契約のリスクは「借り手の信用力」に由来する。期待値ベースの参加制約だけでは一つの条件にまとめられない。 |
 | 規制がなぜ必要か | 参加制約は期待値の非負しか要求しない。テールリスク（相関デフォルト）、有限責任によるモラルハザード、満期ミスマッチ（預金は要求払い、貸出は非流動的）に対応するため、自己資本規制と準備・流動性規制が外側から課される。 |
 
@@ -89,8 +324,13 @@ math: true
 
 各Stepは「操作→結果」の順に書く。式番号は本文からの通し番号。
 
-<div class="hb">
-<div class="hbt">A.0 構造図</div><div class="hbs one"><div class="hbr"><div class="hbrow"><div class="hbl">全体像</div><div class="hbe"><pre style="margin:0;font-size:.82em;line-height:1.35;overflow-x:auto">                    信用創造
+
+### A.0 構造図
+
+**全体像**
+
+```
+                    信用創造
                        │
          ┌─────────────┴─────────────┐
          │                           │
@@ -121,17 +361,367 @@ PC-dep 式(1)(3)  PC-lend, PC-borrow 式(4)(5)
         ┌────────┴────────┐
         ▼                 ▼
    自己資本規制         準備率・流動性規制
-  （貸出のテールリスク）  （預金の満期ミスマッチ）</pre></div></div><div class="hbrow"><div class="hbl">読み方</div><div class="hbe"><div class="hbq"><span>上から下へ、二つの契約が独立に条件を課し、会計恒等式で結合され、銀行の最適化で金利の区間が定まり、最後に外側から規制が課される。規制の二本の矢印は、それぞれ別の契約のリスクに対応している。</span><span class="n"></span></div></div></div></div></div>
-<div class="hbt">A.1 使う道具</div><div class="hbs one"><div class="hbr"><div class="hbrow"><div class="hbl">T1 期待値</div><div class="hbe"><div class="hbq"><span>$E=pa+(1-p)b\quad\text{（確率 }p\text{ で }a\text{、}1-p\text{ で }b\text{）}$</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">T2 不等式</div><div class="hbe"><div class="hbq"><span>両辺への加減は可。正の数の乗除で向きは不変、負の数の乗除で反転。0では割れない。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">T3 商の微分</div><div class="hbe"><div class="hbq"><span>$\Big(\dfrac{u}{v}\Big)'=\dfrac{u'v-uv'}{v^{2}}$</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">T4 偏微分</div><div class="hbe"><div class="hbq"><span>他の変数を定数とみなして一つの変数で微分する。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">T5 1次関数の最大化</div><div class="hbe"><div class="hbq"><span>$f(t)=at+b,\ a>0\Rightarrow\max_{[p,q]}f=f(q),\quad a<0\Rightarrow\max_{[p,q]}f=f(p)$</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">T6 代入法</div><div class="hbe"><div class="hbq"><span>一つの式から変数を解き、他の式へ代入して未知数を減らす。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">T7 内積</div><div class="hbe"><div class="hbq"><span>$w^{T}x=\sum_{i=1}^{N}w_ix_i$</span><span class="n"></span></div></div></div></div></div>
-<div class="hbt">A.2 預金者の期待利得と均衡預金金利</div><div class="hbs"><div class="hbr"><div class="hbrow"><div class="hbl">Step 1<br>状態別の利得</div><div class="hbe"><div class="hbq"><span>存続（確率 $\sigma$）：$i_DD$。破綻（確率 $1-\sigma$）：$-(1-\rho_B)D$。状態によらず $+\ell D-\rho_0D$。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">Step 2<br>T1で期待値</div><div class="hbe"><div class="hbq"><span>$E[\Pi_{dep}]=\underbrace{\sigma\,(i_DD)}_{\text{存続時}}+\underbrace{(1-\sigma)\big(-(1-\rho_B)D\big)}_{\text{破綻時}}+\underbrace{\ell D-\rho_0D}_{\text{状態によらない項}}$</span><span class="n">(22)</span></div></div></div><div class="hbrow"><div class="hbl">Step 3<br>Dで括る</div><div class="hbe"><div class="hbq"><span>式(22)を $D$ で括ると式(1)になる。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">Step 4<br>D>0で割る</div><div class="hbe"><div class="hbq"><span>PC-dep $E[\Pi_{dep}]\ge0$ を $D>0$ で割ると式(2)。向きは不変（T2）。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">Step 5<br>移項</div><div class="hbe"><div class="hbq"><span>$\underbrace{\sigma i_D}_{\text{$i_D$ を含む項}}\ \ge\ \underbrace{\rho_0-\ell+(1-\sigma)(1-\rho_B)}_{\text{それ以外の項}}$</span><span class="n">(23)</span></div></div></div><div class="hbrow"><div class="hbl">Step 6<br>σ>0で割る</div><div class="hbe"><div class="hbq"><span>$i_D\ \ge\ \dfrac{\rho_0-\ell+(1-\sigma)(1-\rho_B)}{\sigma}$</span><span class="n">(24)</span></div></div></div><div class="hbrow"><div class="hbl">Step 7<br>銀行の最小化</div><div class="hbe"><div class="hbq"><span>$i_DD$ は $i_D$ について増加（T5）。式(24)の下限、すなわち等号の点が最小で、式(3)を得る。A8 より下限は非負。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">確認</div><div class="hbe"><div class="hbq"><span>$\sigma=1$ を式(3)に代入すると $i_D^{*}=\rho_0-\ell$。破綻リスクがない場合の自然な結果。</span><span class="n"></span></div></div></div></div><div class="hbk"><div><span>$入力$</span><span>A7、A8</span></div><div><span>$T1$</span><span>期待値</span></div><div><span>$T2$</span><span>不等式</span></div><div><span>$T5$</span><span>1次関数の最大化</span></div></div></div>
-<div class="hbt">A.3 貸出契約のPCと実行可能区間</div><div class="hbs"><div class="hbr"><div class="hbrow"><div class="hbl">Step 1<br>貸し手の期待利得</div><div class="hbe"><div class="hbq"><span>$E[\Pi_L]=\underbrace{(1-\pi)(rx)}_{\text{返済時}}+\underbrace{\pi\big(-(1-\rho)x\big)}_{\text{デフォルト時}}=x\big[(1-\pi)r-\pi(1-\rho)\big]$</span><span class="n">(25)</span></div></div></div><div class="hbrow"><div class="hbl">Step 2<br>整理</div><div class="hbe"><div class="hbq"><span>$E[\Pi_L]\ge0$ を $x>0$ で割り、$\pi(1-\rho)$ を移項して $1-\pi>0$ で割ると、式(4)の $r\ge r^{*}_{lend}$ を得る。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">Step 3<br>借り手の期待利得</div><div class="hbe"><div class="hbq"><span>$E[\Pi_B]=\underbrace{(1-\pi)}_{\text{返済確率}}\underbrace{\big(R(x)-x(1+r)\big)}_{\text{返済時の利得}}$</span><span class="n">(26)</span></div></div></div><div class="hbrow"><div class="hbl">Step 4<br>整理</div><div class="hbe"><div class="hbq"><span>$E[\Pi_B]\ge0\iff R(x)\ge x(1+r)\iff\dfrac{R(x)}{x}\ge1+r$</span><span class="n">(27)</span></div><div class="hbq"><span>両辺から1を引くと式(5)の $r\le r^{*}_{mono}$。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">Step 5<br>共通部分</div><div class="hbe"><div class="hbq"><span>二つの不等式を同時に満たす $r$ の集合が式(6)。非空となる条件が式(7)。</span><span class="n"></span></div></div></div></div><div class="hbk"><div><span>$入力$</span><span>A7、A8</span></div><div><span>$\pi$</span><span>$1-\pi>0$ で割る（A8）</span></div></div></div>
-<div class="hbt">A.4 会計恒等式</div><div class="hbs"><div class="hbr"><div class="hbrow"><div class="hbl">Step 1<br>貸借対照表</div><div class="hbe"><div class="hbq"><span>$\Delta A=\underbrace{\Delta D}_{\text{預金}}+\underbrace{\Delta E}_{\text{自己資本}}$</span><span class="n">(28)</span></div><div class="hbn">預金以外の負債は不変とする</div></div></div><div class="hbrow"><div class="hbl">Step 2<br>貸出実行時の記帳</div><div class="hbe"><div class="hbq"><span>$\underbrace{\Delta A=x}_{\text{貸出金 +x}},\ \ \underbrace{\Delta D=x}_{\text{借り手名義の預金 +x}},\ \ \underbrace{\Delta E=0}_{\text{利益は未認識}}$</span><span class="n">(29)</span></div><div class="hbq"><span>代入すると $x=x+0$ が恒等的に成立し、式(8)を得る。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">確認</div><div class="hbe"><div class="hbq"><span>これは残高の等式 $D=x$ ではない。既存預金 $D_0$ があれば $D=D_0+x$。</span><span class="n"></span></div></div></div></div><div class="hbk"><div><span>$入力$</span><span>A4</span></div><div><span>$A$</span><span>資産</span></div><div><span>$E$</span><span>自己資本</span></div></div></div>
-<div class="hbt">A.5 銀行の統合問題・角点・損益分岐金利</div><div class="hbs"><div class="hbr"><div class="hbrow"><div class="hbl">Step 1<br>偏微分（T4）</div><div class="hbe"><div class="hbq"><span>$\underbrace{\dfrac{\partial\Pi_{bank}}{\partial r}=x(1-\pi)>0}_{\text{$r$ について増加}},\quad\underbrace{\dfrac{\partial\Pi_{bank}}{\partial i_D}=-x<0}_{\text{$i_D$ について減少}}$</span><span class="n">(30)</span></div></div></div><div class="hbrow"><div class="hbl">Step 2<br>角点（T5）</div><div class="hbe"><div class="hbq"><span>$r$ は上限、$i_D$ は下限で最大。最適解は $(r,i_D)=(r^{*}_{mono},\,i_D^{*})$。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">Step 3<br>損益分岐</div><div class="hbe"><div class="hbq"><span>$\Pi_{bank}\ge0\iff(1-\pi)r\ge\pi(1-\rho)+i_D\iff r\ge\dfrac{\pi(1-\rho)+i_D^{*}}{1-\pi}=r_{BE}$</span><span class="n">(31)</span></div><div class="hbq"><span>式(10)の定義に一致する。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">Step 4<br>下限との差</div><div class="hbe"><div class="hbq"><span>$r_{BE}-r^{*}_{lend}=\dfrac{\pi(1-\rho)+i_D^{*}-\pi(1-\rho)}{1-\pi}=\dfrac{i_D^{*}}{1-\pi}$</span><span class="n">(32)</span></div><div class="hbq"><span>これが式(11)。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">確認</div><div class="hbe"><div class="hbq"><span>$r=r^{*}_{lend}$ のとき $(1-\pi)r=\pi(1-\rho)$ なので $\Pi_{bank}/x=-i_D^{*}$。貸出単体は損益ゼロでも、調達コスト分だけ銀行全体は赤字。</span><span class="n"></span></div></div></div></div><div class="hbk"><div><span>$入力$</span><span>式(24)、式(4)、式(5)</span></div><div><span>$T4$</span><span>偏微分</span></div><div><span>$T5$</span><span>1次関数の最大化</span></div></div></div>
-<div class="hbt">A.6 期待マージンの π 依存性</div><div class="hbs"><div class="hbr"><div class="hbrow"><div class="hbl">Step 1<br>r を所与</div><div class="hbe"><div class="hbq"><span>$\dfrac{\partial m}{\partial\pi}=-\underbrace{r}_{\text{利息の減少}}-\underbrace{(1-\rho)}_{\text{損失の増加}}\le0$</span><span class="n">(33)</span></div><div class="hbn">$r\ge0,\ \rho\le1$ より。$\rho<1$ なら厳密に負</div></div></div><div class="hbrow"><div class="hbl">Step 2<br>貸し手支配<br>$r=r^{*}_{mono}$</div><div class="hbe"><div class="hbq"><span>$\dfrac{\partial m}{\partial\pi}=-\Big(\dfrac{R}{x}-1\Big)-(1-\rho)=-\Big(\dfrac{R}{x}-\rho\Big)$</span><span class="n">(34)</span></div><div class="hbn">$R/x\ge1\ge\rho$ より $\rho<1$ なら厳密に負</div></div></div><div class="hbrow"><div class="hbl">Step 3<br>競争的極限<br>$r=r_{BE}$</div><div class="hbe"><div class="hbq"><span>式(31)の等号より $(1-\pi)r_{BE}=\pi(1-\rho)+i_D^{*}$。$m$ に代入すると $m=0$ で $\pi$ によらず、$\partial m/\partial\pi=0$。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">確認</div><div class="hbe"><div class="hbq"><span>競争が貸出金利を $\pi$ に応じて調整するとき、リスクは価格に完全転嫁され、銀行の期待マージンは変わらない。</span><span class="n"></span></div></div></div></div><div class="hbk"><div><span>$m$</span><span>式(12)</span></div><div><span>$入力$</span><span>$R/x$ は $\pi$ に依存しない</span></div></div></div>
-<div class="hbt">A.7 比較静学の微分計算</div><div class="hbs"><div class="hbr"><div class="hbrow"><div class="hbl">Step 1<br>$\partial i_D^{*}/\partial\sigma$</div><div class="hbe"><div class="hbq"><span>$u=a+(1-\sigma)b,\ \ v=\sigma\ \Rightarrow\ \dfrac{\partial i_D^{*}}{\partial\sigma}=\dfrac{(-b)\sigma-\big(a+(1-\sigma)b\big)}{\sigma^{2}}=-\dfrac{a+b}{\sigma^{2}}$</span><span class="n">(35)</span></div><div class="hbn">T3を適用。$a=\rho_0-\ell,\ b=1-\rho_B>0$</div></div></div><div class="hbrow"><div class="hbl">Step 2<br>符号</div><div class="hbe"><div class="hbq"><span>A8 より $a+(1-\sigma)b\ge0$。よって $a+b=[a+(1-\sigma)b]+\sigma b\ge\sigma b>0$ で、$\partial i_D^{*}/\partial\sigma<0$。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">Step 3<br>$\ell,\rho_0$</div><div class="hbe"><div class="hbq"><span>$\dfrac{\partial i_D^{*}}{\partial\ell}=-\dfrac1\sigma<0,\qquad\dfrac{\partial i_D^{*}}{\partial\rho_0}=\dfrac1\sigma>0$</span><span class="n">(36)</span></div></div></div><div class="hbrow"><div class="hbl">Step 4<br>$r^{*}_{lend}$</div><div class="hbe"><div class="hbq"><span>$\dfrac{\partial r^{*}_{lend}}{\partial\pi}=\dfrac{(1-\rho)(1-\pi)+\pi(1-\rho)}{(1-\pi)^{2}}=\dfrac{1-\rho}{(1-\pi)^{2}}$</span><span class="n">(37)</span></div><div class="hbq"><span>$\dfrac{\partial r^{*}_{lend}}{\partial\rho}=-\dfrac{\pi}{1-\pi}\le0$</span><span class="n">(38)</span></div></div></div><div class="hbrow"><div class="hbl">Step 5<br>$m$ の $\sigma$ 依存</div><div class="hbe"><div class="hbq"><span>$\dfrac{\partial m}{\partial\sigma}=-\dfrac{\partial i_D^{*}}{\partial\sigma}=\dfrac{a+b}{\sigma^{2}}>0$</span><span class="n">(39)</span></div><div class="hbn">$r$ が $\sigma$ に依存しない場合。$r=r_{BE}$ なら $m=0$ で一定</div></div></div></div><div class="hbk"><div><span>$入力$</span><span>式(3)、式(4)</span></div><div><span>$T3$</span><span>商の微分</span></div></div></div>
-<div class="hbt">A.8 ポートフォリオ表記と規制制約</div><div class="hbs"><div class="hbr"><div class="hbrow"><div class="hbl">Step 1<br>リスクアセット</div><div class="hbe"><div class="hbq"><span>$w^{T}x=\sum_{i=1}^{N}w_ix_i$</span><span class="n">(40)</span></div><div class="hbn">例：$N=2,\ w=(1,0.5)^T,\ x=(10,20)^T$ なら $w^Tx=20$</div></div></div><div class="hbrow"><div class="hbl">Step 2<br>自己資本規制</div><div class="hbe"><div class="hbq"><span>リスクアセットに $\kappa$ を掛けて $E$ と比較し、$E\ge\kappa\,w^Tx$（式(13)）。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">Step 3<br>準備率規制</div><div class="hbe"><div class="hbq"><span>総預金に $\varphi$ を掛け、$M\ge\varphi\sum_jD_j$（式(13)）。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">Step 4<br>実行可能集合</div><div class="hbe"><div class="hbq"><span>$C^{reg}=C^{**}\cap\{E\ge\kappa w^Tx\}\cap\{M\ge\varphi\textstyle\sum_jD_j\}$</span><span class="n">(41)</span></div><div class="hbn">$C^{**}$：参加制約を満たす集合</div></div></div></div><div class="hbk"><div><span>$入力$</span><span>貸出 $x=(x_1,\dots,x_N)^T$、リスクウェイト $w$、預金 $D=(D_1,\dots,D_K)^T$</span></div><div><span>$T7$</span><span>内積</span></div></div></div>
-<div class="hbt">A.9 規制下の資金構成と損益分岐金利</div><div class="hbs"><div class="hbr"><div class="hbrow"><div class="hbl">Step 1<br>代入</div><div class="hbe"><div class="hbq"><span>$x+\varphi D=D+\kappa wx$</span><span class="n">(42)</span></div><div class="hbn">式(14)に式(15)を代入</div></div></div><div class="hbrow"><div class="hbl">Step 2<br>整理</div><div class="hbe"><div class="hbq"><span>$x(1-\kappa w)=D(1-\varphi)$</span><span class="n">(43)</span></div></div></div><div class="hbrow"><div class="hbl">Step 3<br>解く</div><div class="hbe"><div class="hbq"><span>$1-\varphi>0$ で割ると $D=\dfrac{1-\kappa w}{1-\varphi}x$。$M=\varphi D$ とあわせて式(16)。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">Step 4<br>規模の上限</div><div class="hbe"><div class="hbq"><span>$E\ge\kappa wx$ を $\kappa w>0$ で割ると式(18)。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">Step 5<br>損益分岐条件</div><div class="hbe"><div class="hbq"><span>$\underbrace{x\big[(1-\pi)r-\pi(1-\rho)\big]}_{\text{期待収益}}=\underbrace{i_DD+i_EE}_{\text{調達費用}}$</span><span class="n">(44)</span></div></div></div><div class="hbrow"><div class="hbl">Step 6<br>式(16)を代入</div><div class="hbe"><div class="hbq"><span>$(1-\pi)r-\pi(1-\rho)=i_D\dfrac{1-\kappa w}{1-\varphi}+i_E\kappa w$</span><span class="n">(45)</span></div><div class="hbq"><span>$\pi(1-\rho)$ を移項し $1-\pi>0$ で割ると式(17)。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">Step 7<br>整合性</div><div class="hbe"><div class="hbq"><span>$\kappa=\varphi=0$ を式(17)に代入すると、分子は $\pi(1-\rho)+i_D$ となり式(10)に一致。</span><span class="n"></span></div></div></div><div class="hbrow"><div class="hbl">Step 8<br>感応度</div><div class="hbe"><div class="hbq"><span>$\dfrac{\partial}{\partial\kappa}\Big[i_D\dfrac{1-\kappa w}{1-\varphi}+i_E\kappa w\Big]=-\dfrac{i_Dw}{1-\varphi}+i_Ew$</span><span class="n">(46)</span></div><div class="hbq"><span>$1-\pi$ は $\kappa,\varphi$ に依存しないので式(19)。$\varphi$ については T3 で $\partial[u/v]/\partial\varphi=u/v^{2}$（$u=1-\kappa w,\ v=1-\varphi$）となり式(20)。</span><span class="n"></span></div></div></div></div><div class="hbk"><div><span>$入力$</span><span>式(14)、式(15)</span></div><div><span>$T3$</span><span>商の微分</span></div><div><span>$T6$</span><span>代入法</span></div></div></div>
-</div>
+  （貸出のテールリスク）  （預金の満期ミスマッチ）
+```
+
+**読み方**
+
+上から下へ、二つの契約が独立に条件を課し、会計恒等式で結合され、銀行の最適化で金利の区間が定まり、最後に外側から規制が課される。規制の二本の矢印は、それぞれ別の契約のリスクに対応している。
+
+### A.1 使う道具
+
+**T1 期待値**
+
+$$
+E=pa+(1-p)b\quad\text{（確率 }p\text{ で }a\text{、}1-p\text{ で }b\text{）}
+$$
+
+**T2 不等式**
+
+両辺への加減は可。正の数の乗除で向きは不変、負の数の乗除で反転。0では割れない。
+
+**T3 商の微分**
+
+$$
+\Big(\dfrac{u}{v}\Big)'=\dfrac{u'v-uv'}{v^{2}}
+$$
+
+**T4 偏微分**
+
+他の変数を定数とみなして一つの変数で微分する。
+
+**T5 1次関数の最大化**
+
+$$
+f(t)=at+b,\ a>0\Rightarrow\max_{[p,q]}f=f(q),\quad a\lt 0\Rightarrow\max_{[p,q]}f=f(p)
+$$
+
+**T6 代入法**
+
+一つの式から変数を解き、他の式へ代入して未知数を減らす。
+
+**T7 内積**
+
+$$
+w^{T}x=\sum_{i=1}^{N}w_ix_i
+$$
+
+### A.2 預金者の期待利得と均衡預金金利
+
+**Step 1　状態別の利得**
+
+存続（確率 $\sigma$）：$i_DD$。破綻（確率 $1-\sigma$）：$-(1-\rho_B)D$。状態によらず $+\ell D-\rho_0D$。
+
+**Step 2　T1で期待値**
+
+$$
+E[\Pi_{dep}]=\underbrace{\sigma\,(i_DD)}_{\text{存続時}}+\underbrace{(1-\sigma)\big(-(1-\rho_B)D\big)}_{\text{破綻時}}+\underbrace{\ell D-\rho_0D}_{\text{状態によらない項}}\tag{22}
+$$
+
+**Step 3　Dで括る**
+
+式(22)を $D$ で括ると式(1)になる。
+
+**Step 4　D>0で割る**
+
+PC-dep $E[\Pi_{dep}]\ge0$ を $D>0$ で割ると式(2)。向きは不変（T2）。
+
+**Step 5　移項**
+
+$$
+\underbrace{\sigma i_D}_{i_D\text{ を含む項}}\ \ge\ \underbrace{\rho_0-\ell+(1-\sigma)(1-\rho_B)}_{\text{それ以外の項}}\tag{23}
+$$
+
+**Step 6　σ>0で割る**
+
+$$
+i_D\ \ge\ \dfrac{\rho_0-\ell+(1-\sigma)(1-\rho_B)}{\sigma}\tag{24}
+$$
+
+**Step 7　銀行の最小化**
+
+$i_DD$ は $i_D$ について増加（T5）。式(24)の下限、すなわち等号の点が最小で、式(3)を得る。A8 より下限は非負。
+
+**確認**
+
+$\sigma=1$ を式(3)に代入すると $i_D^{\ast}=\rho_0-\ell$。破綻リスクがない場合の自然な結果。
+
+| 記号・項目 | 意味 |
+|---|---|
+| 入力 | A7、A8 |
+| T1 | 期待値 |
+| T2 | 不等式 |
+| T5 | 1次関数の最大化 |
+
+
+### A.3 貸出契約のPCと実行可能区間
+
+**Step 1　貸し手の期待利得**
+
+$$
+E[\Pi_L]=\underbrace{(1-\pi)(rx)}_{\text{返済時}}+\underbrace{\pi\big(-(1-\rho)x\big)}_{\text{デフォルト時}}=x\big[(1-\pi)r-\pi(1-\rho)\big]\tag{25}
+$$
+
+**Step 2　整理**
+
+$E[\Pi_L]\ge0$ を $x>0$ で割り、$\pi(1-\rho)$ を移項して $1-\pi>0$ で割ると、式(4)の $r\ge r^{\ast}_{lend}$ を得る。
+
+**Step 3　借り手の期待利得**
+
+$$
+E[\Pi_B]=\underbrace{(1-\pi)}_{\text{返済確率}}\underbrace{\big(R(x)-x(1+r)\big)}_{\text{返済時の利得}}\tag{26}
+$$
+
+**Step 4　整理**
+
+$$
+E[\Pi_B]\ge0\iff R(x)\ge x(1+r)\iff\dfrac{R(x)}{x}\ge1+r\tag{27}
+$$
+
+両辺から1を引くと式(5)の $r\le r^{\ast}_{mono}$。
+
+**Step 5　共通部分**
+
+二つの不等式を同時に満たす $r$ の集合が式(6)。非空となる条件が式(7)。
+
+| 記号・項目 | 意味 |
+|---|---|
+| 入力 | A7、A8 |
+| $\pi$ | $1-\pi>0$ で割る（A8） |
+
+
+### A.4 会計恒等式
+
+**Step 1　貸借対照表**
+
+$$
+\Delta A=\underbrace{\Delta D}_{\text{預金}}+\underbrace{\Delta E}_{\text{自己資本}}\tag{28}
+$$
+
+> 預金以外の負債は不変とする
+
+**Step 2　貸出実行時の記帳**
+
+$$
+\underbrace{\Delta A=x}_{\text{貸出金 +x}},\ \ \underbrace{\Delta D=x}_{\text{借り手名義の預金 +x}},\ \ \underbrace{\Delta E=0}_{\text{利益は未認識}}\tag{29}
+$$
+
+代入すると $x=x+0$ が恒等的に成立し、式(8)を得る。
+
+**確認**
+
+これは残高の等式 $D=x$ ではない。既存預金 $D_0$ があれば $D=D_0+x$。
+
+| 記号・項目 | 意味 |
+|---|---|
+| 入力 | A4 |
+| $A$ | 資産 |
+| $E$ | 自己資本 |
+
+
+### A.5 銀行の統合問題・角点・損益分岐金利
+
+**Step 1　偏微分（T4）**
+
+$$
+\underbrace{\dfrac{\partial\Pi_{bank}}{\partial r}=x(1-\pi)>0}_{r\text{ について増加}},\quad\underbrace{\dfrac{\partial\Pi_{bank}}{\partial i_D}=-x\lt 0}_{i_D\text{ について減少}}\tag{30}
+$$
+
+**Step 2　角点（T5）**
+
+$r$ は上限、$i_D$ は下限で最大。最適解は $(r,i_D)=(r^{\ast}_{mono},\,i_D^{\ast})$。
+
+**Step 3　損益分岐**
+
+$$
+\Pi_{bank}\ge0\iff(1-\pi)r\ge\pi(1-\rho)+i_D\iff r\ge\dfrac{\pi(1-\rho)+i_D^{\ast}}{1-\pi}=r_{BE}\tag{31}
+$$
+
+式(10)の定義に一致する。
+
+**Step 4　下限との差**
+
+$$
+r_{BE}-r^{\ast}_{lend}=\dfrac{\pi(1-\rho)+i_D^{\ast}-\pi(1-\rho)}{1-\pi}=\dfrac{i_D^{\ast}}{1-\pi}\tag{32}
+$$
+
+これが式(11)。
+
+**確認**
+
+$r=r^{\ast}_{lend}$ のとき $(1-\pi)r=\pi(1-\rho)$ なので $\Pi_{bank}/x=-i_D^{\ast}$。貸出単体は損益ゼロでも、調達コスト分だけ銀行全体は赤字。
+
+| 記号・項目 | 意味 |
+|---|---|
+| 入力 | 式(24)、式(4)、式(5) |
+| T4 | 偏微分 |
+| T5 | 1次関数の最大化 |
+
+
+### A.6 期待マージンの π 依存性
+
+**Step 1　r を所与**
+
+$$
+\dfrac{\partial m}{\partial\pi}=-\underbrace{r}_{\text{利息の減少}}-\underbrace{(1-\rho)}_{\text{損失の増加}}\le0\tag{33}
+$$
+
+> $r\ge0,\ \rho\le1$ より。$\rho\lt 1$ なら厳密に負
+
+**Step 2　貸し手支配　$r=r^{\ast}_{mono}$**
+
+$$
+\dfrac{\partial m}{\partial\pi}=-\Big(\dfrac{R}{x}-1\Big)-(1-\rho)=-\Big(\dfrac{R}{x}-\rho\Big)\tag{34}
+$$
+
+> $R/x\ge1\ge\rho$ より $\rho\lt 1$ なら厳密に負
+
+**Step 3　競争的極限　$r=r_{BE}$**
+
+式(31)の等号より $(1-\pi)r_{BE}=\pi(1-\rho)+i_D^{\ast}$。$m$ に代入すると $m=0$ で $\pi$ によらず、$\partial m/\partial\pi=0$。
+
+**確認**
+
+競争が貸出金利を $\pi$ に応じて調整するとき、リスクは価格に完全転嫁され、銀行の期待マージンは変わらない。
+
+| 記号・項目 | 意味 |
+|---|---|
+| $m$ | 式(12) |
+| 入力 | $R/x$ は $\pi$ に依存しない |
+
+
+### A.7 比較静学の微分計算
+
+**Step 1　$\partial i_D^{\ast}/\partial\sigma$**
+
+$$
+u=a+(1-\sigma)b,\ \ v=\sigma\ \Rightarrow\ \dfrac{\partial i_D^{\ast}}{\partial\sigma}=\dfrac{(-b)\sigma-\big(a+(1-\sigma)b\big)}{\sigma^{2}}=-\dfrac{a+b}{\sigma^{2}}\tag{35}
+$$
+
+> T3を適用。$a=\rho_0-\ell,\ b=1-\rho_B>0$
+
+**Step 2　符号**
+
+A8 より $a+(1-\sigma)b\ge0$。よって $a+b=[a+(1-\sigma)b]+\sigma b\ge\sigma b>0$ で、$\partial i_D^{\ast}/\partial\sigma\lt 0$。
+
+**Step 3　$\ell,\rho_0$**
+
+$$
+\dfrac{\partial i_D^{\ast}}{\partial\ell}=-\dfrac1\sigma\lt 0,\qquad\dfrac{\partial i_D^{\ast}}{\partial\rho_0}=\dfrac1\sigma>0\tag{36}
+$$
+
+**Step 4　$r^{\ast}_{lend}$**
+
+$$
+\dfrac{\partial r^{\ast}_{lend}}{\partial\pi}=\dfrac{(1-\rho)(1-\pi)+\pi(1-\rho)}{(1-\pi)^{2}}=\dfrac{1-\rho}{(1-\pi)^{2}}\tag{37}
+$$
+
+$$
+\dfrac{\partial r^{\ast}_{lend}}{\partial\rho}=-\dfrac{\pi}{1-\pi}\le0\tag{38}
+$$
+
+**Step 5　$m$ の $\sigma$ 依存**
+
+$$
+\dfrac{\partial m}{\partial\sigma}=-\dfrac{\partial i_D^{\ast}}{\partial\sigma}=\dfrac{a+b}{\sigma^{2}}>0\tag{39}
+$$
+
+> $r$ が $\sigma$ に依存しない場合。$r=r_{BE}$ なら $m=0$ で一定
+
+| 記号・項目 | 意味 |
+|---|---|
+| 入力 | 式(3)、式(4) |
+| T3 | 商の微分 |
+
+
+### A.8 ポートフォリオ表記と規制制約
+
+**Step 1　リスクアセット**
+
+$$
+w^{T}x=\sum_{i=1}^{N}w_ix_i\tag{40}
+$$
+
+> 例：$N=2,\ w=(1,0.5)^T,\ x=(10,20)^T$ なら $w^Tx=20$
+
+**Step 2　自己資本規制**
+
+リスクアセットに $\kappa$ を掛けて $E$ と比較し、$E\ge\kappa\,w^Tx$（式(13)）。
+
+**Step 3　準備率規制**
+
+総預金に $\varphi$ を掛け、$M\ge\varphi\sum_jD_j$（式(13)）。
+
+**Step 4　実行可能集合**
+
+$$
+C^{reg}=C^{**}\cap\{E\ge\kappa w^Tx\}\cap\{M\ge\varphi\textstyle\sum_jD_j\}\tag{41}
+$$
+
+> $C^{**}$：参加制約を満たす集合
+
+| 記号・項目 | 意味 |
+|---|---|
+| 入力 | 貸出 $x=(x_1,\dots,x_N)^T$、リスクウェイト $w$、預金 $D=(D_1,\dots,D_K)^T$ |
+| T7 | 内積 |
+
+
+### A.9 規制下の資金構成と損益分岐金利
+
+**Step 1　代入**
+
+$$
+x+\varphi D=D+\kappa wx\tag{42}
+$$
+
+> 式(14)に式(15)を代入
+
+**Step 2　整理**
+
+$$
+x(1-\kappa w)=D(1-\varphi)\tag{43}
+$$
+
+**Step 3　解く**
+
+$1-\varphi>0$ で割ると $D=\dfrac{1-\kappa w}{1-\varphi}x$。$M=\varphi D$ とあわせて式(16)。
+
+**Step 4　規模の上限**
+
+$E\ge\kappa wx$ を $\kappa w>0$ で割ると式(18)。
+
+**Step 5　損益分岐条件**
+
+$$
+\underbrace{x\big[(1-\pi)r-\pi(1-\rho)\big]}_{\text{期待収益}}=\underbrace{i_DD+i_EE}_{\text{調達費用}}\tag{44}
+$$
+
+**Step 6　式(16)を代入**
+
+$$
+(1-\pi)r-\pi(1-\rho)=i_D\dfrac{1-\kappa w}{1-\varphi}+i_E\kappa w\tag{45}
+$$
+
+$\pi(1-\rho)$ を移項し $1-\pi>0$ で割ると式(17)。
+
+**Step 7　整合性**
+
+$\kappa=\varphi=0$ を式(17)に代入すると、分子は $\pi(1-\rho)+i_D$ となり式(10)に一致。
+
+**Step 8　感応度**
+
+$$
+\dfrac{\partial}{\partial\kappa}\Big[i_D\dfrac{1-\kappa w}{1-\varphi}+i_E\kappa w\Big]=-\dfrac{i_Dw}{1-\varphi}+i_Ew\tag{46}
+$$
+
+$1-\pi$ は $\kappa,\varphi$ に依存しないので式(19)。$\varphi$ については T3 で $\partial[u/v]/\partial\varphi=u/v^{2}$（$u=1-\kappa w,\ v=1-\varphi$）となり式(20)。
+
+| 記号・項目 | 意味 |
+|---|---|
+| 入力 | 式(14)、式(15) |
+| T3 | 商の微分 |
+| T6 | 代入法 |
+
 
 ---
 
