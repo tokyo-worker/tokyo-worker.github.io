@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Chien, Cole, Lustig "What about Japan?"：数理モデルのクイックリファレンス"
+title: "Chien, Cole, Lustig : What about Japan? - 数理モデルのクイックリファレンス"
 date: 2026-10-18 00:00:00 +0900
 categories: [経済学, 財政・金融]
 math: true
