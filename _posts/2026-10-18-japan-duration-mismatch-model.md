@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "日本の統合政府のデュレーション・ミスマッチと低金利政策：数理モデル早見表"
+title: "Chien, Cole, Lustig "What about Japan?"：数理モデルのクイックリファレンス"
 date: 2026-10-18 00:00:00 +0900
 categories: [経済学, 財政・金融]
 math: true
