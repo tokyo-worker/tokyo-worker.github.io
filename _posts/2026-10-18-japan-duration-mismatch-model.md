@@ -7,8 +7,8 @@ math: true
 ---
 
 {% raw %}
-# 日本の統合政府のデュレーション・ミスマッチと低金利政策：数理モデル早見表
-### Chien, Cole, Lustig "What about Japan?" の背景にある数理モデル
+# Chien, Cole, Lustig "What about Japan?" の背景にある数理モデル
+### 日本の統合政府のデュレーション・ミスマッチと低金利政策：数理モデルのクイックリファレンス
 
 ---
 
