@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "財政理論の粘着価格モデル（Cochrane 第5章）：数理モデル"
+title: "物価水準の財政理論 第5章 粘着価格モデル：数理モデル早見表"
 date: 2026-10-25 00:00:00 +0900
 categories: [経済学, マクロ経済学]
 math: true
