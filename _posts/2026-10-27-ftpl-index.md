@@ -1,6 +1,8 @@
 ---
-layout: default
-title: 物価水準の財政理論 レジュメ
+layout: post
+title: "物価水準の財政理論 レジュメ"
+date: 2026-10-27 00:00:00 +0900
+categories: [マクロ経済学, 物価水準の財政理論]
 permalink: /ftpl/
 ---
 
