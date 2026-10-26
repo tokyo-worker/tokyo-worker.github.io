@@ -24,6 +24,13 @@
           </a>
         </li>
 
+        <li class="nav-item">
+          <a class="nav-link{% if page.url contains '/ftpl/' %} active{% endif %}" href="{{ '/ftpl/' | relative_url }}">
+            <i class="fas fa-book mr-1"></i> FTPL
+          </a>
+        </li>
+
+
         {% if site.show_rss %}
         <li class="nav-item">
           <a class="nav-link" href="{{ '/feed.xml' | relative_url }}" target="_blank" rel="noopener noreferrer">

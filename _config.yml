@@ -26,9 +26,16 @@ kramdown:
   math_engine: mathjax
   parse_block_html: true
 
+collections:
+  ftpl:
+    output: true
+    permalink: /ftpl/:path/
+
+
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+  - jekyll-redirect-from  
 
 # Sass
 sass:
@@ -58,3 +65,12 @@ defaults:
       type: pages
     values:
       layout: default
+  
+  - scope:
+      path: ""
+      type: ftpl
+    values:
+      layout: post
+      math_scripts:
+        - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js
+        - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js

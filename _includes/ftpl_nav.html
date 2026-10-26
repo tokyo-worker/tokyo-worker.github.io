@@ -1,0 +1,28 @@
+{% assign ftpl_items = site.ftpl | sort: "order" %}
+{% assign ftpl_idx = -1 %}
+{% for p in ftpl_items %}
+  {% if p.url == page.url %}{% assign ftpl_idx = forloop.index0 %}{% endif %}
+{% endfor %}
+{% assign prev_i = ftpl_idx | minus: 1 %}
+{% assign next_i = ftpl_idx | plus: 1 %}
+<div class="row">
+  <div class="col-6">
+    {% if ftpl_idx > 0 %}
+    <a href="{{ ftpl_items[prev_i].url | relative_url }}" class="btn btn-outline-secondary btn-sm">
+      <i class="fas fa-chevron-left mr-1"></i> {{ ftpl_items[prev_i].title | truncate: 30 }}
+    </a>
+    {% endif %}
+  </div>
+  <div class="col-6 text-right">
+    {% if ftpl_idx >= 0 and next_i < ftpl_items.size %}
+    <a href="{{ ftpl_items[next_i].url | relative_url }}" class="btn btn-outline-secondary btn-sm">
+      {{ ftpl_items[next_i].title | truncate: 30 }} <i class="fas fa-chevron-right ml-1"></i>
+    </a>
+    {% endif %}
+  </div>
+</div>
+<div class="text-center mt-3">
+  <a href="{{ '/ftpl/' | relative_url }}" class="btn btn-light btn-sm">
+    <i class="fas fa-list mr-1"></i> &#30446;&#27425;
+  </a>
+</div>
