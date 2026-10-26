@@ -4,6 +4,10 @@ title: "物価水準の財政理論 第23章 過去と現在：数理モデル�
 date: 2026-10-22 00:00:00 +0900
 categories: [マクロ経済学, 物価水準の財政理論]
 math: true
+order: 23
+redirect_from:
+  - /2026/10/22/cochrane-ftpl-ch23-past-and-present/
+related_posts: false
 ---
 
 {% raw %}

@@ -4,6 +4,10 @@ title: "財政理論における中立性とフィッシャー効果（Cochrane 
 date: 2026-10-25 00:00:00 +0900
 categories: [経済学, マクロ経済学]
 math: true
+order: 6
+redirect_from:
+  - /2026/10/25/cochrane-ftpl-neutrality-fisherian/
+related_posts: false
 ---
 
 {% raw %}

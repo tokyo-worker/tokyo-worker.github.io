@@ -4,6 +4,10 @@ title: "財政理論の粘着価格モデル（Cochrane 第5章）：数理モ�
 date: 2026-10-25 00:00:00 +0900
 categories: [経済学, マクロ経済学]
 math: true
+order: 5
+redirect_from:
+  - /2026/10/25/cochrane-ftpl-sticky-price-model/
+related_posts: false
 ---
 
 {% raw %}

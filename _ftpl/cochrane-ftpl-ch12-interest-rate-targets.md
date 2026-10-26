@@ -4,6 +4,10 @@ title: "物価水準の財政理論 第12章 金利目標：数理モデル早�
 date: 2026-10-22 00:00:00 +0900
 categories: [マクロ経済学, 物価水準の財政理論]
 math: true
+order: 12
+redirect_from:
+  - /2026/10/22/cochrane-ftpl-ch12-interest-rate-targets/
+related_posts: false
 ---
 
 {% raw %}

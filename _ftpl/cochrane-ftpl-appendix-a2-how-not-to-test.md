@@ -4,6 +4,10 @@ title: "物価水準の財政理論 オンライン付録A2 財政理論の誤�
 date: 2026-10-22 00:00:00 +0900
 categories: [マクロ経済学, 物価水準の財政理論]
 math: true
+order: 102
+redirect_from:
+  - /2026/10/22/cochrane-ftpl-appendix-a2-how-not-to-test/
+related_posts: false
 ---
 
 {% raw %}
