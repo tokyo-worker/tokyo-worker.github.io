@@ -1,3 +1,11 @@
+---
+layout: post
+title: "政治的陰謀論の認識論と社会的メカニズム：Sunstein & Vermeule (2009) と Räikkä (2009) の対立軸を中心に：Theoretical Minimum"
+date: 2026-10-28 00:00:00 +0900
+categories: [数理モデル, 意思決定論]
+math: true
+---
+
 # 政治的陰謀論の認識論と社会的メカニズム：Sunstein & Vermeule (2009) と Räikkä (2009) の対立軸を中心に
 
 ## 1. 序論：政治的陰謀論をめぐる学術的問い
