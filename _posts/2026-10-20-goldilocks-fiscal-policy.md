@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "A Goldilocks Theory of Fiscal Policy：数理モデル"
+title: "Atif Mian、Ludwig Straub、Amir Sufi(2021) \"A Goldilocks Theory of Fiscal Policy\"：数理モデル"
 date: 2026-10-20 00:00:00 +0900
 categories: [マクロ経済学, 財政政策]
 math: true

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Money Is Memory：数理モデル早見表"
+title: "Narayana R. Kocherlakota, \"Money Is Memory,\" *Journal of Economic Theory：数理モデル早見表"
 date: 2026-10-27 00:00:00 +0900
 categories: [経済学, 貨幣理論]
 math: true

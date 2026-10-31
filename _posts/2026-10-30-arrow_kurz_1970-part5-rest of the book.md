@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Arrow & Kurz (1970) 第I章（後編）：社会的投資の性質、リスク、割引率と技術進歩"
+title: "Arrow & Kurz (1970) \"Public Investment, the Rate of Return, and Optimal Fiscal Policy\" 第I章（後編）：社会的投資の性質、リスク、割引率と技術進歩"
 date: 2026-10-30 23:00:00 +0900
 categories: [Economics, Macroeconomics, Public Finance]
 tags: [Arrow-Kurz, Optimal Growth, Public Investment, Social Discount Rate, Risk Neutrality, Technical Progress]

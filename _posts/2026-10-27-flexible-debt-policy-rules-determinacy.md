@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "柔軟な債務政策ルールと均衡決定性（小国開放経済）：数理モデル"
+title: "Morimoto & Takizawa (2026) \"Flexible debt policy rules and equilibrium determinacy in a small open economy\" 柔軟な債務政策ルールと均衡決定性（小国開放経済）：数理モデル"
 date: 2026-10-27 00:00:00 +0900
 categories: [経済学, マクロ経済学]
 math: true

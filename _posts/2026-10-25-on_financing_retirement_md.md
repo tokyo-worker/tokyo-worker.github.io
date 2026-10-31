@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "マクロ経済の高齢化と年金制度改革：数理モデル早見表"
+title: "Ellen R. McGrattan and Edward C. Prescott(2016) \"On Financing Retirement with an Aging Population\" マクロ経済の高齢化と年金制度改革：数理モデル早見表"
 date: 2026-10-25 00:00:00 +0900
 categories: [マクロ経済学, 公共経済学]
 math: true

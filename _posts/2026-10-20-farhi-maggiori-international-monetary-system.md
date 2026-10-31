@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "A Model of the International Monetary System（Farhi–Maggiori）：数理モデル"
+title: "Emmanuel Farhi, Matteo Maggiori(2016) \"A Model of the International Monetary System\"：数理モデル"
 date: 2026-10-20 00:00:00 +0900
 categories: [国際金融, 国際通貨システム]
 math: true

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "公的債務の制約（r ＜ g ＜ m）：数理モデル"
+title: "Ricardo Reis（LSE）, \"The constraint on public debt when r < g but g < m\", 公的債務の制約（r ＜ g ＜ m）：数理モデル"
 date: 2026-10-19 00:00:00 +0900
 categories: [経済学, 財政・マクロ経済]
 math: true

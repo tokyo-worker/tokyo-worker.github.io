@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "債務ロールオーバーと期間構造（世代重複経済）：数理モデル"
+title: "Keiichi Morimoto(2026) \"Debt Rollover and Term Structure in an Overlapping Generations Economy\" 債務ロールオーバーと期間構造（世代重複経済）：数理モデル"
 date: 2026-10-27 00:00:00 +0900
 categories: [マクロ経済学, 期間構造]
 math: true

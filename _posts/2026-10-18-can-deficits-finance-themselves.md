@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Can Deficits Finance Themselves?：数理モデル"
+title: "George-Marios Angeletos, Chen Lian, and Christian K. Wolf(2024) \"Can Deficits Finance Themselves?\"：数理モデル"
 date: 2026-10-18 00:00:00 +0900
 categories: [Macroeconomics, Fiscal Policy]
 math: true

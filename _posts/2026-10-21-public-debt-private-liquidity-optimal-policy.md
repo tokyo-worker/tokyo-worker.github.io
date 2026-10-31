@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "公的債務は民間の流動性（最適政策）：数理モデル"
+title: "Angeletos–Collard–Dellas (2022) \"Public Debt as Private Liquidity: Optimal Policy\" 公的債務は民間の流動性（最適政策）：数理モデル"
 date: 2026-10-21 00:00:00 +0900
 categories: [マクロ経済学, 最適財政政策]
 math: true
