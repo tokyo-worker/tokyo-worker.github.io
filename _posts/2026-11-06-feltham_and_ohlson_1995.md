@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Gerald A. Feltham & James A. Ohlson (1995) "Valuation and Clean Surplus Accounting for Operating and Financial Activities", Contemporary Accounting Research: 数理モデル
+title: "Gerald A. Feltham & James A. Ohlson (1995) \"Valuation and Clean Surplus Accounting for Operating and Financial Activities\", Contemporary Accounting Research: 数理モデル"
 date: 2026-11-06 00:00:00 +0900
 categories: [会計学, 財務金融論]
 math: true
