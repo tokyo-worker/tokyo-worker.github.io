@@ -22,8 +22,6 @@ math: true
 - [5. 主要文献・関連論文](#sec5)
 - [付録：導出手順](#appendix)
 
----
-
 ## 0. 論文の紹介 {#sec0}
 
 **書誌**：Harry Markowitz, "Portfolio Selection," *The Journal of Finance*, Vol. 7, No. 1 (Mar. 1952), pp. 77–91.
