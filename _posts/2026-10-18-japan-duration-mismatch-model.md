@@ -617,6 +617,17 @@ $$
 - 剰余は一定比率（A2）という仮定のもとの推計で、実際の景気順応的な剰余ではウェッジはさらに大きくなる。
 - 家計の厚生は、金融資産と超過消費のデュレーションの1次近似で評価する。住宅、手元資金のみの家計、一般均衡効果、所得の金利反応は含まない。
 
+## 5. 主要文献・関連論文 {#sec5}
+
+- **[原著論文]** Chien, Y., Cole, H. L., & Lustig, H. (2026). What about Japan?. *NBER Macroeconomics Annual*, 41, 1-65.
+  - **位置づけ**: 本モデルの提示論文。日本の統合政府バランスシートのデュレーション・ミスマッチと資産収益が財政余力および厚生に与える影響を分析。
+- **[金字塔論文]** Blanchard, O. (2019). Public debt and low interest rates. *American Economic Review*, 109(4), 1197-1229.
+  - **位置づけ**: 安全利子率が経済成長率を下回る領域（$$r \lt g$$）における政府債務の福祉コストと持続可能性を分析した先駆的論文。本モデルの式(3)の基準比較。
+- **[関連文献]** Gourinchas, P. O., & Rey, H. (2007). International financial adjustment. *Journal of Political Economy*, 115(4), 665-704.
+  - **位置づけ**: 対外バランスシートにおける「金融的調整（超過収益による調整）」の重要性を提唱した金字塔論文。本モデルはこれを日本政府の統合バランスシートに応用。
+- **[関連文献]** Aguiar, M., Amador, M., & Arellano, C. (2021). Micro risks and Pareto-improving policies with low interest rates. *Journal of Economic Theory*, 194, 105240.
+  - **位置づけ**: 低金利環境下での財政余力と厚生効果を分析した理論分析。本モデルの家計部門のデュレーション評価手法と直接関連。
+
 ---
 
 ## 付録：導出手順 {#appendix}
