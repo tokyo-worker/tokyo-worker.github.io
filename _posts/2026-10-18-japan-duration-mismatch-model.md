@@ -947,6 +947,23 @@ $\mathcal{D}^{\theta}=\mathcal{D}^{c-y}$ なら厚生利得は0。非参加者�
 | T6 | ラグランジュ関数と包絡線定理 |
 | 全国家計構造調査（2019年） | 家計の消費・所得・資産のプロファイル |
 
+### A.7 著者について
+
+**Yi-Li Chien (銭 奕立)**
+- **アカデミックな経歴**: UCLAにて経済学Ph.D.を取得。セントルイス連邦準備銀行リサーチ部門シニアエコノミスト兼副総裁。パデュー大学助教授等を歴任。
+- **主要な研究分野**: マクロ経済学、資産価格評価、不完全市場における家計ポートフォリオ選択および財政・金融政策。
+- **評判・学術的貢献**: 家計の異質性を考慮した一般均衡モデルや政府バランスシート評価に関する論文を *Journal of Monetary Economics*, *American Economic Journal: Macroeconomics* 等のトップジャーナルに多数公刊。
+
+**Harold L. Cole**
+- **アカデミックな経歴**: ロチェスター大学にて経済学Ph.D.を取得。ペンシルベニア大学経済学部教授（Class of 1950 Term Professor）。NBERフェロー、ミネソタ大学・UCLA教授、ミネアポリス連邦準備銀行リサーチアドバイザー等を歴任。
+- **主要な研究分野**: マクロ経済学、国際金融論、財政破綻・国債デフォルト理論、動学的一般均衡論。
+- **評判・学術的貢献**: Econometric Society フェロー。 sovereign debt（自国債務危機）や金融契約理論に関する先駆的研究で知られ、*Econometrica*, *Journal of Political Economy*, *Quarterly Journal of Economics* 等に多数の金字塔的論文を発表。
+
+**Hanno Lustig**
+- **アカデミックな経歴**: シカゴ大学にて経済学Ph.D.を取得。スタンフォード大学経営大学院（Stanford GSB）Philip H. Knight Professor of Finance。UCLA教授、NBER研究員を歴任。
+- **主要な研究分野**: 資産価格論、国際金融論、マクロ金融（Macro-Finance）、財政政策の資産価格への波及。
+- **評判・学術的貢献**: FISF Pioneer Prize や Fischer Black Prize 受賞。為替レートのリスクプレミアム（Carry Trade）および政府債務のバリュエーションに関する世界的権威であり、*American Economic Review*, *Journal of Finance*, *Review of Financial Studies* 等の編集者・著者として絶大な影響力を持つ。
+
 ---
 
 **© 2023 Yi-Li Chien, Harold L. Cole, and Hanno Lustig**（原論文 NBER Working Paper No. 31850 の著作権表記）。本記事は原論文の数理モデルを整理したものであり、著作権は原著者に帰属します。
