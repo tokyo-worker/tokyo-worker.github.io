@@ -481,6 +481,20 @@ $\kappa$ は定理1の単調性と極限を変えず、$\nu_y$ と $\nu_p$ の�
 
 ---
 
+## 5. 主要文献・関連論文 {#sec5}
+
+- **[原著/金字塔論文]** Blanchard, O. J. (1985). Debt, Deficits, and Finite Horizons. *Journal of Political Economy*, 93(2), 223–247.
+  - **位置づけ**: 有限の生存確率（パーペチュアル・ユース）を導入してリカードの等価定理の破綻を分析した本モデルの基礎骨格。
+- **[原著/金字塔論文]** Leeper, E. M. (1991). Equilibria under 'Active' and 'Passive' Monetary and Fiscal Policies. *Journal of Monetary Economics*, 27(1), 129–147.
+  - **位置づけ**: 財政ルールと金融ルールの相互作用および受動的財政政策（$\tau_d$ ルール）を体系化した基礎文献。
+- **[関連文献]** Galí, J. (2020). The Effects of Monetary Policy with Heterogeneous Agents and Sticky Prices. *American Economic Journal: Macroeconomics*, 12(2), 1–39.
+  - **位置づけ**: 異質家計（HANK/パーペチュアル・ユース）と価格粘着性を統合したニューケインジアン枠組みの先行研究。
+- **[関連文献]** Auclert, A., Rognlie, M., & Straub, L. (2023). The Intertemporal Keynesian Cross. *Journal of Political Economy*, 131(2), 329–378.
+  - **位置づけ**: 異時点間MPC行列（iMPC）を用いた動学的ケインジアン・クロスの定式化を提供し、一般化需要関数の分析の基盤となった研究。
+
+---
+
+
 ## 付録：導出手順 {#appendix}
 
 ### A.0 構造図
@@ -812,6 +826,25 @@ $\omega\to1$ で $\tau_d\gt0$ を固定すると、$\mathcal{F}_1\to0$ で $\chi
 ### A.7 拡張（定理2・3）の扱い
 
 定理2（一般の金融政策）と定理3（一般化した総需要）の証明は、本記事では再現しない。原論文のオンライン付録 D.5, D.6 を参照のこと。証明の骨子は、基準モデルと同様に、$\tau_d\to0$ での極限均衡の持続性 $\rho_d^{\text{full}}$ が1より小さいかどうかに帰着する。定理2では $\rho_d^{\text{full}}(\bar\phi)=1$ となる $\phi$ が閾値 $\bar\phi$、定理3では仮定2 (28) がそれを保証する条件である。
+
+---
+
+### A.8 著者について
+
+**George-Marios Angeletos**
+- **アカデミックな経歴**: ハーバード大学でPh.D.を取得。MIT教授を経て、現在はノースウェスタン大学経済学部教授（Kathleen Tremaine Professor of Economics）。
+- **主要な研究分野**: マクロ経済学、情報経済学（不完全情報・協調ゲーム・期待形成の理論）、財政・金融政策の理論分析。
+- **評判・学術的貢献**: Econometric Society フェロー。不完全情報や感情・信念の変動（Confidence Shock）が景気循環や財政・金融政策伝達に与える影響の解明において第一線で活躍するトップ理論家。
+
+**Chen Lian**
+- **アカデミックな経歴**: MITでPh.D.を取得。現在はカリフォルニア大学バークレー校経済学部准教授（Associate Professor of Economics）。
+- **主要な研究分野**: 行動マクロ経済学、不完全合理的期待形成、不完全情報下の意思決定。
+- **評判・学術的貢献**: 制限された合理性（Bounded Rationality）や注意の摩擦（Inattention）をマクロ経済モデルに組み込む研究で注目を集め、Sloan Research Fellowship など多数の賞を受賞。
+
+**Christian K. Wolf**
+- **アカデミックな経歴**: プリストン大学でPh.D.を取得。現在はマサチューセッツ工科大学（MIT）経済学部准教授（Associate Professor of Economics）。
+- **主要な研究分野**: マクロ経済学、財政政策・金融政策の実証および理論分析、構造ショックの識別手法。
+- **評判・学術的貢献**: 財政乗数やインフレ伝達メカニズム、異質的家計モデル（HANK）の政策効果分析において精力的な研究を発表し、若手マクロ経済学者として高い評価を受ける。
 
 ---
 
