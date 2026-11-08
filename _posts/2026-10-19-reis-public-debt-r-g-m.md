@@ -18,6 +18,10 @@ paper_year: 2021
 
 **論文**：Ricardo Reis（LSE）, "The constraint on public debt when r < g but g < m", BIS Working Papers No 939, 2021年5月。
 
+**論文リンク**：
+- 無料で全文を読める版：[BIS Working Paper No 939 (PDF)](https://www.bis.org/publ/work939.pdf)（BIS公式公開版）
+- 公式版（DOI / BISページ）：[https://www.bis.org/publ/work939.htm](https://www.bis.org/publ/work939.htm)
+
 **論文の主張**：実質金利 $r$ が成長率 $g$ を下回り、かつ資本の限界生産性 $m$ が $g$ を上回る（$r\lt g\lt m$）経済では、政府は永続的な赤字を出せます。債務が基礎的財政黒字の現在価値を上回る分は、$m-r$（バブル・プレミアム）から生じる収入で説明されます。論文は、このプレミアムを「公的債務の安全性と流動性」から内生的に導くモデルを作り、支出を増やすほどプレミアムは大きくなる一方で、民間の債務需要は減るため、支出には上限（財政余力 $S$）があることを示します。さらに、インフレ、金融抑圧、再分配、所得税がこの上限をどう動かすかを分析しています。
 
 **この記事について**：この記事は、論文本体の紹介ではなく、**論文の背景にある数理モデルだけ**を早見表にしたものです。式・前提・記号・導出を中心にまとめ、解説は最小限にしています。論文の数理モデルは簡易化せず、一般モデル・拡張・政策分析・付録（安全性のみの経済）まで含めています。論文の実証部分（Figure 1）と先行研究の整理は扱いません。
@@ -709,6 +713,19 @@ $$
 
 ---
 
+## 5. 主要文献・関連論文 {#sec5}
+
+- **[原著/金字塔論文]** Tirole, J. (1985). Asset Bubbles and Overlapping Generations. *Econometrica*, 53(6), 1499–1528.
+  - **位置づけ**: 動学的非効率性やバブルの存在条件を一般均衡枠組みで解明した、マクロ経済学におけるバブル理論の基礎的金字塔論文。
+- **[関連文献]** Caballero, R. J., Farhi, E., & Gourinchas, P.-O. (2017). The Safe Asset Shortage, Conundrum, and Global Rstar. *American Economic Review*, 107(5), 322–327.
+  - **位置づけ**: 安全資産の需要超過が引き起こす低金利現象（Safe Asset Shortage）を理論化し、本モデルの背後にある安全プレミアムの概念に直接つながる主要文献。
+- **[関連文献]** Brunnermeier, M. K., & Sannikov, Y. (2014). A Macroeconomic Framework with Financial Intermediaries. *American Economic Review*, 104(2), 379–421.
+  - **位置づけ**: 金融摩擦と制約付き最適化を連続時間マクロ経済モデルに組み込む手法を提示し、本モデルの分析手法の基礎となった重要論文。
+- **[関連文献]** Blanchard, O. (2019). Public Debt and Low Interest Rates. *American Economic Review*, 109(4), 1197–1229.
+  - **位置づけ**: 低金利環境（$$r\lt g$$）における財政政策の空間と財政再建のコストを再検討し、近年の財政論争に火を付けた代表的論文。
+
+---
+
 ## 付録：導出手順 {#appendix}
 
 ### A.0 構造図
@@ -1092,6 +1109,16 @@ $r=\hat r$ では $s/b=0$（債務は一定の成長を維持するのみで、�
 | T5、T6 | 単調性、2次関数の根 |
 
 ---
+
+### A.9 著者について
+
+**Ricardo Reis**
+- **アカデミックな経歴**: ハーバード大学でPh.D.を取得。コロンビア大学教授を経て、現在はロンドン・スクール・オブ・エコノミクス（LSE）経済学部教授。
+- **主要な研究分野**: マクロ経済学、金融政策、インフレ動学、家計の不注意（Inattention）と期待形成。
+- **評判・学術的貢献**: Econometric Society フェロー、Alfred P. Sloan Fellow。マクロ経済学における物価形成や財政・金融政策の相互作用、インフレの理論および実証分析で世界をリードする著名エコノミスト。
+
+---
+
 
 **© 2021 Bank for International Settlements.** 原論文：Ricardo Reis, "The constraint on public debt when r < g but g < m", BIS Working Papers No 939, May 2021（著作権は著者および BIS に帰属。原論文では短い抜粋の転載・翻訳は出典を明示すれば認められている）。本記事は、その数理モデルを整理した解説であり、原論文の見解を代表するものではありません。
 {% endraw %}
