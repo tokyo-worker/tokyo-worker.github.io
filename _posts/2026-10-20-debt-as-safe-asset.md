@@ -31,6 +31,11 @@ paper_year: 2022
 
 Markus K. Brunnermeier（Princeton）, Sebastian A. Merkel（Bristol）, Yuliy Sannikov（Stanford）, "Debt as Safe Asset", NBER Working Paper No. 29626, 2022年1月（2025年6月改訂）, JEL E44, G11, G12。この論文は、旧題 "Debt as Safe Asset: Mining the Bubble"、"Safe Assets: A Dynamic Retrading Perspective" などの版を置き換えるものです。
 
+**論文リンク**
+
+- 無料で全文を読める版：[NBER Working Paper No. 29626 (PDF)](https://www.nber.org/system/files/working_papers/w29626/w29626.pdf)（NBER公式公開版）
+- 公式版（NBERページ）：[https://www.nber.org/papers/w29626](https://www.nber.org/papers/w29626)（※閲覧に契約や所属機関経由のアクセスが必要な場合が有ります）
+
 **論文の内容**
 
 安全資産の価格は、将来のキャッシュフローの割引現在価値だけでなく、再取引によって得られる自己保険のサービスフローの割引現在価値も含む、というのが論文の中心的な主張です。市場が不完備で個人ごとの特異リスクを消せないとき、家計は不運なショックの後に安全資産を売ることで部分的に保険をかけられます。このサービスフローは、特異リスクが高まる不況期に大きくなるため、政府債務の価値は反循環的になり、CAPM の β は負になりえます。その結果、次のことが整理されます。
@@ -744,6 +749,16 @@ $$
 - 政府が特定のバブル均衡を選ぶ仕組みの詳細（非ポンジ制約の導入、競合バブル資産への課税、金融抑圧など）。論文は先行研究（Brunnermeier et al. 2021a）に委ね、本論文の枠組みの外としている。
 - 最適な債務水準や厚生評価。論文は主張していない。
 
+## 5. 主要文献・関連論文 {#sec5}
+
+- **[原著/金字塔論文]** Jiang, Z., Lustig, H., Van Nieuwerburgh, S., & Xiaolan, M. Z. (2019). Manufacturing Risk-Free Assets. *Econometrica*, 89(3), 1015–1072.
+  - **位置づけ**: 米国政府債務の評価パズル（Government Debt Valuation Puzzle）を実証的に提示し、安全資産のプレミアムの重要性を現代のマクロ・ファイナンス論争に持ち込んだ金字塔的論文。
+- **[関連文献]** Krishnamurthy, A., & Vissing-Jorgensen, A. (2012). The Aggregate Demand for Treasury Debt. *Journal of Political Economy*, 120(2), 233–267.
+  - **位置づけ**: 米国債に対する高い安全需要と、それが生み出す利便性イールド（Convenience Yield）を実証・理論の両面から解明した主要文献。
+- **[関連文献]** Gârleanu, N., & Pedersen, L. H. (2011). Margin-Based Asset Pricing and Immediacy Provision. *Journal of Financial Economics*, 101(3), 545–566.
+  - **位置づけ**: 金融摩擦や再取引制約のもとでの資産価格形成を連続時間で分析した、本モデルの動学的アプローチの基礎となった研究。
+
+
 ---
 
 ## 付録：導出手順 {#appendix}
@@ -1398,6 +1413,24 @@ $\upsilon=0$ なら $\Delta i=0$ で式(51)、式(52)、式(53)、式(54)は式(
 |---|---|
 | 式(50)、式(64)、式(16) | 修正効用、ハミルトニアン、基本のϑ方程式 |
 | T3 | 価値関数の推測 |
+
+### A.16 著者について
+
+**Markus K. Brunnermeier**
+- **アカデミックな経歴**: ニューヨーク大学（NYU）でPh.D.を取得。プリンストン大学経済学部教授（Edwards S. Sanford Professor）。
+- **主要な研究分野**: マクロ経済学、金融危機、流動性、国際金融、行動経済学。
+- **評判・学術的貢献**: Econometric Society フェロー、American Finance Association 会長を歴任。バブル理論や流動性螺旋（Liquidity Spiral）の概念を提唱し、金融規制や中央銀行政策に多大な影響を与えた世界最高峰の金融マクロエコノミスト。
+
+**Sebastian A. Merkel**
+- **アカデミックな経歴**: プリンストン大学でPh.D.を取得。現在はブリストル大学経済学部講師（Lecturer）。
+- **主要な研究分野**: マクロ経済学、資産価格理論、安全資産、金融摩擦。
+- **評判・学術的貢献**: 不完備市場における安全資産の役割や政府債務の評価に関する新進気鋭の理論研究で国際的に注目を集める若手研究者。
+
+**Yuliy Sannikov**
+- **アカデミックな経歴**: スタンフォード大学でPh.D.を取得。プリンストン大学教授を経て、現在はスタンフォード大学経済学部教授。
+- **主要な研究分野**: 金融経済学、契約理論、マクロ経済学、連続時間確率制御。
+- **評判・学術的貢献**: 2016年にジョン・ベイツ・クラーク賞を受賞。連続時間確率法を用いたマクロ経済動学と金融摩擦の分析（Brunnermeier-Sannikovの枠組み等）の開拓者として極めて高い評価を受ける。
+
 
 ---
 
