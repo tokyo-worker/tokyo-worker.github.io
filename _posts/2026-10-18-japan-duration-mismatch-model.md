@@ -4,6 +4,8 @@ title: "Chien, Cole, Lustig : What about Japan? - 数理モデルのクイック
 date: 2026-10-18 00:00:00 +0900
 categories: [経済学, 財政・金融]
 math: true
+paper_authors: "Chien, Cole & Lustig"
+paper_year: 2023
 ---
 
 {% raw %}

@@ -4,6 +4,8 @@ title: "Ricardo Reis（LSE）, \"The constraint on public debt when r < g but g 
 date: 2026-10-19 00:00:00 +0900
 categories: [経済学, 財政・マクロ経済]
 math: true
+paper_authors: "Reis"
+paper_year: 2021
 ---
 
 {% raw %}

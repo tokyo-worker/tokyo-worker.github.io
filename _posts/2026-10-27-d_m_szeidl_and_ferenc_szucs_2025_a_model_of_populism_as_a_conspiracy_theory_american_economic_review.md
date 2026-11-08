@@ -4,6 +4,8 @@ title: "Ádám Szeidl and Ferenc Szucs (2025) \"A Model of Populism as a Conspir
 date: 2026-10-28 00:00:00 +0900
 categories: [Political Economics, Information Economics]
 math: true
+paper_summary: "政治家、知的エリート（ニュースメディア）、有権者の3主体による2期間ゲームで、ポピュリストが「エリートは結託して常に批判する」という陰謀論的な「代替的現実」を有権者に信じさせ、エリートの客観的な批判を無効化するメカニズムを示す。無能な政治家がコストを払ってプロパガンダを行う誘因、有害な政策をあえて強行する戦略、エリートの証拠提示が裏目に出る現象を説明する。"
+paper_position: "この記事は、この論文の背景にある数理モデルを、式・前提・記号・導出を中心に早見表として整理した記事です。"
 ---
 
 {% raw %}

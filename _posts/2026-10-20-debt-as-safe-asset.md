@@ -4,6 +4,8 @@ title: "Debt as Safe Asset（Brunnermeier・Merkel・Sannikov）：数理モデ�
 date: 2026-10-20 00:00:00 +0900
 categories: [マクロ経済学, 安全資産]
 math: true
+paper_authors: "Brunnermeier, Merkel & Sannikov"
+paper_year: 2022
 ---
 
 {% raw %}

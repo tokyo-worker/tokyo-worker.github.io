@@ -46,20 +46,134 @@ module PaperIndex
     name.sub(/\.\z/, '')
   end
 
+  # タイトルの著者部分から、共著者を含む全員の姓を順に取り出す
+  def author_surnames(authors)
+    authors.to_s.split(/\s*,\s*and\s+|\s+and\s+|\s*[&＆、・–—;,]\s*/).map do |name|
+      tokens = name.strip.split(/\s+/)
+      next nil if tokens.empty?
+
+      n = tokens.last.sub(/\.\z/, '')
+      n = "#{tokens[-2]} #{n}" if tokens.size >= 3 && PARTICLES.include?(tokens[-2].downcase)
+      n
+    end.compact.reject(&:empty?)
+  end
+
   def key_of(surname, year)
     "#{norm(surname.to_s.split(/\s+/).last)}-#{year}"
   end
 
-  # 「**ラベル**：本文」(同じ行)と、「**ラベル**」だけの行の次の段落、の両方に対応。
-  # labels は優先順。最初に見つかったものを返す。
-  def grab(content, *labels)
+  SUMMARY_LABELS  = %w[論文の内容 論文の内容（要約） 論文の概要 論文の問いと主張 論文の問い 論文について
+                       論文の紹介 論文の主張 どんな論文か 何を扱う本か 何を扱う論文か].freeze
+  POSITION_LABELS = %w[本記事の位置づけ この記事の位置づけ 本記事の範囲 この記事について 本記事について].freeze
+  POSITION_START  = /\A(?:\*\*)?(?:本記事|この記事|本稿)(?:は|では|の位置づけ)/
+  STOP_LINE       = /\A\s*(?:\*\*|[-*+]\s|\||#|---|\{%)/
+
+  # 本文の前処理: 引用記号の除去、[cite: n] の除去、行ごとの配列化
+  def plain_lines(text)
+    text.to_s.gsub(/\s*\[cite:[^\]]*\]/, '').lines.map { |l| l.chomp.sub(/\A\s*>\s?/, '').rstrip }
+  end
+
+  # 導入部のテキスト: 副題と最初の区切りの間 + 「論文の紹介」等の見出しの節
+  def intro_lines(content)
+    body = content.sub(/\A\s*\{%\s*raw\s*%\}/, '')
+    pre = body[/\A.*?(?=^##\s|^---\s*$)/m].to_s
+    sec = body[/^##\s[^\n]*(?:論文の紹介|この論文について|この記事で扱う論文|紹介する論文|この記事について|論文について|^0\.|0\.\s|はじめに|概要)[^\n]*\n(.*?)(?=^##\s|\z)/m, 1].to_s
+    plain_lines("#{pre}\n#{sec}")
+  end
+
+  # 「**ラベル**：本文」「**ラベル。**本文」「**ラベル**」+次の段落、のどれにも対応
+  def labeled(lines, labels)
     labels.each do |label|
-      l = Regexp.escape(label)
-      m = content.match(/\*\*#{l}\*\*[ \t]*[:：][ \t]*(\S.*?)(?:\n[ \t]*\n|\z)/m) ||
-          content.match(/^\*\*#{l}\*\*[ \t]*\n[ \t]*\n(.+?)(?:\n[ \t]*\n|\z)/m)
-      return m[1].strip.gsub(/\s*\n\s*/, ' ') if m
+      re = /\*\*#{Regexp.escape(label)}[。.：:]?\*\*[ \t　]*[：:。.]?[ \t　]*(.*)\z/
+      lines.each_with_index do |line, idx|
+        m = re.match(line)
+        next unless m
+
+        parts = m[1].to_s.strip.empty? ? [] : [m[1].strip]
+        k = idx + 1
+        k += 1 while k < lines.size && lines[k].strip.empty? && parts.empty?
+        if parts.empty? && k < lines.size && lines[k] =~ /\A\s*[-*+]\s+/
+          # ラベルの次が箇条書きなら、項目をつなげて要約とする(書誌・リンクの項目は除く)
+          while k < lines.size && (lines[k] =~ /\A\s*[-*+]\s+/ || lines[k].strip.empty?)
+            item = lines[k].sub(/\A\s*[-*+]\s+/, '').strip
+            parts << item unless item.empty? || item =~ /\A\*\*(?:書誌|論文リンク)\*\*/
+            k += 1
+            break if k < lines.size && lines[k].strip.empty? && lines[k + 1].to_s !~ /\A\s*[-*+]\s+/
+          end
+          text = parts.join(' ').strip
+          return cap(text, 520) unless text.empty?
+          next
+        end
+        while k < lines.size && !lines[k].strip.empty? && lines[k] !~ STOP_LINE
+          parts << lines[k].strip
+          k += 1
+        end
+        text = parts.join(' ').strip
+        return text unless text.empty?
+      end
     end
     nil
+  end
+
+  # 「Kenneth J. Arrow and Mordecai Kurz, *Title*, ...」のような書誌行か
+  def bibliographic?(text)
+    text =~ /\A[A-Za-z.,&\s\-’']+\*[^*]+\*/ ? true : false
+  end
+
+  def cap(text, max)
+    return text if text.length <= max
+
+    cut = text[0, max][/\A.*。/m]
+    cut && cut.length > max / 2 ? cut : "#{text[0, max - 1]}…"
+  end
+
+  # ラベルがない記事向けの推定: 導入部の段落から拾う
+  def guess_summary(lines)
+    lines.each do |l|
+      t = l.strip
+      next if t.empty? || t =~ STOP_LINE || t =~ POSITION_START || t =~ /\A\*\*[^*]+\*\*[：:。.]?\s*\z/ || bibliographic?(t)
+      next unless t.include?('。') && t.length >= 40
+
+      return cap(t, 520)
+    end
+    nil
+  end
+
+  def guess_position(lines)
+    lines.each do |l|
+      t = l.strip
+      next unless t =~ POSITION_START || t =~ /\A\*\*(?:本記事|この記事)/
+
+      return cap(t, 300)
+    end
+    nil
+  end
+
+  def subtitle_of(content)
+    content.sub(/\A\s*\{%\s*raw\s*%\}/, '')[/^###\s+(.+)$/, 1].to_s.strip
+  end
+
+  # 返り値: [要約, 位置づけ, 要約の取得元, 位置づけの取得元]
+  def extract_intro(content)
+    lines = intro_lines(content)
+    sum = labeled(lines, SUMMARY_LABELS)
+    sum_src = 'label'
+    if sum.nil?
+      sum = guess_summary(lines)
+      sum_src = 'guess'
+    end
+    if sum.nil?
+      sub = subtitle_of(content)
+      sum = sub.empty? ? nil : sub
+      sum_src = sum ? 'subtitle' : 'none'
+    end
+    pos = labeled(lines, POSITION_LABELS)
+    pos_src = 'label'
+    if pos.nil?
+      pos = guess_position(lines)
+      pos_src = pos ? 'guess' : 'none'
+    end
+    [sum, pos, sum_src, pos_src]
   end
 
   def paper_meta(post)
@@ -159,8 +273,12 @@ module PaperIndex
       post.data['paper_sort']     = format('%<s>s|%<y>04d|%<u>s',
                                            s: norm(meta[:surname].split(/\s+/).last),
                                            y: meta[:year], u: post.url)
-      post.data['paper_summary']  = post.data['paper_summary'] || grab(post.content, '論文の内容', '何を扱う本か', '何を扱う論文か')
-      post.data['paper_position'] = post.data['paper_position'] || grab(post.content, '本記事の位置づけ')
+      sum, pos, sum_src, pos_src = extract_intro(post.content)
+      post.data['paper_summary']  ||= sum
+      post.data['paper_position'] ||= pos
+      post.data['paper_summary_src']  = post.data['paper_summary'].equal?(sum) ? sum_src : 'frontmatter'
+      post.data['paper_position_src'] = post.data['paper_position'].equal?(pos) ? pos_src : 'frontmatter'
+      post.data['paper_coauthors'] = author_surnames(meta[:authors])
     end
     by_key.each_value { |arr| arr.sort_by!(&:url) }
 
@@ -263,6 +381,31 @@ module PaperIndex
 
     plain = shown.empty? ? nil : build_graph.call(false)
     titled = shown.empty? ? nil : build_graph.call(true)
+
+
+    # --- 5: 著者索引(共著者も含む) -------------------------------------
+    groups = {}
+    metas.each do |post, meta|
+      names = post.data['paper_coauthors']
+      names = [meta[:surname]] if names.nil? || names.empty?
+      names = names.dup
+      names[0] = meta[:surname] # 筆頭著者は front matter の指定を優先
+      names.each_with_index do |name, i|
+        gk = norm(name.split(/\s+/).last)
+        next if gk.empty?
+
+        g = (groups[gk] ||= { 'surname' => name, 'sort' => gk, 'items' => [] })
+        g['items'] << { 'post' => post, 'primary' => i.zero?, 'first_surname' => meta[:surname], 'first_sort' => norm(meta[:surname].split(/\s+/).last),
+                        'year' => meta[:year], 'authors' => meta[:authors] }
+      end
+    end
+    groups.each_value do |g|
+      # 筆頭著者として載る名前表記を優先して見出しにする
+      prim = g['items'].find { |it| it['primary'] }
+      g['surname'] = prim['first_surname'] if prim
+      g['items'].sort_by! { |it| [it['year'], it['post'].url] }
+    end
+    site.data['paper_index'] = groups.values.sort_by { |g| g['sort'] }
 
     site.data['paper_graph'] = { 'mermaid' => plain, 'mermaid_titles' => titled, 'nodes' => node_keys.size, 'edges' => shown.size }
   end

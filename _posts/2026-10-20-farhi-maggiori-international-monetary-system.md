@@ -4,6 +4,7 @@ title: "Emmanuel Farhi, Matteo Maggiori(2016) \"A Model of the International Mon
 date: 2026-10-20 00:00:00 +0900
 categories: [国際金融, 国際通貨システム]
 math: true
+paper_summary: "準備資産を発行する単独の国（Hegemon）と、競争的な国際投資家（RoW）からなる2期間モデルを扱う。準備資産への需要が大きいと、Hegemon は安全な債務量と危険な債務量のどちらを選ぶかという Triffin のジレンマに直面し、発行による独占レント（exorbitant privilege）や過剰発行が生じることを示す。あわせて、投資家の期待に応じた複数均衡（信認危機）、金本位制下の産出低下、多極化した場合の姿も扱う。"
 ---
 
 {% raw %}

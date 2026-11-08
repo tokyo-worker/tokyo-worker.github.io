@@ -4,6 +4,8 @@ title: "Vasicek (1977) \"An Equilibrium Characterization of the Term Structure\"
 date: 2026-10-31 00:00:00 +0900
 categories: [数理ファイナンス, 金利と財政]
 math: true
+paper_summary: "Vasicek (1977) のマルチンゲール評価による国債利回りに、政府債務の通時的予算制約と横断性条件（TVC）を接続する。短期金利から債券価格・利回りを経て債務GDP比の現在価値に至る流れを一つの連続時間モデルにまとめ、金利が確率的でも債務が有限にとどまる条件が、長期の利回りと成長率の関係で与えられることなどを示す。"
+paper_position: "この記事は、Vasicek (1977) の数理モデルに、政府債務の通時的予算制約とTVCを接続した拡張モデルを、式・前提・記号・導出を中心に早見表として整理した記事です。"
 ---
 
 {% raw %}

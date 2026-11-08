@@ -4,6 +4,8 @@ title: "Narayana R. Kocherlakota, \"Money Is Memory,\" *Journal of Economic Theo
 date: 2026-10-27 00:00:00 +0900
 categories: [経済学, 貨幣理論]
 math: true
+paper_authors: "Kocherlakota"
+paper_year: 1998
 ---
 
 {% raw %}
