@@ -80,6 +80,35 @@ module PaperIndex
     { authors: authors.to_s, year: year.to_i, surname: surname.to_s }
   end
 
+  # 文献行の「(年).」の後ろから論文(書籍)タイトルを取り出す
+  def ref_title(rest)
+    rest = rest.to_s.sub(/\A[a-z]?[）)][.,\s]*/, '').strip
+    t = if rest.start_with?('*')
+          rest[/\A\*+([^*]+)\*+/, 1]
+        elsif rest =~ /\A["“](.+?)["”]/
+          Regexp.last_match(1)
+        else
+          rest[/\A(.+?)(?:\.\s|\.\z|\s\*|\z)/m, 1]
+        end
+    clean_text(t)
+  end
+
+  # Mermaid のラベルに入れても壊れない文字だけにする
+  def clean_text(str)
+    str.to_s.gsub(/[\\"“”<>`*\[\]{}|]/, '').gsub(/\s+/, ' ').strip
+  end
+
+  def shorten(str, max = 56)
+    str = str.to_s
+    str.length > max ? "#{str[0, max - 1].rstrip}…" : str
+  end
+
+  # 記事タイトル中の「論文タイトル」(引用符で囲まれた部分)
+  def title_of_post(post)
+    m = post.data['title'].to_s.match(/["“](.+?)["”]/)
+    clean_text(post.data['paper_title'] || (m && m[1]))
+  end
+
   def parse_ref(line)
     m = REF_LINE_RE.match(line)
     return nil unless m
@@ -88,7 +117,8 @@ module PaperIndex
     return nil if surname.empty?
 
     year = m[:year].to_i
-    { key: key_of(surname, year), label: "#{surname} (#{year})".delete('"') }
+    { key: key_of(surname, year), label: "#{surname} (#{year})".delete('"'),
+      title: ref_title(line[m.end(0) - 1..]) }
   end
 
   def year_of(key)
@@ -102,7 +132,7 @@ module PaperIndex
   def node_label(meta)
     s = meta[:authors]
     s = "#{meta[:surname]} et al." if s.length > 28
-    "#{s} (#{meta[:year]})".delete('"').gsub('&', '&amp;')
+    "#{s} (#{meta[:year]})".delete('"')
   end
 
   def md_escape(text)
@@ -138,6 +168,7 @@ module PaperIndex
     cited_by = {}.compare_by_identity
     edges = Set.new
     ext_labels = {}
+    ext_titles = {}
     pending = []
 
     posts.each do |post|
@@ -156,6 +187,7 @@ module PaperIndex
           a, b = b, a if year_of(a) > year_of(b)
           edges << [a, b]
           ext_labels[ref[:key]] ||= ref[:label]
+          ext_titles[ref[:key]] ||= ref[:title]
         end
         targets = by_key.fetch(ref[:key], []).reject { |t| t.equal?(post) }
         next line if targets.empty?
@@ -198,28 +230,41 @@ module PaperIndex
     end
     node_keys = shown.flat_map { |e| e }.uniq.sort_by { |k| [year_of(k), k] }
 
-    mermaid = nil
-    unless shown.empty?
+    build_graph = lambda do |with_titles|
       lines = ['graph LR']
       externals = []
       node_keys.each do |k|
         if by_key.key?(k)
-          lines << "  #{node_id(k)}[\"#{node_label(metas[by_key[k].first])}\"]"
+          first = by_key[k].first
+          label = node_label(metas[first])
+          t = shorten(title_of_post(first))
+          label += "<br/>#{t}" if with_titles && !t.empty?
+          lines << "  #{node_id(k)}[\"#{label}\"]"
         else
-          lines << "  #{node_id(k)}([\"#{ext_labels[k]}\"])"
+          label = ext_labels[k].to_s
+          t = shorten(ext_titles[k])
+          label += "<br/>#{t}" if with_titles && !t.empty?
+          lines << "  #{node_id(k)}([\"#{label}\"])"
           externals << node_id(k)
         end
       end
       shown.each { |f, t| lines << "  #{node_id(f)} --> #{node_id(t)}" }
       node_keys.each do |k|
-        lines << "  click #{node_id(k)} href \"#{base}#{by_key[k].first.url}\"" if by_key.key?(k)
+        next unless by_key.key?(k)
+
+        first = by_key[k].first
+        tip = clean_text("#{node_label(metas[first])} #{title_of_post(first)}")
+        lines << "  click #{node_id(k)} href \"#{base}#{first.url}\" \"#{tip}\""
       end
       lines << '  classDef ext fill:none,stroke-dasharray:4 3'
       lines << "  class #{externals.join(',')} ext" unless externals.empty?
-      mermaid = lines.join("\n")
+      lines.join("\n")
     end
 
-    site.data['paper_graph'] = { 'mermaid' => mermaid, 'nodes' => node_keys.size, 'edges' => shown.size }
+    plain = shown.empty? ? nil : build_graph.call(false)
+    titled = shown.empty? ? nil : build_graph.call(true)
+
+    site.data['paper_graph'] = { 'mermaid' => plain, 'mermaid_titles' => titled, 'nodes' => node_keys.size, 'edges' => shown.size }
   end
 end
 
