@@ -25,6 +25,36 @@ paper_summary: "準備資産を発行する単独の国（Hegemon）と、競争
 
 ---
 
+## 0. 論文の紹介 {#sec0}
+
+**書誌**：Farhi, E., & Maggiori, M. (2018). "A Model of the International Monetary System," *The Quarterly Journal of Economics*, Vol. 133, No. 1, pp. 295–355. (Working Paper: NBER WP No. 22295, May 2016 / Rev. Dec 2016).
+
+**論文リンク**：
+- 無料で全文を読める版：[https://www.nber.org/system/files/working_papers/w22295/revisions/w22295.rev0.pdf](https://www.nber.org/system/files/working_papers/w22295/revisions/w22295.rev0.pdf)（NBER Working Paper No. 22295 公式リポジトリ）
+- 公式版（出版元・QJE）：[https://doi.org/10.1093/qje/qjx031](https://doi.org/10.1093/qje/qjx031)（閲覧に契約や所属機関経由のアクセスが必要な場合があります）
+
+**論文の内容**：本論文は、基軸通貨を発行する Hegemon 国と国際投資家（RoW）の相互作用を解明する国際通貨システムの静学・動学モデルを提示します。世界的な準備資産需要に対して Hegemon が限定コミットメント下で安全債務を発行する際、安全性を維持して発行量を絞るか、過剰発行して事後的な為替切り下げ（信認危機）リスクを負うかという Triffin のジレンマのメカニズムを解明し、さらに金本位制、ZLB（ゼロ金利制約）、多極化競争が世界情勢に及ぼす影響を統一的に分析しています。
+
+**本記事の位置づけ**：この記事は、この論文の背景にある数理モデルについての記事です。歴史的議論や解釈の記述は最小限にとどめ、決定論・確率的期待構造、安全債・危険債の需要と Hegemon の最適化、信認危機のゾーン分析、ならびに多極化・無限期間拡張の数式と導出プロセスを原論文のまま（簡略化せず）整理しています。
+
+**式番号の対応表**：
+
+| 本記事の式番号 | 原論文の対応箇所 |
+|---|---|
+| 式(1)〜(4) | Section 2.1 - 2.2（RoW の需要曲線） |
+| 式(5)〜(11) | Section 2.3 - 2.4（完全コミットメント均衡・独占レント） |
+| 式(12)〜(20) | Section 3.1 - 3.3（限定コミットメント・3ゾーン・Triffin ジレンマ） |
+| 式(21)〜(25) | Section 4.1 - 4.3（過少・過剰発行と厚生分析） |
+| 式(26)〜(31) | Section 5.1 - 5.2（名目硬直性と ZLB） |
+| 式(32)〜(35) | Section 5.3（金本位制） |
+| 式(36), (37) | Section 5.4（非貿易財と支出切り替え効果） |
+| 式(38)〜(41) | Section 6.1 - 6.2（多極化・Cournot 競争） |
+| 式(42)〜(48) | Section 6.3 - 6.4（無限期間モデル・Franchise Value） |
+| 式(49)〜(52) | Section 7.1 - 7.2（私的発行と第三国発行） |
+| 式(53)〜(58) | Section 7.3 - 7.5（流動性・ネットワーク効果と財政能力） |
+
+---
+
 ## 1. 数理モデル {#sec1}
 
 ### 1.0 前提
@@ -863,6 +893,19 @@ $$
 - 切り下げが 2 値（$e\in\{1,e_L\}$）の単純化。ヘッジ資産（$e_H\gt1,\ e_L\lt1$）の構成は扱わない。
 - 切り下げ以外の財政的負担（インフレ以外の手段）、公的債務の返済構造、満期構造。
 - 他の準備資産需要の要因（国防・為替防衛など）。本モデルは危険回避・流動性の代理変数 $\gamma$ に集約している。
+
+---
+
+## 5. 主要文献・関連論文 {#sec5}
+
+- **[原著論文]** Farhi, E., & Maggiori, M. (2018). A Model of the International Monetary System. *The Quarterly Journal of Economics*, 133(1), 295-355.
+  - **位置づけ**: 本モデルの提示論文。国際通貨システムにおける Hegemon の発行問題と Triffin のジレンマを理論的に定式化した金字塔的論文。
+- **[関連文献]** Maggiori, M. (2017). Financial Intermediation, International Risk Sharing, and Reserve Currencies. *American Economic Review*, 107(10), 3038-3071.
+  - **位置づけ**: 国際金融仲介機関の自己資本制約とリスクシェアリングから基軸通貨需要（$$\gamma$$）をミクロ的基礎づけした主要文献。
+- **[金字塔論文]** Gourinchas, P. O., & Rey, H. (2007). International Financial Adjustment. *Journal of Political Economy*, 115(4), 665-704.
+  - **位置づけ**: 米国の「Exorbitant Privilege（不当な利得）」と対外バランスシートの収益率差（資本利息差）を量的・理論的に定式化した先駆的論文。
+- **[金字塔論文]** Obstfeld, M., & Rogoff, K. (1995). The Mirage of Fixed Exchange Rates. *Journal of Economic Perspectives*, 9(4), 73-96.
+  - **位置づけ**: 限定コミットメントと固定相場制の持続可能性に関する基礎議論を提示した論文。本モデルの事後的な切り下げコスト $$\tau$$ の理論的背景。
 
 ---
 
@@ -1782,6 +1825,20 @@ $\Omega_{12}=\Omega_{21}=0$（ネットワーク効果なし）で乗数が消�
 | 入力 | 式(54)、式(17) |
 | 使う道具 | T1、T8 |
 | 結果 | 式(56)、式(57)、式(58) |
+
+---
+
+### A.17 著者について
+
+**Emmanuel Farhi**
+- **アカデミックな経歴**: 科学研究振興機構および Ecole Normale Supérieure を経て、MITにてPh.D.を取得。ハーバード大学経済学部教授（Paul M. Warburg Professor of Economics）。2020年没。
+- **主要な研究分野**: マクロ経済学、国際金融論、財政政策、金融システムのリスク。
+- **評判・学術的貢献**: Bernácer Prize, Yrjö Jahnsson Award 等を受賞。国際通貨体制、安全資産、流動性トラップ、システムリスク分析において数々の革新的な論文を *American Economic Review*, *Econometrica*, *Quarterly Journal of Economics* に公刊した現代マクロ経済学の不世出の理論家。
+
+**Matteo Maggiori**
+- **アカデミックな経歴**: UCバークレーにてPh.D.を取得。ハーバード大学准教授を経て、現在はスタンフォード大学経営大学院（Stanford GSB）教授。
+- **主要な研究分野**: 国際金融論、資産価格理論、マクロ経済学。
+- **評判・学術的貢献**: Fischer Black Prize (2021) 受賞。グローバル資本移動、基軸通貨（ドル）の支配的構造、国際金融仲介理論の第一人者であり、*American Economic Review*, *Journal of Political Economy*, *Quarterly Journal of Economics* 等のトップジャーナルに多数の論文を発表。
 
 ---
 
