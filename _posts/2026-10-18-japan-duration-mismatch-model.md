@@ -19,8 +19,9 @@ paper_year: 2023
 **What about Japan?**（Yi-Li Chien, Harold L. Cole, Hanno Lustig, NBER Working Paper No. 31850, 2023年11月、2025年3月改訂）
 
 **論文リンク**：
-- 無料で全文を読める版：[https://www.nber.org/system/files/chapters/c15418/c15418.pdf](https://www.nber.org/system/files/chapters/c15418/c15418.pdf)（NBER公式公開章アーカイブ）
-- 公式版（出版社・NBER）：[https://doi.org/10.3386/w31850](https://doi.org/10.3386/w31850)（閲覧に所属機関経由のアクセスが必要な場合あり）
+- 無料で全文を読める版：<https://www.nber.org/papers/w31850> （NBER ワーキングペーパー版（Working Paper 31850、2023年11月）のページ。PDF は同ページ（または http://www.nber.org/papers/w31850.pdf））
+- 無料で読める別の版：<https://www.nber.org/system/files/chapters/c15418/c15418.pdf> （NBER Macroeconomics Annual 2026 向けの改訂稿（2026年3月26日付）。最新の改訂版）
+- 公式版（出版社・DOI）：<https://doi.org/10.3386/w31850> （NBER Working Paper 31850 の DOI）
 
 この論文は、日本銀行・公的金融機関・一般政府（中央・地方・公的年金基金）のバランスシートを連結し、日本の公的部門が「変動金利に近い短期の負債で調達し、長期・リスク資産に投資する」構造を持っていることを示します。この構造によって、公的部門は負債の調達コストを上回る超過収益を得ており、巨額の基礎的財政赤字にもかかわらず純債務の増加が抑えられてきた、というのが論文の主張です。また、実質金利が下がると政府の財政余力が広がる一方、預金中心の若い家計は消費可能集合が縮小して厚生が悪化する、という政府と家計の非対称性も分析しています。
 
@@ -35,6 +36,7 @@ paper_year: 2023
 - [2. 説明できる現象](#sec2)
 - [3. モデルが整理している点](#sec3)
 - [4. 対象外の現象](#sec4)
+- [5. 主要文献・関連論文](#sec5)
 - [付録：導出手順](#appendix)
 
 ---
@@ -621,16 +623,20 @@ $$
 - 剰余は一定比率（A2）という仮定のもとの推計で、実際の景気順応的な剰余ではウェッジはさらに大きくなる。
 - 家計の厚生は、金融資産と超過消費のデュレーションの1次近似で評価する。住宅、手元資金のみの家計、一般均衡効果、所得の金利反応は含まない。
 
+---
+
 ## 5. 主要文献・関連論文 {#sec5}
 
-- **[原著論文]** Chien, Y., Cole, H. L., & Lustig, H. (2026). What about Japan?. *NBER Macroeconomics Annual*, 41, 1-65.
-  - **位置づけ**: 本モデルの提示論文。日本の統合政府バランスシートのデュレーション・ミスマッチと資産収益が財政余力および厚生に与える影響を分析。
-- **[金字塔論文]** Blanchard, O. (2019). Public debt and low interest rates. *American Economic Review*, 109(4), 1197-1229.
-  - **位置づけ**: 安全利子率が経済成長率を下回る領域（$$r \lt g$$）における政府債務の福祉コストと持続可能性を分析した先駆的論文。本モデルの式(3)の基準比較。
-- **[関連文献]** Gourinchas, P. O., & Rey, H. (2007). International financial adjustment. *Journal of Political Economy*, 115(4), 665-704.
-  - **位置づけ**: 対外バランスシートにおける「金融的調整（超過収益による調整）」の重要性を提唱した金字塔論文。本モデルはこれを日本政府の統合バランスシートに応用。
-- **[関連文献]** Aguiar, M., Amador, M., & Arellano, C. (2021). Micro risks and Pareto-improving policies with low interest rates. *Journal of Economic Theory*, 194, 105240.
-  - **位置づけ**: 低金利環境下での財政余力と厚生効果を分析した理論分析。本モデルの家計部門のデュレーション評価手法と直接関連。
+- **[著者自身の発展]** Chien, Y., Cole, H., & Lustig, H. (2011). A multiplier approach to understanding the macro implications of household finance. *Review of Economic Studies*, 78(1), 199–234.
+  - **位置づけ**: 資産市場への参加が限られる家計が混在する経済で、家計の資産選択がマクロ変数に与える影響を分析した、著者らの論文。
+- **[関連文献]** Hall, G. J., & Sargent, T. J. (2011). Interest rate risk and other determinants of post-WWII US government debt/GDP dynamics. *American Economic Journal: Macroeconomics*, 3(3), 192–214.
+  - **位置づけ**: 米国の政府債務の対GDP比の動きを、金利・成長率・インフレなどの要因に分けて分析した論文。
+- **[関連文献]** Blanchard, O. (2019). Public debt and low interest rates. *American Economic Review*, 109(4), 1197–1229.
+  - **位置づけ**: 安全な利子率が成長率を下回る環境での公的債務の持続可能性を論じた論文（アメリカ経済学会の会長講演）。
+- **[同時期の関連論文]** Reis, R. (2021). The constraint on public debt when r < g but g < m. *BIS Working Papers*, No 939.
+  - **位置づけ**: 利子率 r が成長率 g を下回っても、資本の限界生産性 m が g を上回る場合の公的債務の制約を扱った論文。
+- **[同時期の関連論文]** Mian, A., Straub, L., & Sufi, A. (2025). A Goldilocks theory of fiscal deficits. *American Economic Review*, 115(12), 4253–4291.
+  - **位置づけ**: ゼロ金利制約と財政の持続可能性を同じ枠組みで扱い、「フリーランチ」が成立する条件を示した論文。
 
 ---
 
@@ -951,22 +957,23 @@ $\mathcal{D}^{\theta}=\mathcal{D}^{c-y}$ なら厚生利得は0。非参加者�
 | T6 | ラグランジュ関数と包絡線定理 |
 | 全国家計構造調査（2019年） | 家計の消費・所得・資産のプロファイル |
 
+
 ### A.7 著者について
 
-**Yi-Li Chien (銭 奕立)**
-- **アカデミックな経歴**: UCLAにて経済学Ph.D.を取得。セントルイス連邦準備銀行リサーチ部門シニアエコノミスト兼副総裁。パデュー大学助教授等を歴任。
-- **主要な研究分野**: マクロ経済学、資産価格評価、不完全市場における家計ポートフォリオ選択および財政・金融政策。
-- **評判・学術的貢献**: 家計の異質性を考慮した一般均衡モデルや政府バランスシート評価に関する論文を *Journal of Monetary Economics*, *American Economic Journal: Macroeconomics* 等のトップジャーナルに多数公刊。
+**Yi-Li Chien（YiLi Chien）**
+- **アカデミックな経歴**: 本論文の執筆時の所属は Federal Reserve Bank of St. Louis の Research Division。
+- **主要な研究分野**: マクロ経済学、金融経済学（家計の資産選択とマクロ変数）。
+- **評判・学術的貢献**: Chien, Cole & Lustig (2011), *Review of Economic Studies*, 78(1), 199–234 などがある。
 
-**Harold L. Cole**
-- **アカデミックな経歴**: ロチェスター大学にて経済学Ph.D.を取得。ペンシルベニア大学経済学部教授（Class of 1950 Term Professor）。NBERフェロー、ミネソタ大学・UCLA教授、ミネアポリス連邦準備銀行リサーチアドバイザー等を歴任。
-- **主要な研究分野**: マクロ経済学、国際金融論、財政破綻・国債デフォルト理論、動学的一般均衡論。
-- **評判・学術的貢献**: Econometric Society フェロー。 sovereign debt（自国債務危機）や金融契約理論に関する先駆的研究で知られ、*Econometrica*, *Journal of Political Economy*, *Quarterly Journal of Economics* 等に多数の金字塔的論文を発表。
+**Harold L. Cole（ハロルド・L・コール）**
+- **アカデミックな経歴**: 本論文の執筆時の所属は University of Pennsylvania 経済学部と NBER。
+- **主要な研究分野**: マクロ経済学、国際金融、ソブリン債務。
+- **評判・学術的貢献**: Cole & Kehoe (2000) “Self-fulfilling debt crises,” *Review of Economic Studies*, 67(1), 91–116 などの業績がある。
 
-**Hanno Lustig**
-- **アカデミックな経歴**: シカゴ大学にて経済学Ph.D.を取得。スタンフォード大学経営大学院（Stanford GSB）Philip H. Knight Professor of Finance。UCLA教授、NBER研究員を歴任。
-- **主要な研究分野**: 資産価格論、国際金融論、マクロ金融（Macro-Finance）、財政政策の資産価格への波及。
-- **評判・学術的貢献**: FISF Pioneer Prize や Fischer Black Prize 受賞。為替レートのリスクプレミアム（Carry Trade）および政府債務のバリュエーションに関する世界的権威であり、*American Economic Review*, *Journal of Finance*, *Review of Financial Studies* 等の編集者・著者として絶大な影響力を持つ。
+**Hanno Lustig（ハノ・ラスティグ）**
+- **アカデミックな経歴**: 本論文の執筆時の所属は Stanford Graduate School of Business と NBER。
+- **主要な研究分野**: 資産価格、国際金融、マクロ金融。
+- **評判・学術的貢献**: Lustig & Verdelhan (2007) “The cross-section of foreign currency risk premia and consumption growth risk,” *American Economic Review*, 97(1), 89–117 などの業績がある。
 
 ---
 

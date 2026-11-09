@@ -19,13 +19,24 @@ math: true
 
 ## 目次
 
+- [0. 論文の紹介](#sec0)
 - [1. 数理モデル](#sec1)
 - [2. 説明できる現象](#sec2)
 - [3. 整理している点](#sec3)
 - [4. モデルの対象外](#sec4)
+- [5. 主要文献・関連論文](#sec5)
 - [付録：導出手順](#appendix)
 
 ---
+
+## 0. 論文の紹介 {#sec0}
+
+**書誌**：Atif Mian, Ludwig Straub, and Amir Sufi, "A Goldilocks Theory of Fiscal Policy," 2021年版のワーキングペーパー。（のちに題名が "A Goldilocks Theory of Fiscal Deficits" に改められ、*American Economic Review*, Vol. 115, No. 12 (2025), pp. 4253–4291 に掲載された。）
+
+**論文リンク**：
+- 無料で全文を読める版：<https://conference.nber.org/conf_papers/f157802.pdf> （NBER の会議資料に置かれた原稿（2021年7月付、題名は “A Goldilocks Theory of Fiscal Policy”。本記事が参照した版に近い））
+- 無料で読める別の版：<https://www.nber.org/papers/w29707> （NBER Working Paper 29707（2022年1月）。のちに題名が “A Goldilocks Theory of Fiscal Deficits” に改められた版）
+- 公式版（出版社・DOI）：<https://doi.org/10.1257/aer.20220308> （American Economic Review, 115(12), 4253–4291（2025）、題名は “A Goldilocks Theory of Fiscal Deficits”。閲覧に契約や所属機関経由のアクセスが必要な場合がある）
 
 ## 1. 数理モデル {#sec1}
 
@@ -802,6 +813,21 @@ $$
 
 ---
 
+## 5. 主要文献・関連論文 {#sec5}
+
+- **[原著/金字塔論文]** Barro, R. J. (1979). On the determination of the public debt. *Journal of Political Economy*, 87(5), 940–971.
+  - **位置づけ**: 課税の歪みを平準化する観点から、公的債務の最適な推移を論じた論文（税の平準化）。
+- **[関連文献]** Blanchard, O. (2019). Public debt and low interest rates. *American Economic Review*, 109(4), 1197–1229.
+  - **位置づけ**: 安全な利子率が成長率を下回る環境での公的債務の持続可能性を論じた論文（アメリカ経済学会の会長講演）。
+- **[関連文献]** Eggertsson, G. B., Mehrotra, N. R., & Robbins, J. A. (2019). A model of secular stagnation: Theory and quantitative evaluation. *American Economic Journal: Macroeconomics*, 11(1), 1–48.
+  - **位置づけ**: 自然利子率が長期にわたって低下する「長期停滞」を、世代重複モデルで定式化し数量的に評価した論文。
+- **[同時期の関連論文]** Mian, A., Straub, L., & Sufi, A. (2021). Indebted demand. *Quarterly Journal of Economics*, 136(4), 2243–2307.
+  - **位置づけ**: 所得格差と債務の累積が、総需要を弱め、利子率を引き下げることを示した、著者らの論文。
+- **[関連文献]** Eggertsson, G. B., & Krugman, P. (2012). Debt, deleveraging, and the liquidity trap: A Fisher-Minsky-Koo approach. *Quarterly Journal of Economics*, 127(3), 1469–1513.
+  - **位置づけ**: 債務の圧縮（デレバレッジ）が、流動性の罠のもとで総需要を落とす仕組みを示した論文。
+
+---
+
 ## 付録：導出手順 {#appendix}
 
 ### A.0 構造図
@@ -1444,6 +1470,24 @@ $b=0$ で $\underline{\delta}=0$ となり、便益は $\lambda_d\bigl(\mathbb{E
 |---|---|
 | 入力 | 式(62)(63)(64) |
 | 道具 | T6 |
+
+
+### A.14 著者について
+
+**Atif Mian（アティフ・ミアン）**
+- **アカデミックな経歴**: 本論文の執筆時（2021年）の所属は Princeton University と NBER。
+- **主要な研究分野**: マクロ経済学、金融経済学（家計債務と景気変動）。
+- **評判・学術的貢献**: Mian & Sufi (2009) *Quarterly Journal of Economics*, 124(4), 1449–1496 や、Mian & Sufi の著書 *House of Debt*（University of Chicago Press, 2014）で知られる。
+
+**Ludwig Straub（ルートヴィヒ・シュトラウプ）**
+- **アカデミックな経歴**: 本論文の執筆時の所属は Harvard University と NBER。
+- **主要な研究分野**: マクロ経済学、金融、財政政策。
+- **評判・学術的貢献**: Mian, Straub & Sufi (2021) “Indebted demand,” *Quarterly Journal of Economics*, 136(4), 2243–2307 などの業績がある。
+
+**Amir Sufi（アミール・スフィ）**
+- **アカデミックな経歴**: 本論文の執筆時の所属は University of Chicago Booth School of Business と NBER。
+- **主要な研究分野**: 金融経済学、マクロ経済学（家計債務）。
+- **評判・学術的貢献**: Mian & Sufi の共著 *House of Debt*（2014）で知られる。
 
 ---
 

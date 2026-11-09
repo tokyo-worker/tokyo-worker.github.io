@@ -19,8 +19,8 @@ paper_year: 2021
 **論文**：Ricardo Reis（LSE）, "The constraint on public debt when r < g but g < m", BIS Working Papers No 939, 2021年5月。
 
 **論文リンク**：
-- 無料で全文を読める版：[BIS Working Paper No 939 (PDF)](https://www.bis.org/publ/work939.pdf)（BIS公式公開版）
-- 公式版（DOI / BISページ）：[https://www.bis.org/publ/work939.htm](https://www.bis.org/publ/work939.htm)
+- 無料で全文を読める版：<https://www.bis.org/publ/work939.pdf> （BIS（国際決済銀行）が公開する全文PDF（BIS Working Papers No 939、2021年5月））
+- 公式版（出版社・DOI）：<https://www.bis.org/publ/work939.htm> （BIS Working Papers No 939 の公式ページ（出版元はBIS。無料））
 
 **論文の主張**：実質金利 $r$ が成長率 $g$ を下回り、かつ資本の限界生産性 $m$ が $g$ を上回る（$r\lt g\lt m$）経済では、政府は永続的な赤字を出せます。債務が基礎的財政黒字の現在価値を上回る分は、$m-r$（バブル・プレミアム）から生じる収入で説明されます。論文は、このプレミアムを「公的債務の安全性と流動性」から内生的に導くモデルを作り、支出を増やすほどプレミアムは大きくなる一方で、民間の債務需要は減るため、支出には上限（財政余力 $S$）があることを示します。さらに、インフレ、金融抑圧、再分配、所得税がこの上限をどう動かすかを分析しています。
 
@@ -42,6 +42,7 @@ paper_year: 2021
 - [2. 説明できる現象](#sec2)
 - [3. 整理している点](#sec3)
 - [4. モデルの対象外](#sec4)
+- [5. 主要文献・関連論文](#sec5)
 - [付録：導出手順](#appendix)
 
 ---
@@ -715,14 +716,16 @@ $$
 
 ## 5. 主要文献・関連論文 {#sec5}
 
-- **[原著/金字塔論文]** Tirole, J. (1985). Asset Bubbles and Overlapping Generations. *Econometrica*, 53(6), 1499–1528.
-  - **位置づけ**: 動学的非効率性やバブルの存在条件を一般均衡枠組みで解明した、マクロ経済学におけるバブル理論の基礎的金字塔論文。
-- **[関連文献]** Caballero, R. J., Farhi, E., & Gourinchas, P.-O. (2017). The Safe Asset Shortage, Conundrum, and Global Rstar. *American Economic Review*, 107(5), 322–327.
-  - **位置づけ**: 安全資産の需要超過が引き起こす低金利現象（Safe Asset Shortage）を理論化し、本モデルの背後にある安全プレミアムの概念に直接つながる主要文献。
-- **[関連文献]** Brunnermeier, M. K., & Sannikov, Y. (2014). A Macroeconomic Framework with Financial Intermediaries. *American Economic Review*, 104(2), 379–421.
-  - **位置づけ**: 金融摩擦と制約付き最適化を連続時間マクロ経済モデルに組み込む手法を提示し、本モデルの分析手法の基礎となった重要論文。
-- **[関連文献]** Blanchard, O. (2019). Public Debt and Low Interest Rates. *American Economic Review*, 109(4), 1197–1229.
-  - **位置づけ**: 低金利環境（$$r\lt g$$）における財政政策の空間と財政再建のコストを再検討し、近年の財政論争に火を付けた代表的論文。
+- **[原著/金字塔論文]** Diamond, P. A. (1965). National debt in a neoclassical growth model. *American Economic Review*, 55(5), 1126–1150.
+  - **位置づけ**: 資本をもつ世代重複モデルに政府債務を組み込み、債務が資本蓄積と厚生に与える影響を分析した基礎的論文。
+- **[関連文献]** Tirole, J. (1985). Asset bubbles and overlapping generations. *Econometrica*, 53(6), 1499–1528.
+  - **位置づけ**: 世代重複モデルで、資産バブルが成立する条件と、その資本蓄積への影響を示した論文。
+- **[関連文献]** Aiyagari, S. R. (1994). Uninsured idiosyncratic risk and aggregate saving. *Quarterly Journal of Economics*, 109(3), 659–684.
+  - **位置づけ**: 保険のかけられない個人固有のリスクと借入制約のもとで、貯蓄と資産の需要が決まる標準的な枠組みを与えた論文。
+- **[関連文献]** Blanchard, O. (2019). Public debt and low interest rates. *American Economic Review*, 109(4), 1197–1229.
+  - **位置づけ**: 安全な利子率が成長率を下回る環境での公的債務の持続可能性を論じた論文（アメリカ経済学会の会長講演）。
+- **[同時期の関連論文]** Brunnermeier, M. K., Merkel, S. A., & Sannikov, Y. (2022). Debt as safe asset. *NBER Working Paper*, No. 29626.
+  - **位置づけ**: 政府債務が安全資産として得るサービス・フローを通じて、債務の評価と財政の持続可能性を論じた論文。
 
 ---
 
@@ -1108,17 +1111,15 @@ $r=\hat r$ では $s/b=0$（債務は一定の成長を維持するのみで、�
 | 式(4)、(23)、(24) | 予算制約、均衡条件 |
 | T5、T6 | 単調性、2次関数の根 |
 
----
 
 ### A.9 著者について
 
-**Ricardo Reis**
-- **アカデミックな経歴**: ハーバード大学でPh.D.を取得。コロンビア大学教授を経て、現在はロンドン・スクール・オブ・エコノミクス（LSE）経済学部教授。
-- **主要な研究分野**: マクロ経済学、金融政策、インフレ動学、家計の不注意（Inattention）と期待形成。
-- **評判・学術的貢献**: Econometric Society フェロー、Alfred P. Sloan Fellow。マクロ経済学における物価形成や財政・金融政策の相互作用、インフレの理論および実証分析で世界をリードする著名エコノミスト。
+**Ricardo Reis（リカルド・レイス）**
+- **アカデミックな経歴**: 本論文の執筆時の所属は London School of Economics（LSE）経済学部。
+- **主要な研究分野**: マクロ経済学、金融政策、財政政策（公的債務の持続可能性を含む）。
+- **評判・学術的貢献**: Mankiw & Reis (2002) “Sticky information versus sticky prices: A proposal to replace the New Keynesian Phillips curve,” *Quarterly Journal of Economics*, 117(4), 1295–1328 などの業績がある。
 
 ---
-
 
 **© 2021 Bank for International Settlements.** 原論文：Ricardo Reis, "The constraint on public debt when r < g but g < m", BIS Working Papers No 939, May 2021（著作権は著者および BIS に帰属。原論文では短い抜粋の転載・翻訳は出典を明示すれば認められている）。本記事は、その数理モデルを整理した解説であり、原論文の見解を代表するものではありません。
 {% endraw %}

@@ -16,6 +16,10 @@ math: true
 
 > **この記事について**：本稿は、Harrison & Pliska (1983) の**背景にある数理モデル**（確率解析にもとづく連続取引モデル）を、式・前提・記号・導出を中心にまとめた早見表です。論文の主題は、1981年の同著者による論文（*Martingales and Stochastic Integrals in the Theory of Continuous Trading*, Stochastic Processes and Their Applications, 11(3), 215–260）で提示された一般モデルについて、「**市場の完備性**」の特徴づけを厳密に証明し、拡張することです。
 
+**論文リンク**：
+- 無料で全文を読める版：確認できなかった
+- 公式版（出版社・DOI）：<https://doi.org/10.1016/0304-4149(83)90038-8> （Stochastic Processes and their Applications, 15(3), 313–316（1983）。DOIは他論文の文献リストで確認。閲覧に契約や所属機関経由のアクセスが必要な場合がある）
+
 **論文の概要**
 
 - **書誌**：J. Michael Harrison（Stanford University）、Stanley R. Pliska（Northwestern University）。*A Stochastic Calculus Model of Continuous Trading: Complete Markets*。Stochastic Processes and Their Applications, 15(3), 313–316（1983）。本稿の元資料は Northwestern University, Center for Mathematical Studies in Economics and Management Science の Discussion Paper No. 489（1981年7月）。

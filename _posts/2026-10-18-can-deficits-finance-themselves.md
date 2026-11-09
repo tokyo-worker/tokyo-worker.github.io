@@ -17,8 +17,9 @@ math: true
 **Can Deficits Finance Themselves?**（George-Marios Angeletos, Chen Lian, and Christian K. Wolf, NBER Working Paper No. 31185, 2023年4月発表、2024年2月改訂、Econometrica掲載）
 
 **論文リンク**：
-- 無料で全文を読める版：[NBER Working Paper No. 31185 (PDF)](https://www.nber.org/system/files/working_papers/w31185/w31185.pdf)
-- 公式版（Econometrica / DOI）：[https://doi.org/10.3982/ECTA21759](https://doi.org/10.3982/ECTA21759)（※閲覧に契約や所属機関経由のアクセスが必要な場合があります）
+- 無料で全文を読める版：<https://par.nsf.gov/servlets/purl/10593413> （Econometrica 掲載版（オープンアクセス、CC BY）の全文PDF。米国NSFのリポジトリ）
+- 無料で読める別の版：<https://www.nber.org/papers/w31185> （NBER ワーキングペーパー版（NBER Working Paper 31185））
+- 公式版（出版社・DOI）：<https://doi.org/10.3982/ECTA21791> （Econometrica, 92(5), 1351–1390。Econometric Society のページ https://www.econometricsociety.org/doi/10.3982/ECTA21791）
 
 この論文は、名目価格の粘着性とリカードの等価性の崩壊（有限の生存確率や流動性制約による需要側摩擦）という2つの重要な特徴を持つ経済環境において、財政赤字がどのようにファイナンスされるかを分析しています[cite: 4]。著者は、赤字が総需要のブームを引き起こすことで、①税収基盤の拡大（自動的な税収増）と、②インフレによる名目政府債務の実質価値の目減り（債務浸食）という2つのチャネルを通じて、赤字が自ら財源をまかなう（自己ファイナンスする）可能性があることを示しています[cite: 4]。さらに、財政調整（将来の増税や歳出削減）が遅れるほど自己ファイナンスの程度が高まり、極限においては将来の増税なしに債務が初期水準へ収束する「完全な自己ファイナンス」が達成されることを理論的に証明しています[cite: 4]。
 
@@ -33,6 +34,7 @@ math: true
 - [2. 説明できる現象](#sec2)
 - [3. 整理している点](#sec3)
 - [4. 対象外の現象](#sec4)
+- [5. 主要文献・関連論文](#sec5)
 - [付録：導出手順](#appendix)
 
 ---
@@ -487,17 +489,16 @@ $\kappa$ は定理1の単調性と極限を変えず、$\nu_y$ と $\nu_p$ の�
 
 ## 5. 主要文献・関連論文 {#sec5}
 
-- **[原著/金字塔論文]** Blanchard, O. J. (1985). Debt, Deficits, and Finite Horizons. *Journal of Political Economy*, 93(2), 223–247.
-  - **位置づけ**: 有限の生存確率（パーペチュアル・ユース）を導入してリカードの等価定理の破綻を分析した本モデルの基礎骨格。
-- **[原著/金字塔論文]** Leeper, E. M. (1991). Equilibria under 'Active' and 'Passive' Monetary and Fiscal Policies. *Journal of Monetary Economics*, 27(1), 129–147.
-  - **位置づけ**: 財政ルールと金融ルールの相互作用および受動的財政政策（$\tau_d$ ルール）を体系化した基礎文献。
-- **[関連文献]** Galí, J. (2020). The Effects of Monetary Policy with Heterogeneous Agents and Sticky Prices. *American Economic Journal: Macroeconomics*, 12(2), 1–39.
-  - **位置づけ**: 異質家計（HANK/パーペチュアル・ユース）と価格粘着性を統合したニューケインジアン枠組みの先行研究。
-- **[関連文献]** Auclert, A., Rognlie, M., & Straub, L. (2023). The Intertemporal Keynesian Cross. *Journal of Political Economy*, 131(2), 329–378.
-  - **位置づけ**: 異時点間MPC行列（iMPC）を用いた動学的ケインジアン・クロスの定式化を提供し、一般化需要関数の分析の基盤となった研究。
+- **[関連文献]** Leeper, E. M. (1991). Equilibria under 'active' and 'passive' monetary and fiscal policies. *Journal of Monetary Economics*, 27(1), 129–147.
+  - **位置づけ**: 金融政策と財政政策がそれぞれ「能動的」か「受動的」かで、均衡の決まり方が変わることを示した論文。物価水準の財政理論（FTPL）の議論の土台になった。
+- **[関連文献]** Sims, C. A. (1994). A simple model for study of the determination of the price level and the interaction of monetary and fiscal policy. *Economic Theory*, 4(3), 381–399.
+  - **位置づけ**: 物価水準が政府の予算制約によって決まりうることを示した、FTPL の初期の代表的論文。
+- **[関連文献]** Cochrane, J. H. (2001). Long-term debt and optimal policy in the fiscal theory of the price level. *Econometrica*, 69(1), 69–116.
+  - **位置づけ**: FTPL の枠組みで、長期国債の満期構成と政策の関係を扱った論文。
+- **[関連文献]** Blanchard, O. (2019). Public debt and low interest rates. *American Economic Review*, 109(4), 1197–1229.
+  - **位置づけ**: 安全な利子率が成長率を下回る環境での公的債務の持続可能性を論じた論文（アメリカ経済学会の会長講演）。
 
 ---
-
 
 ## 付録：導出手順 {#appendix}
 
@@ -831,24 +832,23 @@ $\omega\to1$ で $\tau_d\gt0$ を固定すると、$\mathcal{F}_1\to0$ で $\chi
 
 定理2（一般の金融政策）と定理3（一般化した総需要）の証明は、本記事では再現しない。原論文のオンライン付録 D.5, D.6 を参照のこと。証明の骨子は、基準モデルと同様に、$\tau_d\to0$ での極限均衡の持続性 $\rho_d^{\text{full}}$ が1より小さいかどうかに帰着する。定理2では $\rho_d^{\text{full}}(\bar\phi)=1$ となる $\phi$ が閾値 $\bar\phi$、定理3では仮定2 (28) がそれを保証する条件である。
 
----
 
 ### A.8 著者について
 
-**George-Marios Angeletos**
-- **アカデミックな経歴**: ハーバード大学でPh.D.を取得。MIT教授を経て、現在はノースウェスタン大学経済学部教授（Kathleen Tremaine Professor of Economics）。
-- **主要な研究分野**: マクロ経済学、情報経済学（不完全情報・協調ゲーム・期待形成の理論）、財政・金融政策の理論分析。
-- **評判・学術的貢献**: Econometric Society フェロー。不完全情報や感情・信念の変動（Confidence Shock）が景気循環や財政・金融政策伝達に与える影響の解明において第一線で活躍するトップ理論家。
+**George-Marios Angeletos（ジョージ＝マリオス・アンジェレトス）**
+- **アカデミックな経歴**: 本論文の執筆時の所属は Northwestern University 経済学部と NBER（以前のワーキングペーパー版では MIT）。
+- **主要な研究分野**: マクロ経済学（情報の不完全性、戦略的補完性、景気循環、財政・金融政策）。
+- **評判・学術的貢献**: Angeletos & La’O (2013) “Sentiments,” *Econometrica*, 81(2), 739–779 などの業績がある。本論文は *Econometrica* 92(5)（2024）に掲載された。
 
 **Chen Lian**
-- **アカデミックな経歴**: MITでPh.D.を取得。現在はカリフォルニア大学バークレー校経済学部准教授（Associate Professor of Economics）。
-- **主要な研究分野**: 行動マクロ経済学、不完全合理的期待形成、不完全情報下の意思決定。
-- **評判・学術的貢献**: 制限された合理性（Bounded Rationality）や注意の摩擦（Inattention）をマクロ経済モデルに組み込む研究で注目を集め、Sloan Research Fellowship など多数の賞を受賞。
+- **アカデミックな経歴**: 本論文の執筆時の所属は UC Berkeley 経済学部と NBER。
+- **主要な研究分野**: マクロ経済学、金融政策・財政政策。
+- **評判・学術的貢献**: 本論文は *Econometrica* 92(5)（2024）に掲載された。
 
 **Christian K. Wolf**
-- **アカデミックな経歴**: プリストン大学でPh.D.を取得。現在はマサチューセッツ工科大学（MIT）経済学部准教授（Associate Professor of Economics）。
-- **主要な研究分野**: マクロ経済学、財政政策・金融政策の実証および理論分析、構造ショックの識別手法。
-- **評判・学術的貢献**: 財政乗数やインフレ伝達メカニズム、異質的家計モデル（HANK）の政策効果分析において精力的な研究を発表し、若手マクロ経済学者として高い評価を受ける。
+- **アカデミックな経歴**: 本論文の執筆時の所属は MIT 経済学部と NBER。
+- **主要な研究分野**: マクロ経済学（金融政策・財政政策の波及、不均質な家計）。
+- **評判・学術的貢献**: 本論文は *Econometrica* 92(5)（2024）に掲載された。
 
 ---
 

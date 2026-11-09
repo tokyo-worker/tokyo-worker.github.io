@@ -15,6 +15,10 @@ math: true
 ## この記事について（論文の紹介）
 
 > **論文**：Paul A. Samuelson (1958), "An Exact Consumption-Loan Model of Interest with or without the Social Contrivance of Money", *Journal of Political Economy*, Vol. 66, No. 6, pp. 467–482.
+
+**論文リンク**：
+- 無料で全文を読める版：確認できなかった
+- 公式版（出版社・DOI）：<https://doi.org/10.1086/258100> （Journal of Political Economy, 66(6), 467–482（1958）。閲覧に契約や所属機関経由のアクセスが必要な場合がある）
 >
 > Samuelson が自身の最初の論文（1937年、個人の生涯の消費・貯蓄パターン＝「ハンプ貯蓄」）を発展させ、**全個人の相互作用によって利子率の時間経路がどう決まるか**を、一般均衡で厳密に解こうとした論文です。「各世代は3期間生き、最後の期は生産できない」「財は保存できない」という極端な単純化のもとで、競争均衡の利子率が**人口成長率に等しい最適解（生物学的利子率）ではなく負の値になる**こと、そして**貨幣が老後の保障を担う「社会的契約」として最適解を実現しうる**ことを示しました。世代重複（overlapping generations）モデルの出発点として広く知られています。
 >

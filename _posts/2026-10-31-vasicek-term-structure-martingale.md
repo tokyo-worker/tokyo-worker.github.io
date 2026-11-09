@@ -16,13 +16,23 @@ paper_position: "この記事は、この論文の背景にある数理モデル
 
 ## 目次
 
+- [0. 論文の紹介](#sec0)
 - [1. 数理モデル](#sec1)
 - [2. 説明できる現象](#sec2)
 - [3. 整理している点](#sec3)
 - [4. モデルの対象外](#sec4)
+- [5. 主要文献・関連論文](#sec5)
 - [付録：導出手順](#appendix)
 
 ---
+
+## 0. 論文の紹介 {#sec0}
+
+**書誌**：Oldrich Vasicek, "An Equilibrium Characterization of the Term Structure," *Journal of Financial Economics*, Vol. 5, No. 2 (1977), pp. 177–188.
+
+**論文リンク**：
+- 無料で全文を読める版：確認できなかった
+- 公式版（出版社・DOI）：<https://doi.org/10.1016/0304-405X(77)90016-2> （Journal of Financial Economics, 5(2), 177–188（1977）。閲覧に契約や所属機関経由のアクセスが必要な場合がある）
 
 ## 1. 数理モデル {#sec1}
 
@@ -240,6 +250,21 @@ $$
 - 外貨建て国債と為替リスク。
 - 原論文の偏微分方程式による導出は、マルチンゲールによる導出と同値だが、本記事では扱わない。
 - パラメータの推定と、実際の利回り曲線への当てはめ。
+
+---
+
+## 5. 主要文献・関連論文 {#sec5}
+
+- **[関連文献]** Cox, J. C., Ingersoll, J. E., Jr., & Ross, S. A. (1985). A theory of the term structure of interest rates. *Econometrica*, 53(2), 385–407.
+  - **位置づけ**: 一般均衡の枠組みで、金利の期間構造を導いた論文（CIR モデル）。
+- **[関連文献]** Heath, D., Jarrow, R., & Morton, A. (1992). Bond pricing and the term structure of interest rates: A new methodology for contingent claims valuation. *Econometrica*, 60(1), 77–105.
+  - **位置づけ**: 現在の金利の期間構造を出発点に、無裁定な金利の動きを導く方法を示した論文（HJM の枠組み）。
+- **[関連文献]** Harrison, J. M., & Kreps, D. M. (1979). Martingales and arbitrage in multiperiod securities markets. *Journal of Economic Theory*, 20(3), 381–408.
+  - **位置づけ**: 無裁定と、同値マルチンゲール測度の存在を結び付けた論文。Vasicek モデルのマルチンゲール評価の土台になる。
+- **[原著/金字塔論文]** Black, F., & Scholes, M. (1973). The pricing of options and corporate liabilities. *Journal of Political Economy*, 81(3), 637–654.
+  - **位置づけ**: オプションの価格を、無裁定の考え方から導いた論文。
+- **[関連文献]** Merton, R. C. (1973). Theory of rational option pricing. *Bell Journal of Economics and Management Science*, 4(1), 141–183.
+  - **位置づけ**: オプション価格の理論を、より一般的な条件のもとで整理した論文。
 
 ---
 

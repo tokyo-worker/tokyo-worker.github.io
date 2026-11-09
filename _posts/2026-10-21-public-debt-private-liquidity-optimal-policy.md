@@ -16,6 +16,10 @@ math: true
 
 George-Marios Angeletos（MIT）、Fabrice Collard（トゥールーズ経済学院）、Harris Dellas（ベルン大学）の論文 **"Public Debt as Private Liquidity: Optimal Policy"**（2022年5月3日版ワーキングペーパー。2016年の "Optimal Public Debt Management and Liquidity Provision" の後継）を紹介します。
 
+**論文リンク**：
+- 無料で全文を読める版：<https://www.nber.org/papers/w22794.pdf> （NBER ワーキングペーパー版の全文PDF（Working Paper 22794、2016年11月、2021年6月改訂））
+- 公式版：公式版は Journal of Political Economy, 131(11), 3233–3264（2023）。今回の検索ではDOIのURLを確認できなかったため、リンクは載せない
+
 この論文は、国債が民間の担保やバッファーストックとして働く経済で、最適な財政政策がどうなるかを分析しています。国債を増やすと民間の金融摩擦が緩んで厚生が上がります。しかし、民間が国債に払うプレミアムが下がるので、政府の借入コストは上がります。論文は、このトレードオフが、長期の最適な債務水準、短期における税平滑化からの乖離、低金利が「安い借入」を意味する条件を決めると主張します。
 
 > **この記事は、その論文の背景にある数理モデルだけを早見表にしたものです。** 論文の本文の解説や文献紹介は最小限にとどめ、簡約形のラムゼー問題、三つのミクロ的基礎、最適条件、位相図の分析、導出を、簡易化せず論文の設定のまま整理しています。
@@ -30,6 +34,7 @@ George-Marios Angeletos（MIT）、Fabrice Collard（トゥールーズ経済学
 - [2. 説明できる現象](#sec2)
 - [3. 整理している点](#sec3)
 - [4. モデルの対象外](#sec4)
+- [5. 主要文献・関連論文](#sec5)
 - [付録：導出手順](#appendix)
 
 ---
@@ -952,6 +957,21 @@ $$
 
 ---
 
+## 5. 主要文献・関連論文 {#sec5}
+
+- **[原著/金字塔論文]** Barro, R. J. (1979). On the determination of the public debt. *Journal of Political Economy*, 87(5), 940–971.
+  - **位置づけ**: 課税の歪みを平準化する観点から、公的債務の最適な推移を論じた論文（税の平準化）。
+- **[関連文献]** Lucas, R. E., Jr., & Stokey, N. L. (1983). Optimal fiscal and monetary policy in an economy without capital. *Journal of Monetary Economics*, 12(1), 55–93.
+  - **位置づけ**: 資本のない経済で、最適な課税と国債の発行を動学的に分析した論文。
+- **[関連文献]** Woodford, M. (1990). Public debt as private liquidity. *American Economic Review*, 80(2), 382–388.
+  - **位置づけ**: 公的債務が民間にとっての流動性を供給し、借入制約を緩める働きを論じた論文。
+- **[関連文献]** Holmström, B., & Tirole, J. (1998). Private and public supply of liquidity. *Journal of Political Economy*, 106(1), 1–40.
+  - **位置づけ**: 民間の流動性が不足する経済で、公的な流動性の供給が果たす役割を論じた論文。
+- **[著者自身の発展]** Angeletos, G.-M., Collard, F., Dellas, H., & Diba, B. (2013). Optimal public debt management and liquidity provision. *NBER Working Paper*, No. 18800.
+  - **位置づけ**: 本論文の前身にあたる論文。公的債務の流動性供給と最適な債務管理を扱っている。
+
+---
+
 ## 付録：導出手順 {#appendix}
 
 ### A.0 構造図
@@ -1478,6 +1498,24 @@ $\dfrac{d}{dt}\bigl(e^{-\rho t}b\bigr)=e^{-\rho t}\bigl(g-s-\pi m\bigr)$ を積�
 | T2 | $k$ の最適化後の $V'$、包絡線 |
 | T7 | $m$ の最適化 |
 | T1 | 定常状態の一階条件との比較 |
+
+
+### A.11 著者について
+
+**George-Marios Angeletos（ジョージ＝マリオス・アンジェレトス）**
+- **アカデミックな経歴**: 本論文の2016年版の所属は MIT 経済学部と NBER。
+- **主要な研究分野**: マクロ経済学（情報の不完全性、景気循環、財政・金融政策）。
+- **評判・学術的貢献**: Angeletos & La’O (2013) “Sentiments,” *Econometrica*, 81(2), 739–779 などの業績がある。
+
+**Fabrice Collard（ファブリス・コラール）**
+- **アカデミックな経歴**: 2016年版の所属は University of Bern、2022年版では Toulouse School of Economics。
+- **主要な研究分野**: マクロ経済学、動学的一般均衡モデル、財政・金融政策。
+- **評判・学術的貢献**: 本論文の共著者。本論文は *Journal of Political Economy* 131(11)（2023）に掲載された。
+
+**Harris Dellas（ハリス・デラス）**
+- **アカデミックな経歴**: 本論文の執筆時の所属は University of Bern 経済学部。
+- **主要な研究分野**: マクロ経済学、国際マクロ経済学。
+- **評判・学術的貢献**: 本論文の共著者。本論文は *Journal of Political Economy* 131(11)（2023）に掲載された。
 
 ---
 

@@ -7,6 +7,16 @@ tags: [Arrow-Kurz, Optimal Growth, Public Investment, Social Discount Rate, Risk
 math: true
 ---
 
+## 0. 書誌と論文リンク {#sec0}
+
+**書誌**：Kenneth J. Arrow and Mordecai Kurz, *Public Investment, the Rate of Return, and Optimal Fiscal Policy*, The Johns Hopkins Press for Resources for the Future, 1970（2011年に RFF Press から復刻）。
+
+**論文リンク**：
+- 無料で全文を読める版：確認できなかった
+- 公式版（出版社・DOI）：<https://www.routledge.com/Public-Investment-the-Rate-of-Return-and-Optimal-Fiscal-Policy/Arrow-Kruz/p/book/9781617260308> （2011年の RFF Press（Routledge）復刻版の書籍ページ（有料の書籍。原著は 1970年、Johns Hopkins Press for Resources for the Future））
+
+---
+
 ## 1. はじめに（概要と問題意識）
 
 前回の記事では、Arrow & Kurz (1970) *Public Investment, the Rate of Return, and Optimal Fiscal Policy* の第I章より、新古典派成長モデルにおける**ソロー＝スワンの基本方程式**と**黄金律（Golden Rule of Accumulation）**の定式化を中心に解説しました。
@@ -152,6 +162,20 @@ $$
 
 ---
 
-### 参考文献
+## 主要文献・関連論文 {#sec-refs}
 * Arrow, K. J., & Kurz, M. (1970). *Public Investment, the Rate of Return, and Optimal Fiscal Policy*. Johns Hopkins Press.
 * Arrow, K. J., & Lind, R. C. (1970). "Uncertainty and the Evaluation of Public Investment Decisions." *American Economic Review*, 60(3), 364–378.
+
+---
+
+## 著者について
+
+**Kenneth Joseph Arrow（1921–2017）**
+- **アカデミックな経歴**: ニューヨーク市立大学シティカレッジ（BA、1940）、コロンビア大学（MA、1941）。第二次大戦後にコロンビア大学で博士課程に復帰し、シカゴ大学のコウルズ委員会で研究。コロンビア大学で PhD（1951）。スタンフォード大学、ハーバード大学（本書刊行時はハーバード大学教授）、のちスタンフォード大学で教授を務めた。
+- **主要な研究分野**: 社会的選択理論、一般均衡理論、リスクと不確実性の経済学、医療経済学、成長理論、オペレーションズ・リサーチ。
+- **評判・学術的貢献**: 1972年にノーベル経済学賞（J. R. Hicks と共同受賞）。John Bates Clark 賞（1957年）、アメリカ国家科学賞（2004年）など。代表的業績は、社会的選択の不可能性定理、Arrow-Debreu モデル（一般均衡の存在）、Arrow-Pratt の絶対的リスク回避度、医療の不確実性に関する1963年の論文、learning by doing の論文（1962年）。
+
+**Mordecai Kurz（1934年生）**
+- **アカデミックな経歴**: ヘブライ大学（BA、1957）、イェール大学（MA、1958、PhD、1962）。スタンフォード大学で統計学の修士（1960）。スタンフォード大学で助教授、准教授を経て、1969年から教授。Joan Kenney Professor of Economics（のち名誉教授、2010年）。スタンフォード大学 IMSSS の経済部門のディレクターを1989年まで務めた。
+- **主要な研究分野**: 新古典派成長理論、一般均衡理論、ゲーム理論、所得分配、合理的信念（rational beliefs）の理論、技術的市場支配力。
+- **評判・学術的貢献**: 計量経済学会フェロー（1971年から）。Arrow との共著である本書と、Arrow との共著論文（*Econometrica* 1970 の不可逆投資のラムゼイモデル）が初期の代表作。のちに *Endogenous Economic Fluctuations*（1997）、*The Market Power of Technology*（2023）などを発表した。

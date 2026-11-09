@@ -16,13 +16,23 @@ paper_position: "この記事は、この論文の背景にある数理モデル
 
 ## 目次
 
+- [0. 論文の紹介](#sec0)
 - [1. 数理モデル](#sec1)
 - [2. 説明できる現象](#sec2)
 - [3. 整理している点](#sec3)
 - [4. モデルの対象外](#sec4)
+- [5. 主要文献・関連論文](#sec5)
 - [付録：導出手順](#appendix)
 
 ---
+
+## 0. 論文の紹介 {#sec0}
+
+**書誌**：Ádám Szeidl and Ferenc Szucs, "A Model of Populism as a Conspiracy Theory," *American Economic Review*, Vol. 115, No. 9 (2025), pp. 3214–3247.
+
+**論文リンク**：
+- 無料で全文を読める版：<https://conference.nber.org/conf_papers/f167918.pdf> （NBER の会議資料に置かれた初期稿 “The Political Economy of Alternative Realities”（2022年7月付。のちに題名が “A Model of Populism as a Conspiracy Theory” に改められた））
+- 公式版（出版社・DOI）：<https://doi.org/10.1257/aer.20240010> （American Economic Review, 115(9), 3214–3247（2025）。閲覧に契約や所属機関経由のアクセスが必要な場合がある）
 
 ## 1. 数理モデル {#sec1}
 
@@ -143,6 +153,19 @@ $$
 
 ---
 
+## 5. 主要文献・関連論文 {#sec5}
+
+- **[関連文献]** Acemoglu, D., Egorov, G., & Sonin, K. (2013). A political theory of populism. *Quarterly Journal of Economics*, 128(2), 771–805.
+  - **位置づけ**: 有権者が政治家の動機を完全には知らない状況で、ポピュリズムの政策が生じるメカニズムを示した論文。
+- **[関連文献]** Bonomi, G., Gennaioli, N., & Tabellini, G. (2021). Identity, beliefs, and political conflict. *Quarterly Journal of Economics*, 136(4), 2371–2411.
+  - **位置づけ**: 政治的な対立が、有権者の信念や集団への帰属意識と結び付くことを理論的に示した論文。
+- **[関連文献]** Levy, G., Razin, R., & Young, A. (2022). Misspecified politics and the recurrence of populism. *American Economic Review*, 112(3), 928–962.
+  - **位置づけ**: 有権者が誤った（誤特定の）モデルを持つことで、ポピュリズムが繰り返し現れることを示した論文。
+- **[関連文献]** Schwartzstein, J., & Sunderam, A. (2021). Using models to persuade. *American Economic Review*, 111(1), 276–323.
+  - **位置づけ**: 説得する側が、データをよりよく説明するモデルを示すことで、相手の信念を動かせることを示した論文。本論文もこの結果に言及している。
+
+---
+
 ## 付録：導出手順 {#appendix}
 
 ### A.0 構造図
@@ -215,6 +238,19 @@ $$
 | 事前確率 | $\mathbb{P}(\theta_c=1)=\pi$ |
 | シグナル精度 | $\mathbb{P}(s=1 \mid \theta_c=1) = q_c$ |
 | ベイズの定理 | 式(4) |
+
+
+### A.3 著者について
+
+**Ádám Szeidl（アーダーム・セイドル）**
+- **アカデミックな経歴**: 本論文の執筆時の所属は Central European University（CEU）と CEPR。
+- **主要な研究分野**: 政治経済学、行動経済学、ネットワークの経済学。
+- **評判・学術的貢献**: 本論文は *American Economic Review* 115(9)（2025）に掲載された。
+
+**Ferenc Szucs**
+- **アカデミックな経歴**: 本論文の執筆時の所属は Stockholm University。
+- **主要な研究分野**: 政治経済学、メディアの経済学。
+- **評判・学術的貢献**: 本論文は *American Economic Review* 115(9)（2025）に掲載された。
 
 ---
 

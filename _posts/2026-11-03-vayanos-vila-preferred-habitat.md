@@ -16,6 +16,11 @@ math: true
 
 本記事は、Dimitri Vayanos（ロンドン・スクール・オブ・エコノミクス）と Jean-Luc Vila（Bank of America Merrill Lynch、論文執筆当時）による論文 "A Preferred-Habitat Model of the Term Structure of Interest Rates"（NBER Working Paper 15487、2009年11月。刊行版は *Econometrica* 89(1), 2021）を紹介し、**その背景にある数理モデルを早見表としてまとめた記事**です。論文の文章解説ではなく、モデルの式・前提・記号・導出の整理を目的としています。
 
+**論文リンク**：
+- 無料で全文を読める版：<https://researchonline.lse.ac.uk/id/eprint/106509/> （LSE Research Online にあるオープンアクセスの刊行版（Econometrica 掲載版、CC BY）。PDFは同ページから取得できる）
+- 無料で読める別の版：<https://www.nber.org/papers/w15487> （NBER ワーキングペーパー版（Working Paper 15487、2009年11月）。本記事が参照した版）
+- 公式版（出版社・DOI）：<https://doi.org/10.3982/ECTA17440> （Econometrica, 89(1), 77–112（2021））
+
 **論文の問い。** 標準理論では、満期 $T$ の金利は代表的個人の時点 $0$ と $T$ の間の消費の代替で決まります。これに対し Culbertson (1957) と Modigliani–Sutch (1966) の「選好ハビタット説」は、特定の満期を好む投資家クライアンテル（長期債の年金基金など）が存在し、その満期に局所的な需給ショックが金利を動かすと主張します。ただし、この説は形式的なモデルを欠き、無裁定と矛盾するという印象も持たれていました。
 
 **動機となる事例。** 2000年1月、米財務省は長期債の買戻し（リバースオークション）を発表しました。3週間以内に30年債利回りは58bp低下しましたが、5年債は9bpの低下にとどまり、2年債は9bp上昇しました。長期満期に局所的な供給ショックだったと考えると説明しやすい現象です。

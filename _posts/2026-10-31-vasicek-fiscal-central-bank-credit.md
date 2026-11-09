@@ -16,13 +16,23 @@ paper_position: "この記事は、Vasicek (1977) の数理モデルに、政府
 
 ## 目次
 
+- [0. 論文の紹介](#sec0)
 - [1. 数理モデル](#sec1)
 - [2. 説明できる現象](#sec2)
 - [3. 整理している点](#sec3)
 - [4. モデルの対象外](#sec4)
+- [5. 主要文献・関連論文](#sec5)
 - [付録：導出手順](#appendix)
 
 ---
+
+## 0. 論文の紹介 {#sec0}
+
+**書誌**：Oldrich Vasicek, "An Equilibrium Characterization of the Term Structure," *Journal of Financial Economics*, Vol. 5, No. 2 (1977), pp. 177–188.（本記事は、この論文の数理モデルに政府債務の通時的予算制約とTVC、国債市場・中央銀行・信用創造のモデルを接続した統合モデルを扱う。）
+
+**論文リンク**：
+- 無料で全文を読める版：確認できなかった
+- 公式版（出版社・DOI）：<https://doi.org/10.1016/0304-405X(77)90016-2> （Journal of Financial Economics, 5(2), 177–188（1977）。閲覧に契約や所属機関経由のアクセスが必要な場合がある）
 
 ## 1. 数理モデル {#sec1}
 
@@ -524,6 +534,21 @@ $$
 - $\beta \lt 1$ のときの $\phi_t$ の確率的な変動を含む閉じた形(式(32)(34))。一般形は(27)(29)。
 - 確率的な成長率、短期金利のゼロ下限、状態変数が複数ある場合、外貨建て国債と為替リスク。
 - 元記事の「国債の発行量に制約がない」ことの主張、およびパラメータの推定・実際の利回り曲線への当てはめ。
+
+---
+
+## 5. 主要文献・関連論文 {#sec5}
+
+- **[関連文献]** Cox, J. C., Ingersoll, J. E., Jr., & Ross, S. A. (1985). A theory of the term structure of interest rates. *Econometrica*, 53(2), 385–407.
+  - **位置づけ**: 一般均衡の枠組みで、金利の期間構造を導いた論文（CIR モデル）。
+- **[関連文献]** Heath, D., Jarrow, R., & Morton, A. (1992). Bond pricing and the term structure of interest rates: A new methodology for contingent claims valuation. *Econometrica*, 60(1), 77–105.
+  - **位置づけ**: 現在の金利の期間構造を出発点に、無裁定な金利の動きを導く方法を示した論文（HJM の枠組み）。
+- **[関連文献]** Harrison, J. M., & Kreps, D. M. (1979). Martingales and arbitrage in multiperiod securities markets. *Journal of Economic Theory*, 20(3), 381–408.
+  - **位置づけ**: 無裁定と、同値マルチンゲール測度の存在を結び付けた論文。Vasicek モデルのマルチンゲール評価の土台になる。
+- **[関連文献]** Vayanos, D., & Vila, J.-L. (2021). A preferred-habitat model of the term structure of interest rates. *Econometrica*, 89(1), 77–112.
+  - **位置づけ**: 投資家の選好する満期（preferred habitat）と裁定を組み合わせた、金利の期間構造モデル。
+- **[関連文献]** Hamilton, J. D., & Flavin, M. A. (1986). On the limitations of government borrowing: A framework for empirical testing. *American Economic Review*, 76(4), 808–819.
+  - **位置づけ**: 政府の借入に「ポンジ・ゲームを行わない」という制約があるかどうかを、実証的に検定する枠組みを示した論文。
 
 ---
 

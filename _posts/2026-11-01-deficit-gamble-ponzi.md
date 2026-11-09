@@ -19,6 +19,10 @@ math: true
 - 著者：Laurence Ball（Johns Hopkins University, NBER）、Douglas W. Elmendorf（当時 U.S. Congress, Congressional Budget Office, Macroeconomic Analysis Division）、N. Gregory Mankiw（Harvard University, NBER）
 - NBER Working Paper No. 5015、1995年2月。のちに Journal of Money, Credit and Banking, 30(4), 1998, pp. 699–720 に掲載された（本記事が使うのはNBERワーキングペーパー版）。
 
+**論文リンク**：
+- 無料で全文を読める版：<https://www.nber.org/papers/w5015> （NBER ワーキングペーパー版（Working Paper 5015、1995年））
+- 公式版（出版社・DOI）：<https://doi.org/10.3386/w5015> （NBER Working Paper 5015 の DOI）
+
 **論文の問いと主張**
 
 - 問い：一時的に財政赤字を出し、積み上がった政府債務を「永久に借り換える（ロールオーバーする）」ことが可能なら、世代ごとの厚生はどうなるか。

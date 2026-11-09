@@ -18,6 +18,10 @@ math: true
 
 Kenneth J. Arrow and Mordecai Kurz, *Public Investment, the Rate of Return, and Optimal Fiscal Policy*, The Johns Hopkins Press for Resources for the Future, 1970（2011年に RFF Press から *Environmental and Resource Economics* 叢書の Volume 1 として復刻）。全8章、約210ページの単行本である。
 
+**論文リンク**：
+- 無料で全文を読める版：確認できなかった
+- 公式版（出版社・DOI）：<https://www.routledge.com/Public-Investment-the-Rate-of-Return-and-Optimal-Fiscal-Policy/Arrow-Kruz/p/book/9781617260308> （2011年の RFF Press（Routledge）復刻版の書籍ページ（有料の書籍。原著は 1970年、Johns Hopkins Press for Resources for the Future））
+
 **何を扱う本か**
 
 政府の投資（公共投資）を評価するとき、市場利子率をそのまま割引率に使ってよいかを問う。出発点は、市場利子率が多数あること、先物市場が乏しいこと、リスク市場が不完全であること、公共財の収益が回収しきれないこと、政府が将来世代に対して特別な責任をもつことである。著者らはこれを「割引率の選び方」の問題として扱わず、**成長理論の枠内での動学的最適化問題**として定式化する。さらに、政府が使える手段（税・公債）で最適経路を実現できるか、という**操作可能性（controllability）**を、Tinbergen の経済政策論の動学版として新たに導入する。
@@ -44,6 +48,7 @@ Kenneth J. Arrow and Mordecai Kurz, *Public Investment, the Rate of Return, and 
 - [2. 説明できる現象](#sec2)
 - [3. モデルが整理している点](#sec3)
 - [4. 対象外の現象](#sec4)
+- [5. 主要文献・関連論文](#sec5)
 - [付録：導出手順](#appendix)
 
 ---
@@ -515,6 +520,19 @@ $$
 - 所得再分配。基準関数は個人が同質で、分配は考慮しない。
 - 人口・技術進歩の内生化。どちらも外生で、一定率で成長する。原著も、人口は物理的理由で上限をもつはずだと述べている。
 - 実証的な数値（利子率・弾力性の推定値）。モデルは係数が「データから計算できる」と述べるにとどまる。
+
+---
+
+## 5. 主要文献・関連論文 {#sec5}
+
+- **[原著/金字塔論文]** Ramsey, F. P. (1928). A mathematical theory of saving. *Economic Journal*, 38(152), 543–559.
+  - **位置づけ**: 最適な貯蓄率を動学的最適化で導いた、成長理論の出発点となる論文。
+- **[関連文献]** Arrow, K. J., & Lind, R. C. (1970). Uncertainty and the evaluation of public investment decisions. *American Economic Review*, 60(3), 364–378.
+  - **位置づけ**: 公共投資のリスクを、政府がどう評価すべきかを論じた論文。本書と同じ年に出た関連研究。
+- **[関連文献]** Marglin, S. A. (1963). The social rate of discount and the optimal rate of investment. *Quarterly Journal of Economics*, 77(1), 95–111.
+  - **位置づけ**: 社会的割引率と最適な投資率の関係を論じた論文。
+- **[関連文献]** Baumol, W. J. (1968). On the social rate of discount. *American Economic Review*, 58(4), 788–802.
+  - **位置づけ**: 公共投資に用いる社会的割引率を、民間資本の収益率との関係から論じた論文。
 
 ---
 

@@ -16,13 +16,24 @@ paper_position: "この記事は、この論文の背景にある数理モデル
 
 ## 目次
 
+- [0. 論文の紹介](#sec0)
 - [1. 数理モデル](#sec1)
 - [2. 説明できる現象](#sec2)
 - [3. 整理している点](#sec3)
 - [4. モデルの対象外](#sec4)
+- [5. 主要文献・関連論文](#sec5)
 - [付録：導出手順](#appendix)
 
 ---
+
+## 0. 論文の紹介 {#sec0}
+
+**書誌**：Ellen R. McGrattan and Edward C. Prescott, "On Financing Retirement with an Aging Population," *Quantitative Economics*, Vol. 8, No. 1 (2017), pp. 75–115.
+
+**論文リンク**：
+- 無料で全文を読める版：<https://www.nber.org/papers/W18760> （NBER ワーキングペーパー版（Working Paper 18760、2013年2月））
+- 無料で読める別の版：<https://users.cla.umn.edu/~erm/data/sr531/literature/QE/sr472e.pdf> （共著者 McGrattan のミネソタ大学サイトに置かれた Minneapolis 連銀 Staff Report 472（2016年2月改訂）。著者サイトのため、公開状況が変わる可能性がある）
+- 公式版（出版社・DOI）：<https://doi.org/10.3982/QE648> （Quantitative Economics, 8(1), 75–115（2017）。閲覧に契約や所属機関経由のアクセスが必要な場合がある）
 
 ## 1. 数理モデル {#sec1}
 
@@ -203,6 +214,21 @@ $$
 
 ---
 
+## 5. 主要文献・関連論文 {#sec5}
+
+- **[原著/金字塔論文]** Diamond, P. A. (1965). National debt in a neoclassical growth model. *American Economic Review*, 55(5), 1126–1150.
+  - **位置づけ**: 資本をもつ世代重複モデルに政府債務を組み込み、債務が資本蓄積と厚生に与える影響を分析した基礎的論文。
+- **[関連文献]** Auerbach, A. J., & Kotlikoff, L. J. (1987). *Dynamic Fiscal Policy*. Cambridge: Cambridge University Press.
+  - **位置づけ**: 世代重複モデルで税制・社会保障の改革の経済効果を数値的に評価する枠組みを示した古典的な単行書。
+- **[関連文献]** İmrohoroğlu, A., İmrohoroğlu, S., & Joines, D. H. (1995). A life cycle analysis of social security. *Economic Theory*, 6(1), 83–114.
+  - **位置づけ**: 個人の所得リスクをもつ世代重複モデルで、社会保障制度の厚生効果を分析した論文。
+- **[関連文献]** Conesa, J. C., & Krueger, D. (1999). Social security reform with heterogeneous agents. *Review of Economic Dynamics*, 2(4), 757–795.
+  - **位置づけ**: 不均質な家計の世代重複モデルで、賦課方式の年金改革の効果を分析した論文。
+- **[著者自身の発展]** McGrattan, E. R., & Prescott, E. C. (2005). Taxes, regulations, and the value of U.S. and U.K. corporations. *Review of Economic Studies*, 72(3), 767–796.
+  - **位置づけ**: 無形資本を含めて企業価値と課税の関係を分析した、著者らの論文。本論文の「より多い生産的資本」の考え方につながる。
+
+---
+
 ## 付録：導出手順 {#appendix}
 
 ### A.0 構造図
@@ -296,6 +322,19 @@ $$
 |---|---|
 | T1, T2 | 家計および企業の決定方程式 |
 | NIPA・CPS統合データ | 初期パラメータ $\theta, \delta, \beta_i, \alpha_i$ のキャリブレーション |
+
+
+### A.3 著者について
+
+**Ellen R. McGrattan（エレン・R・マクグラッタン）**
+- **アカデミックな経歴**: 本論文の執筆時の所属は University of Minnesota と Federal Reserve Bank of Minneapolis。
+- **主要な研究分野**: マクロ経済学（課税と生産的資本、無形資本の測定）。
+- **評判・学術的貢献**: McGrattan & Prescott (2005) *Review of Economic Studies*, 72(3), 767–796 などの業績がある。
+
+**Edward C. Prescott（エドワード・C・プレスコット）**
+- **アカデミックな経歴**: 本論文の執筆時の所属は Arizona State University と Federal Reserve Bank of Minneapolis。
+- **主要な研究分野**: マクロ経済学（景気循環の実物的要因、動学的一般均衡モデル、課税と労働供給）。
+- **評判・学術的貢献**: Kydland & Prescott (1982) “Time to build and aggregate fluctuations,” *Econometrica*, 50(6), 1345–1370 などの業績により、2004年にノーベル経済学賞を Finn Kydland とともに受賞した。2022年に死去。
 
 ---
 

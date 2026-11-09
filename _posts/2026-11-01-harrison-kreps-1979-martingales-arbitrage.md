@@ -16,6 +16,10 @@ math: true
 
 本記事で扱う論文は、J. Michael Harrison と David M. Kreps による "Martingales and Arbitrage in Multiperiod Securities Markets"（Journal of Economic Theory, 20(3), 381–408, 1979、スタンフォード大学ビジネススクール）である。Black–Scholes に始まるオプション価格の裁定理論について、その基礎的な論点を整理した論文である。株式や債券の価格過程を所与とし、そこから他の偶発請求権（株式のオプションなど）の価格を裁定のみで決められるかどうかを問う。
 
+**論文リンク**：
+- 無料で全文を読める版：確認できなかった
+- 公式版（出版社・DOI）：<https://doi.org/10.1016/0022-0531(79)90043-7> （Journal of Economic Theory, 20(3), 381–408（1979）。閲覧に契約や所属機関経由のアクセスが必要な場合がある）
+
 論文の主な結論は次の通りである。
 
 - 証券市場モデルが均衡として成立しうること（viability）は、同値マルチンゲール測度が少なくとも一つ存在することと同値である。

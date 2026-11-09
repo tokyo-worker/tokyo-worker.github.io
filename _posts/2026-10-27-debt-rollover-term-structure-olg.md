@@ -34,6 +34,7 @@ math: true
 - [2. 説明できる現象](#sec2)
 - [3. 整理している点](#sec3)
 - [4. モデルの対象外](#sec4)
+- [5. 主要文献・関連論文](#sec5)
 - [付録：導出手順](#appendix)
 
 ---
@@ -834,6 +835,21 @@ $$
 
 ---
 
+## 5. 主要文献・関連論文 {#sec5}
+
+- **[原著/金字塔論文]** Diamond, P. A. (1965). National debt in a neoclassical growth model. *American Economic Review*, 55(5), 1126–1150.
+  - **位置づけ**: 資本をもつ世代重複モデルに政府債務を組み込み、債務が資本蓄積と厚生に与える影響を分析した基礎的論文。
+- **[関連文献]** Abel, A. B., Mankiw, N. G., Summers, L. H., & Zeckhauser, R. J. (1989). Assessing dynamic efficiency: Theory and evidence. *Review of Economic Studies*, 56(1), 1–19.
+  - **位置づけ**: 動学的効率性を、資本部門のキャッシュフローから判定する基準を示した論文。
+- **[関連文献]** O'Connell, S. A., & Zeldes, S. P. (1988). Rational Ponzi games. *International Economic Review*, 29(3), 431–450.
+  - **位置づけ**: 動学的に効率的な経済でも、政府が債務を永続的に借り換えられる条件を論じた論文。
+- **[関連文献]** Blanchard, O. (2019). Public debt and low interest rates. *American Economic Review*, 109(4), 1197–1229.
+  - **位置づけ**: 安全な利子率が成長率を下回る環境での公的債務の持続可能性を論じた論文（アメリカ経済学会の会長講演）。
+- **[関連文献]** Kocherlakota, N. R. (2023). Infinite debt rollover in stochastic economies. *Econometrica*, 91(5), 1629–1658.
+  - **位置づけ**: 確率的な経済で、政府債務を永続的に借り換えられる条件を論じた論文。
+
+---
+
 ## 付録：導出手順 {#appendix}
 
 ### A.0 構造図
@@ -1514,6 +1530,14 @@ $a_2\neq0$ と $\det[u_1,u_2]\neq0$ なら $\neq0$ で、$R(\theta)$ は2行の�
 | 式(25)(11) | $Q^j=X^j\mathbf 1$、$R^j$ の定義 |
 | T5、T6 | フロベニウスの極限、スペクトル分解 |
 | A.8 Step 6 | スイッチ点での $Q^j=\lambda_1^{j}\mathbf 1$ |
+
+
+### A.14 著者について
+
+**Keiichi Morimoto**
+- **アカデミックな経歴**: 記事が参照した資料（2026年1月27日付）に記載の所属は、明治大学 政治経済学部。
+- **主要な研究分野**: 資料の主題は、世代重複モデルにおける政府債務の借り換えと金利の期間構造。
+- **評判・学術的貢献**: （この論文は査読誌に掲載された論文ではなく、この記事が参照した資料の範囲でのみ記述している。経歴・受賞歴は確認できていない。）
 
 ---
 

@@ -18,6 +18,10 @@ math: true
 
 Kenneth J. Arrow and Mordecai Kurz, *Public Investment, the Rate of Return, and Optimal Fiscal Policy*, The Johns Hopkins Press for Resources for the Future, 1970（2011年に RFF Press から復刻）。公共投資の割引率を、成長理論の動学的最適化と、政府の政策手段による**操作可能性（controllability）**の問題として定式化した単行本である。
 
+**論文リンク**：
+- 無料で全文を読める版：確認できなかった
+- 公式版（出版社・DOI）：<https://www.routledge.com/Public-Investment-the-Rate-of-Return-and-Optimal-Fiscal-Policy/Arrow-Kruz/p/book/9781617260308> （2011年の RFF Press（Routledge）復刻版の書籍ページ（有料の書籍。原著は 1970年、Johns Hopkins Press for Resources for the Future））
+
 **本記事の位置づけ**
 
 本記事は、この書籍そのものの解説ではなく、**書籍の背景にある数理モデルを早見表にした記事**である。原著の式は簡略化せず、そのまま用いる。全8章を4部に分けて記事化しており、本記事は第3部にあたる。
@@ -40,6 +44,7 @@ Kenneth J. Arrow and Mordecai Kurz, *Public Investment, the Rate of Return, and 
 - [2. 説明できる現象](#sec2)
 - [3. モデルが整理している点](#sec3)
 - [4. 対象外の現象](#sec4)
+- [5. 主要文献・関連論文](#sec5)
 - [付録：導出手順](#appendix)
 
 ---
@@ -519,6 +524,19 @@ $$
 - 定常点の一意性の一般的な条件。原著は $f_{gp}k_p+f_{gg}k_g\lt 0$ が十分条件だが収穫逓増では成り立たないと述べるのみ。
 - 不確実性。
 - 公的目的と私的目的の割引率が異なる場合の詳しい分析（式(1)(2)は第4部以降で使う）。
+
+---
+
+## 5. 主要文献・関連論文 {#sec5}
+
+- **[原著/金字塔論文]** Ramsey, F. P. (1928). A mathematical theory of saving. *Economic Journal*, 38(152), 543–559.
+  - **位置づけ**: 最適な貯蓄率を動学的最適化で導いた、成長理論の出発点となる論文。
+- **[関連文献]** Arrow, K. J., & Lind, R. C. (1970). Uncertainty and the evaluation of public investment decisions. *American Economic Review*, 60(3), 364–378.
+  - **位置づけ**: 公共投資のリスクを、政府がどう評価すべきかを論じた論文。本書と同じ年に出た関連研究。
+- **[関連文献]** Marglin, S. A. (1963). The social rate of discount and the optimal rate of investment. *Quarterly Journal of Economics*, 77(1), 95–111.
+  - **位置づけ**: 社会的割引率と最適な投資率の関係を論じた論文。
+- **[関連文献]** Baumol, W. J. (1968). On the social rate of discount. *American Economic Review*, 58(4), 788–802.
+  - **位置づけ**: 公共投資に用いる社会的割引率を、民間資本の収益率との関係から論じた論文。
 
 ---
 

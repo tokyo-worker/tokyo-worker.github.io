@@ -16,6 +16,10 @@ math: true
 
 J. Michael Harrison（Stanford University）と Stanley R. Pliska（Northwestern University）による論文で、*Stochastic Processes and their Applications*, Vol. 11, No. 3 (1981), pp. 215–260 に掲載された。本記事が参照した PDF は、この論文の Discussion Paper No. 454（1981年1月）版である。
 
+**論文リンク**：
+- 無料で全文を読める版：確認できなかった
+- 公式版（出版社・DOI）：<https://doi.org/10.1016/0304-4149(81)90026-0> （Stochastic Processes and their Applications, 11(3), 215–260（1981）。DOIは他論文の文献リストで確認。閲覧に契約や所属機関経由のアクセスが必要な場合がある）
+
 論文の位置づけは、原著者自身の言葉では「チュートリアル・サーベイ・新結果の場」である。Black–Scholes のオプション価格公式をより深く理解したいという動機から出発し、次の枠組みを与える。
 
 - 価格過程をセミマルチンゲールとし、資本利得を一般の確率積分で表す、無摩擦な連続取引市場の一般モデル。

@@ -18,6 +18,10 @@ paper_year: 1998
 
 **紹介する論文**：Narayana R. Kocherlakota, "Money Is Memory," *Journal of Economic Theory* 81 (1998), pp. 232–251.
 
+**論文リンク**：
+- 無料で全文を読める版：<https://minneapolisfed.org/research/staff-reports/money-is-memory> （ミネアポリス連銀の Staff Report 218（1996年10月）のページ（PDFをダウンロードできる。出版版の前身にあたる論文））
+- 公式版（出版社・DOI）：<https://doi.org/10.1006/jeth.1997.2357> （Journal of Economic Theory, 81(2), 232–251（1998）。閲覧に契約や所属機関経由のアクセスが必要な場合がある）
+
 この論文は、価値のない紙切れ（不換貨幣）がなぜ社会の配分を改善できるのかを問い、貨幣の技術的な役割は「過去の取引の記録（記憶）の代替」にあると論じます。主命題は、貨幣のある環境で実現できる配分はすべて、同じ環境に記憶があれば実現できる、というものです。
 
 この記事は、その論文の**背景にある数理モデル**（物理環境・貨幣・記憶・無コミットメント取引メカニズム・完全公開均衡・主命題）だけを早見表として整理したものです。論文の解説は最小限にし、モデルは簡略化せずに原論文のまま掲載しています。
@@ -32,6 +36,7 @@ paper_year: 1998
 - [2. 説明できる現象](#sec2)
 - [3. モデルが整理している点](#sec3)
 - [4. 対象外の現象](#sec4)
+- [5. 主要文献・関連論文](#sec5)
 - [付録：導出手順](#appendix)
 
 ---
@@ -428,6 +433,21 @@ $$
 
 ---
 
+## 5. 主要文献・関連論文 {#sec5}
+
+- **[原著/金字塔論文]** Samuelson, P. A. (1958). An exact consumption-loan model of interest with or without the social contrivance of money. *Journal of Political Economy*, 66(6), 467–482.
+  - **位置づけ**: 世代重複モデルで貨幣が価値をもつことを示した、基礎的論文。
+- **[関連文献]** Ostroy, J. M. (1973). The informational efficiency of monetary exchange. *American Economic Review*, 63(4), 597–610.
+  - **位置づけ**: 貨幣が情報の面で果たす役割を、取引の効率性から論じた論文。
+- **[関連文献]** Townsend, R. M. (1989). Currency and credit in a private information economy. *Journal of Political Economy*, 97(6), 1323–1344.
+  - **位置づけ**: 私的情報のある経済で、貨幣と信用が果たす役割を論じた論文。
+- **[関連文献]** Kiyotaki, N., & Wright, R. (1989). On money as a medium of exchange. *Journal of Political Economy*, 97(4), 927–954.
+  - **位置づけ**: サーチ理論の枠組みで、交換手段としての貨幣が成立する条件を示した論文。
+- **[同時期の関連論文]** Kocherlakota, N., & Wallace, N. (1998). Incomplete record-keeping and optimal payment arrangements. *Journal of Economic Theory*, 81(2), 272–289.
+  - **位置づけ**: 記録の不完全さと貨幣を併せて、最適な支払い方法を論じた、同じ号に載った関連論文。
+
+---
+
 ## 付録：導出手順 {#appendix}
 
 ### A.0 構造図
@@ -578,6 +598,14 @@ OLG(d)では、貨幣環境の集合が(30)に等しく、記憶環境でも同�
 | (5)(19) | 自給自足効用、直接メカニズム |
 | T1・T3 | 逸脱の比較、自給自足の下限 |
 | 結果 | 式(30) |
+
+
+### A.5 著者について
+
+**Narayana R. Kocherlakota（ナラヤナ・R・コチャーラコタ）**
+- **アカデミックな経歴**: 本論文の執筆時の所属は Federal Reserve Bank of Minneapolis の Research Department（Senior Economist）。のちに同行の総裁（2009–2015年）を務め、University of Rochester の教授となった。
+- **主要な研究分野**: 金融経済学、貨幣理論、マクロ経済学（金融政策・財政政策）。
+- **評判・学術的貢献**: Kocherlakota (1996) “The equity premium: It’s still a puzzle,” *Journal of Economic Literature*, 34(1), 42–71 などの業績がある。本論文は *Journal of Economic Theory* 81(2)（1998）に掲載された。
 
 ---
 

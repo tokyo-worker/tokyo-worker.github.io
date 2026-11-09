@@ -16,13 +16,23 @@ paper_position: "この記事は、この論文の背景にある数理モデル
 
 ## 目次
 
+- [0. 論文の紹介](#sec0)
 - [1. 数理モデル](#sec1)
 - [2. 説明できる現象](#sec2)
 - [3. 整理している点](#sec3)
 - [4. 対象外の現象](#sec4)
+- [5. 主要文献・関連論文](#sec5)
 - [付録：導出手順](#appendix)
 
 ---
+
+## 0. 論文の紹介 {#sec0}
+
+**書誌**：Douglas W. Diamond, "Financial Intermediation and Delegated Monitoring," *The Review of Economic Studies*, Vol. 51, No. 3 (July 1984), pp. 393–414.
+
+**論文リンク**：
+- 無料で全文を読める版：確認できなかった
+- 公式版（出版社・DOI）：<https://doi.org/10.2307/2297430> （The Review of Economic Studies, 51(3), 393–414（1984）。閲覧に契約や所属機関経由のアクセスが必要な場合がある）
 
 ## 1. 数理モデル {#sec1}
 
@@ -623,6 +633,21 @@ $$
 - 第5章（Leland–Pyle）の分析は、$N=1$ と $N=2$ の比較と簡略化された設定（小さなプロジェクト、市場ポートフォリオと無相関）によるスケッチで、仲介者の最適な構造を完全に解くものではない。
 - 資産の非流動性や、銀行規制・預金保険の評価は、結論での示唆にとどまり、モデルとしては展開されていない。
 - 実証的な検証は行っていない。
+
+---
+
+## 5. 主要文献・関連論文 {#sec5}
+
+- **[関連文献]** Townsend, R. M. (1979). Optimal contracts and competitive markets with costly state verification. *Journal of Economic Theory*, 21(2), 265–293.
+  - **位置づけ**: 状態の確認に費用がかかるときに、負債契約が最適になることを示した論文。
+- **[関連文献]** Gale, D., & Hellwig, M. (1985). Incentive-compatible debt contracts: The one-period problem. *Review of Economic Studies*, 52(4), 647–663.
+  - **位置づけ**: 状態の確認に費用がかかる一期間の問題で、負債契約が最適になることを示した論文。
+- **[同時期の関連論文]** Diamond, D. W., & Dybvig, P. H. (1983). Bank runs, deposit insurance, and liquidity. *Journal of Political Economy*, 91(3), 401–419.
+  - **位置づけ**: 銀行が流動性を供給する役割と、取り付けが生じる仕組みを示した、同じ著者の論文。
+- **[関連文献]** Boyd, J. H., & Prescott, E. C. (1986). Financial intermediary-coalitions. *Journal of Economic Theory*, 38(2), 211–232.
+  - **位置づけ**: 金融仲介機関を、情報を共有する貸し手の連合として捉えた論文。
+- **[関連文献]** Holmström, B., & Tirole, J. (1997). Financial intermediation, loanable funds, and the real sector. *Quarterly Journal of Economics*, 112(3), 663–691.
+  - **位置づけ**: 企業と金融仲介機関の資本が、投資に与える影響を分析した論文。
 
 ---
 
