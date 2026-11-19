@@ -662,7 +662,7 @@ $$
 |---|---|---|
 | $$\sum_{j}P_t(j)\mathbb{E}_t\left[S_{t+j}\right]$$ | リスク中立のPDV | リスクフリーの債券価格で期待余剰を割り引いた値。SDFが一定なら、これだけが残る（式(6)）。標本の平均基礎的収支がほぼ0のため、ほぼ0 |
 | $$\sum_{j}\mathrm{Cov}_t\left(M_{t,t+j},T_{t+j}\right)$$ | 税収の共分散項 | 税収が好況（$$M$$ 低）で高いと負。債務余力を下げる |
-| $$-\sum_{j}\mathrm{Cov}_t\left(M_{t,t+j},G_{t+j}\right)$$ | 歳出の共分散項 | 歳出が不況（$$M$$ 高）で高いと、この項は負の符号がつく前の共分散が正、全体としては負の寄与。両方が成り立つと2項の和は負 |
+| $$-\sum_{j}\mathrm{Cov}_t\left(M_{t,t+j},G_{t+j}\right)$$ | 歳出の共分散項 | 歳出が不況（$$M$$ 高）で高いと共分散は正で、式では引かれるため負の寄与になる。税収の項と合わせて、両方が成り立つと共分散項の和は負 |
 
 **意味**：債務を支える力は、期待余剰のリスク中立の価値から、景気循環との共分散（リスク）の分だけ減る。
 
@@ -783,3 +783,477 @@ VAR (14) + SDF (18) ───▶ ⑤ 税収・歳出請求権のプレミアム 
 | 緊縮の確率 | 平均25.8%、標本末期で約60% |
 
 > 数値は版により異なる。2019年12月版のNBER Working Paper（No. 26583）の概要には、乖離が平均でGDP比192%と書かれている（Web検索で確認）。
+
+---
+
+## 2. 説明できる現象 {#sec2}
+
+| 現象 | モデルによる説明の要点 |
+|---|---|
+| 国債の市場価値が、収支請求権の価値を大きく上回る（価値パズル） | 税収は景気順行的、歳出は景気逆行的で、収支請求権は高い割引率で割り引かれる。共分散項（式(6)）が債務余力を大きく下げる |
+| 国債ポートフォリオの期待収益が低すぎる（リスクプレミアム・パズル） | 国債は税収請求権を買い、歳出請求権を売る位置にあり、期待収益は両請求権より高いはず（式(8)）。観察は超過収益1.11% |
+| 安全金利が成長率より低いのに、請求権の価値が有限 | 税収・歳出請求権の割引率（7.20%、7.03%）は名目GDP成長率（6.2%）より高い。成長率と比べるべきは安全金利ではなくリスク調整後の割引率（式(31)） |
+| 国債価値が財政ニュースに反応しない（過度な平滑性） | 収支請求権の価値は状態変数に大きく反応するが、1期債中心の国債価値は反応しない（式(12)、(13)、(38)） |
+| 税収・歳出の平均回帰 | VARの水準変数の係数が負（$$\Psi[7,9]=-0.568$$、$$\Psi[8,10]=-0.265$$）。水準が高いと数年先の成長率が下がるという予測回帰とも整合（原論文表4） |
+| インフレでは解消されない | 価値等式は名目でも実質でも成り立つ事前の関係。ブレークイーブン・インフレ率は2%を下回り、国債の平均デュレーションは約4年と短いので、事後のインフレで実質債務を減らす力は限られる（たとえば5ポイントのインフレが4年続いても約20%） |
+| デフォルトでは解消されない | 同じ予算制約がデフォルトの下でも成り立ち、債券価格にデフォルトが織り込まれる（式(11)） |
+| コンビニエンスイールドでは解消されない | 追加収入が増える一方、安全金利が上がり割引率も上がるため、現在価値はほぼ不変（シニョリッジの現在価値はGDP比15.50%）（式(40)） |
+
+## 3. 整理している点 {#sec3}
+
+- 債券を1本ずつ価格づけするのではなく、国債ポートフォリオ全体を1つの請求権として価格づけし、その割引率をキャッシュフロー（基礎的収支）のリスクから決める。
+- 「リスクフリー金利で将来余剰を割り引く」従来の検定が、予算制約が成り立つこととリスクフリーであることの同時仮説になっている点を分け、税収・歳出請求権のリスクプレミアムを明示する。
+- 共和分により、短期のリスク（景気循環性）と長期のリスク（GDPと共通の永続ショック）の両方が、収支請求権の割引率を押し上げる経路を整理する。
+
+## 4. 対象外の現象 {#sec4}
+
+- 財政政策を最適化の結果として導くことはしない。税収と歳出は所与の過程としてVARで推定する。
+- 将来の財政調整が実際に起きるかどうかの予測や、どの政策がパズルを解消するかの提言はしない。緊縮の確率は、市場価値と整合させるための逆算にとどまる。
+- 国債市場がなぜ割高に価格づけされているかを特定する理論（バブル、安全資産需要、制度的要因など）は示さない。代替説明を検討したうえで、いずれも説明できないと論じるにとどまる。
+- 債務や債務対GDP比そのものの動学を状態に含む定式化は、基準モデルでは扱わない（付録Gの拡張で、結果が似ることを示す）。
+- 米国以外の国との比較は扱わない（今後の課題）。
+- 2020年のコロナ危機による追加の赤字は、標本に含まれない。
+
+## 5. 主要文献・関連論文 {#sec5}
+
+- **[原著/金字塔論文]** Hamilton, J. D., & Flavin, M. A. (1986). On the limitations of government borrowing: A framework for empirical testing. *American Economic Review*, 76(4), 808–819.
+  - **位置づけ**: 政府の異時点間予算制約の時系列的な検定の出発点。割引率にリスクフリー金利を使う点が、本論文の批判する同時仮説問題にあたる。
+- **[関連文献]** Bohn, H. (1998). The behavior of U.S. public debt and deficits. *Quarterly Journal of Economics*, 113(3), 949–963.
+  - **位置づけ**: 財政余剰が債務に反応する自動安定化の実証。本論文は、税収・歳出の平均回帰（共和分）の動機づけにこれを引く。
+- **[基礎となる理論]** Alvarez, F., & Jermann, U. J. (2005). Using asset prices to measure the persistence of the marginal utility of wealth. *Econometrica*, 73(6), 1977–2016.
+  - **位置づけ**: SDFの永続成分を資産価格から測る。長期のキャッシュフローの割引率が、長期債の利回りより高くなりうる理由の基礎。
+- **[関連文献]** Krishnamurthy, A., & Vissing-Jorgensen, A. (2012). The aggregate demand for Treasury debt. *Journal of Political Economy*, 120(2), 233–267.
+  - **位置づけ**: 国債のコンビニエンスイールドの標準的な推定。本論文はこの推定を使い、パズルが残ることを示す。
+- **[関連文献]** Blanchard, O. (2019). Public debt and low interest rates. *American Economic Review*, 109(4), 1197–1229.
+  - **位置づけ**: 安全金利が成長率を下回ることを根拠に、債務の余力が大きいと論じる。本論文は、割引率をリスク調整する立場から対比される。
+
+---
+
+## 付録：導出手順 {#appendix}
+
+### A.0 構造図
+
+```
+予算制約 (1) ─▶ 恒等式 (46)(47) ─▶ オイラー式 (48) ─▶ (49) ─▶ 逐次加算 (50) ─TVC (3)─▶ 価値等式 (4)(5)   [A.2]
+                                         │                                                  │
+                                         │                                                  ├─ 共分散分解 (53)(54) → (6)   [A.4]
+                                         │                                                  └─ 収益率の恒等式 (55)(56) → (8)  [A.5]
+デフォルト (11) ─▶ (51)(52) ──────────────┘                                                  [A.3]
+固有関数 (57) ─▶ SDF分解 (58) ─▶ 長期収益 (59)(60)(61) ─▶ (9), (10)                            [A.6]
+VAR (14) + SDF (18) ─▶ 債券 (62) → (20), (22) ─▶ 実質 (64)(65) → (23), (24)                  [A.7, A.8]
+                    ─▶ 株式・配当ストリップ (66)(67) → (26), (28), (29)                        [A.9]
+                    ─▶ 歳出・税収請求権 (68)(69) → (31)–(37)                                   [A.10]
+コンビニエンス (39) ─▶ (70)(71) ─▶ (40)                                                        [A.11]
+```
+
+### A.1 使う道具
+
+**T1　対数正規分布の期待値**
+
+$$
+\varepsilon\sim N(0,I)\ \Longrightarrow\ \mathbb{E}\left[\exp\left(a^{\top}\varepsilon\right)\right]=\exp\left(\tfrac12a^{\top}a\right)
+$$
+
+**T2　繰り返し期待値の法則**
+
+$$
+\mathbb{E}_t\left[\mathbb{E}_{t+j}\left[X\right]\right]=\mathbb{E}_t\left[X\right]
+$$
+
+**T3　共分散の定義**
+
+$$
+\mathbb{E}_t\left[XY\right]=\mathbb{E}_t\left[X\right]\mathbb{E}_t\left[Y\right]+\mathrm{Cov}_t\left(X,Y\right)
+$$
+
+**T4　望遠鏡和（逐次相殺）**
+
+$$
+\sum_{j=0}^{J}\left(a_j-a_{j+1}\right)=a_0-a_{J+1}
+$$
+
+**T5　対数線形化（Campbell–Shiller型）**
+
+$$
+\log\left(1+e^{pd}\right)\approx\kappa_0+\kappa_1pd,\qquad \kappa_1=\frac{e^{\overline{pd}}}{e^{\overline{pd}}+1}\lt1
+$$
+
+**T6　線形差分方程式の定常解**
+
+$$
+b^{\top}\left[\kappa_1F-I\right]=-c^{\top}F+e^{\top}\ \Longrightarrow\ b=\left(I-\kappa_1F^{\top}\right)^{-1}\left(F^{\top}c-e\right),\quad F=\Psi-\Sigma^{1/2}\Lambda_1
+$$
+
+### A.2 価値等式（命題1）の導出
+
+> 原論文は、各期の予算制約に割引因子を掛けて足し合わせ、隣り合う項の相殺を示す。本記事は同じ結果を、恒等式 $$D_t-S_t=\mathbb{E}_t\left[M_{t+1}D_{t+1}\right]$$ を使って短く導く（本記事による整理）。最大満期を超える残高は0（$$Q_{t,h}=0\ (h\gt H)$$）とする。
+
+**Step 1　予算制約の書き換え**
+
+式(1)の右辺を左へ、$$T_t$$ を右へ移す。
+
+$$
+G_t+Q_{t-1,1}+\sum_{h=1}^{H}Q_{t-1,h+1}P_t(h)=T_t+\sum_{h=1}^{H}Q_{t,h}P_t(h)\tag{46}
+$$
+
+**Step 2　債務価値の恒等式**
+
+$$P_t(0)=1$$ より $$D_t=Q_{t-1,1}+\sum_{h=1}^{H}Q_{t-1,h+1}P_t(h)$$。式(46)を代入して、
+
+$$
+D_t-S_t=\sum_{h=1}^{H}Q_{t,h}P_t(h)\tag{47}
+$$
+
+**Step 3　オイラー方程式の適用**
+
+$$D_{t+1}=\sum_{h=0}^{H}P_{t+1}(h)Q_{t,h+1}$$ に $$M_{t+1}$$ を掛け、式(2)の $$\mathbb{E}_t\left[M_{t+1}P_{t+1}(h)\right]=P_t(h+1)$$ を使う（$$Q_{t,h+1}$$ は時点 $$t$$ で既知）。
+
+$$
+\mathbb{E}_t\left[M_{t+1}D_{t+1}\right]=\sum_{h=0}^{H}Q_{t,h+1}P_t(h+1)=\sum_{h=1}^{H}Q_{t,h}P_t(h)=D_t-S_t\tag{48}
+$$
+
+**Step 4　$$j$$ 期先への拡張**
+
+$$S_{t+j}=D_{t+j}-\left(D_{t+j}-S_{t+j}\right)$$ に $$M_{t,t+j}$$ を掛け、式(48)（時点 $$t+j$$）とT2を使う。
+
+$$
+\mathbb{E}_t\left[M_{t,t+j}S_{t+j}\right]=\mathbb{E}_t\left[M_{t,t+j}D_{t+j}\right]-\mathbb{E}_t\left[M_{t,t+j+1}D_{t+j+1}\right]\tag{49}
+$$
+
+**Step 5　$$j=0,\dots,J$$ の和（T4）**
+
+$$
+\sum_{j=0}^{J}\mathbb{E}_t\left[M_{t,t+j}S_{t+j}\right]=D_t-\mathbb{E}_t\left[M_{t,t+J+1}D_{t+J+1}\right]\tag{50}
+$$
+
+**Step 6　$$J\to\infty$$ とTVC**
+
+式(48)より $$\mathbb{E}_t\left[M_{t,t+J+1}D_{t+J+1}\right]=\mathbb{E}_t\left[M_{t,t+J}\sum_{h=1}^{H}Q_{t+J,h}P_{t+J}(h)\right]$$。式(3)でこれが0に向かうので、式(4)の中央の等式を得る。$$T_{t+j}$$ と $$G_{t+j}$$ の割引現在価値がそれぞれ収束すること（暗黙の前提）から、$$P^{T}_t-P^{G}_t$$ に分ける（式(5)）。
+
+**確認**
+
+| 入力・使う道具 | 内容 |
+|---|---|
+| 式(1)、$$P_t(0)=1$$ | 式(46)、(47) |
+| 式(2)、T2 | 式(48)、(49) |
+| T4、式(3) | 式(50)、式(4) |
+
+SDFが $$M_{t+1}=1/(1+r_f)$$（定数）の場合、式(48)は $$D_t-S_t=D_{t+1}$$ の割引、すなわち通常の債務の遷移式になり、式(4)は $$D_t=\sum_j S_{t+j}/(1+r_f)^j$$ に一致する。
+
+### A.3 デフォルトを許す場合
+
+デフォルト時（全額デフォルト・回収ゼロ）の予算制約は、満期到来債務を払わず、既存債務の残高も使わないので、
+
+$$
+G_t=T_t+\sum_{h=1}^{H}Q_{t,h}P_t(h)\tag{51}
+$$
+
+**Step 1**　デフォルトしない状態の $$D_{t+1}$$ を $$\tilde D_{t+1}$$ とし、デフォルト状態では $$\tilde D_{t+1}=0$$ と置く。どちらの状態でも $$S_{t+1}=\tilde D_{t+1}-\sum_{h=1}^{H}Q_{t+1,h}P_{t+1}(h)$$ が成り立つ（式(46)と式(51)）。
+
+**Step 2**　債券価格が式(11)で与えられるとき、
+
+$$
+\mathbb{E}_t\left[M_{t+1}\tilde D_{t+1}\right]=\sum_{h=0}^{H}Q_{t,h+1}\mathbb{E}_t\left[M_{t+1}\left(1-\chi_{t+1}\right)P_{t+1}(h)\right]=\sum_{h=1}^{H}Q_{t,h}P_t(h)=D_t-S_t\tag{52}
+$$
+
+**Step 3**　式(48)の代わりに式(52)を使えば、A.2のStep 4〜6が同じに進み、式(4)が成り立つ。
+
+**確認**：$$\chi=0$$ なら式(52)は式(48)に一致する。
+
+### A.4 共分散による分解（式(6)）の導出
+
+> 原論文は「式(4)を書き換えると」とだけ述べる。中間式は本記事による補足。
+
+**Step 1**　T3を $$X=M_{t,t+j}$$、$$Y=T_{t+j}$$ に適用し、式(2)の $$\mathbb{E}_t\left[M_{t,t+j}\right]=P_t(j)$$ を使う。
+
+$$
+\mathbb{E}_t\left[M_{t,t+j}T_{t+j}\right]=P_t(j)\mathbb{E}_t\left[T_{t+j}\right]+\mathrm{Cov}_t\left(M_{t,t+j},T_{t+j}\right)\tag{53}
+$$
+
+**Step 2**　$$G_{t+j}$$ にも同様に適用して引き、$$j=0$$ から足す。
+
+$$
+\mathbb{E}_t\left[\sum_{j=0}^{\infty}M_{t,t+j}\left(T_{t+j}-G_{t+j}\right)\right]=\sum_{j=0}^{\infty}P_t(j)\mathbb{E}_t\left[S_{t+j}\right]+\sum_{j=0}^{\infty}\mathrm{Cov}_t\left(M_{t,t+j},T_{t+j}\right)-\sum_{j=0}^{\infty}\mathrm{Cov}_t\left(M_{t,t+j},G_{t+j}\right)\tag{54}
+$$
+
+左辺は式(4)により $$D_t$$ なので、式(6)を得る。
+
+**確認**：SDFが $$t$$ 時点で既知（定数）なら、共分散は0で、第1項だけが残る。
+
+### A.5 リスクプレミアム等価（命題2）の導出
+
+**Step 1**　式(7)の $$R^{D}$$ の分母は、式(47)により $$D_t-S_t$$。分子は $$h$$ を付け替えると $$\sum_{h=0}^{\infty}P_{t+1}(h)Q_{t,h+1}=D_{t+1}$$。
+
+$$
+R^{D}_{t+1}\left(D_t-S_t\right)=D_{t+1}\tag{55}
+$$
+
+**Step 2**　式(4)を $$t+1$$ 期に適用し、式(7)の $$R^{T}$$, $$R^{G}$$ の定義を使う。
+
+$$
+D_{t+1}=P^{T}_{t+1}-P^{G}_{t+1}=\left(P^{T}_t-T_t\right)R^{T}_{t+1}-\left(P^{G}_t-G_t\right)R^{G}_{t+1}\tag{56}
+$$
+
+**Step 3**　式(55)、(56)を等しいと置き、$$D_t-S_t$$ で割って $$\mathbb{E}_t$$ をとると式(8)。$$D_t-S_t=\left(P^{T}_t-T_t\right)-\left(P^{G}_t-G_t\right)$$ は、式(4)から $$S_t=T_t-G_t$$ を引いて得る。$$D_t-S_t\ne0$$ が条件。
+
+**確認**：$$\mathbb{E}_t\left[R^{T}_{t+1}\right]=\mathbb{E}_t\left[R^{G}_{t+1}\right]=\mu$$ なら、右辺は $$\mu$$ で、国債の期待収益率も $$\mu$$。
+
+### A.6 長期の割引率（命題3・系1）の導出
+
+> 原論文は、Backus, Boyarchenko, and Chernov (2018) のワーキングペーパー版の例5に従うと述べる。以下は原論文の記述に沿った整理（Step 6は本記事による補足）。
+
+**Step 1　固有関数の問題（Hansen–Scheinkman）**
+
+$$
+\mathbb{E}_t\left[M_{t,t+1}v_{t+1}\right]=\nu v_t\tag{57}
+$$
+
+$$\nu$$ は支配的な固有値、$$v_t$$ は固有関数。
+
+**Step 2　SDFの分解**
+
+$$
+M_{t,t+1}=M^{1}_{t,t+1}M^{2}_{t,t+1},\qquad M^{1}_{t,t+1}=\frac{M_{t,t+1}v_{t+1}}{\nu v_t},\quad M^{2}_{t,t+1}=\frac{\nu v_t}{v_{t+1}}\tag{58}
+$$
+
+式(57)より $$\mathbb{E}_t\left[M^{1}_{t,t+1}\right]=1$$。
+
+**Step 3　長期債の収益率**
+
+長期の利回りは $$-\log\nu$$ に収束し、長期債の収益率は
+
+$$
+R^{\infty}_{t,t+1}=\frac{1}{M^{2}_{t,t+1}}=\frac{v_{t+1}}{\nu v_t},\qquad \mathbb{E}\left[\log R^{\infty}_{t,t+1}\right]=-\log\nu\tag{59}
+$$
+
+**Step 4　ストリップの価格**
+
+1期の成長率 $$g_{t,t+1}$$ のキャッシュフローの $$n$$ 期先ストリップの価格 $$\hat p^{n}_t$$ は、
+
+$$
+\hat p^{n}_t=\mathbb{E}_t\left[M_{t,t+1}g_{t,t+1}\hat p^{n-1}_{t+1}\right]=\mathbb{E}_t\left[\hat M_{t,t+1}\hat p^{n-1}_{t+1}\right],\qquad \hat M_{t,t+1}=M_{t,t+1}g_{t,t+1}\tag{60}
+$$
+
+**Step 5　もう1つの固有関数の問題**
+
+$$
+\mathbb{E}_t\left[\hat M_{t,t+1}\hat v_{t+1}\right]=\hat\nu\hat v_t\tag{61}
+$$
+
+キャッシュフロー $$d_t$$（$$g_{t,t+1}=d_{t+1}/d_t$$）が定常なら、式(57)の $$(\nu,v_t)$$ に対し $$\left(\nu,v_t/d_t\right)$$ が式(61)を満たす。確認：$$\mathbb{E}_t\left[M_{t,t+1}\frac{d_{t+1}}{d_t}\frac{v_{t+1}}{d_{t+1}}\right]=\frac{\nu v_t}{d_t}$$。
+
+**Step 6　結論（補足）**
+
+共通の $$\nu$$ が長期のストリップの収益率と長期債の利回りを同時に決めるので、式(9)を得る。系1は、$$d_t$$ の代わりにGDPに対する比率が定常なキャッシュフローを考える。このとき成長率 $$g_{t,t+1}$$ は、GDPの成長率に定常な比率の成長率を掛けたものになり、固有値問題はGDPストリップのものと同じになる。したがって長期の収益率はGDPストリップのそれに収束し、式(10)を得る。長期債より大きくなる（$$\gg$$）のは、SDFの永続成分のエントロピーが正のため（Alvarez and Jermann, 2005 など）。
+
+**確認**：キャッシュフローが一定（$$g_{t,t+1}=1$$、$$d_t$$ 定数）なら、ストリップは長期債そのもので、収益率は $$-\log\nu$$ に等しい。
+
+| 入力・使う道具 | 内容 |
+|---|---|
+| 固有関数 (57)、(61) | 長期の割引率を決める固有値 |
+| 定常性 | 同じ $$\nu$$ を共有する条件 |
+
+### A.7 名目債券の価格と債券リスクプレミアム（式(19)〜(22)）の導出
+
+**Step 1　予想**
+
+$$
+\log P^{\$}_{t+1}(h)=A^{\$}(h)+B^{\$}(h)^{\top}z_{t+1}
+$$
+
+**Step 2　オイラー方程式**
+
+$$y^{\$}_t(1)=y^{\$}_0(1)+e_{y1}^{\top}z_t$$、式(14)、式(18)を使う。
+
+$$
+\begin{aligned}
+P^{\$}_t(h+1)&=\mathbb{E}_t\left[\exp\left(m^{\$}_{t+1}+\log P^{\$}_{t+1}(h)\right)\right]\\
+&=\exp\left\{-y^{\$}_0(1)-e_{y1}^{\top}z_t-\tfrac12\Lambda_t^{\top}\Lambda_t+A^{\$}(h)+B^{\$}(h)^{\top}\Psi z_t\right\}\mathbb{E}_t\left[\exp\left\{\left(B^{\$}(h)^{\top}\Sigma^{1/2}-\Lambda_t^{\top}\right)\varepsilon_{t+1}\right\}\right]
+\end{aligned}\tag{62}
+$$
+
+**Step 3　T1を適用**
+
+$$\tfrac12\left(B^{\$}(h)^{\top}\Sigma^{1/2}-\Lambda_t^{\top}\right)\left(B^{\$}(h)^{\top}\Sigma^{1/2}-\Lambda_t^{\top}\right)^{\top}=\tfrac12B^{\$}(h)^{\top}\Sigma B^{\$}(h)-B^{\$}(h)^{\top}\Sigma^{1/2}\Lambda_t+\tfrac12\Lambda_t^{\top}\Lambda_t$$。$$\tfrac12\Lambda_t^{\top}\Lambda_t$$ が打ち消し合う。
+
+**Step 3'　係数の比較**
+
+$$\Lambda_t=\Lambda_0+\Lambda_1z_t$$ を代入し、定数項と $$z_t$$ の係数を比べると、$$\log P^{\$}_t(h+1)=A^{\$}(h+1)+B^{\$}(h+1)^{\top}z_t$$ で、$$A^{\$}(h+1)$$、$$B^{\$}(h+1)$$ は式(20)。$$-\log P^{\$}_t(h)/h=y^{\$}_t(h)$$ から式(19)。
+
+**Step 4　リスクプレミアム**
+
+$$r^{b,\$}_{t+1}(h)=\log P^{\$}_{t+1}(h)-\log P^{\$}_t(h+1)$$ のショック項は $$B^{\$}(h)^{\top}\Sigma^{1/2}\varepsilon_{t+1}$$。$$m^{\$}_{t+1}$$ のショック項は $$-\Lambda_t^{\top}\varepsilon_{t+1}$$。よって $$-\mathrm{Cov}_t\left(m^{\$}_{t+1},r^{b,\$}_{t+1}(h)\right)=B^{\$}(h)^{\top}\Sigma^{1/2}\Lambda_t$$（式(22)）。
+
+**確認**：$$h=0$$ で $$A^{\$}(1)=-y^{\$}_0(1)$$、$$B^{\$}(1)=-e_{y1}$$。式(19)で $$y^{\$}_t(1)=y^{\$}_0(1)+e_{y1}^{\top}z_t$$ に戻る。
+
+| 入力・使う道具 | 内容 |
+|---|---|
+| T1、式(18) | 式(62)から式(20) |
+
+### A.8 実質短期金利と実質債券（式(23)、(24)）の導出
+
+> 実質SDFが $$m_{t+1}=m^{\$}_{t+1}+\pi_{t+1}$$、$$\pi_{t+1}=\pi_0+e_\pi^{\top}\Psi z_t+e_\pi^{\top}\Sigma^{1/2}\varepsilon_{t+1}$$ であることから導く。式(23)、(24)は原論文の式で、途中の計算は本記事による補足。
+
+**Step 1　実質短期金利**
+
+$$\mathbb{E}_t\left[\exp\left(m_{t+1}+y_t(1)\right)\right]=1$$ より $$y_t(1)=-\mathbb{E}_t\left[m_{t+1}\right]-\tfrac12\mathbb{V}_t\left[m_{t+1}\right]$$。
+
+$$
+\begin{aligned}
+\mathbb{E}_t\left[m_{t+1}\right]&=-y^{\$}_t(1)-\tfrac12\Lambda_t^{\top}\Lambda_t+\pi_0+e_\pi^{\top}\Psi z_t,\\
+\mathbb{V}_t\left[m_{t+1}\right]&=\Lambda_t^{\top}\Lambda_t-2e_\pi^{\top}\Sigma^{1/2}\Lambda_t+e_\pi^{\top}\Sigma e_\pi
+\end{aligned}\tag{63}
+$$
+
+よって $$y_t(1)=y^{\$}_t(1)-\pi_0-e_\pi^{\top}\Psi z_t-\tfrac12e_\pi^{\top}\Sigma e_\pi+e_\pi^{\top}\Sigma^{1/2}\Lambda_t$$。$$y^{\$}_t(1)=y^{\$}_0(1)+e_{y1}^{\top}z_t$$ と $$\Lambda_t=\Lambda_0+\Lambda_1z_t$$ を入れると式(23)。
+
+**Step 2　実質債券**
+
+予想 $$\log P_{t+1}(h)=A(h)+B(h)^{\top}z_{t+1}$$ に対し、ショック項は $$\left(\left(e_\pi+B(h)\right)^{\top}\Sigma^{1/2}-\Lambda_t^{\top}\right)\varepsilon_{t+1}$$。A.7と同様にT1を使うと、
+
+$$
+\begin{aligned}
+A(h+1)&=-y^{\$}_0(1)+\pi_0+A(h)+\tfrac12\left(e_\pi+B(h)\right)^{\top}\Sigma\left(e_\pi+B(h)\right)-\left(e_\pi+B(h)\right)^{\top}\Sigma^{1/2}\Lambda_0\\
+B(h+1)^{\top}&=-e_{y1}^{\top}+\left(e_\pi+B(h)\right)^{\top}\left(\Psi-\Sigma^{1/2}\Lambda_1\right)
+\end{aligned}\tag{64}
+$$
+
+**Step 3　式(24)との一致**
+
+式(23)の $$y_0(1)$$ を使い $$-y^{\$}_0(1)+\pi_0=-y_0(1)-\tfrac12e_\pi^{\top}\Sigma e_\pi+e_\pi^{\top}\Sigma^{1/2}\Lambda_0$$ と書き直す。展開すると $$\tfrac12\left(e_\pi+B\right)^{\top}\Sigma\left(e_\pi+B\right)-\tfrac12e_\pi^{\top}\Sigma e_\pi=\tfrac12B^{\top}\Sigma B+B^{\top}\Sigma e_\pi$$ なので、式(64)の $$A(h+1)$$ は式(24)の第1式に一致する。
+
+**確認**：$$h=0$$ で $$B(1)^{\top}=-e_{y1}^{\top}+e_\pi^{\top}\left(\Psi-\Sigma^{1/2}\Lambda_1\right)$$、$$A(1)=-y_0(1)$$ で、式(23)の実質短期金利に戻る。
+
+### A.9 株式と配当ストリップ（式(25)〜(29)）の導出
+
+**Step 1　線形化**
+
+総収益率 $$\left(P^{m}_{t+1}+D^{m}_{t+1}\right)/P^{m}_t$$ の対数に、T5を使い式(25)を得る。$$pd^{m}_t=\overline{pd}+e_{pd}^{\top}z_t$$、$$\Delta d^{m}_t=\mu^{m}+e_{\mathrm{div}}^{\top}z_t$$ を代入すると、
+
+$$
+r^{m}_{t+1}-r^{m}_0=\left[\left(e_{\mathrm{div}}+\kappa^{m}_1e_{pd}\right)^{\top}\Psi-e_{pd}^{\top}\right]z_t+\left(e_{\mathrm{div}}+\kappa^{m}_1e_{pd}\right)^{\top}\Sigma^{1/2}\varepsilon_{t+1}
+$$
+
+**Step 2　オイラー方程式（式(26)）**
+
+$$\mathbb{E}_t\left[\exp\left(m^{\$}_{t+1}+\pi_{t+1}+r^{m}_{t+1}\right)\right]=1$$ にT1を使い、対数をとる。定数項と $$z_t$$ の係数が、VARが示すプレミアム（左辺）とモデルのプレミアム $$\left(e_{\mathrm{div}}+\kappa^{m}_1e_{pd}+e_\pi\right)^{\top}\Sigma^{1/2}\Lambda_t$$（右辺）の等式になる。
+
+**Step 3　配当ストリップ**
+
+$$P^{d}_t(h+1)=\mathbb{E}_t\left[M_{t+1}P^{d}_{t+1}(h)D^{m}_{t+1}/D^{m}_t\right]$$ に予想 $$pd^{m}_t(h)=A^{m}(h)+B^{m}(h)^{\top}z_t$$ を入れる。実質SDFの指数は $$m^{\$}_{t+1}+\pi_{t+1}+\Delta d^{m}_{t+1}+pd^{m}_{t+1}(h)$$。T1で、
+
+$$
+A^{m}(h+1)=A^{m}(h)+\mu^{m}-y^{\$}_0(1)+\pi_0+\tfrac12\left(e_{\mathrm{div}}+e_\pi+B^{m}(h)\right)^{\top}\Sigma\left(e_{\mathrm{div}}+e_\pi+B^{m}(h)\right)-\left(e_{\mathrm{div}}+e_\pi+B^{m}(h)\right)^{\top}\Sigma^{1/2}\Lambda_0\tag{65}
+$$
+
+$$B^{m}(h+1)$$ は式(28)の第2式。
+
+**Step 4　式(28)の第1式との一致**
+
+式(23)の $$y_0(1)$$ を使い、$$-y^{\$}_0(1)+\pi_0=-y_0(1)-\tfrac12e_\pi^{\top}\Sigma e_\pi+e_\pi^{\top}\Sigma^{1/2}\Lambda_0$$ と置く。$$\tfrac12\left(e_{\mathrm{div}}+e_\pi+B\right)^{\top}\Sigma\left(\cdot\right)-\tfrac12e_\pi^{\top}\Sigma e_\pi=\tfrac12\left(e_{\mathrm{div}}+B\right)^{\top}\Sigma\left(e_{\mathrm{div}}+B\right)+e_\pi^{\top}\Sigma\left(e_{\mathrm{div}}+B\right)$$ なので、式(65)は式(28)の第1式に一致する。ストリップのリスクプレミアムは、ショック項の係数 $$\left(e_{\mathrm{div}}+e_\pi+B^{m}(h)\right)^{\top}\Sigma^{1/2}$$ と $$-\Lambda_t^{\top}\varepsilon_{t+1}$$ の共分散で、式(29)。
+
+**確認**：$$h=0$$（$$B^{m}(0)=\mathbf{0}$$）で、式(29)の右辺は $$\left(e_{\mathrm{div}}+e_\pi\right)^{\top}\Sigma^{1/2}\Lambda_t$$（配当成長率のショックだけ）。
+
+### A.10 歳出・税収請求権（命題5、式(30)〜(37)）の導出
+
+**Step 1　歳出ストリップ**
+
+$$P^{G}_t(h+1)=\mathbb{E}_t\left[M^{\$}_{t+1}P^{G}_{t+1}(h)G_{t+1}/G_t\right]$$ に、式(16)の $$\Delta\log G_{t+1}$$ と予想 $$\log P^{G}_t(h)=A^{g}(h)+B^{g}(h)^{\top}z_t$$ を入れる。指数は $$m^{\$}_{t+1}+\Delta\log G_{t+1}+\log P^{G}_{t+1}(h)$$ で、ショック項の係数は $$\left(e_{\Delta g}+e_x+e_\pi+B^{g}(h)\right)^{\top}\Sigma^{1/2}-\Lambda_t^{\top}$$。
+
+$$
+\log P^{G}_t(h+1)=-y^{\$}_0(1)+\mu^{g}+x_0+\pi_0+A^{g}(h)+\left[\left(c+B^{g}(h)\right)^{\top}\Psi-e_{y1}^{\top}\right]z_t+\tfrac12\left(c+B^{g}(h)\right)^{\top}\Sigma\left(c+B^{g}(h)\right)-\left(c+B^{g}(h)\right)^{\top}\Sigma^{1/2}\left(\Lambda_0+\Lambda_1z_t\right)\tag{66}
+$$
+
+ここで $$c=e_{\Delta g}+e_x+e_\pi$$。係数を比べると式(32)。価格配当比率の和が式(30)。
+
+**Step 2　請求権全体の線形化**
+
+式(33)の $$r^{g}_{t+1}$$ に、式(16)の $$\Delta\log G_{t+1}$$ と式(34)の $$p^{g}_t=\overline{pg}+\bar B_g^{\top}z_t$$ を代入する。定数部分は $$r^{g}_0=x_0+\pi_0+\kappa^{g}_0-\overline{pg}\left(1-\kappa^{g}_1\right)$$（$$\mu^{g}_0=0$$）。
+
+**Step 3　オイラー方程式**
+
+$$\mathbb{E}_t\left[\exp\left(m^{\$}_{t+1}+r^{g}_{t+1}\right)\right]=1$$ にT1を使う。指数のショック項の係数は $$\left(c+\kappa^{g}_1\bar B_g\right)^{\top}\Sigma^{1/2}-\Lambda_t^{\top}$$。
+
+$$
+r^{g}_0-y^{\$}_0(1)+\left[\left(c+\kappa^{g}_1\bar B_g\right)^{\top}\Psi-\bar B_g^{\top}-e_{y1}^{\top}\right]z_t+\text{Jensen}=\left(c+\kappa^{g}_1\bar B_g\right)^{\top}\Sigma^{1/2}\left(\Lambda_0+\Lambda_1z_t\right)\tag{67}
+$$
+
+定数項が式(35)の第1式、$$z_t$$ の係数が第2式。
+
+**Step 4　$$\bar B_g$$ の解**
+
+式(35)の第2式を $$F=\Psi-\Sigma^{1/2}\Lambda_1$$ で書くと $$\left(c+\kappa^{g}_1\bar B_g\right)^{\top}F-\bar B_g^{\top}-e_{y1}^{\top}=0$$。T6で式(36)。
+
+**Step 5　リスクプレミアム（式(31)）**
+
+$$\mathbb{E}_t\left[r^{g}_{t+1}\right]=r^{g}_0+\left(c+\kappa^{g}_1\bar B_g\right)^{\top}\Psi z_t-\bar B_g^{\top}z_t$$ と $$y^{\$}_t(1)=y^{\$}_0(1)+e_{y1}^{\top}z_t$$ の差に、式(67)を使うと、$$-\text{Jensen}$$ を除いて $$\left(c+\kappa^{g}_1\bar B_g\right)^{\top}\Sigma^{1/2}\left(\Lambda_0+\Lambda_1z_t\right)$$ に等しい。式(31)の第2式。
+
+**Step 6　税収請求権**
+
+$$e_{\Delta g}\to e_{\Delta\tau}$$、$$\mu^{g}\to\mu^{\tau}$$ と置き換えれば、Step 1〜5が同じに進み、式(31)の第1式と式(37)を得る。
+
+**確認**：リスク価格が0（$$\Lambda_0=0$$、$$\Lambda_1=0$$）なら、式(36)は $$\bar B_g=\left(I-\kappa^{g}_1\Psi^{\top}\right)^{-1}\left(\Psi^{\top}c-e_{y1}\right)$$ で、通常の現在価値（Campbell–Shiller）の関係に一致し、式(31)の右辺は0になる。
+
+| 入力・使う道具 | 内容 |
+|---|---|
+| T1、T5、T6 | 式(32)、(35)、(36) |
+| 式(14)、(16)、(18) | 成長率とSDFのショック構造 |
+
+### A.11 コンビニエンスイールド（命題6、式(40)）の導出
+
+> 原論文は各期の予算制約を割引して足し合わせる長い証明を示す。以下はA.2と同じ恒等式を使った短い導出（本記事による整理）。
+
+**Step 1　コンビニエンスを含むオイラー方程式**
+
+式(39)より $$\mathbb{E}_t\left[M_{t+1}P_{t+1}(h)\right]=e^{-\lambda_t}P_t(h+1)$$（$$\lambda_t$$ は時点 $$t$$ で既知）。A.2のStep 3と同じ計算で、
+
+$$
+\mathbb{E}_t\left[M_{t+1}D_{t+1}\right]=e^{-\lambda_t}\sum_{h=1}^{H}Q_{t,h}P_t(h)=e^{-\lambda_t}\left(D_t-S_t\right)\tag{68}
+$$
+
+**Step 2　債務価値の再帰式**
+
+$$V_t\equiv D_t-S_t=\sum_{h=1}^{H}Q_{t,h}P_t(h)$$ と置くと、$$D_t=S_t+V_t$$ で、式(68)より $$V_t=\mathbb{E}_t\left[M_{t+1}D_{t+1}\right]+\left(1-e^{-\lambda_t}\right)V_t$$。
+
+$$
+D_t=S_t+\left(1-e^{-\lambda_t}\right)V_t+\mathbb{E}_t\left[M_{t+1}D_{t+1}\right]\tag{69}
+$$
+
+**Step 3　前向きに繰り返す**
+
+式(69)を $$t+1,\ t+2,\dots$$ に適用し、$$M_{t,t+j}$$ を掛けて足すと、TVCにより最後の項が消えて式(40)。
+
+**確認**：$$\lambda_t=0$$ なら式(69)は $$D_t=S_t+\mathbb{E}_t\left[M_{t+1}D_{t+1}\right]$$（式(48)）で、式(40)は式(4)に一致する。
+
+| 入力・使う道具 | 内容 |
+|---|---|
+| 式(39)、T2、式(3) | 式(68)、(69)、(40) |
+
+### A.12 著者について
+
+以下は、各著者の所属機関の公開プロフィール（2026年11月時点で確認できたもの）に基づく。
+
+**Zhengyang Jiang（Northwestern大学 Kellogg経営大学院）**
+- **アカデミックな経歴**: Stanford大学経営大学院で2018年に金融のPh.D.、California Institute of Technologyで2013年に数学・ビジネス経済学のB.Sc.。2018年にKelloggの助教授、2022年から金融の准教授。
+- **主要な研究分野**: 為替、資本フロー、公的債務の価値評価と持続可能性、国際通貨システム。
+- **評判・学術的貢献**: NBERのFaculty Research Fellow、*Journal of International Economics* のAssociate Editor。WFAのNasdaq Award（資産価格の最優秀論文）やCubist Systematic Strategies Ph.D. Candidate Awardなどの受賞がプロフィールに記載されている。
+
+**Hanno Lustig（Stanford大学経営大学院）**
+- **アカデミックな経歴**: 2002年にStanford大学で経済学のPh.D.（Louvain大学でMA、1997年）。Chicago大学（2002〜04年）、UCLAの経済学部とAnderson校（2004〜15年）を経て、2015年からStanford GSB（Mizuho Financial Group Professor of Finance）。
+- **主要な研究分野**: マクロ経済学と金融の接点（為替、資産価格、金融機関への政府保証、公的債務と財政）。
+- **評判・学術的貢献**: NASDAQ OMX Award（資産価格の最優秀論文、2010年）、JP Morgan Award（金融機関・市場の最優秀論文、2012年）。Fleckenstein, Longstaff との共著で *Journal of Finance* のAmundi Smith Breeden Prizeの特別表彰。NBERの研究員。
+
+**Stijn Van Nieuwerburgh（Columbia大学ビジネススクール）**
+- **アカデミックな経歴**: Ghent大学でB.A.（1998年）、Stanford大学で経済学のM.A.・金融数学のM.Sc.（2001年）と経済学のPh.D.。NYU Sternで教授（David S. Loeb Professor of Finance を含む、2003〜2018年）を務め、2018年からColumbia（Earle W. Kazis and Benjamin Schore Professor of Real Estate）。
+- **主要な研究分野**: 不動産、資産価格、マクロ経済学の接点。近年は政府債務と財政政策も扱う。
+- **評判・学術的貢献**: 2015年Germán Bernácer Prize、2020年TIAA Paul A. Samuelson Award。*Review of Financial Studies* のEditorを務めた。American Real Estate and Urban Economics Associationの会長（2022年）。European Finance Associationの会長を2027年に務める予定（所属機関の紹介による）。
+
+**Mindy Z. Xiaolan（Texas大学オースティン校 McCombs経営大学院）**
+- **アカデミックな経歴**: 北京大学で修士（2009年）、UCLA Anderson校で金融のPh.D.（2014年）。2014年からMcCombsで助教授、現在は金融の准教授。
+- **主要な研究分野**: マクロ金融、均衡資産価格、動学的契約、労働市場と所得格差、財政の持続可能性。
+- **評判・学術的貢献**: 2014年にWFAのTrefftzs Award（最優秀学生論文）、CICFのYihong Xia Best Paper Award、WFAのCubist Systematic Strategies Ph.D. Candidate Awardを受賞。
+
+---
+
+**© 原論文：Zhengyang Jiang, Hanno Lustig, Stijn Van Nieuwerburgh, Mindy Z. Xiaolan**（原論文は著者らに帰属。NBER Working Paper No. 26583の表記は © 2019 著者ら）。本記事は数理モデルの整理であり、原論文の記述の転載ではありません。
+{% endraw %}
