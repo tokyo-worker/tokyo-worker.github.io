@@ -8,6 +8,11 @@ layout: default
       <p class="text-muted site-description">{{ site.description }}</p>
     </div>
 
+    <div class="home-guides mb-4">
+      <span class="home-guides-label"><i class="fas fa-book-open mr-1"></i>論文群ガイド：</span>
+      {% for g in site.data.guides %}<a class="home-guide-chip" href="{{ g.url | relative_url }}">{{ g.short | escape }}</a>{% endfor %}
+    </div>
+
     <ul class="post-list">
       {% assign sorted_posts = site.posts | sort: 'date' | reverse %}
       {% for post in sorted_posts %}
@@ -30,8 +35,18 @@ layout: default
               <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
             </h3>
 
-            {% if post.description %}
+            {% if post.paper_summary %}
+            <div class="post-summary"><span class="pl-label">論文の内容</span>{{ post.paper_summary | markdownify }}</div>
+            {% elsif post.card_summary %}
+            <div class="post-summary">{{ post.card_summary | markdownify }}</div>
+            {% elsif post.description %}
             <p class="post-description text-muted">{{ post.description }}</p>
+            {% endif %}
+
+            {% if post.guide_id %}
+            <div class="post-guide small">
+              <i class="fas fa-book-open mr-1"></i>論文群：<a href="{{ post.guide_url | relative_url }}">{{ post.guide_short | escape }}</a>
+            </div>
             {% endif %}
 
             {% if post.tags %}
@@ -56,3 +71,16 @@ layout: default
     {% endif %}
   </div>
 </div>
+
+<script>
+// 要約中の数式(kramdown が出す <script type="math/tex">)を KaTeX で描画する
+document.addEventListener('DOMContentLoaded', function () {
+  if (typeof katex === 'undefined') return;
+  document.querySelectorAll('script[type^="math/tex"]').forEach(function (el) {
+    var display = el.type.indexOf('mode=display') !== -1;
+    var node = document.createElement(display ? 'div' : 'span');
+    katex.render(el.textContent, node, { throwOnError: false, displayMode: display });
+    el.parentNode.replaceChild(node, el);
+  });
+});
+</script>

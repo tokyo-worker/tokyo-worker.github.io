@@ -4,6 +4,8 @@ title: 関連論文ツリー
 permalink: /paper-tree/
 description: 各記事の「主要文献・関連論文」から自動生成した、論文どうしのつながり
 ---
+
+<p class="text-muted small"><i class="fas fa-book-open mr-1"></i>群ごとのツリー・読む順番・共通の設例は <a href="{{ '/guides/' | relative_url }}">論文群ガイド</a> にあります。</p>
 {::nomarkdown}
 {% assign g = site.data.paper_graph %}
 <style>

@@ -23,6 +23,9 @@
 require 'set'
 
 module PaperIndex
+  # paper_guides.rb が使うための生データ(build のたびに作り直す)
+  RAW = {}
+
   SEP        = /\s+and\s+|\s*[&＆、・–—;]\s*/
   PARTICLES  = %w[van von de der den del della di le la].freeze
   TITLE_RE   = /\A(?<authors>[\p{Latin}\s.,&＆、・'’\-–—]+?)\s*[（(](?<year>\d{4})[）)]/
@@ -288,15 +291,19 @@ module PaperIndex
     ext_labels = {}
     ext_titles = {}
     pending = []
+    post_refs = {}.compare_by_identity
 
     posts.each do |post|
       m = REFS_RE.match(post.content)
       next unless m
 
       citing = metas[post]
+      post_refs[post] = []
       new_body = m[:body].lines.map do |line|
         ref = parse_ref(line)
         next line unless ref
+
+        post_refs[post] << ref
 
         if citing && ref[:key] != citing[:key]
           # 文献欄には後続の発展論文も載るので、向きは常に「古い → 新しい」にそろえる
@@ -406,6 +413,10 @@ module PaperIndex
       g['items'].sort_by! { |it| [it['year'], it['post'].url] }
     end
     site.data['paper_index'] = groups.values.sort_by { |g| g['sort'] }
+
+    RAW.clear
+    RAW.merge!(metas: metas, by_key: by_key, edges: edges.to_a, post_refs: post_refs,
+               ext_labels: ext_labels, ext_titles: ext_titles)
 
     site.data['paper_graph'] = { 'mermaid' => plain, 'mermaid_titles' => titled, 'nodes' => node_keys.size, 'edges' => shown.size }
   end

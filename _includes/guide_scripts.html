@@ -1,0 +1,50 @@
+<script>
+// ガイド記事用: (1) 数式(KaTeX) (2) 関連論文ツリー(Mermaid)
+// 要約・本文中の kramdown が出す <script type="math/tex"> を KaTeX で描画する
+document.addEventListener('DOMContentLoaded', function () {
+  if (typeof katex !== 'undefined') {
+    document.querySelectorAll('script[type^="math/tex"]').forEach(function (el) {
+      var display = el.type.indexOf('mode=display') !== -1;
+      var node = document.createElement(display ? 'div' : 'span');
+      if (display) node.className = 'katex-display-wrap';
+      katex.render(el.textContent, node, { throwOnError: false, displayMode: display });
+      el.parentNode.replaceChild(node, el);
+    });
+    if (typeof renderMathInElement !== 'undefined') {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '\\(', right: '\\)', display: false },
+          { left: '\\[', right: '\\]', display: true }
+        ],
+        throwOnError: false
+      });
+    }
+  }
+});
+
+window.addEventListener('load', function () {
+  var wrap = document.getElementById('gt-wrap');
+  if (!wrap) return;
+  if (typeof mermaid === 'undefined') { wrap.textContent = '図の描画ライブラリを読み込めませんでした。'; return; }
+  var seq = 0;
+  async function draw() {
+    var withTitles = document.getElementById('gt-titles').checked;
+    var size = document.getElementById('gt-size').value;
+    var src = document.getElementById(withTitles ? 'gt-src-titles' : 'gt-src-plain').textContent.trim();
+    mermaid.initialize({
+      startOnLoad: false, securityLevel: 'loose', theme: 'neutral',
+      themeVariables: { fontSize: size + 'px', fontFamily: "'Roboto','Noto Sans JP',sans-serif" },
+      flowchart: { useMaxWidth: false, htmlLabels: true, wrappingWidth: 240, nodeSpacing: 36, rankSpacing: 70 }
+    });
+    try {
+      var out = await mermaid.render('gt-svg-' + (++seq), src);
+      wrap.innerHTML = out.svg;
+      if (out.bindFunctions) out.bindFunctions(wrap);
+    } catch (e) { wrap.textContent = '図を描画できませんでした: ' + e.message; }
+  }
+  document.getElementById('gt-titles').addEventListener('change', draw);
+  document.getElementById('gt-size').addEventListener('change', draw);
+  draw();
+});
+</script>

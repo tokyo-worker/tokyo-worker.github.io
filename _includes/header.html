@@ -24,10 +24,21 @@
           </a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link{% if page.url == '/papers/' or page.url == '/paper-tree/' %} active{% endif %}" href="{{ '/papers/' | relative_url }}">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle{% if page.url == '/papers/' or page.url == '/paper-tree/' or page.layout == 'guide' or page.url == '/guides/' or page.guide_id %} active{% endif %}" href="#" id="papersDropdown" role="button"
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-list-ul mr-1"></i> 論文著者名リスト
           </a>
+          <div class="dropdown-menu dropdown-menu-right papers-menu" aria-labelledby="papersDropdown">
+            <a class="dropdown-item" href="{{ '/papers/' | relative_url }}"><i class="fas fa-user-edit mr-1"></i> 論文著者名リスト(著者順)</a>
+            <a class="dropdown-item" href="{{ '/paper-tree/' | relative_url }}"><i class="fas fa-project-diagram mr-1"></i> 関連論文ツリー(全体)</a>
+            <a class="dropdown-item" href="{{ '/guides/' | relative_url }}"><i class="fas fa-book-open mr-1"></i> 論文群ガイド一覧</a>
+            <div class="dropdown-divider"></div>
+            <h6 class="dropdown-header">論文群ガイド(ナビゲート記事)</h6>
+            {% for g in site.data.guides %}
+            <a class="dropdown-item{% if page.guide.id == g.id or page.guide_id == g.id %} active{% endif %}" href="{{ g.url | relative_url }}">{{ g.short | escape }} <span class="small text-muted">({{ g.count }})</span></a>
+            {% endfor %}
+          </div>
         </li>
 
         {% if site.show_rss %}

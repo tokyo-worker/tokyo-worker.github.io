@@ -12,6 +12,9 @@ layout: default
       {% if page.collection == 'ftpl' %}
       <li class="breadcrumb-item"><a href="{{ '/ftpl/' | relative_url }}">FTPL</a></li>
       {% endif %}
+      {% if page.guide_id %}
+      <li class="breadcrumb-item"><a href="{{ page.guide_url | relative_url }}">{{ page.guide_short | escape }}</a></li>
+      {% endif %}
 
       <li class="breadcrumb-item active" aria-current="page">{{ page.title | truncate: 40 }}</li>
     </ol>
@@ -54,6 +57,17 @@ layout: default
   </div>
   {% endif %}
 </div>
+
+{% if page.guide_id %}
+<!-- 論文群ガイドへの案内(全記事に自動で表示) -->
+<div class="guide-backlink mb-4">
+  <i class="fas fa-book-open mr-1"></i>
+  この記事は論文群ガイド
+  <a href="{{ page.guide_url | relative_url }}"><strong>{{ page.guide_title | escape }}</strong></a>
+  の一部です。系譜ツリー・読む順番・関連記事はそちらから。
+  {% if page.also_guides.size > 0 %}<span class="small text-muted">(関連：{% for a in page.also_guides %}<a href="{{ a.url | relative_url }}">{{ a.short | escape }}</a>{% unless forloop.last %}、{% endunless %}{% endfor %})</span>{% endif %}
+</div>
+{% endif %}
 
 <!-- KaTeX CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -178,6 +192,7 @@ layout: default
   {% endif %}
     
   <div class="text-center mt-3">
+    {% if page.guide_id %}<a href="{{ page.guide_url | relative_url }}" class="btn btn-outline-secondary btn-sm mr-2"><i class="fas fa-book-open mr-1"></i> 論文群ガイドへ</a>{% endif %}
     <a href="{{ '/' | relative_url }}" class="btn btn-light btn-sm">
       <i class="fas fa-list mr-1"></i> 記事一覧に戻る
     </a>

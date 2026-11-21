@@ -4,6 +4,8 @@ title: 論文著者名リスト
 permalink: /papers/
 description: 論文の数理モデル紹介記事を筆頭著者の姓順に、その他の記事を日付順に並べた一覧
 ---
+
+<p class="text-muted small"><i class="fas fa-book-open mr-1"></i>関連する論文をまとめて、読む順番と共通の設例つきで見たいときは <a href="{{ '/guides/' | relative_url }}">論文群ガイド</a> へ。</p>
 {::nomarkdown}
 {% assign papers = site.posts | where_exp: "p", "p.paper_sort" | sort: "paper_sort" %}
 {% assign others = site.posts | where_exp: "p", "p.paper_sort == nil" %}

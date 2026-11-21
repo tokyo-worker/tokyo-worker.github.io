@@ -1,0 +1,168 @@
+---
+layout: default
+---
+{% assign g = page.guide %}
+
+<div class="post-nav-bar mb-4 pb-2 border-bottom">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-transparent p-0 mb-0">
+      <li class="breadcrumb-item"><a href="{{ '/' | relative_url }}"><i class="fas fa-home mr-1"></i>Home</a></li>
+      <li class="breadcrumb-item"><a href="{{ '/guides/' | relative_url }}">論文群ガイド</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ g.short | escape }}</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="guide-page">
+<h1 class="guide-title">{{ g.title | escape }}</h1>
+<p class="text-muted mb-1">論文群ガイド(How to Read a Paper 型のナビゲート記事)・記事 {{ g.count }} 本(論文 {{ g.papers_count }} / その他 {{ g.notes_count }}{% if g.series_count > 0 %} / 連載 {{ g.series_count }}{% endif %})</p>
+<p class="guide-question"><strong>この群の問い</strong>：{{ g.question | escape }}</p>
+
+<ul class="guide-toc">
+  <li><a href="#g-overview">1. この論文群の見取り図</a></li>
+  <li><a href="#g-tree">2. 関連論文ツリー</a></li>
+  <li><a href="#g-howto">3. 読み方(サーベイの進め方と3パス)</a></li>
+  <li><a href="#g-cards">4. 論文カード(各記事へ)</a></li>
+  <li><a href="#g-example">5. 共通の設例(Theoretical Minimum)</a></li>
+</ul>
+
+<h2 id="g-overview" class="guide-h2">1. この論文群の見取り図</h2>
+<p>{{ g.summary | escape }}</p>
+{% if g.neighbors.size > 0 %}
+<p class="small text-muted">この群と引用でつながっている他の論文群：
+{% for n in g.neighbors %}<a href="{{ n.url | relative_url }}">{{ n.title | escape }}</a>({{ n.count }}本の引用){% unless forloop.last %}、{% endunless %}{% endfor %}</p>
+{% endif %}
+{% if g.auto_count > 0 %}
+<p class="small guide-warn"><i class="fas fa-info-circle mr-1"></i>この群には、引用関係・キーワードから<strong>自動分類</strong>された記事が {{ g.auto_count }} 本あります(カードに「自動分類」と表示)。内容を確認して <code>_data/paper_groups.yml</code> の members に追記すると確定します。</p>
+{% endif %}
+
+<h2 id="g-tree" class="guide-h2">2. 関連論文ツリー</h2>
+<p class="text-muted small">各記事の「主要文献・関連論文」から自動で作った図です(記事が増えると自動で更新されます)。矢印は<strong>古い論文 → 新しい論文</strong>。
+太い紫枠は入口の論文、実線の四角はこの群の記事(クリックで記事へ)、点線の丸は<strong>この群の2本以上が挙げているのに本サイトに記事がない文献</strong>、灰色の点線の四角は別の論文群の記事(〔〕内がその群)です。</p>
+{% if g.mermaid %}
+<p class="text-muted small">ノード {{ g.nodes }}、つながり {{ g.edges }} 本</p>
+<div class="pg-controls">
+  <label><input type="checkbox" id="gt-titles"> 論文タイトルも表示する</label>
+  <label>文字の大きさ
+    <select id="gt-size"><option value="13">小</option><option value="15" selected>標準</option><option value="18">大</option><option value="22">特大</option></select></label>
+</div>
+<div class="pg-wrap" id="gt-wrap"><p class="text-muted">図を読み込み中…</p></div>
+<script type="text/plain" id="gt-src-plain">
+{{ g.mermaid }}
+</script>
+<script type="text/plain" id="gt-src-titles">
+{{ g.mermaid_titles }}
+</script>
+{% else %}
+<p class="text-muted">この群には、引用関係を図にできる論文記事がまだありません。</p>
+{% endif %}
+
+{% if g.roots.size > 0 or g.frontier.size > 0 %}
+<ul class="small">
+  {% if g.roots.size > 0 %}<li><strong>起点(群内の後続論文が多く挙げている)</strong>：
+    {% for r in g.roots %}{% if r.url %}<a href="{{ r.url | relative_url }}">{{ r.label }}</a>{% else %}{{ r.label }}{% endif %}{% unless forloop.last %}、{% endunless %}{% endfor %}</li>{% endif %}
+  {% if g.frontier.size > 0 %}<li><strong>先端(この群で最も新しい発展)</strong>：
+    {% for r in g.frontier %}{% if r.url %}<a href="{{ r.url | relative_url }}">{{ r.label }}</a>{% else %}{{ r.label }}{% endif %}{% unless forloop.last %}、{% endunless %}{% endfor %}</li>{% endif %}
+</ul>
+{% endif %}
+
+<h2 id="g-howto" class="guide-h2">3. 読み方：サーベイの進め方と3パス</h2>
+<p class="small text-muted">S. Keshav, “How to Read a Paper”(ACM SIGCOMM CCR, 2007)の方法に沿った案内です。同論文では、1本の論文を最大3回(パス)に分けて深く読み、複数本を読む文献サーベイではまず少数の論文を1パスしてから共通文献をたどります。</p>
+
+<h3 class="guide-h3">3.1 サーベイの進め方(この群に当てはめる)</h3>
+<ol class="guide-steps">
+  <li><strong>入口の論文を1パスずつ読む(1本5〜10分)。</strong>
+    {% if g.entry.size > 0 %}
+    <ul>
+      {% for e in g.entry %}<li><a href="{{ e.post.url | relative_url }}">{{ e.post.title | escape }}</a>{% if e.why != "" %} — {{ e.why }}{% endif %}</li>{% endfor %}
+    </ul>
+    {% else %}<span class="text-muted">(入口の論文は未指定です。ツリーの起点を目安にしてください。)</span>{% endif %}
+  </li>
+  <li><strong>共通して挙げられている文献と、繰り返し出てくる著者を見つける。</strong>これが群の「重要文献」です。
+    {% if g.shared_refs.size > 0 %}
+    <p class="small mb-1">この群の2本以上の記事が挙げているのに、<strong>本サイトにまだ記事がない文献</strong>(記事化・読書の次の候補):</p>
+    <ul class="small">
+      {% for r in g.shared_refs %}<li>{{ r.label }}{% if r.title != "" %} “{{ r.title }}”{% endif %} — {{ r.count }}本が引用({{ r.citing | join: "、" }})</li>{% endfor %}
+    </ul>
+    {% else %}<p class="small text-muted mb-1">(複数の記事が共通して挙げている未記事化の文献は、現時点ではありません。)</p>{% endif %}
+    {% if g.repeat_authors.size > 0 %}
+    <p class="small mb-1">この群で複数回登場する著者：{% for a in g.repeat_authors %}{{ a.name }}({{ a.count }}本){% unless forloop.last %}、{% endunless %}{% endfor %}</p>
+    {% endif %}
+  </li>
+  <li><strong>ツリーの起点から先端へ向かって、2パスで読む(1本1時間まで)。</strong>各論文が「前の論文のどの仮定を変えたか」を、カードの「つながり」とツリーで確かめます。</li>
+  <li><strong>議論の核になる論文だけ3パスで読む。</strong>{% if g.has_body %}下の<a href="#g-example">共通の設例</a>で、各論文の仮定・ロジック・主張の違いを同じ数値で比べると、3パスの「仮定を疑う」作業が楽になります。{% else %}この群の共通設例はまだありません(5章を参照)。{% endif %}</li>
+</ol>
+
+<h3 class="guide-h3">3.2 1本の記事をどう読むか(パス別)</h3>
+<p class="small text-muted">各記事は「数理モデル 記事化テンプレート」の様式で書かれているので、パスごとに見る場所が決まっています。</p>
+<div class="table-responsive">
+<table class="guide-table">
+  <thead><tr><th>パス</th><th>目安</th><th>記事のどこを読むか</th><th>読み終えて答えられること</th></tr></thead>
+  <tbody>
+    <tr><td><strong>第1パス</strong><br>鳥瞰</td><td>5〜10分</td>
+      <td>目次と見出し、「0. 論文の紹介」(論文の内容・位置づけ)、「2. 説明できる現象」「4. 対象外の現象」「5. 主要文献・関連論文」。式は読まない。</td>
+      <td>5つのC：<strong>Category</strong>(どんな型の論文か)、<strong>Context</strong>(どの論文とつながるか)、<strong>Correctness</strong>(前提は妥当そうか)、<strong>Contributions</strong>(新しい点)、<strong>Clarity</strong>(読めるか)。読み進めるかを決める。</td></tr>
+    <tr><td><strong>第2パス</strong><br>骨格</td><td>〜1時間</td>
+      <td>「1.0 前提」の仮定(A1, A2…)と、「主要帰結」の主要式と<strong>「主要式の読み方」</strong>(ひと目で言うと／意味／結論へのつながり)。付録の導出は飛ばす。</td>
+      <td>論文の主張とその根拠を、他人に説明できる。どの仮定のもとで結論が出るかが言える。</td></tr>
+    <tr><td><strong>第3パス</strong><br>再実装</td><td>数時間<br><span class="small">(初学者4〜5時間、慣れた人は1時間程度)</span></td>
+      <td>付録の導出を自分で再現し、各Stepで<strong>どの仮定が効いているか</strong>を確認する。「4. 対象外の現象」から、仮定を外すと何が変わるかを考える。</td>
+      <td>隠れた仮定、主張の限界、自分ならどう書くか。この群の別の論文はどの仮定を変えたのか(設例で確認)。</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="g-cards" class="guide-h2">4. 論文カード(各記事へ)</h2>
+<p class="text-muted small">年代順(論文)→ 日付順(その他の記事)。「論文の内容」は各記事の0章から自動で取り込んでいます。ここが各記事への入口で、<strong>すべての記事は必ずどれかの論文群のこのリストに載ります</strong>。</p>
+{% assign shown_notes_header = false %}
+{% for c in g.cards %}
+{% if c.is_paper == false and shown_notes_header == false %}
+{% assign shown_notes_header = true %}
+<h3 class="guide-h3 mt-4">論文以外の関連ノート(理論的最小限モデル・解説など)</h3>
+{% endif %}
+<div class="guide-card{% if c.is_entry %} guide-card-entry{% endif %}">
+  <div class="guide-card-meta">
+    {% if c.is_paper %}<span class="badge badge-light">{{ c.year }}</span>{% else %}<span class="badge badge-light">{{ c.post.date | date: "%Y-%m-%d" }}</span>{% endif %}
+    {% if c.is_entry %}<span class="badge badge-primary-custom">入口</span>{% endif %}
+    {% if c.auto %}<span class="badge badge-warning" title="引用関係・キーワードから自動で分類されました。paper_groups.yml に追記すると確定します">自動分類</span>{% endif %}
+    {% for cat in c.post.categories %}<span class="badge badge-secondary">{{ cat }}</span> {% endfor %}
+  </div>
+  <h4 class="guide-card-title"><a href="{{ c.post.url | relative_url }}">{{ c.post.title | escape }}</a></h4>
+  {% if c.summary %}<div class="guide-card-field"><span class="pl-label">論文の内容</span>{{ c.summary | markdownify }}</div>{% endif %}
+  {% if c.position %}<div class="guide-card-field"><span class="pl-label">本記事の位置づけ</span>{{ c.position | markdownify }}</div>{% endif %}
+  {% if c.five_c.size > 0 %}
+  <div class="guide-card-field guide-5c"><span class="pl-label">読解の手がかり(5C)</span>
+    <ul class="small mb-0">{% for f in c.five_c %}<li><strong>{{ f.label | escape }}</strong>：{{ f.text | escape }}</li>{% endfor %}</ul>
+  </div>
+  {% endif %}
+  {% if c.cites.size > 0 or c.cited_by.size > 0 %}
+  <div class="guide-card-links small">
+    {% if c.cites.size > 0 %}<div><span class="pl-label inline">この論文が挙げている(本サイトの記事)</span>
+      {% for l in c.cites %}<a href="{{ l.url | relative_url }}" title="{{ l.full_title | escape }}">{{ l.title }}</a>{% unless forloop.last %}、{% endunless %}{% endfor %}</div>{% endif %}
+    {% if c.cited_by.size > 0 %}<div><span class="pl-label inline">この論文を挙げている(本サイトの記事)</span>
+      {% for l in c.cited_by %}<a href="{{ l.url | relative_url }}" title="{{ l.full_title | escape }}">{{ l.title }}</a>{% unless forloop.last %}、{% endunless %}{% endfor %}</div>{% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endfor %}
+
+{% if g.series.size > 0 %}
+<h3 class="guide-h3 mt-4">関連連載(章立ての記事)</h3>
+<p class="small text-muted">この群に属する連載です。{{ g.series.size }} 本。</p>
+<ol class="guide-series small">
+  {% for it in g.series %}<li><a href="{{ it.url | relative_url }}">{{ it.title | escape }}</a></li>{% endfor %}
+</ol>
+{% endif %}
+
+<h2 id="g-example" class="guide-h2">5. 共通の設例(Theoretical Minimum)</h2>
+{% if g.has_body %}
+<p class="text-muted small">この群の論文を、<strong>同じ小さな数値例</strong>に当てはめて、各論文の仮定・ロジック・主張の違いを比べます。</p>
+<div class="guide-body">
+{{ content }}
+</div>
+{% else %}
+<p class="text-muted">この群の共通設例はまだ作られていません。<code>_guides/{{ g.id }}.md</code> を作ると、ここに自動で表示されます(書き方は <code>ガイド記事_設例テンプレート_v1.md</code> を参照)。</p>
+{% endif %}
+</div>
+
+{% include guide_scripts.html %}

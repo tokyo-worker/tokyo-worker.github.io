@@ -1,0 +1,244 @@
+# 論文群(ナビゲート記事)の定義
+#
+# ■ このファイルで決めること
+#   - 論文群の名前・問い・入口の論文(entry)・初期メンバー(members)
+# ■ サイト側が自動でやること(_plugins/paper_guides.rb)
+#   - 各論文群のナビゲート記事 /guides/<id>/ を作る
+#   - 関連論文ツリー、論文カード、共通文献(次に記事化すべき文献)などを、記事から自動生成する
+#   - ここに載っていない新しい記事は、次の順で自動的にどれかの論文群に入る(必ず1つの群に属する)
+#       1) 記事の front matter に  paper_group: <id>  があればそれ
+#       2) 「主要文献・関連論文」の引用関係(直接の引用・共通文献)と、keywords の一致が最も多い群
+#       3) どれにも当たらなければ fallback: true の群(other)
+#     自動で入った記事は、ガイド上で「自動分類」バッジが付く。内容を確認して、
+#     よければ該当群の members に追記する(またはfront matterに paper_group を書く)と確定する。
+#
+# ■ members / entry / also の書き方
+#   記事のファイル名から日付と拡張子を除いたもの(slug)。同じ slug が複数ある場合だけ、日付付きで書く。
+#     例) bohn-1998-us-public-debt-deficits
+#         2026-10-18-can-deficits-finance-themselves   (同名の記事が2本あるため日付付き)
+#   also: 主たる所属は別の群だが、この群のガイドにも載せたい記事(クロスリスト)
+#
+# ■ collections: [名前]
+#   _posts 以外のコレクション(例: _ftpl の連載)を、この群のガイドに「関連連載」として載せる。
+#   コレクションが増えたら、どれかの群に必ず書く(書き忘れるとビルドログに警告が出る)。
+#
+# ■ 新しい論文群を作るとき
+#   下に1ブロック足すだけでよい。長い読み物(共通の設例など)は _guides/<id>.md に書く(任意)。
+
+- id: asset-pricing
+  order: 1
+  title: 資産価格の理論：効率的市場・均衡・ポートフォリオ・ファクター
+  short: 資産価格(均衡・効率的市場・ファクター)
+  question: 資産の期待収益率は何で決まるのか。価格は予測できるのか。リスクの価格はどう測るのか。
+  summary: 「価格は公正ゲーム(マルチンゲール)か」という問いから出発し、平均分散(Markowitz–Sharpe)、消費ベースの均衡(Lucas–Mehra–Prescott)、実証ファクター(Fama–French)へと進む系譜。価格を説明する言語が「分散・ベータ」から「割引ファクター」へ移っていく過程が読みどころ。
+  keywords: ["効率的市場", "資産価格理論", "ポートフォリオ", "ファクター", "CAPM", "equity premium"]
+  entry:
+    - { post: fama-1970-efficient-capital-markets, why: "レビュー論文。効率性を「検証できる仮説」に言い換える枠組みを先に押さえると、他の論文の位置が見える。" }
+    - { post: markowitz-portfolio-selection-1952, why: "平均と分散でリスクを測る、という出発点の言語。Sharpe・Fama–Frenchはこの言語の上に立つ。" }
+  members:
+    - bachelier-1900-theorie-de-la-speculation
+    - markowitz-portfolio-selection-1952
+    - sharpe-1964-capm
+    - samuelson-1965-fair-game-futures
+    - mandelbrot-1966-forecasts-martingale
+    - fama-1970-efficient-capital-markets
+    - lucas-1978-asset-prices
+    - mehra-prescott-1985-equity-premium
+    - fama-french-1992-cross-section
+    - fama-french-1993-three-factor
+    - fama-french-2015-five-factor
+
+- id: corporate-valuation
+  order: 2
+  title: 企業価値・資本構成・会計に基づく株式評価
+  short: 企業価値(MM・残余利益)
+  question: 企業の価値は、資本構成や配当政策、会計数値とどう結びつくのか。
+  summary: 裁定による「無関連命題」(Modigliani–Miller)から、配当割引モデルとクリーンサープラス関係を使った会計ベースの評価(Ohlson, Feltham–Ohlson)へ。同じ「価値＝期待配当の現在価値」を、何を所与にして書き換えるかの違いとして読める。
+  keywords: ["企業価値", "資本構成", "配当政策", "株式評価", "会計学", "財務"]
+  entry:
+    - { post: modigliani-miller-1958, why: "裁定だけで企業価値を論じる原型。以降の論文が何を所与にするかを測る基準になる。" }
+  members:
+    - modigliani-miller-1958
+    - miller-modigliani-1961-dividend-policy
+    - ohlson-1995-earnings-book-values-dividends
+    - feltham_and_ohlson_1995
+  also:
+    - fama-french-2015-five-factor
+
+- id: no-arbitrage-ccas
+  order: 3
+  title: 無裁定価格理論：オプション・マルチンゲール測度・偶発請求権(信用リスク・預金保険)
+  short: 無裁定・オプション・偶発請求権
+  question: 市場参加者の選好を知らなくても、複製と無裁定だけで価格はどこまで決まるのか。
+  summary: Black–Scholes–Mertonの複製論法を、二項モデル(CRR)、マルチンゲール測度(Harrison–Kreps–Pliska)、ジャンプ(Merton 1976)へ広げ、さらに企業・銀行・国家のバランスシートに当てはめる(Merton 1974/1977、ソブリンCCA)系譜。「何が複製できるか(完備性)」が全体の分かれ目になる。
+  keywords: ["オプション", "裁定", "マルチンゲール", "偶発請求権", "預金保険", "ソブリン", "CCA", "確率論"]
+  entry:
+    - { post: cox-ross-rubinstein-1979-binomial-option-pricing, why: "二項モデルは数学が最も軽く、複製・リスク中立確率の考え方を一番短時間で掴める。" }
+    - { post: black-scholes-1973, why: "この群の共通の基準点。以降の論文はほぼ全て、これを拡張するか前提を外している。" }
+  members:
+    - black-scholes-1973
+    - merton-1973-rational-option-pricing
+    - merton-1976-jump-diffusion-option-pricing
+    - cox-ross-rubinstein-1979-binomial-option-pricing
+    - harrison-kreps-1979-martingales-arbitrage
+    - harrison-pliska-1981-continuous-trading
+    - harrison-pliska-1983-complete-markets
+    - merton-1974-risk-structure-of-interest-rates
+    - merton-1977-deposit-insurance
+    - merton-1978-deposit-insurance-surveillance-costs
+    - gray-merton-bodie-sovereign-cca
+    - gapen-gray-lim-xiao-sovereign-cca
+    - van-uem-extended-gamblers-ruin
+    - renormalization_group_martingale_convergence
+  also:
+    - bachelier-1900-theorie-de-la-speculation
+
+- id: term-structure
+  order: 4
+  title: 金利の期間構造・債券のリスクプレミアム
+  short: 期間構造・債券
+  question: 満期ごとの金利(イールドカーブ)は何で決まり、債券の超過収益はなぜ予測できるのか。
+  summary: Vasicekの無裁定モデル(短期金利の確率過程から全満期の価格を導く)を基準に、インフレ連動債(Jarrow–Yildirim)、投資家の選好する満期(Vayanos–Vila)、実証的な予測可能性(Cochrane–Piazzesi)が、どの仮定を足し引きしているかを読む群。国債市場・財政との接続記事も含む。
+  keywords: ["期間構造", "イールド", "債券", "金利", "国債"]
+  entry:
+    - { post: vasicek-term-structure-martingale, why: "短期金利から全満期の価格を導く最小のモデル。この群の共通言語になる。" }
+  members:
+    - vasicek-term-structure-martingale
+    - vasicek-fiscal-ibc-tvc
+    - vasicek-fiscal-central-bank-credit
+    - jarrow-yildirim-tips-hjm
+    - vayanos-vila-preferred-habitat
+    - cochrane-piazzesi-bond-risk-premia
+    - government_bond_market_model
+  also:
+    - harrison-kreps-1979-martingales-arbitrage
+
+- id: fiscal-sustainability
+  order: 5
+  title: 財政の持続可能性・財政ルール・公債の評価(物価水準の財政理論を含む)
+  short: 財政の持続可能性・公債評価
+  question: 政府債務は将来のどんな財政黒字で裏づけられるのか。債務が積み上がったとき、政府(と市場)はどう反応するのか。
+  summary: 政府の異時点間予算制約(横断性条件)を共通の骨格として、(i) 財政黒字が債務に反応するか(Bohn)、(ii) 債務の市場価値は将来黒字の割引現在価値と合うのか(Jiang–Lustigら)、(iii) 格付け・金融抑圧・財政ルールがどう効くか、を読み比べる群。
+  keywords: ["財政", "公債", "債務", "ソブリン", "FTPL", "物価水準の財政理論", "国債", "財政政策"]
+  entry:
+    - { post: bohn-1998-us-public-debt-deficits, why: "「債務が増えたら黒字を増やすか」という反応関数が、この群の多くの論文の共通の基準点。" }
+    - { post: ftpl-index, why: "予算制約と物価水準・金利の関係を一望するレジュメ。群全体の背景。" }
+  members:
+    - bohn-1998-us-public-debt-deficits
+    - bohn-2002-vanishing-debt
+    - bohn_2007_jme
+    - bohn-fiscal-policy-mehra-prescott
+    - jiang-lustig-public-debt-valuation-puzzle
+    - blanchard-leigh-mishra-ratings-debt-deficits
+    - flexible-debt-policy-rules-determinacy
+    - 2026-10-18-can-deficits-finance-themselves
+    - 2026-05-26-can-deficits-finance-themselves
+    - can_deficits_finance_themselves_theoretical_minimum
+    - japan-duration-mismatch-model
+    - what_about_japan_theoretical_minimum
+    - Micro-foundations_of_the_Risk-Asset_Pricing_Condition
+    - ftpl-index
+  also:
+    - reis-public-debt-r-g-m
+  # 連載(コレクション)をこの群に載せる。_config.yml の collections の名前を書く
+  collections:
+    - ftpl
+
+- id: rg-olg-bubbles
+  order: 6
+  title: 世代重複モデル・r＜g・動学的効率性・公債のロールオーバーとバブル
+  short: r＜g・OLG・公債バブル
+  question: 利子率が成長率を下回る(r<g)とき、政府は債務を返さずに借り換え続けられるのか。それは世代の厚生に何をもたらすのか。
+  summary: Samuelson(1958)の世代重複モデルを出発点に、Diamond(1965)の公債、Tirole(1985)のバブル、Abel–Mankiw–Summers–Zeckhauser(1989)の動学的効率性の検定、O'Connell–Zeldes(1988)・Kocherlakota(2023)のポンジ・ゲーム、Reis(2021)の r<g<m、といった「どの条件で借り換えが続くか」の系譜を読む群。
+  keywords: ["世代重複", "OLG", "動学的効率性", "バブル", "ポンジ", "ロールオーバー", "r<g", "年金"]
+  entry:
+    - { post: samuelson-1958-consumption-loan, why: "r<gで何が起きるかを最も単純に示した原型。この群の全論文の出発点。" }
+    - { post: abel-mankiw-summers-zeckhauser-dynamic-efficiency, why: "理論の「r<gか」という条件を、実データでどう判定するかを示す。理論と実証の橋渡し。" }
+  members:
+    - samuelson-1958-consumption-loan
+    - diamond-1965-national-debt
+    - tirole-1985-asset-bubbles-olg
+    - abel-mankiw-summers-zeckhauser-dynamic-efficiency
+    - rational-ponzi-games
+    - deficit-gamble-ponzi
+    - kocherlakota-infinite-debt-rollover
+    - reis-public-debt-r-g-m
+    - goldilocks-fiscal-policy
+    - debt-rollover-term-structure-olg
+    - on_financing_retirement_md
+    - bohn-2010-public-pension-funding
+  also:
+    - bohn-2002-vanishing-debt
+
+- id: safe-assets-intermediation
+  order: 7
+  title: 安全資産・金融仲介・マクロ金融摩擦
+  short: 安全資産・金融仲介
+  question: なぜ政府債務や預金のような「安全な資産」に需要があるのか。金融仲介の制約はマクロ経済に何をもたらすのか。
+  summary: 金融仲介(Diamond 1984)、仲介者の資本制約が作る危機(He–Krishnamurthy, Brunnermeier–Sannikov)、そして公債が安全資産・流動性として果たす役割(Brunnermeierら、Angeletosら、Farhi–Maggiori)を読む群。
+  keywords: ["安全資産", "金融仲介", "流動性", "マクロ金融", "国際通貨", "信用創造"]
+  entry:
+    - { post: diamond-1984-delegated-monitoring, why: "「なぜ仲介者が要るのか」の最小モデル。後の論文の仲介者の置き方を比べる基準になる。" }
+    - { post: debt-as-safe-asset, why: "公債を安全資産として評価する枠組みで、財政の群ともつながる。" }
+  members:
+    - diamond-1984-delegated-monitoring
+    - brunnermeier-sannikov-macro-financial-sector
+    - he-krishnamurthy-2012-capital-crises
+    - debt-as-safe-asset
+    - public-debt-private-liquidity-optimal-policy
+    - farhi-maggiori-international-monetary-system
+    - credit_creation_formula_sheet
+
+- id: money-inflation-zlb
+  order: 8
+  title: 貨幣・インフレ・ゼロ金利制約(ハイパーインフレ、税の徴収ラグ、流動性の罠)
+  short: 貨幣・インフレ・ZLB
+  question: インフレは何で決まり、実質税収や金融政策の効き方にどう跳ね返るのか。名目金利がゼロでも政策は効くのか。
+  summary: Cagan(1956)の貨幣需要から、Olivera–Tanzi効果(徴収ラグ)、Krugman(1998)・Eggertsson–Woodford(2003)のゼロ金利下限まで、「貨幣・物価・財政」の結びつきを読む群。
+  keywords: ["インフレ", "貨幣", "ハイパーインフレ", "金融政策", "ゼロ金利", "流動性の罠", "税収"]
+  entry:
+    - { post: cagan-1956-monetary-dynamics-of-hyperinflation, why: "貨幣需要とインフレ期待の最小の動学モデル。他の論文の貨幣の扱いを比べる基準になる。" }
+  members:
+    - cagan-1956-monetary-dynamics-of-hyperinflation
+    - olivera-1967-fiscal-lags-inflation
+    - tanzi-1977-inflation-collection-lags
+    - bracket-creep-olivera-tanzi-theoretical-minimum
+    - krugman-1998-liquidity-trap
+    - eggertsson-woodford-2003-zero-bound
+    - money-is-memory
+
+- id: general-equilibrium-macro
+  order: 9
+  title: 一般均衡・標準マクロモデル(RBC・NK)・公共投資と成長
+  short: 一般均衡・RBC/NK・公共投資
+  question: 競争均衡はいつ存在するのか。標準的なマクロモデル(RBC、NK)に政府や公共投資を入れると何が変わるのか。
+  summary: Arrow–Debreuの均衡存在から、公共投資の割引率を論じたArrow–Kurz、RBC・NKモデルへ。他の群の論文が暗黙に使う「標準モデル」の置き場所でもある。
+  keywords: ["一般均衡", "RBC", "ニューケインジアン", "DSGE", "経済成長", "公共投資"]
+  entry:
+    - { post: arrow-debreu-1954-existence-competitive-equilibrium, why: "競争均衡という概念の土台。多くの論文の「均衡」の意味がここに戻る。" }
+  members:
+    - arrow-debreu-1954-existence-competitive-equilibrium
+    - arrow-kurz-1970-part1-one-sector
+    - arrow-kurz-1970-part2-two-sector
+    - arrow-kurz-1970-part3-controllability-fixed-savings
+    - arrow-kurz-1970-part4-perfect-capital-markets
+    - arrow_kurz_1970-part5-rest of the book
+    - rbc-model-guide
+    - nk-model-guide
+    - plain-rbc-model-guide
+    - pure_rbc_recursive_equilibrium
+  also:
+    - lucas-1978-asset-prices
+
+- id: other
+  order: 99
+  fallback: true
+  title: その他の記事(政治経済・意思決定・分類前の新着記事)
+  short: その他・新着(分類前)
+  question: 上のどの論文群にも(まだ)入らない記事の置き場所。
+  summary: 政治経済・意思決定論など、他の群と引用関係を持たない記事と、追加されたばかりで引用関係・キーワードから群を決められなかった記事がここに入る。新しい論文群を作る材料にもなる。
+  keywords: ["政治", "陰謀論", "意思決定", "ポピュリズム"]
+  members:
+    - d_m_szeidl_and_ferenc_szucs_2025_a_model_of_populism_as_a_conspiracy_theory_american_economic_review
+    - theoretical_minimum
+    - Conspiracy
