@@ -4,11 +4,33 @@
 
 **骨格（3本）**
 
-$$E[\tilde p_{t+1}\mid\Phi_t]=\bigl(1+E[\tilde r_{t+1}\mid\Phi_t]\bigr)\,p_t$$
+$$
+\underbrace{E[\tilde p_{t+1}\mid\Phi_t]}_{\text{次期価格の期待値}}\qquad=\qquad\underbrace{\bigl(1+E[\tilde r_{t+1}\mid\Phi_t]\bigr)}_{\text{期待総収益率}}\qquad\underbrace{p_t}_{\text{現在価格}}
+$$
 
-$$p=\sum_{s}\pi_s\,m_s\,x_s,\qquad m_s=\beta\,g_s^{-\alpha}$$
+（式の意図・補足）期待収益モデルです。情報 $$\Phi_t$$ のもとで、次期価格の期待値が「今の価格×期待総収益率」に等しい、という均衡の条件を表します。期待収益率が情報によって変わってよい点が、期待収益率が一定のランダムウォークとの違いです。
 
-$$E=\sum_i X_i\mu_i,\qquad V=\sum_i\sum_j\sigma_{ij}X_iX_j$$
+$$
+\underbrace{p}_{\text{価格}}\qquad=\qquad\underbrace{\sum_{s}\pi_s\,m_s\,x_s}_{\text{確率×割引因子×元利合計の和}}
+$$
+
+（式の意図・補足）確率オイラー方程式を、状態 $$s$$ ごとの和で書いたものです。証券の価格は、次期の元利合計 $$x_s$$ を、状態の確率 $$\pi_s$$ と割引因子 $$m_s$$ で重みづけして足したものになります。
+
+$$
+\underbrace{m_s}_{\text{割引因子}}\qquad=\qquad\underbrace{\beta\,g_s^{-\alpha}}_{\text{時間割引×消費の限界効用の比}}
+$$
+
+（式の意図・補足）CRRA 効用 $$U'(c)=c^{-\alpha}$$ から出る割引因子です。$$\beta$$ は将来を割り引く度合い、$$g_s^{-\alpha}$$ は消費成長率 $$g_s$$ が低い状態ほど大きくなる項です。5.0 の表のとおり不況で最も大きく($$1.170$$)、不況で多く払う証券ほど高く評価されます。
+
+$$
+\underbrace{E}_{\text{期待収益率}}\qquad=\qquad\underbrace{\sum_i X_i\mu_i}_{\text{配分×期待収益率の和}}
+$$
+
+$$
+\underbrace{V}_{\text{分散}}\qquad=\qquad\underbrace{\sum_i\sum_j\sigma_{ij}X_iX_j}_{\text{共分散×配分の2次形式}}
+$$
+
+（式の意図・補足）ポートフォリオの期待収益率は配分に対して線形(加重平均)ですが、分散は共分散 $$\sigma_{ij}$$ を含む2次形式になります。そのため、分散投資の効果は個々の証券の分散ではなく、証券どうしの共分散で決まります(5.2)。
 
 - 1本目は期待収益モデルです。[Fama (1970)](/2026/11/06/fama-1970-efficient-capital-markets/) の式(1)と同じ形です。
 - 2本目は確率オイラー方程式を、状態 $$s$$ ごとの和で書いたものです。[Lucas (1978)](/2026/11/06/lucas-1978-asset-prices/) の式(17)、[Mehra–Prescott (1985)](/2026/11/06/mehra-prescott-1985-equity-premium/) の式(12)(15)と同じ構造です。効用は CRRA で $$U'(c)=c^{-\alpha}$$（Mehra–Prescott の式(5)）とします。$$g_s$$ は状態 $$s$$ の消費成長率で、同論文の $$\lambda_j$$ に当たります（Samuelson の $$\lambda$$ と区別するため、本設例では $$g$$ と書きます）。

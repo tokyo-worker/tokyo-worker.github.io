@@ -5,12 +5,34 @@
 **骨格（Vasicek の式(1)、(8)〜(11)と同じ形）**
 
 $$
-P(t,T)=\mathbb{E}^{Q}\!\left[e^{-\int_t^T r_s\,ds}\,\middle|\,\mathcal{F}_t\right]=\exp\bigl(A(\tau)-B(\tau)\,r_t\bigr),\qquad B(\tau)=\frac{1-e^{-a\tau}}{a}
+\underbrace{P(t,T)}_{\text{割引債の価格}}\qquad=\qquad\underbrace{\mathbb{E}^{Q}\!\left[e^{-\int_t^T r_s\,ds}\,\middle|\,\mathcal{F}_t\right]}_{\text{Q の下で、将来の金利で割り引く}}\qquad=\qquad\underbrace{\exp\bigl(A(\tau)-B(\tau)\,r_t\bigr)}_{\text{閉形式}}
 $$
 
+（式の意図・補足）割引債の価格を、リスク中立測度 $$Q$$ の下での、将来の短期金利による割引の期待値として書いた式です。Vasicek の仮定のもとでは、この期待値が $$r_t$$ に関する指数アフィン形(閉形式)で求まります。
+
 $$
-\frac{dP}{P}=\bigl(r_t+\lambda\sigma B(\tau)\bigr)dt-\sigma B(\tau)\,dW_t,\qquad y_\infty=b^{\ast}-\frac{\sigma^2}{2a^2},\quad b^{\ast}=b+\frac{\sigma\lambda}{a}
+\underbrace{B(\tau)}_{\text{金利への感応度}}\qquad=\qquad\underbrace{\frac{1-e^{-a\tau}}{a}}_{\text{満期が長いほど頭打ち}}
 $$
+
+（式の意図・補足）価格の対数が短期金利 $$r_t$$ にどれだけ感応するかを表す係数です。平均回帰の速さ $$a$$ のため、満期が長くなっても $$1/a$$ に頭打ちになります(5.0 の表で $$B(30)=3.333$$)。
+
+$$
+\underbrace{\frac{dP}{P}}_{\text{債券の収益率}}\qquad=\qquad\underbrace{\bigl(r_t+\lambda\sigma B(\tau)\bigr)dt}_{\text{期待収益(短期金利+プレミアム)}}\qquad\underbrace{-\,\sigma B(\tau)\,dW_t}_{\text{金利ショックの変動}}
+$$
+
+（式の意図・補足）債券の短い期間の収益率です。期待収益は、短期金利 $$r_t$$ に、リスク価格 $$\lambda$$ に応じた上乗せ $$\lambda\sigma B(\tau)$$ を足したものです。変動の大きさ $$\sigma B(\tau)$$ に比例した上乗せなので、満期が長い債券ほどプレミアムが大きくなります。
+
+$$
+\underbrace{b^{\ast}}_{\text{Q の下の長期平均}}\qquad=\qquad\underbrace{b}_{\text{実世界の長期平均}}\qquad+\qquad\underbrace{\frac{\sigma\lambda}{a}}_{\text{リスク価格の上乗せ}}
+$$
+
+（式の意図・補足）実世界の長期平均 $$b$$ に、リスク価格による上乗せを足して、評価に使う動き($$Q$$ の下)の長期平均にする式です。5.1 のとおり、価格には $$b$$ と $$\lambda$$ が $$b^{\ast}$$ の組としてしか入りません。
+
+$$
+\underbrace{y_\infty}_{\text{無限満期の利回り}}\qquad=\qquad\underbrace{b^{\ast}}_{\text{Q の下の長期平均}}\qquad-\qquad\underbrace{\frac{\sigma^2}{2a^2}}_{\text{凸性の補正}}
+$$
+
+（式の意図・補足）満期を無限に延ばしたときの利回りです。長期平均 $$b^{\ast}$$ から、金利の揺れに由来する凸性の補正を引きます。5.2(b) では、この $$y_\infty$$ が成長率 $$g$$ を上回るかが、現在価値が有限かどうかの分かれ目になります。
 
 **共通の記号**
 
@@ -108,8 +130,22 @@ Vasicek の式(14)の分解（%。丸めのため合計が0.001ずれる行が�
 | 平均回帰の強さ | $$1-x(1-\rho)$$。正なら定常 | 表の第2列($$\rho=0.05$$) |
 
 $$
-d_{t+1}=x\,(d_t-s_t),\qquad s_t=\rho\,d_t+\mu,\qquad \bar d=\frac{-x\mu}{1-x(1-\rho)}
+\underbrace{d_{t+1}}_{\text{来期の債務比}}\qquad=\qquad\underbrace{x\,(d_t-s_t)}_{\text{黒字を引いた残りに、倍率 }x\text{ がかかる}}
 $$
+
+（式の意図・補足）予算恒等式です。債務比の1期の動きで、$$x=(1+r)/(1+g)$$ は金利と成長率の差を表します(Bohn 1998 の式(6)〜(8)の1本目)。
+
+$$
+\underbrace{s_t}_{\text{基礎的黒字比}}\qquad=\qquad\underbrace{\rho\,d_t}_{\text{債務への反応}}\qquad+\qquad\underbrace{\mu}_{\text{その他の要因}}
+$$
+
+（式の意図・補足）財政の反応関数です。債務比が1上がると黒字比が $$\rho$$ だけ増える、という政府の反応を表します。$$\rho$$ が正であることが、持続可能性の証拠になります。
+
+$$
+\underbrace{\bar d}_{\text{定常水準}}\qquad=\qquad\underbrace{\frac{-x\mu}{1-x(1-\rho)}}_{\text{赤字を回帰の強さで割る}}
+$$
+
+（式の意図・補足）上の2式から出る、債務比の定常水準です。分母 $$1-x(1-\rho)$$ は平均回帰の強さで、正のときだけ定常水準が存在します。$$\rho$$ が大きいほど分母が大きくなり、定常水準は小さくなります。
 
 $$x=(1+r)/(1+g)\approx 1+r-g$$ は金利と成長率の差を表す。$$\mu=-1\%$$（債務以外の要因で黒字比が $$-1\%$$）、$$\rho=0.05$$ のとき：
 

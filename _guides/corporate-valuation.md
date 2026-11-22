@@ -5,24 +5,30 @@
 **骨格1（価値は期待支払の割引現在価値）**
 
 $$
-P_t=\sum_{\tau=1}^{\infty}\frac{E_t[d_{t+\tau}]}{(1+\rho)^{\tau}}
+\underbrace{P_t}_{\text{今の株価}}\qquad=\qquad\underbrace{\sum_{\tau=1}^{\infty}\frac{E_t[d_{t+\tau}]}{(1+\rho)^{\tau}}}_{\text{各期の期待配当を割り引いて足す}}
 $$
+
+（式の意図・補足）「株の価値は、将来の配当の割引現在価値である」という出発点の式です。分子 $$E_t[d_{t+\tau}]$$ は $$\tau$$ 期先の期待配当、分母 $$(1+\rho)^{\tau}$$ はその割引で、遠い配当ほど小さく数えます。論文ごとの違いは、この式の $$\rho$$ の決め方と、$$d$$ をどう言い換えるかにあります。
 
 [Ohlson (1995)](/2026/11/07/ohlson-1995-earnings-book-values-dividends/) 式(1)、[Feltham–Ohlson (1995)](/2026/11/06/feltham_and_ohlson_1995/) 式(1)、[Fama–French (2015)](/2026/11/18/fama-french-2015-five-factor/) 式(1)と同じ形である。[Miller–Modigliani (1961)](/2026/11/07/miller-modigliani-1961-dividend-policy/) 式(9)は、配当の代わりに「純利益−投資」で書いた同値な形、[Modigliani–Miller (1958)](/2026/11/08/modigliani-miller-1958/) 式(6)は、毎期 $$\bar X$$ が永続する場合の $$V=\bar X/\rho$$ である。
 
 **骨格2（簿価・利益・配当の恒等式）**
 
 $$
-y_t=y_{t-1}+x_t-d_t
+\underbrace{y_t}_{\text{今期末の簿価}}\qquad=\qquad\underbrace{y_{t-1}}_{\text{前期末の簿価}}\qquad+\qquad\underbrace{x_t}_{\text{今期の利益}}\qquad-\qquad\underbrace{d_t}_{\text{配当}}
 $$
+
+（式の意図・補足）簿価の増減は、利益から配当を引いた分だけだという会計の恒等式(クリーンサープラス)です。この式で配当を簿価と利益に言い換えると、骨格1の配当割引を、簿価と利益で書き直せます(5.4)。
 
 Ohlson 式(2)、Feltham–Ohlson 式(2)、Fama–French 式(2)（クリーンサープラス）と同じ形。Miller–Modigliani 式(4)の「新株発行額 $$=I-(X-D)$$」は、同じ会計の恒等式を外部資金の側から書いたものである。
 
 **骨格3（請求権の分割）**
 
 $$
-V=S+D
+\underbrace{V}_{\text{企業価値}}\qquad=\qquad\underbrace{S}_{\text{株式価値}}\qquad+\qquad\underbrace{D}_{\text{負債価値}}
 $$
+
+（式の意図・補足）企業の価値を、株主への請求権と債権者への請求権に分ける式です。資本構成を変えても $$V$$ の中身をどう分けるかが変わるだけか(5.1)、負債をオプションとして評価すると何が変わるか(5.3)を見るときの出発点になります。
 
 Modigliani–Miller 式(6)の $$V\equiv S+D$$、[Merton (1974)](/2026/11/13/merton-1974-risk-structure-of-interest-rates/) の $$V\equiv F+f$$（1.3節）、[Black–Scholes (1973)](/2026/11/14/black-scholes-1973/) 式(31)の「社債 $$=x-w$$」が同じ形である。
 
@@ -43,8 +49,10 @@ Modigliani–Miller 式(6)の $$V\equiv S+D$$、[Merton (1974)](/2026/11/13/mert
 動かす仮定は資本構成 $$D$$ である。債券は確実な所得を生み、同じ利子率 $$r$$ で取引される（A6、A7）。裁定の結果、企業価値は $$V=\bar X/\rho$$（式(6)）で、株式の期待収益率は次になる（式(13)）。
 
 $$
-i=\rho+(\rho-r)\frac{D}{S}
+\underbrace{i}_{\text{株式収益率}}\qquad=\qquad\underbrace{\rho}_{\text{無負債}}\qquad+\qquad\underbrace{(\rho-r)\frac{D}{S}}_{\text{負債による上乗せ}}
 $$
+
+（式の意図・補足）負債を増やすと、株主の期待収益率が負債・株式比 $$D/S$$ に比例して上がることを示す式です(命題II)。負債の利子率 $$r$$ は $$\rho$$ より低いので、「安い負債」の分だけ株式のコストが上がり、平均資本コストは $$\rho$$ のまま動きません。
 
 **この設例の記号**
 
@@ -86,8 +94,10 @@ $$D=40$$ の行は、原論文の脚注12の数値例（$$\bar X=1000$$、$$D=40
 動かす仮定は、配当と投資の組合せである。完全資本市場、合理的行動、完全確実性（A1〜A3）のもとで、全株式の収益率は $$\rho$$ に等しい。企業は無負債とし、毎期、利益の $$k=0.4$$ を投資して、翌期から永続的に $$\rho^{\ast}$$ の利益を得る。このとき（式(27)）
 
 $$
-V(0)=\frac{X(1-k)}{\rho-k\rho^{\ast}}=\frac{X}{\rho}\left[1+\frac{k(\rho^{\ast}-\rho)}{\rho-k\rho^{\ast}}\right]
+\underbrace{V(0)}_{\text{企業価値}}\qquad=\qquad\underbrace{\frac{X(1-k)}{\rho-k\rho^{\ast}}}_{\text{配当を成長率で割り引く}}\qquad=\qquad\underbrace{\frac{X}{\rho}}_{\text{成長なし}}\qquad\times\qquad\underbrace{\left[1+\frac{k(\rho^{\ast}-\rho)}{\rho-k\rho^{\ast}}\right]}_{\text{成長機会による倍率}}
 $$
+
+（式の意図・補足）利益の $$k$$ を投資に回し、翌期から永続的に $$\rho^{\ast}$$ の利益を得る企業の価値です。左の形は、配当 $$X(1-k)$$ が利益の成長率 $$k\rho^{\ast}$$ で伸び続ける場合の割引和で、$$k\rho^{\ast}\lt\rho$$ のときだけ有限です。右の形は、同じ値を「成長なしの価値 $$X/\rho$$」と「成長機会の倍率」に分けたもので、$$\rho^{\ast}\gt\rho$$ のときだけ倍率が1を超えます。
 
 **この設例の記号**
 
@@ -129,8 +139,16 @@ $$V(0)$$ は、式(9)の割引和を数値で足し上げた値と一致する�
 動かす仮定は、負債の性質である。5.1の確実な永続債（A6、A7）を、満期 $$\tau$$ で額面 $$B$$ を払う割引債に置き換え、払えなければ債権者が企業を受け取る（Merton の I1〜I3）。企業価値は拡散過程 $$dV=\alpha V\,dt+\sigma V\,dz$$ に従う（Merton の A8、Black–Scholes の A2）。M–M 定理は仮定する（Merton の A6）ので、$$V=100$$ は資本構成に依らず固定する。株式は資産 $$V$$ に対するコール・オプションになる（Merton 式(17)〜(19)、Black–Scholes 1.7節）。
 
 $$
-f=V\,\Phi(x_1)-Be^{-r\tau}\,\Phi(x_2),\qquad F=V-f
+\underbrace{f}_{\text{株式の価値}}\qquad=\qquad\underbrace{V\,\Phi(x_1)}_{\text{資産の取り分}}\qquad-\qquad\underbrace{Be^{-r\tau}\,\Phi(x_2)}_{\text{額面返済の現在価値}}
 $$
+
+（式の意図・補足）株式を、資産 $$V$$ に対する、額面 $$B$$ を行使価格とするコール・オプションとして評価する式です。株主は、返済後に残る資産を受け取る権利を持ちます。第1項は資産を受け取る側、第2項は額面を払う側で、どちらも満期に返済できる確率に応じた重み $$\Phi(\cdot)$$ がつきます。
+
+$$
+\underbrace{F}_{\text{負債の価値}}\qquad=\qquad\underbrace{V}_{\text{企業価値}}\qquad-\qquad\underbrace{f}_{\text{株式の価値}}
+$$
+
+（式の意図・補足）5.0 の $$V=S+D$$ を、負債の側から書いたものです。株式の価値 $$f$$ が出れば、負債の価値は企業価値の残りとして決まります。
 
 数値は、連続複利で $$r=5\%$$、$$\alpha=10\%$$、$$\tau=5$$、額面 $$B=60$$（安全債なら現在価値は $$Be^{-r\tau}=46.73$$）とし、$$\sigma$$ を動かす。$$g$$ は負債と企業の収益率の標準偏差の比（式(26)）、$$\alpha_y=r+g(\alpha-r)$$（式(45)）、$$\alpha_e=\alpha+(1-g)X(\alpha-r)$$（式(49)）で、$$X=F/f$$ は市場価値の負債・株式比である。
 
@@ -172,8 +190,16 @@ $$
 動かす仮定は、価値の表現である。骨格1と2から、価値を簿価と異常利益で書く。異常利益は $$x_t^a=x_t-(R_f-1)y_{t-1}$$（式(4)）で、持続性 $$\omega$$ で減衰する（式(9)）。ここでは $$v_t\equiv0$$ とする。
 
 $$
-P_t=y_t+\alpha_1x_t^a,\qquad\alpha_1=\frac{\omega}{R_f-\omega}\qquad(\text{式(13)、(14)})
+\underbrace{P_t}_{\text{株価}}\qquad=\qquad\underbrace{y_t}_{\text{簿価}}\qquad+\qquad\underbrace{\alpha_1x_t^a}_{\text{異常利益の資本化}}
 $$
+
+（式の意図・補足）株価を、簿価と、異常利益(利益のうち簿価の資本コストを超える分)の資本化に分ける式です(式(13))。異常利益がなければ、株価は簿価に等しくなります。
+
+$$
+\underbrace{\alpha_1}_{\text{資本化係数}}\qquad=\qquad\underbrace{\frac{\omega}{R_f-\omega}}_{\text{持続性が高いほど大きい}}
+$$
+
+（式の意図・補足）異常利益が毎期 $$\omega$$ 倍に減衰するとき、その将来分を足し合わせた倍率です(式(14))。持続性 $$\omega$$ が大きいほど係数は大きくなり、$$\omega$$ が1に近づく極限では異常利益が減衰せず、株価は $$X/\rho$$ に戻ります(表で $$\omega=0.999$$ のとき 99.78)。
 
 設定は $$y=80$$、$$x=10$$、$$d=10$$（全額配当）、$$R_f=1.10$$ で、$$x^a=10-0.10\times80=2$$ である。
 
@@ -238,8 +264,10 @@ $$\omega=0.6$$ で $$P=k(\varphi x-d)+(1-k)y=0.12\times(110-10)+0.88\times80=82.
 動かす向きは逆である。5.1〜5.4は、割引率 $$\rho$$ を与えて価値を出した。Fama–French は、骨格1と2から、価格 $$M$$・簿価 $$y$$（原論文の $$B$$）・期待利益・期待投資を与えて、内部収益率 $$r$$ を定義する（式(3)、(4)）。
 
 $$
-M=\sum_{\tau=1}^{\infty}\frac{E(Y_{\tau}-dy_{\tau})}{(1+r)^{\tau}}
+\underbrace{M}_{\text{株価}}\qquad=\qquad\underbrace{\sum_{\tau=1}^{\infty}\frac{E(Y_{\tau}-dy_{\tau})}{(1+r)^{\tau}}}_{\text{期待純キャッシュフローを }r\text{ で割り引いた和}}
 $$
+
+（式の意図・補足）骨格1の配当を、クリーンサープラスで「利益 $$Y$$ から簿価の増加 $$dy$$(投資)を引いたもの」に言い換えた式です。ここでは価格 $$M$$、利益、投資を与えて、割引率 $$r$$ を内部収益率として逆算します。5.1〜5.4 の向きとは逆です。
 
 ここで $$dy$$ は簿価の増加（原論文の $$dB$$）である。期待純キャッシュフローが毎期同額で永続するとすると $$r=[E(Y)-E(dy)]/M$$ になる（本設例による整理）。
 
