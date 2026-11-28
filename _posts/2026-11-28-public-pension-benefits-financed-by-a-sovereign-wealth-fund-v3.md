@@ -85,16 +85,14 @@ $$
 
 **式(4)〜(6) 制約付き最適カバー率および戦略決定問題**
 
-$$
-\begin{aligned}
+$$\begin{aligned}
 \max_{\lambda \in [0, 1],\; \mathbf{w}} \; \underbrace{U(\lambda, \mathbf{w})}_{\text{厚生・負担軽減目的関数}} \quad \text{s.t.} \quad
 \underbrace{\tilde{r}_p(\mathbf{w}) F_t}_{\text{純期待実質運用益}} &\ge \underbrace{\lambda\,\mathrm{Ben}_t}_{\text{運用益充当給付}} \tag{4} \\
 \underbrace{P_{\mathrm{Pen}}(\lambda, \mathbf{w})}_{\text{保証プット価値}} \le \underbrace{\bar{P}}_{\text{プット上限}}, \qquad
 \underbrace{1 - N\bigl(d_{1,\mathrm{Pen}}(\lambda, \mathbf{w})\bigr)}_{\text{保証プット・デルタ } |\Delta_{P,\mathrm{Pen}}|} &\le \underbrace{\bar{\Delta}}_{\text{デルタ上限}} \tag{5} \\
 \underbrace{\mathrm{Prob}\bigl(V_{\mathrm{Sov},T}(\lambda, \mathbf{w}) \le V_{\min}\bigr)}_{\text{ソブリン資産テール確率（SAaR）}} \le \underbrace{\alpha}_{\text{許容危機確率}}, \qquad
 \underbrace{\bigl|D^{ND}(\mathbf{w}) - D^{T-G}(\lambda)\bigr|}_{\text{デュレーション乖離幅}} &\le \underbrace{\bar{D}_{\text{gap}}}_{\text{乖離上限}} \tag{6}
-\end{aligned}
-$$
+\end{aligned}$$
 
 > **補足**：期待収支条件(4)は $\lambda$ の上限候補を与えるが、非線形プット・デルタ制約(5)と統合バランスシート制約(6)がバインドすることで、最適カバー率は内点解 $\lambda^{\ast} \in (0, 1)$ に決まる。
 
